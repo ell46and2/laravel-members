@@ -4,7 +4,7 @@ namespace App\Listeners\Admin\Account;
 
 use App\Events\Jockey\Account\NewJockeyRegistered;
 use App\Mail\Admin\Account\ToAdminJockeyRegisteredEmail;
-use App\User;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;

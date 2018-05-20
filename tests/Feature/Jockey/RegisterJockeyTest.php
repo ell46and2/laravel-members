@@ -4,8 +4,8 @@ namespace Tests\Feature\Jockey;
 
 use App\Mail\Admin\Account\ToAdminJockeyRegisteredEmail;
 use App\Mail\Jockey\Account\JockeyRegisteredEmail;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;

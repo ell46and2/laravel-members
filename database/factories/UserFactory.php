@@ -14,7 +14,7 @@ use Faker\Generator as Faker;
 */
 
 // Jockey user
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Models\User::class, function (Faker $faker) {
 	static $password;
 
     return [
@@ -30,21 +30,21 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\User::class, 'coach', function($faker) {
+$factory->state(App\Models\User::class, 'coach', function($faker) {
 	return [
 		'role_id' => 2, // coach
 		'approved' => true
 	];
 });
 
-$factory->state(App\User::class, 'admin', function($faker) {
+$factory->state(App\Models\User::class, 'admin', function($faker) {
 	return [
 		'role_id' => 3, // admin
 		'approved' => true
 	];
 });
 
-$factory->state(App\User::class, 'approved', function($faker) {
+$factory->state(App\Models\User::class, 'approved', function($faker) {
 	return [
 		'approved' => true
 	];

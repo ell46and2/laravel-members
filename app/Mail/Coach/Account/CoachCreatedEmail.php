@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Jockey\Account;
+namespace App\Mail\Coach\Account;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -8,20 +8,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JockeyRegisteredEmail extends Mailable
+class CoachCreatedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $coach;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $coach)
     {
-        $this->user = $user;
+        $this->coach = $coach;
     }
 
     /**
@@ -31,6 +31,6 @@ class JockeyRegisteredEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.jockey.account.registered');
+        return $this->markdown('emails.coach.account.created');
     }
 }

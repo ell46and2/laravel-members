@@ -17,6 +17,9 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Jockey\Account\SendToJockeyRegisteredEmail',
             'App\Listeners\Admin\Account\SendToAdminJockeyRegisteredEmail',
         ],
+        'App\Events\Admin\Coach\NewCoachCreated' => [
+            'App\Listeners\Admin\Coach\SendToCoachAccountCreatedEmail',
+        ],
     ];
 
     /**

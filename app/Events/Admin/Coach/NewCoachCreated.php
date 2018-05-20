@@ -1,25 +1,28 @@
 <?php
 
-namespace App\Events\Jockey\Account;
+namespace App\Events\Admin\Coach;
+
 
 use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 
-class NewJockeyRegistered
+class NewCoachCreated
 {
     use Dispatchable, SerializesModels;
 
-    public $user;
+    public $coach;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $coach)
     {
-        $this->user = $user;
+        $this->coach = $coach;
     }
+
+   
 }
