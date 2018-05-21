@@ -3,6 +3,7 @@
 namespace Tests\Feature\Coach;
 
 use App\Models\Activity;
+use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -24,7 +25,7 @@ class ActivityTest extends TestCase
             'start' => Carbon::parse('2018-11-06 1:00pm'),
             'duration' => 30,
             'location' => 'Cheltenham racecourse',
-            'jockeys' => [$jockey->id] // array of selected jockeys
+            'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
         ]);
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
@@ -41,6 +42,61 @@ class ActivityTest extends TestCase
         	$this->assertEquals('Cheltenham racecourse', $activity->location);
 
         	// Need to test 'new activity' notification is created for $jockey
+        	// Probably add notification creation to a queue - as can be for many jockeys
+        	tap(Notification::first(), function($notification) use ($activity, $coach, $jockey) {
+        		dd($notification->notifiable);
+        		// notification->user is $jockey
+        		// the $notification->notifiable is the $activity
+        		// the body contains the $coach's fullname()
+        	});
         });
+    }
+
+    /** @test */
+    public function a_coach_can_edit_their_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_can_delete_their_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_cannot_edit_another_coaches_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_cannot_delete_another_coaches_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_can_create_a_group_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_can_only_add_jockeys_from_their_group_to_the_group_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function a_coach_can_add_mileage_to_an_activity()
+    {
+        	
+    }
+
+    /** @test */
+    public function an_activity_must_have_a_jockey_assigned_unless_its_a_meeting() // requires more thought
+    {
+        	
     }
 }

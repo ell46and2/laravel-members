@@ -22,6 +22,11 @@ class Activity extends Model
 	{
 		return $this->belongsTo(User::class, 'coach_id');
 	}
+
+	public function notifications()
+    {
+    	return $this->morphMany(Notification::class, 'notifiable');
+    }
     
 
     /*
@@ -41,6 +46,8 @@ class Activity extends Model
 
     public function addJockeysById(Array $jockeyIds)
     {
-    	$this->jockeys()->attach($jockeyIds);
+    	// look at replacing with sync() 
+    	// As sync() will remove any jockeys that are not in the array.
+    	$this->jockeys()->attach($jockeyIds); 
     }
 }
