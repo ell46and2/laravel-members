@@ -145,7 +145,25 @@ class UserTest extends TestCase
     /** @test */
     public function jockey_activities_relationship()
     {
-    	
+    	$jockey = factory(User::class)->states('jockey')->create();
+    	// dd($jockey->activities());
+        $this->assertEquals($jockey->activities()->count(), 0);
+
+        $activity1 = factory(Activity::class)->create();
+    	$activity2 = factory(Activity::class)->create();
+    	$activityNotForJockey = factory(Activity::class)->create();
+
+		$activity1->addJockey($jockey);
+		$activity2->addJockey($jockey);
+
+		$jockeyActivities = $jockey->activities()->get();
+
+		$this->assertEquals($jockeyActivities->count(), 2);
+
+		$jockeyActivities->assertContains($activity1);
+       	$jockeyActivities->assertContains($activity2);
+
+       	$jockeyActivities->assertNotContains($activityNotForJockey);
     }
 
 

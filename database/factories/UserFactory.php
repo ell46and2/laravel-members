@@ -30,6 +30,12 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
+$factory->state(App\Models\User::class, 'jockey', function($faker) {
+	return [
+		'role_id' => 1, // jockey
+	];
+});
+
 $factory->state(App\Models\User::class, 'coach', function($faker) {
 	return [
 		'role_id' => 2, // coach

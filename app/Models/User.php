@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,11 @@ class User extends Authenticatable
 
     protected $casts = [
         'approved' => 'boolean' // returns 0 or 1 from db, so casts to boolean so we can assertTrue or assertFalse
+    ];
+
+    // Always eager load role as we'll use it so often.
+    protected $with = [
+        'role'
     ];
 
     /*
@@ -101,12 +107,12 @@ class User extends Authenticatable
 
     public function isJockey()
     {
-        return (bool) $this->role->name = 'jockey';
+        return $this->role->name === 'jockey';
     }
 
     public function isCoach()
     {
-        return (bool) $this->role->name = 'coach';
+        return $this->role->name === 'coach';
     }
 
     public static function createCoach($requestData)
@@ -125,5 +131,15 @@ class User extends Authenticatable
         $this->update([
             'approved' => true
         ]);
+    }
+
+    public function upcomingActivitiesForJockey()
+    {
+        return $this->activities()->whereDate('end', '>', Carbon::now())->orderBy('end');
+    }
+
+    public function recentActivitiesForJockey()
+    {
+        return $this->activities()->whereDate('end', '<', Carbon::now())->orderBy('end', 'desc');
     }
 }

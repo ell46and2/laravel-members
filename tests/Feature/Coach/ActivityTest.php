@@ -44,10 +44,12 @@ class ActivityTest extends TestCase
         	// Need to test 'new activity' notification is created for $jockey
         	// Probably add notification creation to a queue - as can be for many jockeys
         	tap(Notification::first(), function($notification) use ($activity, $coach, $jockey) {
-        		dd($notification->notifiable);
-        		// notification->user is $jockey
-        		// the $notification->notifiable is the $activity
+        		// dd($activity);
+        		$this->assertEquals($notification->notifiable_type, 'App\Models\Activity');
+        		$this->assertEquals($notification->notifiable->id, $activity->id);
+        		$this->assertEquals($notification->user->id, $jockey->id);
         		// the body contains the $coach's fullname()
+        		$this->assertRegexp("/{$coach->fullName()}/", $notification->body);
         	});
         });
     }
@@ -95,8 +97,16 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function an_activity_must_have_a_jockey_assigned_unless_its_a_meeting() // requires more thought
+    public function an_away_day_activity_doesnt_have_a_jockey()
     {
         	
     }
+
+    /** @test */
+    public function an_activity_must_have_a_jockey_assigned_unless_its_an_away_day() // requires more thought
+    {
+        	
+    }
+
+
 }
