@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
+use App\Models\Coach;
+use App\Models\Jockey;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,7 +18,7 @@ class ActivityTest extends TestCase
 	/** @test */
     public function activity_has_a_coach()
     {
-        $coach = factory(User::class)->create();
+        $coach = factory(Coach::class)->create();
 
         $activity = factory(Activity::class)->create([
         	'coach_id' => $coach->id
@@ -30,7 +32,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_jockey_can_be_added_to_an_activity()
     {
-    	$jockey = factory(User::class)->create();
+    	$jockey = factory(Jockey::class)->create();
 
         $activity = factory(Activity::class)->create();
 
@@ -44,10 +46,10 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_group_of_jockeys_can_be_added_to_an_activity()
     {
-    	$jockey1 = factory(User::class)->create();
-        $jockey2 = factory(User::class)->create();
-        $jockey3 = factory(User::class)->create();
-        $jockeyNotAddedToActivity = factory(User::class)->create();
+    	$jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+        $jockeyNotAddedToActivity = factory(Jockey::class)->create();
 
         $activity = factory(Activity::class)->create();
 
@@ -67,12 +69,41 @@ class ActivityTest extends TestCase
     public function a_subsection_of_jockeys_can_be_removed_from_an_activity()
     {
         // $activity->removeJockeysById
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+        $jockeyToBeRemoved = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create();
+
+        $activity->addJockeysById([$jockey1->id, $jockey2->id, $jockey3->id, $jockeyToBeRemoved->id]);
+
+        $addedJockeys = $activity->jockeys()->get();
+
+        $this->assertEquals($addedJockeys->count(), 4);
+
+        $addedJockeys->assertContains($jockey1);
+        $addedJockeys->assertContains($jockey2);
+        $addedJockeys->assertContains($jockey3);
+        $addedJockeys->assertContains($jockeyToBeRemoved);
+
+        // Excluding jockey to be removed - as we're using sync() any jockey not in the array will be removed.
+        $activity->addJockeysById([$jockey1->id, $jockey2->id, $jockey3->id]);
+
+        $newAddedJockeys = $activity->jockeys()->get();
+
+        $this->assertEquals($newAddedJockeys->count(), 3);
+
+        $newAddedJockeys->assertContains($jockey1);
+        $newAddedJockeys->assertContains($jockey2);
+        $newAddedJockeys->assertContains($jockey3);
+        $newAddedJockeys->assertNotContains($jockeyToBeRemoved);
     }
 
     /** @test */
     public function a_jockey_cannot_be_added_twice_to_an_activity()
     {
-    	$jockey = factory(User::class)->create();
+    	$jockey = factory(Jockey::class)->create();
 
         $activity = factory(Activity::class)->create();
 
@@ -89,7 +120,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_jockey_can_view_their_upcoming_activities()
     {
-    	$jockey = factory(User::class)->states('jockey')->create();
+    	$jockey = factory(Jockey::class)->create();
 
     	$activity1 = factory(Activity::class)->create([
     		'duration' => 30,
@@ -118,9 +149,9 @@ class ActivityTest extends TestCase
 		$activity4->addJockey($jockey);
 		$activityInPast->addJockey($jockey);
 		
-		$upcomingActivities = $jockey->upcomingActivitiesForJockey()->get();
+		$upcomingActivities = $jockey->upcomingActivities()->get();
 
-		$this->assertEquals($jockey->upcomingActivitiesForJockey()->count(), 4);
+		$this->assertEquals($jockey->upcomingActivities()->count(), 4);
 
 		$upcomingActivities->assertContains($activity1);
 		$upcomingActivities->assertContains($activity2);
@@ -140,7 +171,7 @@ class ActivityTest extends TestCase
      /** @test */
     public function a_jockey_can_view_their_recent_activities()
     {
-        $jockey = factory(User::class)->states('jockey')->create();
+        $jockey = factory(Jockey::class)->create();
 
     	$activity1 = factory(Activity::class)->create([
     		'duration' => 30,
@@ -169,9 +200,9 @@ class ActivityTest extends TestCase
 		$activity4->addJockey($jockey);
 		$activityInFuture->addJockey($jockey);
 		
-		$recentActivities = $jockey->recentActivitiesForJockey()->get();
+		$recentActivities = $jockey->recentActivities()->get();
 
-		$this->assertEquals($jockey->recentActivitiesForJockey()->count(), 4);
+		$this->assertEquals($jockey->recentActivities()->count(), 4);
 
 		$recentActivities->assertContains($activity1);
 		$recentActivities->assertContains($activity2);
@@ -186,5 +217,29 @@ class ActivityTest extends TestCase
 			$activity3,
 			$activity4
 		]);	
+    }
+
+    /** @test */
+    public function can_see_number_of_unread_comments_excluding_their_own()
+    {
+            
+    }
+
+    /** @test */
+    public function can_mark_a_comment_as_read()
+    {
+        
+    }
+
+    /** @test */
+    public function can_add_a_video_as_an_attachment_to_a_comment()
+    {
+            
+    }
+
+    /** @test */
+    public function can_add_an_image_as_an_attachment_to_a_comment()
+    {
+            
     }
 }

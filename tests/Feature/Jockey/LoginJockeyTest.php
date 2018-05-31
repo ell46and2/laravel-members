@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jockey;
 
+use App\Models\Jockey;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -16,7 +17,7 @@ class LoginJockeyTest extends TestCase
     /** @test */
     public function a_registered_jockey_not_yet_approved_cannot_login()
     {
-        $jockey = factory(User::class)->create([
+        $jockey = factory(Jockey::class)->create([
         	'email' => 'jane@example.com',
             'password' => bcrypt('super-secret-password')
         ]);
@@ -29,7 +30,7 @@ class LoginJockeyTest extends TestCase
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors('email');
         $errors = session('errors');
-        $this->assertEquals($errors->get('email')[0],'No account found, or your account is awaitng approval.');
+        $this->assertEquals($errors->get('email')[0],'No account found, or your account is awaiting approval.');
 
         $this->assertFalse(Auth::check()); 
     }
@@ -37,7 +38,7 @@ class LoginJockeyTest extends TestCase
     /** @test */
     public function a_registered_jockey_thats_approved_can_login()
     {
-        $jockey = factory(User::class)->states('approved')->create([
+        $jockey = factory(Jockey::class)->states('approved')->create([
         	'email' => 'jane@example.com',
             'password' => bcrypt('super-secret-password')
         ]);
@@ -55,7 +56,7 @@ class LoginJockeyTest extends TestCase
     /** @test */
     public function logging_in_with_invalid_credentials()
     {
-        $jockey = factory(User::class)->states('approved')->create([
+        $jockey = factory(Jockey::class)->states('approved')->create([
         	'email' => 'jane@example.com',
             'password' => bcrypt('super-secret-password')
         ]);

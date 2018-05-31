@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
+use App\Models\Coach;
+use App\Models\Jockey;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,7 +13,6 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
 	use DatabaseMigrations;
-
 
     /** @test */
     public function can_get_the_admin_user()
@@ -26,7 +27,7 @@ class UserTest extends TestCase
     /** @test */
     public function can_get_users_full_name()
     {
-        $user = factory(User::class)->create([
+        $user = factory(Jockey::class)->create([
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
         ]);
@@ -37,14 +38,14 @@ class UserTest extends TestCase
     /** @test */
     public function can_get_jockeys_coaches()
     {
-    	$jockey = factory(User::class)->create([
+    	$jockey = factory(Jockey::class)->create([
     		'first_name' => 'Ell'
     	]);
 
-    	$coach1 = factory(User::class)->states('coach')->create();
-    	$coach2 = factory(User::class)->states('coach')->create();
-    	$coach3 = factory(User::class)->states('coach')->create();
-    	$notJockeysCoach = factory(User::class)->states('coach')->create();
+    	$coach1 = factory(Coach::class)->create();
+    	$coach2 = factory(Coach::class)->create();
+    	$coach3 = factory(Coach::class)->create();
+    	$notJockeysCoach = factory(Coach::class)->create();
     	$adminUser = factory(User::class)->states('admin')->create();
 
     	$this->assertEquals($jockey->coaches()->count(), 0);
@@ -68,12 +69,12 @@ class UserTest extends TestCase
     /** @test */
     public function can_get_coaches_jockeys()
     {
-        $coach = factory(User::class)->states('coach')->create();
+        $coach = factory(Coach::class)->create();
 
-       	$jockey1 = factory(User::class)->create();
-       	$jockey2 = factory(User::class)->create();
-       	$jockey3 = factory(User::class)->create();
-       	$notCoachesJockey = factory(User::class)->create();
+       	$jockey1 = factory(Jockey::class)->create();
+       	$jockey2 = factory(Jockey::class)->create();
+       	$jockey3 = factory(Jockey::class)->create();
+       	$notCoachesJockey = factory(Jockey::class)->create();
 
        	$this->assertEquals($coach->jockeys()->count(), 0);
 
@@ -95,15 +96,15 @@ class UserTest extends TestCase
     /** @test */
     public function can_get_all_coaches()
     {
-        $coach1 = factory(User::class)->states('coach')->create();
-        $coach2 = factory(User::class)->states('coach')->create();
+        $coach1 = factory(Coach::class)->create();
+        $coach2 = factory(Coach::class)->create();
 
         $jockey1 = factory(User::class)->create();
        	$jockey2 = factory(User::class)->create();
 
        	$admin = factory(User::class)->states('admin')->create();
 
-       	$coaches = User::getAllCoaches();
+       	$coaches = Coach::get();
 
        	$this->assertEquals($coaches->count(), 2);
 
@@ -118,7 +119,7 @@ class UserTest extends TestCase
     /** @test */
     public function coach_activities_relationship()
     {
-        $coach = factory(User::class)->states('coach')->create();
+        $coach = factory(Coach::class)->create();
 
         $this->assertEquals($coach->activities()->count(), 0);
 
@@ -145,25 +146,25 @@ class UserTest extends TestCase
     /** @test */
     public function jockey_activities_relationship()
     {
-    	$jockey = factory(User::class)->states('jockey')->create();
+    	$jockey = factory(Jockey::class)->create();
     	// dd($jockey->activities());
         $this->assertEquals($jockey->activities()->count(), 0);
 
-        $activity1 = factory(Activity::class)->create();
+      $activity1 = factory(Activity::class)->create();
     	$activity2 = factory(Activity::class)->create();
     	$activityNotForJockey = factory(Activity::class)->create();
 
-		$activity1->addJockey($jockey);
-		$activity2->addJockey($jockey);
+  		$activity1->addJockey($jockey);
+  		$activity2->addJockey($jockey);
 
-		$jockeyActivities = $jockey->activities()->get();
+  		$jockeyActivities = $jockey->activities()->get();
 
-		$this->assertEquals($jockeyActivities->count(), 2);
+  		$this->assertEquals($jockeyActivities->count(), 2);
 
-		$jockeyActivities->assertContains($activity1);
-       	$jockeyActivities->assertContains($activity2);
+  		$jockeyActivities->assertContains($activity1);
+     	$jockeyActivities->assertContains($activity2);
 
-       	$jockeyActivities->assertNotContains($activityNotForJockey);
+     	$jockeyActivities->assertNotContains($activityNotForJockey);
     }
 
 

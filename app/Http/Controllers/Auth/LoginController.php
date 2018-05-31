@@ -60,7 +60,7 @@ class LoginController extends Controller
     protected function validationErrors()
     {
         return [
-            $this->username() . '.exists' => 'No account found, or your account is awaitng approval.'
+            $this->username() . '.exists' => 'No account found, or your account is awaiting approval.'
         ];
     }
 }

@@ -18,8 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('body');
             $table->boolean('read')->default(false);
-            $table->integer('notifiable_id')->unsigned();
-            $table->string('notifiable_type');
+            $table->integer('notifiable_id')->unsigned()->nullable();
+            $table->string('notifiable_type')->nullable();
             $table->timestamps();
 
             // Add polymorphic notifiable_type notifiable_id

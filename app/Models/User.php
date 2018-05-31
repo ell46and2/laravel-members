@@ -46,37 +46,32 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function coaches()  // could order alphabetically here ->orderBy('last_name', 'desc')
-    {
-        return $this->belongsToMany(User::class, 'coach_jockey', 'coach_id', 'jockey_id');
-    }
+    // public function activities()
+    // {
+    //     // if($this->isCoach()) {
+    //     //     return $this->hasMany(Activity::class, 'coach_id');
+    //     // }
 
-    public function jockeys() // could order alphabetically here ->orderBy('last_name', 'desc')
-    {
-        return $this->belongsToMany(User::class, 'coach_jockey', 'jockey_id', 'coach_id');
-    }
-
-    public function activities()
-    {
-        if($this->isCoach()) {
-            return $this->hasMany(Activity::class, 'coach_id');
-        }
-
-        if($this->isJockey()) {
-            return $this->belongsToMany(Activity::class, 'activity_jockey', 'jockey_id', 'activity_id');
-        }
-    }
+    //     if($this->isJockey()) {
+    //         return $this->belongsToMany(Activity::class, 'activity_jockey', 'jockey_id', 'activity_id');
+    //     }
+    // }
 
     public function notifications()
     {
         return $this->hasMany(Notification::class);
     }
 
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('read', false);
+    }
+
     /*
         Utilities
      */
     
-    public static function admin()
+    public static function admin() // Needs amending as can be more than one admin
     {
         return self::whereHas('role', function($q) {
             $q->where('name', 'admin');
@@ -86,16 +81,6 @@ class User extends Authenticatable
     public function fullName()
     {
         return "{$this->first_name} {$this->last_name}";
-    }
-
-    public function assignJockey(User $jockey)
-    {
-        $this->jockeys()->attach($jockey->id);
-    }
-
-    public function unassignJockey(User $jockey)
-    {
-        $this->jockeys()->detach($jockey->id);
     }
 
     public static function getAllCoaches()
@@ -115,31 +100,10 @@ class User extends Authenticatable
         return $this->role->name === 'coach';
     }
 
-    public static function createCoach($requestData)
-    {
-        $data = array_merge($requestData, [ 
-            'password' => uniqid(true),
-            'role_id' => Role::where('name', 'coach')->firstOrFail()->id,
-            'approved' => true,
-        ]);
-
-        return self::create($data);
-    }
-
     public function approve()
     {
         $this->update([
             'approved' => true
         ]);
-    }
-
-    public function upcomingActivitiesForJockey()
-    {
-        return $this->activities()->whereDate('end', '>', Carbon::now())->orderBy('end');
-    }
-
-    public function recentActivitiesForJockey()
-    {
-        return $this->activities()->whereDate('end', '<', Carbon::now())->orderBy('end', 'desc');
     }
 }

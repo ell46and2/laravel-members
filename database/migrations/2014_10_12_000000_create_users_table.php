@@ -28,6 +28,18 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            // Need to add fields: 
+            // - last_login
+            // - middle_name (nullable)
+            // - DOB
+            // County
+            // Country
+            // Telephone
+            // Twitter handle
+            // Known as (alias)
+            // Sex
+            // Jockey status ? - for jockeys that vacate from the system for a period of time.
+
             $table->foreign('role_id')->references('id')->on('roles');
         });
 

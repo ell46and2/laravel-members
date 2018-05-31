@@ -15,12 +15,12 @@ class Activity extends Model
 	*/
     public function jockeys()
     {
-       	return $this->belongsToMany(User::class, 'activity_jockey', 'activity_id', 'jockey_id');
+       	return $this->belongsToMany(Jockey::class, 'activity_jockey', 'activity_id', 'jockey_id');
     }
 
 	public function coach()
 	{
-		return $this->belongsTo(User::class, 'coach_id');
+		return $this->belongsTo(Coach::class, 'coach_id');
 	}
 
 	public function notifications()
@@ -32,14 +32,14 @@ class Activity extends Model
     /*
     	Utilities
     */
-    public function addJockey(User $jockey)
+    public function addJockey(Jockey $jockey)
     {
     	if(!$this->jockeys()->where('jockey_id', $jockey->id)->count()) {
     		$this->jockeys()->attach($jockey);
     	}	
     }
 
-    public function removeJockey(User $jockey)
+    public function removeJockey(Jockey $jockey)
     {
     	$this->jockeys()->detach($jockey);
     }
@@ -48,6 +48,6 @@ class Activity extends Model
     {
     	// look at replacing with sync() 
     	// As sync() will remove any jockeys that are not in the array.
-    	$this->jockeys()->attach($jockeyIds); 
+    	$this->jockeys()->sync($jockeyIds); 
     }
 }

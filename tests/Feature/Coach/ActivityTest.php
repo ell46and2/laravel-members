@@ -3,6 +3,8 @@
 namespace Tests\Feature\Coach;
 
 use App\Models\Activity;
+use App\Models\Coach;
+use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,8 +20,8 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_coach_can_create_an_activity()
     {
-        $coach = factory(User::class)->states('coach')->create();
-        $jockey = factory(User::class)->create();
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
 
         $response = $this->actingAs($coach)->post("/coach/activity", [
             'start' => Carbon::parse('2018-11-06 1:00pm'),
@@ -45,13 +47,20 @@ class ActivityTest extends TestCase
         	// Probably add notification creation to a queue - as can be for many jockeys
         	tap(Notification::first(), function($notification) use ($activity, $coach, $jockey) {
         		// dd($activity);
-        		$this->assertEquals($notification->notifiable_type, 'App\Models\Activity');
+        		$this->assertEquals($notification->notifiable_type, 'activity');
         		$this->assertEquals($notification->notifiable->id, $activity->id);
+                $this->assertEquals($notification->linkUrl(), "activity/{$activity->id}");
         		$this->assertEquals($notification->user->id, $jockey->id);
         		// the body contains the $coach's fullname()
         		$this->assertRegexp("/{$coach->fullName()}/", $notification->body);
         	});
         });
+    }
+
+    /** @test */
+    public function cannot_add_a_jockey_they_are_not_assigned_to_an_activity()
+    {
+        	
     }
 
     /** @test */
@@ -108,5 +117,27 @@ class ActivityTest extends TestCase
         	
     }
 
+    /** @test */
+    public function can_add_a_comment_for_an_individaul_jockey_to_an_activity_they_are_coach_for()
+    {
+            
+    }
 
+    /** @test */
+    public function cannot_add_a_comment_for_an_activity_they_are_not_coach_for()
+    {
+            
+    }
+
+    /** @test */
+    public function can_add_a_comment_for_all_jockeys_that_belong_to_an_activity()
+    {
+            
+    }
+
+    /** @test */
+    public function can_view_all_comments_for_an_activity_including_other_coaches()
+    {
+            
+    }
 }

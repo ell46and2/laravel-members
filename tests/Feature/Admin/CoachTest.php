@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Mail\Coach\Account\CoachCreatedEmail;
+use App\Models\Coach;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -31,7 +32,7 @@ class CoachTest extends TestCase
         	'email' => 'jane@example.com',
         ]);
 
-        tap(User::getAllCoaches()->first(), function($coach) use ($response) {
+        tap(Coach::first(), function($coach) use ($response) {
         	$response->assertStatus(302);
         	$response->assertRedirect("/admin/coaches/{$coach->id}");
 
@@ -52,5 +53,9 @@ class CoachTest extends TestCase
         		$mail->hasTo($coach->email);
         	});
         });
+
+        // Need to add creating a unique activation token, so that the coach can login straight from the activation email
+        // They will be logged in to a account - set password page.
+        // The page is only visible if the coach has an activation token, once the password has been set the activation token is removed.
     }
 }

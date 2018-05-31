@@ -13,7 +13,6 @@ use Faker\Generator as Faker;
 |
 */
 
-// Jockey user
 $factory->define(App\Models\User::class, function (Faker $faker) {
 	static $password;
 
@@ -27,6 +26,42 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+// Jockey user
+$factory->define(App\Models\Jockey::class, function (Faker $faker) {
+	static $password;
+
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'telephone' => $faker->phoneNumber,
+    	'street_address' => $faker->secondaryAddress,
+    	'city' => $faker->city,
+    	'postcode' => $faker->postcode,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+        'role_id' => 1, // jockey
+    ];
+});
+
+$factory->define(App\Models\Coach::class, function (Faker $faker) {
+	static $password;
+
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'telephone' => $faker->phoneNumber,
+    	'street_address' => $faker->secondaryAddress,
+    	'city' => $faker->city,
+    	'postcode' => $faker->postcode,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+        'role_id' => 2, // coach
+		'approved' => true
     ];
 });
 
@@ -50,7 +85,7 @@ $factory->state(App\Models\User::class, 'admin', function($faker) {
 	];
 });
 
-$factory->state(App\Models\User::class, 'approved', function($faker) {
+$factory->state(App\Models\Jockey::class, 'approved', function($faker) {
 	return [
 		'approved' => true
 	];

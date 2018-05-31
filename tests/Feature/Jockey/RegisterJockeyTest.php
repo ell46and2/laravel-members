@@ -94,5 +94,9 @@ class RegisterJockeyTest extends TestCase
         		$mail->hasTo($admin->email);
         	});
         });
+
+        // Add Country field
+        // Add t&C's, privacy Policy checkboxed
+        // Add see's a thank you message on registration
     }
 }

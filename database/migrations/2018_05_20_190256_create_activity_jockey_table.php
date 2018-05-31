@@ -18,6 +18,8 @@ class CreateActivityJockeyTable extends Migration
             $table->integer('jockey_id')->unsigned();
             $table->timestamps();
 
+            // Do we add individual coach feedback here?
+
             $table->foreign('activity_id')->references('id')->on('activities');
             $table->foreign('jockey_id')->references('id')->on('users');
 

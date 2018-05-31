@@ -14,7 +14,7 @@ class MessageTest extends TestCase
     /** @test */
     public function a_jockey_can_receive_a_message()
     {
-        	
+        // subject, body, from full name, date - as days ago
     }
 
     /** @test */

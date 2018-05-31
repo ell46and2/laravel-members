@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jockey;
 
+use App\Models\Jockey;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -17,7 +18,7 @@ class ProfileTest extends TestCase
     {
     	factory(User::class, 10)->create();
     	
-        $jockey = factory(User::class)->states('approved')->create([
+        $jockey = factory(Jockey::class)->states('approved')->create([
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
         	'telephone' => '01242 222333',	
@@ -37,7 +38,7 @@ class ProfileTest extends TestCase
     /** @test */
     public function a_jockey_can_view_the_edit_form_for_their_profile()
     {
-        $jockey = factory(User::class)->states('approved')->create([
+        $jockey = factory(Jockey::class)->states('approved')->create([
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
         	'telephone' => '01242 222333',	
@@ -57,7 +58,7 @@ class ProfileTest extends TestCase
     /** @test */
     public function a_jockey_can_edit_their_own_profile()
     {
-        $jockey = factory(User::class)->states('approved')->create([
+        $jockey = factory(Jockey::class)->states('approved')->create([
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
         	'telephone' => '01242 222333',	
