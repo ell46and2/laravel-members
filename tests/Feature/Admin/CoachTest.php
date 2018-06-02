@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Mail\Coach\Account\CoachCreatedEmail;
+use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -20,16 +21,20 @@ class CoachTest extends TestCase
     {
     	Mail::fake();
 
-     	$admin = factory(User::class)->states('admin')->create();
+     	$admin = factory(Admin::class)->create();
 
      	$response = $this->actingAs($admin)->post("/admin/coaches", [
         	'first_name' => 'Jane',
-        	'last_name' => 'Doe',
-        	'telephone' => '01242 222333',	
-        	'street_address' => '123 street',
-        	'city' => 'Cheltenham',
-        	'postcode' => 'GL50 1ST',
-        	'email' => 'jane@example.com',
+            'last_name' => 'Doe',
+            // 'date_of_birth' => '2000-11-06',
+            'gender' => 'female',   
+            'address_1' => '123 street',
+            'address_2' => 'Cheltenham',
+            'county' => 'Gloucestershire',
+            'country' => 'UK',
+            'postcode' => 'GL50 1ST',
+            'telephone' => '01242 222333',
+            'email' => 'jane@example.com',
         ]);
 
         tap(Coach::first(), function($coach) use ($response) {
@@ -39,8 +44,10 @@ class CoachTest extends TestCase
         	$this->assertEquals('Jane', $coach->first_name);
         	$this->assertEquals('Doe', $coach->last_name);
         	$this->assertEquals('01242 222333', $coach->telephone);
-        	$this->assertEquals('123 street', $coach->street_address);
-        	$this->assertEquals('Cheltenham', $coach->city);
+        	$this->assertEquals('123 street', $coach->address_1);
+        	$this->assertEquals('Cheltenham', $coach->address_2);
+            $this->assertEquals('Gloucestershire', $coach->county);
+            $this->assertEquals('UK', $coach->country);
         	$this->assertEquals('GL50 1ST', $coach->postcode);
         	$this->assertEquals('jane@example.com', $coach->email);
 

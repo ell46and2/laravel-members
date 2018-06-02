@@ -28,6 +28,6 @@ class SendToJockeyRegisteredEmail
      */
     public function handle(NewJockeyRegistered $event)
     {
-        Mail::to($event->user->email)->queue(new JockeyRegisteredEmail($event->user));
+        Mail::to($event->jockey->email)->queue(new JockeyRegisteredEmail($event->jockey));
     }
 }

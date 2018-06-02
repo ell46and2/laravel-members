@@ -23,6 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if($user = auth()->user()) {
+            // if($user->is_admin) {
+            //     return redirect()->route('admin.meets.index');
+            // }
+
+            // return redirect()->route('meets.index');
+            return view('home');
+        }
+
+        return redirect('/login');
     }
 }

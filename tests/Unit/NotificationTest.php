@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
+use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -17,7 +18,7 @@ class NotificationTest extends TestCase
     /** @test */
     public function can_get_all_unread_notifications()
     {
-    	$jockey = factory(User::class)->states('jockey')->create();
+    	$jockey = factory(Jockey::class)->create();
 
         $notification1 = factory(Notification::class)->create([
         	'user_id' => $jockey->id
@@ -46,7 +47,7 @@ class NotificationTest extends TestCase
     /** @test */
     public function can_be_marked_as_read() // read/dismissed
     {
-    	$jockey = factory(User::class)->states('jockey')->create();
+    	$jockey = factory(Jockey::class)->create();
 
         $notification = factory(Notification::class)->create([
         	'user_id' => $jockey->id
@@ -68,8 +69,8 @@ class NotificationTest extends TestCase
     /** @test */
     public function can_mark_all_unread_notifications_as_read() // by clicking 'Mark all as read'
     {
-        $jockey = factory(User::class)->states('jockey')->create();
-        $otherJockey = factory(User::class)->states('jockey')->create();
+        $jockey = factory(Jockey::class)->create();
+        $otherJockey = factory(Jockey::class)->create();
 
         $notification1 = factory(Notification::class)->create([
         	'user_id' => $jockey->id
@@ -99,7 +100,7 @@ class NotificationTest extends TestCase
     public function a_notification_can_be_attached_to_a_model() // i.e an activity
     {
         // Will have a view button
-        $jockey = factory(User::class)->states('jockey')->create();
+        $jockey = factory(Jockey::class)->create();
         $activity = factory(Activity::class)->create();
 
         $notification = $activity->notifications()->create([
@@ -120,7 +121,7 @@ class NotificationTest extends TestCase
     /** @test */
     public function on_clicking_view_will_redirect_to_the_appropriate_page_if_attached_to_a_model()
     {
-        $jockey = factory(User::class)->states('jockey')->create();
+        $jockey = factory(Jockey::class)->create();
         $activity = factory(Activity::class)->create();
 
         $notificationWithModel = $activity->notifications()->create([

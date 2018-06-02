@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\Jockey\Account\NewJockeyRegistered;
 use App\Http\Controllers\Controller;
+use App\Models\Jockey;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -52,6 +54,18 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'string|max:255',
+            'alias' => 'string|max:255',
+            'date_of_birth' => 'required|min:10|date_format:"d/m/Y"',
+            'gender' => 'required|in:male,female',
+            'address_1' => 'required|string|max:255',
+            'address_2' => 'string|max:255',
+            'county' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'postcode' => 'required|string|max:255',
+            'telephone' => 'required|string|max:255',
+            'twitter_handle' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -65,13 +79,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Jockey::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'telephone' => $data['telephone'],
-            'street_address' => $data['street_address'],
-            'city' => $data['city'],
+            'middle_name' => $data['middle_name'],
+            'alias' => $data['alias'],
+            'date_of_birth' => $data['date_of_birth'],
+            'gender' => $data['gender'],
+            'address_1' => $data['address_1'],
+            'address_2' => $data['address_2'],
+            'county' => $data['county'],
+            'country' => $data['country'],
             'postcode' => $data['postcode'],
+            'telephone' => $data['telephone'],
+            'twitter_handle' => $data['twitter_handle'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -79,12 +100,12 @@ class RegisterController extends Controller
 
     /*
         Overwrite the registered method from the RegistersUsers trait to
-        stop automatic login when user registers.
+        stop automatic login when jockey registers.
      */
-    protected function registered(Request $request, $user)
+    protected function registered(Request $request, $jockey)
     {
         // send activation email
-        event(new NewJockeyRegistered($user));
+        event(new NewJockeyRegistered($jockey));
 
         $this->guard()->logout();
 

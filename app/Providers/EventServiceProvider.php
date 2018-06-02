@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\Coach\Activity\NewActivityCreated' => [
             'App\Listeners\Coach\Activity\NotifyJockeysOfNewActivity',
+        ],
+        'App\Events\Admin\RacingExcellence\NewRacingExcellenceCreated' => [
+            'App\Listeners\Admin\RacingExcellence\NotifyCoachOfNewRacingExcellence',
+            'App\Listeners\Admin\RacingExcellence\NotifyJockeysOfNewRacingExcellence'
         ]
     ];
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Jockey;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Jockey\UpdateJockeyFormRequest;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -21,18 +23,21 @@ class ProfileController extends Controller
     	return view('jockey.profile.edit', compact('jockey'));
     }
 
-    public function update()
+    public function update(UpdateJockeyFormRequest $request)
     {
     	$jockey = auth()->user();
 
-    	$jockey->update(request()->only([
-    		'first_name',
-    		'last_name', 
-    		'telephone', 
-    		'street_address', 
-    		'city', 
-    		'postcode', 
-    		'email'
+    	$jockey->update($request->only([
+            'middle_name',
+            'alias',
+            'address_1',
+            'address_2',
+            'county',
+            'country',
+            'postcode',
+            'telephone',
+            'twitter_handle',
+            'email',
     	]));
 
     	return redirect()->route('jockey.profile.index');

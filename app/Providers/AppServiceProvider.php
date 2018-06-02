@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Activity;
+use App\Models\RacingExcellence;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
         Relation::morphMap([
             'activity' => Activity::class,
+            'racing-excellence' => RacingExcellence::class
         ]);
     }
 

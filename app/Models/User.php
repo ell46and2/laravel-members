@@ -16,7 +16,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'email', 'password', 'first_name', 'last_name', 'telephone', 'street_address', 'city', 'postcode', 'role_id', 'approved'
+        'role_id',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'alias',
+        'date_of_birth',
+        'gender',
+        'address_1',
+        'address_2',
+        'county',
+        'country',
+        'postcode',
+        'telephone',
+        'twitter_handle',
+        'email',
+        'password',
+        'approved',
     ];
 
     /**
@@ -37,6 +53,8 @@ class User extends Authenticatable
         'role'
     ];
 
+    protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
+
     /*
         Relationships
      */
@@ -46,20 +64,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    // public function activities()
-    // {
-    //     // if($this->isCoach()) {
-    //     //     return $this->hasMany(Activity::class, 'coach_id');
-    //     // }
-
-    //     if($this->isJockey()) {
-    //         return $this->belongsToMany(Activity::class, 'activity_jockey', 'jockey_id', 'activity_id');
-    //     }
-    // }
-
     public function notifications()
     {
-        return $this->hasMany(Notification::class);
+        return $this->hasMany(Notification::class, 'user_id');
     }
 
     public function unreadNotifications()
@@ -71,11 +78,17 @@ class User extends Authenticatable
         Utilities
      */
     
-    public static function admin() // Needs amending as can be more than one admin
+    // public static function admin() // Needs amending as can be more than one admin
+    // {
+    //     return self::whereHas('role', function($q) {
+    //         $q->where('name', 'admin');
+    //     })->firstOrFail();
+    // }
+    
+    // Convert date of birth to Carbon when saving to db.
+    public function setDateOfBirthAttribute($value)
     {
-        return self::whereHas('role', function($q) {
-            $q->where('name', 'admin');
-        })->firstOrFail();
+        $this->attributes['date_of_birth'] = Carbon::parse($value);
     }
 
     public function fullName()
@@ -83,11 +96,16 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public static function getAllCoaches()
+    // public static function getAllCoaches()
+    // {
+    //     return self::whereHas('role', function($q) {
+    //         $q->where('name', 'coach');
+    //     })->get();
+    // }
+ 
+    public function isAdmin()
     {
-        return self::whereHas('role', function($q) {
-            $q->where('name', 'coach');
-        })->get();
+        return $this->role->name === 'admin';
     }
 
     public function isJockey()

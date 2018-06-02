@@ -1,7 +1,7 @@
 @component('mail::message')
 # Thank you for registering
 
-Dear {{ $user->first_name }} {{ $user->last_name}}
+Dear {{ $jockey->first_name }} {{ $jockey->last_name}}
 
 @component('mail::button', ['url' => ''])
 Button Text

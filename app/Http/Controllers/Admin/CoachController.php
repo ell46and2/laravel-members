@@ -13,11 +13,14 @@ class CoachController extends Controller
     {
     	$coach = Coach::createNew(request()->only([
     		'first_name',
-    		'last_name', 
-    		'telephone', 
-    		'street_address', 
-    		'city', 
-    		'postcode', 
+    		'last_name',
+            'gender', 		
+    		'address_1', 
+    		'address_2',
+            'county',
+            'country', 
+    		'postcode',
+            'telephone', 
     		'email',
     	]));
 

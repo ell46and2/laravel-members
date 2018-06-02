@@ -12,7 +12,7 @@ class RacingExcellenceTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function can_create_a_racing_excellence()
+    public function can_create_add_results_to_a_racing_excellence()
     {
         	
     }

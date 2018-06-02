@@ -20,8 +20,8 @@ class CreateActivitiesTable extends Migration
             // Does this need to be polymorphic for activity types, racing excellence, away days etc?
             // $table->integer('activity_type_id')->unsigned(); 
               
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->date('start');
+            $table->date('end');
             $table->integer('duration'); // in minutes
             $table->string('location')->nullable();
             $table->timestamps();

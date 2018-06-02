@@ -1,7 +1,7 @@
 @component('mail::message')
 # New Jockey Registration
 
-Jockey {{ $user->first_name }} {{ $user->last_name}} has registered
+Jockey {{ $jockey->first_name }} {{ $jockey->last_name}} has registered
 
 @component('mail::button', ['url' => ''])
 Button Text

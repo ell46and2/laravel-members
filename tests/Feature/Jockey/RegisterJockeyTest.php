@@ -4,8 +4,11 @@ namespace Tests\Feature\Jockey;
 
 use App\Mail\Admin\Account\ToAdminJockeyRegisteredEmail;
 use App\Mail\Jockey\Account\JockeyRegisteredEmail;
+use App\Models\Admin;
+use App\Models\Jockey;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -24,8 +27,10 @@ class RegisterJockeyTest extends TestCase
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
         	'telephone' => '01242 222333',	
-        	'street_address' => '123 street',
-        	'city' => 'Cheltenham',
+        	'address_1' => '123 street',
+            'address_2' => 'Something Avenue',
+        	'county' => 'Cheltenham',
+            'country' => 'UK',
         	'postcode' => 'GL50 1ST',
         	'email' => 'jane@example.com',
         	'password' => 'super-secret-password',
@@ -38,7 +43,7 @@ class RegisterJockeyTest extends TestCase
     {
     	Mail::fake();
 
-    	$admin = factory(User::class)->states('admin')->create();
+    	$admin = factory(Admin::class)->create();
 
     	// create jockey user
     	// send email to jockey
@@ -48,49 +53,67 @@ class RegisterJockeyTest extends TestCase
         $response = $this->post('/register', [
         	'first_name' => 'Jane',
         	'last_name' => 'Doe',
-        	'telephone' => '01242 222333',	
-        	'street_address' => '123 street',
-        	'city' => 'Cheltenham',
+            'middle_name' => 'Lee',
+            'alias' => 'Janey',
+            'date_of_birth' => '11/06/2000',
+            'gender' => 'female',	
+        	'address_1' => '123 street',
+            'address_2' => 'Cheltenham',
+        	'county' => 'Gloucestershire',
+            'country' => 'UK',
         	'postcode' => 'GL50 1ST',
+            'telephone' => '01242 222333',
+            'twitter_handle' => 'jdoe',
         	'email' => 'jane@example.com',
         	'password' => 'super-secret-password',
         	'password_confirmation' => 'super-secret-password',
         ]);
 
-        tap(User::find(2), function($user) use ($response, $admin) {
+        // dd(Jockey::first());
+
+        tap(Jockey::firstOrFail(), function($jockey) use ($response, $admin) {
         	$response->assertStatus(302);
         	//redirect back (with registration success session variable) and display 'thank you message'
         	$response->assertRedirect('/register');
         	$response->assertSessionHas('registered', true);
 
-        	// check that a user is not logged in
+        	// check that a jockey is not logged in
         	$this->assertFalse(Auth::check());
 
-        	$this->assertEquals('Jane', $user->first_name);
-        	$this->assertEquals('Doe', $user->last_name);
-        	$this->assertEquals('01242 222333', $user->telephone);
-        	$this->assertEquals('123 street', $user->street_address);
-        	$this->assertEquals('Cheltenham', $user->city);
-        	$this->assertEquals('GL50 1ST', $user->postcode);
-        	$this->assertEquals('jane@example.com', $user->email);
+            // dd($jockey);
 
-        	// user has the role 'jockey'
-        	$this->assertEquals('jockey', $user->role->name);
+        	$this->assertEquals('Jane', $jockey->first_name);
+        	$this->assertEquals('Doe', $jockey->last_name);
+            $this->assertEquals('Lee', $jockey->middle_name);
+            $this->assertEquals('Janey', $jockey->alias);
+            $this->assertEquals(Carbon::parse('2000-11-06'), $jockey->date_of_birth);
+            $this->assertEquals('female', $jockey->gender);   	
+        	$this->assertEquals('123 street', $jockey->address_1);
+        	$this->assertEquals('Cheltenham', $jockey->address_2);
+            $this->assertEquals('Gloucestershire', $jockey->county);
+            $this->assertEquals('UK', $jockey->country);
+        	$this->assertEquals('GL50 1ST', $jockey->postcode);
+            $this->assertEquals('01242 222333', $jockey->telephone);
+            $this->assertEquals('jdoe', $jockey->twitter_handle);
+        	$this->assertEquals('jane@example.com', $jockey->email);
+
+        	// jockey has the role 'jockey'
+        	$this->assertEquals('jockey', $jockey->role->name);
 
         	// jockey is not approved when they register
-        	$this->assertFalse($user->approved);
+        	$this->assertFalse($jockey->approved);
 
         	// Assert that registered email was queued to send to jockey
         	Mail::assertQueued(JockeyRegisteredEmail::class, 1);
-        	Mail::assertQueued(JockeyRegisteredEmail::class, function($mail) use ($user) {
-        		return $mail->user->id == $user->id &&
-        		$mail->hasTo($user->email);
+        	Mail::assertQueued(JockeyRegisteredEmail::class, function($mail) use ($jockey) {
+        		return $mail->jockey->id == $jockey->id &&
+        		$mail->hasTo($jockey->email);
         	});
 
         	// Assert that new jockey registered email was queued to send to admin
         	Mail::assertQueued(ToAdminJockeyRegisteredEmail::class, 1);
-        	Mail::assertQueued(ToAdminJockeyRegisteredEmail::class, function($mail) use ($user, $admin) {
-        		return $mail->user->id == $user->id &&
+        	Mail::assertQueued(ToAdminJockeyRegisteredEmail::class, function($mail) use ($jockey, $admin) {
+        		return $mail->jockey->id == $jockey->id &&
         		$mail->hasTo($admin->email);
         	});
         });

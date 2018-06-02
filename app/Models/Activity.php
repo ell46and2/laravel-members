@@ -28,6 +28,10 @@ class Activity extends Model
     	return $this->morphMany(Notification::class, 'notifiable');
     }
     
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     /*
     	Utilities

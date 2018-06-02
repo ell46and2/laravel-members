@@ -4,7 +4,7 @@ namespace App\Listeners\Admin\Account;
 
 use App\Events\Jockey\Account\NewJockeyRegistered;
 use App\Mail\Admin\Account\ToAdminJockeyRegisteredEmail;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -29,8 +29,8 @@ class SendToAdminJockeyRegisteredEmail
      */
     public function handle(NewJockeyRegistered $event)
     {
-        $admin = User::admin();
+        $admin = Admin::firstOrFail();
 
-        Mail::to($admin->email)->queue(new ToAdminJockeyRegisteredEmail($event->user));
+        Mail::to($admin->email)->queue(new ToAdminJockeyRegisteredEmail($event->jockey));
     }
 }

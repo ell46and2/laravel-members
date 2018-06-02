@@ -15,12 +15,15 @@ class CreateRacingExcellencesTable extends Migration
     {
         Schema::create('racing_excellences', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('coach_id')->unsigned();
             $table->string('location')->nullable();
-            // $table->
-            // $table->
-            // $table->
+            $table->timestamp('start');
+            // $table->timestamp('end');
+            // $table->integer('duration'); // in minutes
             // $table->
             $table->timestamps();
+
+            $table->foreign('coach_id')->references('id')->on('users');
         });
     }
 

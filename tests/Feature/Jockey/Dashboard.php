@@ -12,7 +12,7 @@ class ActivityTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function a_jockey_can_view_their_next_upcoming_activities_with_a_max_of_5()
+    public function a_jockey_can_view_their_next_upcoming_activities_with_a_max_of_10()
     {
         // with id, type, date, time, location
     }
@@ -24,7 +24,7 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function a_jockey_can_view_their_recent_activities_with_a_max_of_5()
+    public function a_jockey_can_view_their_recent_activities_with_a_max_of_10()
     {
         // with id, type, date, time, location
     }

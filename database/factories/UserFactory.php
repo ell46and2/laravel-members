@@ -19,10 +19,13 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'gender' => 'male',
+        'address_1' => $faker->secondaryAddress,
+        'address_2' => $faker->streetAddress,
+        'county' => $faker->city,
+        'country' => $faker->country,
+        'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
-    	'street_address' => $faker->secondaryAddress,
-    	'city' => $faker->city,
-    	'postcode' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -36,10 +39,13 @@ $factory->define(App\Models\Jockey::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'gender' => 'male',
+        'address_1' => $faker->secondaryAddress,
+        'address_2' => $faker->streetAddress,
+        'county' => $faker->city,
+        'country' => $faker->country,
+        'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
-    	'street_address' => $faker->secondaryAddress,
-    	'city' => $faker->city,
-    	'postcode' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -53,10 +59,13 @@ $factory->define(App\Models\Coach::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'gender' => 'male',
+        'address_1' => $faker->secondaryAddress,
+        'address_2' => $faker->streetAddress,
+        'county' => $faker->city,
+        'country' => $faker->country,
+        'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
-    	'street_address' => $faker->secondaryAddress,
-    	'city' => $faker->city,
-    	'postcode' => $faker->postcode,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
@@ -65,25 +74,46 @@ $factory->define(App\Models\Coach::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\Models\User::class, 'jockey', function($faker) {
-	return [
-		'role_id' => 1, // jockey
-	];
+$factory->define(App\Models\Admin::class, function (Faker $faker) {
+    static $password;
+
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'gender' => 'male',
+        'address_1' => $faker->secondaryAddress,
+        'address_2' => $faker->streetAddress,
+        'county' => $faker->city,
+        'country' => $faker->country,
+        'postcode' => $faker->postcode,
+        'telephone' => $faker->phoneNumber,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+        'role_id' => 3, // coach
+        'approved' => true
+    ];
 });
 
-$factory->state(App\Models\User::class, 'coach', function($faker) {
-	return [
-		'role_id' => 2, // coach
-		'approved' => true
-	];
-});
+// $factory->state(App\Models\User::class, 'jockey', function($faker) {
+// 	return [
+// 		'role_id' => 1, // jockey
+// 	];
+// });
 
-$factory->state(App\Models\User::class, 'admin', function($faker) {
-	return [
-		'role_id' => 3, // admin
-		'approved' => true
-	];
-});
+// $factory->state(App\Models\User::class, 'coach', function($faker) {
+// 	return [
+// 		'role_id' => 2, // coach
+// 		'approved' => true
+// 	];
+// });
+
+// $factory->state(App\Models\User::class, 'admin', function($faker) {
+// 	return [
+// 		'role_id' => 3, // admin
+// 		'approved' => true
+// 	];
+// });
 
 $factory->state(App\Models\Jockey::class, 'approved', function($faker) {
 	return [

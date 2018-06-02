@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
+use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\Jockey;
 use App\Models\User;
@@ -15,13 +16,14 @@ class UserTest extends TestCase
 	use DatabaseMigrations;
 
     /** @test */
-    public function can_get_the_admin_user()
+    public function can_get_the_admin_users()
     {
-    	factory(User::class, 10)->create();
+    	factory(Jockey::class, 5)->create();
+      factory(Coach::class, 5)->create();
 
-       	$adminUser = factory(User::class)->states('admin')->create();
+      $adminUser = factory(Admin::class)->create();
 
-       	$this->assertEquals($adminUser->id, User::admin()->id);
+      $this->assertEquals($adminUser->id, Admin::first()->id);
     }
 
     /** @test */
@@ -46,7 +48,7 @@ class UserTest extends TestCase
     	$coach2 = factory(Coach::class)->create();
     	$coach3 = factory(Coach::class)->create();
     	$notJockeysCoach = factory(Coach::class)->create();
-    	$adminUser = factory(User::class)->states('admin')->create();
+    	$adminUser = factory(Admin::class)->create();
 
     	$this->assertEquals($jockey->coaches()->count(), 0);
 
@@ -102,7 +104,7 @@ class UserTest extends TestCase
         $jockey1 = factory(User::class)->create();
        	$jockey2 = factory(User::class)->create();
 
-       	$admin = factory(User::class)->states('admin')->create();
+       	$admin = factory(Admin::class)->create();
 
        	$coaches = Coach::get();
 

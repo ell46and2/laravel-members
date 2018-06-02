@@ -11,19 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 // Jockey
 Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.index');
 Route::get('/profile/edit', 'Jockey\ProfileController@edit')->name('jockey.profile.edit');
-Route::patch('/profile/edit', 'Jockey\ProfileController@update')->name('jockey.profile.update');
+Route::put('/profile/edit', 'Jockey\ProfileController@update')->name('jockey.profile.update');
+
+Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jockey.activity.show');
+
+// Comment
+Route::post('/activity/{activity}/comment', 'Comment\CommentController@store')->name('comment.store');
 
 
 // Coach
@@ -34,3 +39,5 @@ Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name(
 // Admin
 Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.store');
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
+
+Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');

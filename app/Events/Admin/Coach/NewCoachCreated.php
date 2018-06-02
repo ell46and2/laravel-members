@@ -3,7 +3,7 @@
 namespace App\Events\Admin\Coach;
 
 
-use App\Models\User;
+use App\Models\Coach;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -19,7 +19,7 @@ class NewCoachCreated
      *
      * @return void
      */
-    public function __construct(User $coach)
+    public function __construct(Coach $coach)
     {
         $this->coach = $coach;
     }
