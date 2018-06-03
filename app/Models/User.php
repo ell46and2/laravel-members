@@ -33,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'approved',
+        'avatar_path',
     ];
 
     /**
@@ -123,5 +124,14 @@ class User extends Authenticatable
         $this->update([
             'approved' => true
         ]);
+    }
+
+    public function getAvatar()
+    {
+        if (!$this->avatar_filename) {
+            return config('jcp.buckets.avatars') . 'default_avatar.png';
+        }
+
+        return config('jcp.buckets.avatars') . $this->avatar_filename;
     }
 }

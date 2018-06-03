@@ -27,15 +27,15 @@ class UpdateJockeyFormRequest extends FormRequest
         $jockeyId = auth()->user()->id;
 
         return [
-            'middle_name' => 'string|max:255',
-            'alias' => 'string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'alias' => 'nullable|string|max:255',
             'address_1' => 'required|string|max:255',
-            'address_2' => 'string|max:255',
+            'address_2' => 'nullable|string|max:255',
             'county' => 'required|string|max:255',
             'country' => 'required|string|max:255',
             'postcode' => 'required|string|max:255',
             'telephone' => 'required|string|max:255',
-            'twitter_handle' => 'string|max:255',
+            'twitter_handle' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $jockeyId,
         ];
     }

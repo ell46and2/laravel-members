@@ -1,0 +1,1 @@
+<img src="{{ $jockey->getAvatar() }}" alt="">

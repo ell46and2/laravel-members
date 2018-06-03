@@ -13,7 +13,11 @@
                 <div class="card-header">Edit Profile</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('jockey.profile.update') }}">
+                    <form 
+                        method="POST" 
+                        action="{{ route('jockey.profile.update') }}"
+                        enctype="multipart/form-data"
+                    >
                         @csrf
 
                         {{ method_field('PUT') }} 
@@ -103,6 +107,13 @@
                             'errors' => $errors,
                             'value' => $jockey->email
                         ])
+
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="avatar_image">Avatar image</label>
+                            <div class="col-md-6">
+                                <input class="form-control" type="file" name="avatar_image" id="avatar_image">  
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

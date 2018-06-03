@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('approved')->default(false);
+            $table->string('avatar_filename')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

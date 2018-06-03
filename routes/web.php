@@ -40,4 +40,7 @@ Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name(
 Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.store');
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
 
+Route::post('/admin/jockeys/{jockey}/approve', 'Admin\JockeyController@approve')->name('admin.jockey.approve');
+Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('admin.jockeys.pending');
+
 Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');

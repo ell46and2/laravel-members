@@ -65,4 +65,13 @@ class CoachTest extends TestCase
         // They will be logged in to a account - set password page.
         // The page is only visible if the coach has an activation token, once the password has been set the activation token is removed.
     }
+
+    /** @test */
+    public function only_admin_users_can_create_a_coach()
+    {
+         // not jockey
+         // not coach
+         // not jcp
+         // not guest   
+    }
 }

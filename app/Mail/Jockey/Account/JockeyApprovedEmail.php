@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JockeyRegisteredEmail extends Mailable
+class JockeyApprovedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,6 +31,6 @@ class JockeyRegisteredEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Jockey Coaching Program registration')->markdown('emails.jockey.account.registered');
+        return $this->subject('Account approved')->markdown('emails.jockey.account.jockey-approved');
     }
 }
