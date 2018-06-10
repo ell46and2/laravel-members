@@ -13,6 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin',
+        ],   
         'App\Events\Jockey\Account\NewJockeyRegistered' => [
             'App\Listeners\Jockey\Account\SendToJockeyRegisteredEmail',
             'App\Listeners\Admin\Account\SendToAdminJockeyRegisteredEmail',

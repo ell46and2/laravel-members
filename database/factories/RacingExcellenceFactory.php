@@ -20,3 +20,15 @@ $factory->define(App\Models\RacingExcellenceDivision::class, function (Faker $fa
 		},
     ];
 });
+
+$factory->state(App\Models\RacingExcellence::class, 'upcoming', function($faker) {
+	return [
+		'start' => Carbon::now()->addMinutes(120),
+	];
+});
+
+$factory->state(App\Models\RacingExcellence::class, 'recent', function($faker) {
+	return [
+		'start' => Carbon::now()->subMinutes(120),
+	];
+});

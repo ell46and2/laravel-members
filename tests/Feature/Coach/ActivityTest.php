@@ -24,7 +24,9 @@ class ActivityTest extends TestCase
         $jockey = factory(Jockey::class)->create();
 
         $response = $this->actingAs($coach)->post("/coach/activity", [
-            'start' => Carbon::parse('2018-11-06 1:00pm'),
+            // 'start' => Carbon::parse('2018-11-06 1:00pm'),
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
             'duration' => 30,
             'location' => 'Cheltenham racecourse',
             'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
@@ -38,9 +40,9 @@ class ActivityTest extends TestCase
         	$this->assertEquals($activity->jockeys->count(), 1);
         	$this->assertTrue($activity->jockeys->first()->is($jockey));
 
-        	$this->assertEquals(Carbon::parse('2018-11-06 1:00pm'), $activity->start);
+        	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
         	$this->assertEquals(30, $activity->duration);
-        	$this->assertEquals(Carbon::parse('2018-11-06 1:00pm')->addMinutes(30), $activity->end);
+        	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
         	$this->assertEquals('Cheltenham racecourse', $activity->location);
 
         	// Need to test 'new activity' notification is created for $jockey

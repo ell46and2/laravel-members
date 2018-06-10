@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\Jockey\Account\NewJockeyRegistered;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use App\Models\County;
 use App\Models\Jockey;
+use App\Models\Nationality;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -45,6 +48,20 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $countries = Country::all();
+        $counties = County::all();
+        $nationalities = Nationality::all();
+
+        return view('auth.register', compact('countries', 'counties', 'nationalities'));
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -61,8 +78,9 @@ class RegisterController extends Controller
             'gender' => 'required|in:male,female',
             'address_1' => 'required|string|max:255',
             'address_2' => 'nullable|string|max:255',
-            'county' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
+            'county_id' => 'required|exists:counties,id',
+            'country_id' => 'required|exists:countries,id',
+            'nationality_id' => 'required|exists:nationalities,id',
             'postcode' => 'required|string|max:255',
             'telephone' => 'required|string|max:255',
             'twitter_handle' => 'nullable|string|max:255',
@@ -88,8 +106,9 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'address_1' => $data['address_1'],
             'address_2' => $data['address_2'],
-            'county' => $data['county'],
-            'country' => $data['country'],
+            'county_id' => $data['county_id'],
+            'country_id' => $data['country_id'],
+            'nationality_id' => $data['nationality_id'],
             'postcode' => $data['postcode'],
             'telephone' => $data['telephone'],
             'twitter_handle' => $data['twitter_handle'],

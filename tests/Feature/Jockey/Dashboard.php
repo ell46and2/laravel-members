@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jockey;
 
+use App\Models\Jockey;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -15,6 +16,7 @@ class ActivityTest extends TestCase
     public function a_jockey_can_view_their_next_upcoming_activities_with_a_max_of_10()
     {
         // with id, type, date, time, location
+        
     }
 
     /** @test */
@@ -38,7 +40,7 @@ class ActivityTest extends TestCase
     /** @test */
     public function can_see_total_number_of_hours_training_in_current_month()  // check its current month
     {
-            
+
     }
 
     /** @test */

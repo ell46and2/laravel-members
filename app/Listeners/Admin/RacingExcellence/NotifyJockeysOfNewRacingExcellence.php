@@ -26,13 +26,13 @@ class NotifyJockeysOfNewRacingExcellence
      */
     public function handle(NewRacingExcellenceCreated $event)
     {
-        $jockeys = $event->racingExcellence->jockeys;
+        $jockeyParticipants = $event->racingExcellence->jockeys;
 
-        $body = "You have a new Racing Excellence on {$event->racingExcellence->start->format('l jS \\of F Y h:i A')} with {$event->racingExcellence->coach->fullName()}";
+        $body = "You have a new Racing Excellence on {$event->racingExcellence->start->format('l jS \\of F Y h:i A')} with {$event->racingExcellence->coach->full_name}";
 
-        $jockeys->each(function($jockey) use ($body, $event) {
+        $jockeyParticipants->each(function($jockeyParticipant) use ($body, $event) {
             $event->racingExcellence->notifications()->create([
-                'user_id' => $jockey->jockey_id,
+                'user_id' => $jockeyParticipant->jockey_id,
                 'body' => $body
             ]);
         });

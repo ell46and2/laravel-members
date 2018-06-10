@@ -32,8 +32,9 @@ class RegisterJockeyTest extends TestCase
             'gender' => 'female',   
             'address_1' => '123 street',
             'address_2' => 'Cheltenham',
-            'county' => 'Gloucestershire',
-            'country' => 'UK',
+            'county_id' => 1,
+            'country_id' => 1,
+            'nationality_id' => 1,
             'postcode' => 'GL50 1ST',
             'telephone' => '01242 222333',
             'twitter_handle' => 'jdoe',
@@ -64,8 +65,9 @@ class RegisterJockeyTest extends TestCase
             'gender' => 'female',	
         	'address_1' => '123 street',
             'address_2' => 'Cheltenham',
-        	'county' => 'Gloucestershire',
-            'country' => 'UK',
+        	'county_id' => 1,
+            'country_id' => 1,
+            'nationality_id' => 1,
         	'postcode' => 'GL50 1ST',
             'telephone' => '01242 222333',
             'twitter_handle' => 'jdoe',
@@ -74,7 +76,7 @@ class RegisterJockeyTest extends TestCase
         	'password_confirmation' => 'super-secret-password',
         ]);
 
-        // dd(Jockey::first());
+        // dd(Jockey::first()->role);
 
         tap(Jockey::firstOrFail(), function($jockey) use ($response, $admin) {
         	$response->assertStatus(302);
@@ -95,8 +97,9 @@ class RegisterJockeyTest extends TestCase
             $this->assertEquals('female', $jockey->gender);   	
         	$this->assertEquals('123 street', $jockey->address_1);
         	$this->assertEquals('Cheltenham', $jockey->address_2);
-            $this->assertEquals('Gloucestershire', $jockey->county);
-            $this->assertEquals('UK', $jockey->country);
+            $this->assertEquals(1, $jockey->county_id);
+            $this->assertEquals(1, $jockey->country_id);
+            $this->assertEquals(1, $jockey->nationality_id);
         	$this->assertEquals('GL50 1ST', $jockey->postcode);
             $this->assertEquals('01242 222333', $jockey->telephone);
             $this->assertEquals('jdoe', $jockey->twitter_handle);
@@ -259,12 +262,12 @@ class RegisterJockeyTest extends TestCase
     public function county_is_required()
     {
         $response = $this->from('/register')->post('/register', $this->validParams([
-            'county' => ''
+            'county_id' => ''
         ]));
 
         $response->assertStatus(302);
         $response->assertRedirect('/register');
-        $response->assertSessionHasErrors('county');
+        $response->assertSessionHasErrors('county_id');
         $this->assertEquals(0, Jockey::count());
     }
 
@@ -272,12 +275,25 @@ class RegisterJockeyTest extends TestCase
     public function country_is_required()
     {
         $response = $this->from('/register')->post('/register', $this->validParams([
-            'country' => ''
+            'country_id' => ''
         ]));
 
         $response->assertStatus(302);
         $response->assertRedirect('/register');
-        $response->assertSessionHasErrors('country');
+        $response->assertSessionHasErrors('country_id');
+        $this->assertEquals(0, Jockey::count());
+    }
+
+    /** @test */
+    public function nationality_is_required()
+    {
+        $response = $this->from('/register')->post('/register', $this->validParams([
+            'nationality_id' => ''
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/register');
+        $response->assertSessionHasErrors('nationality_id');
         $this->assertEquals(0, Jockey::count());
     }
 

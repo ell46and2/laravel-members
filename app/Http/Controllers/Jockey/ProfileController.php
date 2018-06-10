@@ -26,17 +26,16 @@ class ProfileController extends Controller
 
     public function update(UpdateJockeyFormRequest $request)
     {
-    	$jockey = auth()->user();
-
-        // dd($request->file('avatar_image'));
+    	$jockey = auth()->user(); // check is role jockey?
 
     	$jockey->update($request->only([
             'middle_name',
             'alias',
             'address_1',
             'address_2',
-            'county',
-            'country',
+            'county_id',
+            'country_id',
+            'nationality_id',
             'postcode',
             'telephone',
             'twitter_handle',

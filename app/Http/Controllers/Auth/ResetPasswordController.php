@@ -41,12 +41,17 @@ class ResetPasswordController extends Controller
         overwrite resetPassword method from ResetsPasswords trait
         to stop unapproved users from getting automatically
         signed in when they reset their passwords.
+
+        We'll also set coaches access_token to null when they reset their passwords,
+        just incase they set their passwords via this route.
      */
     protected function resetPassword($user, $password)
     {
         $user->password = Hash::make($password);
 
         $user->setRememberToken(str_random(60));
+
+        $user->access_token = null;
 
         $user->save();
 

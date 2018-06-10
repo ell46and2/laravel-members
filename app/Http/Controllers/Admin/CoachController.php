@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class CoachController extends Controller
 {
-    public function store()
+    public function store() // need to add FormREquest validation
     {
     	$coach = Coach::createNew(request()->only([
     		'first_name',
@@ -17,8 +17,9 @@ class CoachController extends Controller
             'gender', 		
     		'address_1', 
     		'address_2',
-            'county',
-            'country', 
+            'county_id',
+            'country_id',
+            'nationality_id',
     		'postcode',
             'telephone', 
     		'email',

@@ -15,7 +15,7 @@ class CreateRacingExcellencesTable extends Migration
     {
         Schema::create('racing_excellences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('coach_id')->unsigned();
+            $table->integer('coach_id')->unsigned()->index();
             $table->string('location')->nullable();
             $table->timestamp('start');
             // $table->timestamp('end');
@@ -24,6 +24,9 @@ class CreateRacingExcellencesTable extends Migration
             $table->timestamps();
 
             $table->foreign('coach_id')->references('id')->on('users');
+
+            // change location to drop down - needs own table racing_excellence_locations
+            // Need a series drop down - needs own table racing_excellence_series
         });
     }
 

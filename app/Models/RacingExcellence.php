@@ -15,7 +15,14 @@ class RacingExcellence extends Model
 	*/
     public function participants()
     {
-        return $this->hasManyThrough(RacingExcellenceParticipant::class, RacingExcellenceDivision::class);
+        return $this->hasManyThrough(
+        	RacingExcellenceParticipant::class, 
+        	RacingExcellenceDivision::class,
+        	'racing_excellence_id',
+        	'division_id',
+        	'id',
+        	'id'
+        );
     }
 
     public function jockeys()

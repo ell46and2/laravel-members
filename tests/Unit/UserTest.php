@@ -5,8 +5,11 @@ namespace Tests\Unit;
 use App\Models\Activity;
 use App\Models\Admin;
 use App\Models\Coach;
+use App\Models\Country;
 use App\Models\Jockey;
 use App\Models\User;
+use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -34,7 +37,7 @@ class UserTest extends TestCase
         	'last_name' => 'Doe',
         ]);
 
-        $this->assertEquals($user->fullName(), 'Jane Doe');	
+        $this->assertEquals($user->full_name, 'Jane Doe');	
     }
 
     /** @test */
@@ -169,6 +172,138 @@ class UserTest extends TestCase
      	$jockeyActivities->assertNotContains($activityNotForJockey);
     }
 
+    /** @test */
+    public function total_hours_spent_training_for_jockey_for_current_month()
+    {
+        $faker = Factory::create();
 
+        $jockey = factory(Jockey::class)->states('approved')->create();
+        $coach1 = factory(Coach::class)->create();
+        $coach2 = factory(Coach::class)->create();
+        $differentJockey = factory(Jockey::class)->states('approved')->create();
+
+        // dd($faker->dateTimeThisMonth());
+
+        $activity1 = factory(Activity::class)->create([
+          'coach_id' => $coach1->id,
+          'duration' => '30',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(30),
+        ]);
+
+        $activity2 = factory(Activity::class)->create([
+          'coach_id' => $coach2->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activity3 = factory(Activity::class)->create([
+          'coach_id' => $coach2->id,
+          'duration' => '30',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(30),
+        ]);
+
+        $activityNotInCurrentMonth = factory(Activity::class)->create([
+          'coach_id' => $coach1->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth()->subMonth(2), // In current month
+          'end' => Carbon::now()->startOfMonth()->subMonth(2)->addMinutes(60),
+        ]);
+        
+        $activityInCurrentMonthButFuture = factory(Activity::class)->create([
+          'coach_id' => $coach2->id,
+          'duration' => '60',
+          'start' => Carbon::now()->addMinutes(60), // In current month
+          'end' => Carbon::now()->addMinutes(120),
+        ]);
+
+        $activityNotWithCoach = factory(Activity::class)->create([
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activityWithDifferentJockey = factory(Activity::class)->create([
+          'coach_id' => $coach1->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activity1->addJockey($jockey);
+        $activity2->addJockey($jockey);
+        $activity3->addJockey($jockey);
+        $activityNotInCurrentMonth->addJockey($jockey);
+        $activityInCurrentMonthButFuture->addJockey($jockey);
+        $activityWithDifferentJockey->addJockey($differentJockey);
+        // dd($coach->activities);
+
+        $this->assertEquals($jockey->trainingTimeThisMonth(), 2);
+    }
+
+    /** @test */
+    public function hours_spent_training_with_a_coach_for_current_month() // doesn't need to include Racing Excellence.
+    {
+        $faker = Factory::create();
+
+        $jockey = factory(Jockey::class)->states('approved')->create();
+        $coach = factory(Coach::class)->create();
+        $differentJockey = factory(Jockey::class)->states('approved')->create();
+
+        // dd($faker->dateTimeThisMonth());
+
+        $activity1 = factory(Activity::class)->create([
+          'coach_id' => $coach->id,
+          'duration' => '30',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(30),
+        ]);
+
+        $activity2 = factory(Activity::class)->create([
+          'coach_id' => $coach->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activityNotInCurrentMonth = factory(Activity::class)->create([
+          'coach_id' => $coach->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth()->subMonth(2), // In current month
+          'end' => Carbon::now()->startOfMonth()->subMonth(2)->addMinutes(60),
+        ]);
+        
+        $activityInCurrentMonthButFuture = factory(Activity::class)->create([
+          'coach_id' => $coach->id,
+          'duration' => '60',
+          'start' => Carbon::now()->addMinutes(60), // In current month
+          'end' => Carbon::now()->addMinutes(120),
+        ]);
+
+        $activityNotWithCoach = factory(Activity::class)->create([
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activityWithDifferentJockey = factory(Activity::class)->create([
+          'coach_id' => $coach->id,
+          'duration' => '60',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
+        $activity1->addJockey($jockey);
+        $activity2->addJockey($jockey);
+        $activityNotInCurrentMonth->addJockey($jockey);
+        $activityInCurrentMonthButFuture->addJockey($jockey);
+        $activityWithDifferentJockey->addJockey($differentJockey);
+        // dd($coach->activities);
+
+        $this->assertEquals($coach->trainingTimeWithJockeyThisMonth($jockey->id), 1.5);
+        // dd($coach->trainingTimeWithJockeyThisMonth($jockey->id));
+    }
 
 }

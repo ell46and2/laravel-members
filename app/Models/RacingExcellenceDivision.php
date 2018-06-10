@@ -9,8 +9,13 @@ class RacingExcellenceDivision extends Model
 {
     public function participants()
     {
-    	return $this->hasMany(RacingExcellenceParticipant::class);
+    	return $this->hasMany(RacingExcellenceParticipant::class, 'division_id');
     	// return $this->belongsToMany(Jockey::class, 'activity_jockey', 'activity_id', 'jockey_id');
+    }
+
+    public function racingExcellence()
+    {
+        return $this->belongsTo(RacingExcellence::class);
     }
 
     public function parent()
@@ -23,6 +28,7 @@ class RacingExcellenceDivision extends Model
     	$jockeyIds->each(function($jockeyId) {
             $this->participants()->create([
                 'jockey_id' => $jockeyId,
+                'racing_excellence_id' => $this->racingExcellence->id
             ]);
         });
     }
@@ -32,6 +38,7 @@ class RacingExcellenceDivision extends Model
     	$externalParticipantNames->each(function($name) {
     		$this->participants()->create([
 	            'name' => $name,
+                'racing_excellence_id' => $this->racingExcellence->id
 	        ]);
     	});	
     }

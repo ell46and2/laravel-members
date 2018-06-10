@@ -30,8 +30,9 @@ class CoachTest extends TestCase
             'gender' => 'female',   
             'address_1' => '123 street',
             'address_2' => 'Cheltenham',
-            'county' => 'Gloucestershire',
-            'country' => 'UK',
+            'county_id' => 1,
+            'country_id' => 1,
+            'nationality_id' => 1,
             'postcode' => 'GL50 1ST',
             'telephone' => '01242 222333',
             'email' => 'jane@example.com',
@@ -46,10 +47,12 @@ class CoachTest extends TestCase
         	$this->assertEquals('01242 222333', $coach->telephone);
         	$this->assertEquals('123 street', $coach->address_1);
         	$this->assertEquals('Cheltenham', $coach->address_2);
-            $this->assertEquals('Gloucestershire', $coach->county);
-            $this->assertEquals('UK', $coach->country);
+            $this->assertEquals(1, $coach->county_id);
+            $this->assertEquals(1, $coach->country_id);
+            $this->assertEquals(1, $coach->nationality_id);
         	$this->assertEquals('GL50 1ST', $coach->postcode);
         	$this->assertEquals('jane@example.com', $coach->email);
+            $this->assertNotNull($coach->access_token);
 
         	$this->assertTrue($coach->isCoach());
         	$this->assertTrue($coach->approved);

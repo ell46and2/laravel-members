@@ -29,6 +29,15 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    /*
+        https://laravel-news.com/laravel-auth-redirection
+        Can set where users get redirected to upon login here
+     */
+    // public function redirectTo()
+    // {
+    //     return '/@'.auth()->user()->username;
+    // }
+
     /**
      * Create a new controller instance.
      *

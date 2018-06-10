@@ -25,8 +25,9 @@ class User extends Authenticatable
         'gender',
         'address_1',
         'address_2',
-        'county',
-        'country',
+        'county_id',
+        'country_id',
+        'nationality_id',
         'postcode',
         'telephone',
         'twitter_handle',
@@ -34,6 +35,8 @@ class User extends Authenticatable
         'password',
         'approved',
         'avatar_path',
+        'last_login',
+        'access_token'
     ];
 
     /**
@@ -56,6 +59,7 @@ class User extends Authenticatable
 
     protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
 
+    protected $appends = ['full_name', 'role_name'];
     /*
         Relationships
      */
@@ -75,34 +79,56 @@ class User extends Authenticatable
         return $this->notifications()->where('read', false);
     }
 
+    public function county()
+    {
+        return $this->belongsTo(County::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function nationailty()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'recipient_id');
+    }
+
+    public function unreadMessages()
+    {
+        return $this->messages()->where('read', false);
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'author_id');
+    }
+
+
     /*
         Utilities
      */
-    
-    // public static function admin() // Needs amending as can be more than one admin
-    // {
-    //     return self::whereHas('role', function($q) {
-    //         $q->where('name', 'admin');
-    //     })->firstOrFail();
-    // }
-    
+      
     // Convert date of birth to Carbon when saving to db.
     public function setDateOfBirthAttribute($value)
     {
         $this->attributes['date_of_birth'] = Carbon::parse($value);
     }
 
-    public function fullName()
+    public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }
 
-    // public static function getAllCoaches()
-    // {
-    //     return self::whereHas('role', function($q) {
-    //         $q->where('name', 'coach');
-    //     })->get();
-    // }
+    public function getRoleNameAttribute()
+    {
+        return $this->role->name;
+    }
  
     public function isAdmin()
     {
@@ -133,5 +159,15 @@ class User extends Authenticatable
         }
 
         return config('jcp.buckets.avatars') . $this->avatar_filename;
+    }
+
+    public function numberOfUnreadNotifications()
+    {
+        return $this->unreadNotifications()->count();
+    }
+
+    public function numberOfUnreadMessages()
+    {
+        return $this->unreadMessages()->count();
     }
 }

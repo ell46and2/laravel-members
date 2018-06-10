@@ -19,8 +19,7 @@
                         enctype="multipart/form-data"
                     >
                         @csrf
-
-                        {{ method_field('PUT') }} 
+                        @method('put')
 
                         @include('form.partials._input', [
                             'label' => 'Middle name',

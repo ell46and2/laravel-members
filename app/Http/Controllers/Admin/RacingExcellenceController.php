@@ -12,11 +12,10 @@ class RacingExcellenceController extends Controller
 {
     public function store(Request $request)
     {
-    	// dd(request()->divisions);
     	$racingExcellence = RacingExcellence::createRace($request);
 
     	event(new NewRacingExcellenceCreated($racingExcellence));
 
-  		// dd($racingExcellence->participants->count());
+  		return redirect()->route('admin.racing-excellence.show', $racingExcellence);
     }
 }

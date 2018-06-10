@@ -22,13 +22,16 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county' => $faker->city,
-        'country' => $faker->country,
+        'county_id' => 1,
+        'country_id' => 1,
+        'nationality_id' => 1,
         'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+        'county_id' => 1,
+        'country_id' => 1,
     ];
 });
 
@@ -42,8 +45,9 @@ $factory->define(App\Models\Jockey::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county' => $faker->city,
-        'country' => $faker->country,
+        'county_id' => 1,
+        'country_id' => 1,
+        'nationality_id' => 1,
         'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
@@ -62,8 +66,9 @@ $factory->define(App\Models\Coach::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county' => $faker->city,
-        'country' => $faker->country,
+        'county_id' => 1,
+        'country_id' => 1,
+        'nationality_id' => 1,
         'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
@@ -83,8 +88,9 @@ $factory->define(App\Models\Admin::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county' => $faker->city,
-        'country' => $faker->country,
+        'county_id' => 1,
+        'country_id' => 1,
+        'nationality_id' => 1,
         'postcode' => $faker->postcode,
         'telephone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
@@ -119,4 +125,10 @@ $factory->state(App\Models\Jockey::class, 'approved', function($faker) {
 	return [
 		'approved' => true
 	];
+});
+
+$factory->state(App\Models\Coach::class, 'with_token', function($faker) {
+    return [
+        'access_token' => str_random(100)
+    ];
 });

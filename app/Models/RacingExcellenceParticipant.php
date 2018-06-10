@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RacingExcellenceParticipant extends Model
 {
-	protected $fillable = ['jockey_id', 'name'];
+	protected $fillable = ['jockey_id', 'name', 'racing_excellence_id'];
 
     public function jockey()
 	{
@@ -15,6 +15,6 @@ class RacingExcellenceParticipant extends Model
 
 	public function division()
 	{
-		return $this->belongsTo(RacingExcellenceDivision::class);
+		return $this->belongsTo(RacingExcellenceDivision::class, 'division_id');
 	}
 }

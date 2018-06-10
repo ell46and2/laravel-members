@@ -17,6 +17,8 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         Artisan::call('db:seed', ['--class' => 'RolesTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'CountriesTableSeeder']);
+        Artisan::call('db:seed', ['--class' => 'NationalitiesTableSeeder']);
 
 	    // Gets the response data that is sent with the view.
 	    // i.e return view('index', ['concert' => $concert]);

@@ -3,8 +3,11 @@
 
 New coach account created
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => route('coach.token-access', [
+	'token' => $user->activation_token,
+	'email' => $user->email
+])])
+Go to site
 @endcomponent
 
 Thanks,<br>

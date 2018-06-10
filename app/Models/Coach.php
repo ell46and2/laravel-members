@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class Coach extends User
 {
@@ -33,10 +35,25 @@ class Coach extends User
         return $this->hasMany(Activity::class, 'coach_id');
     }
 
+    public function competencyAssessments()
+    {
+        return $this->hasMany(CompetencyAssessment::class);
+    }
+
 
     /*
         Utilities
      */
+    
+    public function scopeByAccessToken(Builder $builder, $email, $token)
+    {
+        return $builder->where('email', $email)->where('access_token', $token)->whereNotNull('access_token');
+    }
+    
+    public function numberOfJockeysCoaching()
+    {
+        return $this->jockeys()->count();
+    }
 
     public static function createNew($requestData)
     {
@@ -44,6 +61,7 @@ class Coach extends User
             'password' => uniqid(true),
             'role_id' => Role::where('name', 'coach')->firstOrFail()->id,
             'approved' => true,
+            'access_token' => str_random(100),
         ]);
 
         return self::create($data);
@@ -57,5 +75,29 @@ class Coach extends User
     public function unassignJockey(Jockey $jockey)
     {
         $this->jockeys()->detach($jockey->id);
+    }
+
+    public function trainingTimeWithJockeyThisMonth($jockeyId)
+    {   
+        $startOfMonth = Carbon::now()->startOfMonth();
+
+        // dd($startOfMonth);
+
+        return $this->activities()
+            ->whereBetween('end', [$startOfMonth, Carbon::now()])
+            ->whereHas('jockeys', function($query) use ($jockeyId) {
+                $query->where('id', $jockeyId);
+            })
+            ->sum('duration') / 60;
+
+        // get activities for this month that have the jockey in.
+        // sum the duration and divide by 60 to get in hours..
+    }
+
+    public function activitiesInNextSevenDays()
+    {
+        return $this->activities()
+            ->whereBetween('start', [Carbon::now(), Carbon::now()->addDays(7)])
+            ->count();
     }
 }

@@ -24,8 +24,9 @@ class ProfileTest extends TestCase
             'alias' => 'New alias',
             'address_1' => 'New address',
             'address_2' => 'New city',
-            'county' => 'New county',
-            'country' => 'New country',
+            'county_id' => 2,
+            'country_id' => 2,
+            'nationality_id' => 2,
             'postcode' => 'New post',
             'telephone' => '0000 111111',
             'twitter_handle' => 'newtwitterhandle',
@@ -40,8 +41,9 @@ class ProfileTest extends TestCase
             'alias' => 'Janey',
             'address_1' => '123 street',
             'address_2' => 'Cheltenham',
-            'county' => 'Gloucestershire',
-            'country' => 'UK',
+            'county_id' => 1,
+            'country_id' => 1,
+            'nationality_id' => 1,
             'postcode' => 'GL50 1ST',
             'telephone' => '01242 222333',
             'twitter_handle' => 'jdoe',
@@ -99,8 +101,9 @@ class ProfileTest extends TestCase
         	'alias' => 'Janey',
         	'address_1' => '123 street',
         	'address_2' => 'Cheltenham',
-            'county' => 'Gloucestershire',
-            'country' => 'UK',
+            'county_id' => 1,
+            'country_id' => 1,
+            'nationality_id' => 1,
         	'postcode' => 'GL50 1ST',
             'telephone' => '01242 222333',
             'twitter_handle' => 'jdoe',
@@ -112,8 +115,9 @@ class ProfileTest extends TestCase
             'alias' => 'New alias',
         	'address_1' => 'New address',
         	'address_2' => 'New city',
-            'county' => 'New county',
-            'country' => 'New country',
+            'county_id' => 2,
+            'country_id' => 2,
+            'nationality_id' => 2,
         	'postcode' => 'New post',
             'telephone' => '0000 111111',
             'twitter_handle' => 'newtwitterhandle',
@@ -129,8 +133,9 @@ class ProfileTest extends TestCase
 		    $this->assertEquals('New alias', $jockey->alias);	    
 		    $this->assertEquals('New address', $jockey->address_1);
 		    $this->assertEquals('New city', $jockey->address_2);
-            $this->assertEquals('New county', $jockey->county);
-            $this->assertEquals('New country', $jockey->country);
+            $this->assertEquals(2, $jockey->county_id);
+            $this->assertEquals(2, $jockey->country_id);
+            $this->assertEquals(2, $jockey->nationality_id);
 		    $this->assertEquals('New post', $jockey->postcode);
             $this->assertEquals('0000 111111', $jockey->telephone);
             $this->assertEquals('newtwitterhandle', $jockey->twitter_handle);
@@ -210,12 +215,12 @@ class ProfileTest extends TestCase
         $jockey = factory(Jockey::class)->states('approved')->create($this->oldAttributes());
 
         $response = $this->actingAs($jockey)->from('/profile/edit')->put('/profile/edit', $this->validParams([
-            'county' => ''
+            'county_id' => ''
         ]));
 
         $response->assertStatus(302);
         $response->assertRedirect('/profile/edit');
-        $response->assertSessionHasErrors('county');
+        $response->assertSessionHasErrors('county_id');
         $this->assertArraySubset($this->oldAttributes(), $jockey->fresh()->getAttributes());
     }
 
@@ -225,12 +230,27 @@ class ProfileTest extends TestCase
         $jockey = factory(Jockey::class)->states('approved')->create($this->oldAttributes());
 
         $response = $this->actingAs($jockey)->from('/profile/edit')->put('/profile/edit', $this->validParams([
-            'country' => ''
+            'country_id' => ''
         ]));
 
         $response->assertStatus(302);
         $response->assertRedirect('/profile/edit');
-        $response->assertSessionHasErrors('country');
+        $response->assertSessionHasErrors('country_id');
+        $this->assertArraySubset($this->oldAttributes(), $jockey->fresh()->getAttributes());
+    }
+
+    /** @test */
+    public function nationality_is_required()
+    {
+        $jockey = factory(Jockey::class)->states('approved')->create($this->oldAttributes());
+
+        $response = $this->actingAs($jockey)->from('/profile/edit')->put('/profile/edit', $this->validParams([
+            'nationality_id' => ''
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/profile/edit');
+        $response->assertSessionHasErrors('nationality_id');
         $this->assertArraySubset($this->oldAttributes(), $jockey->fresh()->getAttributes());
     }
 
