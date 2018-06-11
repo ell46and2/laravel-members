@@ -81,8 +81,6 @@ class Coach extends User
     {   
         $startOfMonth = Carbon::now()->startOfMonth();
 
-        // dd($startOfMonth);
-
         return $this->activities()
             ->whereBetween('end', [$startOfMonth, Carbon::now()])
             ->whereHas('jockeys', function($query) use ($jockeyId) {

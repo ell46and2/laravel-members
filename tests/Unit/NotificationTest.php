@@ -138,5 +138,5 @@ class NotificationTest extends TestCase
         $this->assertEquals($notificationWithoutModel->linkUrl(), null);
     }
 
-    // Do we mark the notification as read if the view button is clicked?
+    // Do we mark the notification as read if the view button is clicked? (Yes)
 }

@@ -26,12 +26,13 @@ class Jockey extends User
    
    	public function coaches()  // could order alphabetically here ->orderBy('last_name', 'desc')
     {
-        return $this->belongsToMany(User::class, 'coach_jockey', 'coach_id', 'jockey_id');
+        return $this->belongsToMany(Coach::class, 'coach_jockey', 'coach_id', 'jockey_id');
     }
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class, 'activity_jockey', 'jockey_id', 'activity_id');
+        return $this->belongsToMany(Activity::class, 'activity_jockey', 'jockey_id', 'activity_id')
+            ->withPivot('feedback');
     }
 
     public function competencyAsssessments()
@@ -67,8 +68,8 @@ class Jockey extends User
     
     public function upcomingEvents() // activities and Racing Excellence
     {
-        $activities = collect($this->activities()->get());
-        $racingExcellences = collect($this->racingExcellences()->get());
+        $activities = collect($this->upcomingActivities()->get());
+        $racingExcellences = collect($this->racingExcellences()->whereDate('start', '>', Carbon::now())->get());
         return $activities->merge($racingExcellences)->sortBy('start');
     }
     
@@ -85,8 +86,6 @@ class Jockey extends User
     public function trainingTimeThisMonth()
     {   
         $startOfMonth = Carbon::now()->startOfMonth();
-
-        // dd($startOfMonth);
 
         return $this->activities()
             ->whereBetween('end', [$startOfMonth, Carbon::now()])

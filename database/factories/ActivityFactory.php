@@ -5,6 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Activity::class, function (Faker $faker) {
     return [
+    	'activity_type_id' => 1,
         'coach_id' => function() {
 			return factory(App\Models\Coach::class)->create()->id;
 		},

@@ -30,6 +30,8 @@ Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jock
 // Comment
 Route::post('/activity/{activity}/comment', 'Comment\CommentController@store')->name('comment.store');
 
+Route::get('/dashboard', 'Jockey\DashboardController@index')->name('jockey.dashboard.index');
+
 
 // Coach
 Route::post('/coach/activity', 'Coach\ActivityController@store')->name('coach.activity.store');

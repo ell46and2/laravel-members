@@ -52,11 +52,6 @@ class User extends Authenticatable
         'approved' => 'boolean' // returns 0 or 1 from db, so casts to boolean so we can assertTrue or assertFalse
     ];
 
-    // Always eager load role as we'll use it so often.
-    protected $with = [
-        'role'
-    ];
-
     protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
 
     protected $appends = ['full_name', 'role_name'];

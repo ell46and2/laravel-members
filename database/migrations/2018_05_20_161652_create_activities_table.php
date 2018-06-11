@@ -15,15 +15,17 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('activity_type_id')->unsigned();
             $table->integer('coach_id')->unsigned()->index();
 
             // Does this need to be polymorphic for activity types, racing excellence, away days etc?
             // $table->integer('activity_type_id')->unsigned(); 
               
-            $table->date('start')->index();
-            $table->date('end')->index();
+            $table->dateTime('start')->index();
+            $table->dateTime('end')->index();
             $table->integer('duration'); // in minutes
             $table->string('location')->nullable();
+            $table->string('group_feedback')->nullable();
             $table->timestamps();
 
             $table->foreign('coach_id')->references('id')->on('users');

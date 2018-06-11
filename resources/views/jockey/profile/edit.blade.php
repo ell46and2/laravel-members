@@ -54,23 +54,45 @@
                             'value' => $jockey->address_2
                         ])
 
-                        @include('form.partials._input', [
-                            'label' => 'County',
-                            'field' => 'county',
-                            'type' => 'text',
-                            'attributes' => 'required',
-                            'errors' => $errors,
-                            'value' => $jockey->county
-                        ])
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="country_id">Country</label>
+                            
+                            <div class="col-md-6">
+                                <select class="form-control" name="country_id" id="country_id" required>
+                                   @foreach($countries as $country)
+                                        <option value="{{ $country->id }}"{{ $jockey->country_id === $country->id ? ' selected="selected"' : '' }}>
+                                            {{ ucfirst($country->name) }}
+                                        </option>
+                                   @endforeach
+                                </select>
 
-                        @include('form.partials._input', [
-                            'label' => 'Country',
-                            'field' => 'country',
-                            'type' => 'text',
-                            'attributes' => 'required',
-                            'errors' => $errors,
-                            'value' => $jockey->country
-                        ])
+                                @if ($errors->has('country_id'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('country_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="county_id">County</label>
+                            
+                            <div class="col-md-6">
+                                <select class="form-control" name="county_id" id="county_id" required>
+                                   @foreach($counties as $county)
+                                        <option value="{{ $county->id }}"{{ $jockey->county_id === $county->id ? ' selected="selected"' : '' }}>
+                                            {{ ucfirst($county->name) }}
+                                        </option>
+                                   @endforeach
+                                </select>
+
+                                @if ($errors->has('county_id'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('county_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         @include('form.partials._input', [
                             'label' => 'Post code',

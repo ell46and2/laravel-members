@@ -16,6 +16,7 @@ class CreateActivityJockeyTable extends Migration
         Schema::create('activity_jockey', function (Blueprint $table) {
             $table->integer('activity_id')->unsigned();
             $table->integer('jockey_id')->unsigned();
+            $table->string('feedback')->nullable();
             $table->timestamps();
 
             // Do we add individual coach feedback here?

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $fillable = ['start', 'duration', 'end', 'location'];
+	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location'];
 
 	protected $dates = ['created_at', 'updated_at', 'start', 'end'];
 
@@ -15,7 +15,8 @@ class Activity extends Model
 	*/
     public function jockeys()
     {
-       	return $this->belongsToMany(Jockey::class, 'activity_jockey', 'activity_id', 'jockey_id');
+       	return $this->belongsToMany(Jockey::class, 'activity_jockey', 'activity_id', 'jockey_id')
+            ->withPivot('feedback');;
     }
 
 	public function coach()
@@ -31,6 +32,11 @@ class Activity extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function activityType()
+    {
+        return $this->belongsTo(ActivityType::class);
     }
 
     /*

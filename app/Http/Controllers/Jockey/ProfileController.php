@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Jockey;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Jockey\UpdateJockeyFormRequest;
 use App\Jobs\UploadAvatarImage;
+use App\Models\Country;
+use App\Models\County;
+use App\Models\Nationality;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -21,7 +24,11 @@ class ProfileController extends Controller
     {
     	$jockey = auth()->user();
 
-    	return view('jockey.profile.edit', compact('jockey'));
+        $countries = Country::all();
+        $counties = County::all();
+        $nationalities = Nationality::all();
+
+    	return view('jockey.profile.edit', compact('jockey', 'countries', 'counties', 'nationalities'));
     }
 
     public function update(UpdateJockeyFormRequest $request)

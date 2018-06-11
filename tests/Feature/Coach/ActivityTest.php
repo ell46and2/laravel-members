@@ -24,7 +24,7 @@ class ActivityTest extends TestCase
         $jockey = factory(Jockey::class)->create();
 
         $response = $this->actingAs($coach)->post("/coach/activity", [
-            // 'start' => Carbon::parse('2018-11-06 1:00pm'),
+            'activity_type_id' => 1,
             'start_date' => '06/11/2018',
             'start_time' => '13:00',
             'duration' => 30,
@@ -54,7 +54,7 @@ class ActivityTest extends TestCase
                 $this->assertEquals($notification->linkUrl(), "activity/{$activity->id}");
         		$this->assertEquals($notification->user->id, $jockey->id);
         		// the body contains the $coach's fullname()
-        		$this->assertRegexp("/{$coach->fullName()}/", $notification->body);
+        		$this->assertRegexp("/{$coach->full_name}/", $notification->body);
         	});
         });
     }
@@ -63,6 +63,34 @@ class ActivityTest extends TestCase
     public function cannot_add_a_jockey_they_are_not_assigned_to_an_activity()
     {
         	
+    }
+
+    /** @test */
+    public function a_coach_can_add_jockey_feedback()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->post("/coach/activity", [
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location' => 'Cheltenham racecourse',
+            'jockeys' => [$jockey->id], // array of selected jockeys from checkboxes
+            "feedback" => [
+                [$jockey->id => 'Jockeys feedback from coach']
+            ], // array of feedback with the key being each jockeys id.
+        ]);
+
+        tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
+            $response->assertStatus(302);
+            $response->assertRedirect("/coach/activity/{$activity->id}");
+
+            $this->assertTrue($activity->jockeys->first()->is($jockey));
+
+            $this->assertEquals($activity->jockeys->first()->pivot->feedback, 'Jockeys feedback from coach');
+        });   
     }
 
     /** @test */
@@ -92,7 +120,76 @@ class ActivityTest extends TestCase
     /** @test */
     public function a_coach_can_create_a_group_activity()
     {
-        	
+        $coach = factory(Coach::class)->create();
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->post("/coach/activity", [
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location' => 'Cheltenham racecourse',
+            'jockeys' => [$jockey1->id, $jockey2->id, $jockey3->id], // array of selected jockeys from checkboxes
+            "feedback" => [
+                [$jockey1->id => 'Jockey1 feedback from coach'],
+                [$jockey2->id => ''],
+                [$jockey3->id => 'Jockey3 feedback from coach']
+            ], // array of feedback with the key being each jockeys id.
+        ]);
+
+        tap(Activity::first(), function($activity) use ($response, $coach, $jockey1, $jockey2, $jockey3) {
+            $response->assertStatus(302);
+            $response->assertRedirect("/coach/activity/{$activity->id}");
+
+            $this->assertTrue($activity->coach->is($coach));
+            $this->assertEquals($activity->jockeys->count(), 3);
+            $activity->jockeys->assertContains($jockey1);
+            $activity->jockeys->assertContains($jockey2);
+            $activity->jockeys->assertContains($jockey3);
+
+            $this->assertEquals($activity->jockeys->first()->pivot->feedback, 'Jockey1 feedback from coach');
+            $this->assertEquals($activity->jockeys->find($jockey2->id)->pivot->feedback, '');
+            $this->assertEquals($activity->jockeys->find($jockey3->id)->pivot->feedback, 'Jockey3 feedback from coach');
+
+            $this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
+            $this->assertEquals(30, $activity->duration);
+            $this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
+            $this->assertEquals('Cheltenham racecourse', $activity->location);
+
+            // Need to test 'new activity' notification is created for $jockey
+            // Probably add notification creation to a queue - as can be for many jockeys
+            tap(Notification::first(), function($notification) use ($activity, $coach, $jockey1) {
+                // dd($activity);
+                $this->assertEquals($notification->notifiable_type, 'activity');
+                $this->assertEquals($notification->notifiable->id, $activity->id);
+                $this->assertEquals($notification->linkUrl(), "activity/{$activity->id}");
+                $this->assertEquals($notification->user->id, $jockey1->id);
+                // the body contains the $coach's fullname()
+                $this->assertRegexp("/{$coach->full_name}/", $notification->body);
+            });
+
+            tap(Notification::find(2), function($notification) use ($activity, $coach, $jockey2) {
+                // dd($activity);
+                $this->assertEquals($notification->notifiable_type, 'activity');
+                $this->assertEquals($notification->notifiable->id, $activity->id);
+                $this->assertEquals($notification->linkUrl(), "activity/{$activity->id}");
+                $this->assertEquals($notification->user->id, $jockey2->id);
+                // the body contains the $coach's fullname()
+                $this->assertRegexp("/{$coach->full_name}/", $notification->body);
+            });
+
+            tap(Notification::find(3), function($notification) use ($activity, $coach, $jockey3) {
+                // dd($activity);
+                $this->assertEquals($notification->notifiable_type, 'activity');
+                $this->assertEquals($notification->notifiable->id, $activity->id);
+                $this->assertEquals($notification->linkUrl(), "activity/{$activity->id}");
+                $this->assertEquals($notification->user->id, $jockey3->id);
+                // the body contains the $coach's fullname()
+                $this->assertRegexp("/{$coach->full_name}/", $notification->body);
+            });
+        });
     }
 
     /** @test */
