@@ -3,7 +3,10 @@
 use App\Models\Activity;
 use App\Models\Admin;
 use App\Models\Coach;
+use App\Models\CompetencyAssessment;
 use App\Models\Jockey;
+use App\Models\RacingExcellence;
+use App\Models\RacingExcellenceDivision;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -195,5 +198,56 @@ class UserTableSeeder extends Seeder
             'end' => Carbon::now()->subDays(10),
         ]);
         $recentActivity11->addJockey($jockey);
+
+        $racingExcellenceA = factory(RacingExcellence::class)->create([
+            'start' => Carbon::now()->addDays(7),
+        ]);
+        $divisionA = factory(RacingExcellenceDivision::class)->create([
+            'racing_excellence_id' => $racingExcellenceA->id
+        ]);
+        $divisionA->addJockeysById(collect([$jockey->id]));
+
+        $racingExcellenceB = factory(RacingExcellence::class)->create([
+            'start' => Carbon::now()->subDays(2),
+        ]);
+        $divisionB = factory(RacingExcellenceDivision::class)->create([
+            'racing_excellence_id' => $racingExcellenceB->id
+        ]);
+        $divisionB->addJockeysById(collect([$jockey->id]));
+
+        $racingExcellenceC = factory(RacingExcellence::class)->create([
+            'start' => Carbon::now()->addDays(2),
+        ]);
+        $divisionC = factory(RacingExcellenceDivision::class)->create([
+            'racing_excellence_id' => $racingExcellenceC->id
+        ]);
+        $divisionC->addJockeysById(collect([$jockey->id]));
+
+        for ($i=0; $i <1000 ; $i++) { 
+            $racingExcellence = factory(RacingExcellence::class)->create([
+                'start' => Carbon::now()->addDays($i),
+            ]);
+            $division = factory(RacingExcellenceDivision::class)->create([
+                'racing_excellence_id' => $racingExcellence->id
+            ]);
+            $division->addJockeysById(collect([$jockey->id]));
+        }
+
+        for ($i=0; $i < 2000; $i++) { 
+            $recentActivity = factory(Activity::class)->create([
+                'start' => Carbon::now()->addDays($i),
+                'end' => Carbon::now()->addDays($i),
+                'activity_type_id' => rand(1, 5),
+            ]);
+            $recentActivity->addJockey($jockey);
+        }
+
+        for ($i=0; $i <1000 ; $i++) { 
+            $competencyAssessment = factory(CompetencyAssessment::class)->create([
+                'start' => Carbon::now()->addDays($i),
+                'jockey_id' => $jockey->id,
+                'coach_id' => $coach->id
+            ]);
+        }
     }
 }

@@ -12,8 +12,19 @@ class ActivityTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        ActivityType::create([
-        	'name' => 'simulation',
-        ])->save();
+        $types = [
+            'simulator session',
+            'phonecall',
+            'meeting',
+            'fitness',
+            'riding',
+        ];
+
+        foreach ($types as $type) {
+            ActivityType::create([
+                'name' => $type,
+            ])->save();
+        }
+        
     }
 }

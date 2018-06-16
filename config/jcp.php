@@ -19,7 +19,16 @@ return [
     'racing_excellence' => [
         'set_fee' => 120,
         'additional_divisions' => 60,
-    ]
+    ],
+
+    'activity' => [
+        'rate' => 35
+    ],
+
+    'group_activity' => [
+        '2' => 1.5,
+        '3+' => 1.75
+    ],
 
     // VAT
     // Hours jockeys are chargable for - i.e. 4hrs and 6hrs if first 3 months of license

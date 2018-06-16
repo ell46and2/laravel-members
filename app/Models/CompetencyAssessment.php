@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\CompetencyAssessment\CompetencyAssessmentFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class CompetencyAssessment extends Model
@@ -22,4 +24,37 @@ class CompetencyAssessment extends Model
 	{
 		return $this->belongsTo(Jockey::class, 'jockey_id');
 	}
+
+	public function notifications()
+    {
+    	return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    /*
+    	Utilities
+    */
+   	public function scopeFilter(Builder $builder, $request)
+    {
+        return (new CompetencyAssessmentFilters($request))->filter($builder);
+    }
+
+    public function getFormattedTypeAttribute()
+    {
+        return 'Competency Assessment';
+    }
+
+    public function getFormattedStartAttribute()
+    {
+        return $this->start->format('l jS F Y');
+    }
+
+    public function getFormattedStartTimeAttribute()
+    {
+        return '-';
+    }
+
+    public function getFormattedLocationAttribute()
+    {
+        return '-';
+    }
 }

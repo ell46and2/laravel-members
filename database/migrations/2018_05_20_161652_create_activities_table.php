@@ -22,9 +22,10 @@ class CreateActivitiesTable extends Migration
             // $table->integer('activity_type_id')->unsigned(); 
               
             $table->dateTime('start')->index();
-            $table->dateTime('end')->index();
-            $table->integer('duration'); // in minutes
-            $table->string('location')->nullable();
+            $table->dateTime('end')->index()->nullable();
+            $table->integer('duration')->nullable(); // in minutes
+            $table->integer('location_id')->unsigned()->nullable(); // location either dropdown id or free test.
+            $table->string('location_name')->nullable();
             $table->string('group_feedback')->nullable();
             $table->timestamps();
 
@@ -35,8 +36,6 @@ class CreateActivitiesTable extends Migration
             // group activity feedback field
             // 
             // Individual feedback needs to go on seperate table.
-            
-            // Location can be a dropdown or free text.
         });
     }
 

@@ -8,7 +8,8 @@ $factory->define(App\Models\RacingExcellence::class, function (Faker $faker) {
         'coach_id' => function() {
 			return factory(App\Models\Coach::class)->create()->id;
 		},
-        'location' => 'Cheltenham racecourse',
+        'location_id' => 1,
+        'series_id' => 1,
         'start' => Carbon::parse('2018-11-06 1:00pm'),
     ];
 });
@@ -31,4 +32,10 @@ $factory->state(App\Models\RacingExcellence::class, 'recent', function($faker) {
 	return [
 		'start' => Carbon::now()->subMinutes(120),
 	];
+});
+
+$factory->define(App\Models\RacingLocation::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+    ];
 });

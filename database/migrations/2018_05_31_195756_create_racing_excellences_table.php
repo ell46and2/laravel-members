@@ -16,17 +16,26 @@ class CreateRacingExcellencesTable extends Migration
         Schema::create('racing_excellences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('coach_id')->unsigned()->index();
-            $table->string('location')->nullable();
+            $table->integer('location_id')->unsigned();
+            $table->integer('series_id')->unsigned();
             $table->timestamp('start');
-            // $table->timestamp('end');
-            // $table->integer('duration'); // in minutes
-            // $table->
             $table->timestamps();
 
             $table->foreign('coach_id')->references('id')->on('users');
 
-            // change location to drop down - needs own table racing_excellence_locations
-            // Need a series drop down - needs own table racing_excellence_series
+            // Has statuses of 'pending race', 'pending results', 'completed',
+            // but will calculate them by:
+            // 'pending race': - if 'start' is in future.
+            // 'pending results': - if 'start' is past and the 'presentation_points' for first participant haven't been entered. (NOTE: do we need to check all participants).
+            
+
+            // OR
+            // 'pending race': - if 'start' is in future.
+            // we add a boolean field called 'completed' that gets set to true when the coach enters the race results. Maybe with observer.
+            // 'pending results': - if 'start' is past and 'completed' = false
+            // 'completed': - 'completed' field = true.
+            
+
         });
     }
 

@@ -77,19 +77,27 @@ class Coach extends User
         $this->jockeys()->detach($jockey->id);
     }
 
+    /*
+        Get activities for this month that have the jockey in and get the duration.
+        If activity is a group activity divide duration by number of jockeys and 
+        rounded down to nearest whole number.
+        Sum the duration and divide by 60 to get in hours.
+    */
     public function trainingTimeWithJockeyThisMonth($jockeyId)
     {   
-        $startOfMonth = Carbon::now()->startOfMonth();
-
-        return $this->activities()
-            ->whereBetween('end', [$startOfMonth, Carbon::now()])
+        $activities = $this->activities()
+            ->with('jockeys')
+            ->whereBetween('end', [Carbon::now()->startOfMonth(), Carbon::now()])
             ->whereHas('jockeys', function($query) use ($jockeyId) {
                 $query->where('id', $jockeyId);
             })
-            ->sum('duration') / 60;
+            ->get();
 
-        // get activities for this month that have the jockey in.
-        // sum the duration and divide by 60 to get in hours..
+        $duration = $activities->sum(function($activity){
+            return floor($activity->duration / $activity->jockeys->count());
+        });
+
+        return round($duration / 60, 2);
     }
 
     public function activitiesInNextSevenDays()

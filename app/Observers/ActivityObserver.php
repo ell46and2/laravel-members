@@ -8,6 +8,8 @@ class ActivityObserver
 {
 	public function creating(Activity $activity)
   	{
-    	$activity->end = $activity->start->addMinutes($activity->duration);
+  		if($activity->duration) {
+    		$activity->end = $activity->start->addMinutes($activity->duration);
+    	}
   	}
 }

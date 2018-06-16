@@ -119,6 +119,7 @@ class RegisterJockeyTest extends TestCase
         	});
 
         	// Assert that new jockey registered email was queued to send to admin
+            // NOTE: this should be a notification 
         	Mail::assertQueued(ToAdminJockeyRegisteredEmail::class, 1);
         	Mail::assertQueued(ToAdminJockeyRegisteredEmail::class, function($mail) use ($jockey, $admin) {
         		return $mail->jockey->id == $jockey->id &&

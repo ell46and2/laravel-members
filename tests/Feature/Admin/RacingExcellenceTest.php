@@ -8,6 +8,8 @@ use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
+use App\Models\RacingLocation;
+use App\Models\SeriesType;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -31,7 +33,8 @@ class RacingExcellenceTest extends TestCase
         $response = $this->actingAs($admin)->post("/admin/racing-excellence/", [
         	'coach_id' => $coach->id,
             'start' => Carbon::parse('2018-11-06 1:00pm'), // NEED TO CHANGE
-            'location' => 'Cheltenham racecourse',
+            'location_id' => 1,
+            'series_id' => 1,
             "divisions" => [
             	['jockeys' => $jockeys1->pluck('id')->toArray(), 'external_participants' => ['John Doe', 'Jane Doe']],
             	['jockeys' => $jockeys2->pluck('id')->toArray(), 'external_participants' => []]
@@ -44,7 +47,10 @@ class RacingExcellenceTest extends TestCase
 
         	$this->assertTrue($racingExcellence->coach->is($coach));
         	$this->assertEquals(Carbon::parse('2018-11-06 1:00pm'), $racingExcellence->start);
-        	$this->assertEquals('Cheltenham racecourse', $racingExcellence->location);
+        	$this->assertEquals(1, $racingExcellence->location_id);
+        	$this->assertEquals(RacingLocation::find(1)->name, $racingExcellence->location->name);
+        	$this->assertEquals(1, $racingExcellence->series_id);
+        	$this->assertEquals(SeriesType::find(1)->name, $racingExcellence->series->name);
 
         	$this->assertEquals($racingExcellence->participants->count(), 20);
         	$this->assertEquals($racingExcellence->jockeys->count(), 18);

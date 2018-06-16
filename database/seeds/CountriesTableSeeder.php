@@ -22,6 +22,10 @@ class CountriesTableSeeder extends Seeder
         	'name' => 'ireland',
         ]);
 
+        $northernIreland = factory(Country::class)->create([
+        	'name' => 'northern ireland',
+        ]);
+
         $scotland = factory(Country::class)->create([
         	'name' => 'scotland',
         ]);
@@ -151,18 +155,14 @@ class CountriesTableSeeder extends Seeder
         ];
 
         // Ireland Counties
-        $irelandCounties = [
-        	"Antrim",
-            "Armagh",
+        $irelandCounties = [      	
             "Carlow",
             "Cavan",
             "Clare",
             "Cork",
             "Derry",
             "Donegal",
-            "Down",
             "Dublin",
-            "Fermanagh",
             "Galway",
             "Kerry",
             "Kildare",
@@ -170,7 +170,6 @@ class CountriesTableSeeder extends Seeder
             "Laois",
             "Leitrim",
             "Limerick",
-            "Londonderry",
             "Longford",
             "Louth",
             "Mayo",
@@ -180,11 +179,20 @@ class CountriesTableSeeder extends Seeder
             "Roscommon",
             "Sligo",
             "Tipperary",
-            "Tyrone",
             "Waterford",
             "Westmeath",
             "Wexford",
             "Wicklow"
+        ];
+
+        // Northern Ireland Counties
+        $northernIrelandCounties = [
+        	"Antrim",
+            "Armagh",
+            "Down",
+            "Fermanagh",
+            "Londonderry",
+            "Tyrone",
         ];
 
         foreach ($walesCounties as $county) {
@@ -201,6 +209,12 @@ class CountriesTableSeeder extends Seeder
 
         foreach ($irelandCounties as $county) {
         	$ireland->counties()->create([
+        		'name' => $county
+        	])->save();
+        }
+
+        foreach ($northernIrelandCounties as $county) {
+        	$northernIreland->counties()->create([
         		'name' => $county
         	])->save();
         }

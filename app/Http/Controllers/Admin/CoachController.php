@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\Admin\Coach\NewCoachCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Coach\StorePostFormRequest;
 use App\Models\Coach;
 use Illuminate\Http\Request;
 
 class CoachController extends Controller
 {
-    public function store() // need to add FormREquest validation
+    public function create()
     {
-    	$coach = Coach::createNew(request()->only([
+        
+    }
+
+    public function store(StorePostFormRequest $request)
+    {
+    	$coach = Coach::createNew($request->only([
     		'first_name',
     		'last_name',
+            'middle_name',
+            'date_of_birth',
             'gender', 		
     		'address_1', 
     		'address_2',
@@ -21,8 +29,11 @@ class CoachController extends Controller
             'country_id',
             'nationality_id',
     		'postcode',
-            'telephone', 
+            'telephone',
+            'twitter_handle', 
     		'email',
+            'mileage',
+            'vat_number'
     	]));
 
     	event(new NewCoachCreated($coach));

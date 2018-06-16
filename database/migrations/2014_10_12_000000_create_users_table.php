@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('address_2')->nullable();
             $table->integer('county_id')->unsigned();
             $table->integer('country_id')->unsigned();
-            $table->integer('nationality_id')->unsigned();
+            $table->integer('nationality_id')->unsigned()->nullable();
             $table->string('postcode');
             $table->string('telephone');
             $table->string('twitter_handle')->nullable();
@@ -36,23 +36,38 @@ class CreateUsersTable extends Migration
             $table->string('avatar_filename')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('access_token')->nullable();
+
+            // Coach only
+            $table->integer('mileage')->default(0);
+            $table->string('vat_number')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
 
             // Need to add fields: 
             // Jockey status ? - for jockeys that vacate from the system for a period of time.
             // profile_completion % - when profile is updated (and jockey registers) update. Probably use an observer to calculate.
-            // Racing Post API id
-            // Number of wins
-            // Number of races
             // terms_acceptance?
             // privacy_policy_acceptance?
             
             // license_date - for first 3 month jockeys can have 6hrs of training
             
-            //coach_details table ? or add to this table as nullable fields
+            // COACH - coach_details table ? or add to this table as nullable fields
             // bio
             // Current mileage -- needs to be updated when an invoice-line is added/removed/edited.
+            // vat_number 
+             
+            // JOCKEY
+            // classification - enum ('apprentice', 'conditional')
+            // Racing Post API id - nullable() as only on RP when already raced or have a race booked.
+            // Number of wins
+            // Number of races
+            // Current claim (7lb/5lb/3lb/none) - enum
+            // Start date of their licence
+            /* Jockey leaving the system
+                A jockey will eventually leave the system. The admin will then be able to mark the jockey as ‘left the system’ and add a comment to their profile stating the reason.
+            */
+
 
             // $table->foreign('role_id')->references('id')->on('roles');
         });

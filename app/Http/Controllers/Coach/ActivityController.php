@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Coach;
 
 use App\Events\Coach\Activity\NewActivityCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Coach\Activity\StorePostFormRequest;
 use App\Models\Jockey;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
-    public function store(Request $request) // add form request validation
+    public function store(StorePostFormRequest $request)
     {
         DB::beginTransaction();
 
@@ -20,7 +21,8 @@ class ActivityController extends Controller
                 'activity_type_id' => $request->activity_type_id,
     			'start' => Carbon::parse("{$request->start_date} {$request->start_time}"),
             	'duration' => $request->duration,
-            	'location' => $request->location
+            	'location_name' => $request->location_name,
+                'location_id' => $request->location_id,
         	]);
 
         	$activity->addJockeysById(request()->jockeys);
@@ -48,9 +50,11 @@ class ActivityController extends Controller
         collect($requestFeedback)->each(function($jockeyFeedback) use ($activity) {
             collect($jockeyFeedback)->each(function($feedback, $jockeyId) use ($activity) {
                 // dd($jockeyId);
-                Jockey::findOrFail($jockeyId)->activities()->updateExistingPivot($activity->id, [
-                    'feedback' => $feedback
-                ]);
+                Jockey::findOrFail($jockeyId)
+                    ->activities()
+                    ->updateExistingPivot($activity->id, [
+                        'feedback' => $feedback
+                    ]);
             });
         });
     }

@@ -17,7 +17,7 @@ class CreateCountiesTable extends Migration
             $table->increments('id');
             $table->integer('country_id')->unsigned()->index();
             $table->string('name');
-            $table->timestamps();
+            // $table->timestamps();
 
             $table->foreign('country_id')->references('id')->on('countries');
         });

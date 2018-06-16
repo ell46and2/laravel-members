@@ -35,6 +35,8 @@ class User extends Authenticatable
         'password',
         'approved',
         'avatar_path',
+        'mileage',
+        'vat_number',
         'last_login',
         'access_token'
     ];
@@ -112,7 +114,18 @@ class User extends Authenticatable
     // Convert date of birth to Carbon when saving to db.
     public function setDateOfBirthAttribute($value)
     {
-        $this->attributes['date_of_birth'] = Carbon::parse($value);
+        if($value) {
+           $this->attributes['date_of_birth'] = Carbon::parse($value); 
+        }
+    }
+
+    public function setMileageAttribute($value)
+    { 
+        if($value === null) {
+           $this->attributes['mileage'] = 0; 
+        } else {
+            $this->attributes['mileage'] = $value; 
+        }
     }
 
     public function getFullNameAttribute()

@@ -175,6 +175,9 @@ class UserTest extends TestCase
     /** @test */
     public function total_hours_spent_training_for_jockey_for_current_month()
     {
+      // NEED TO ADD GROUP ACTIVITIES
+      // if activity is a group activity duration/number_of_jockeys rounded down to nearest whole number.
+
         $faker = Factory::create();
 
         $jockey = factory(Jockey::class)->states('approved')->create();
@@ -232,6 +235,13 @@ class UserTest extends TestCase
           'end' => Carbon::now()->startOfMonth()->addMinutes(60),
         ]);
 
+        $groupActivity = factory(Activity::class)->create([
+          'coach_id' => $coach1->id,
+          'duration' => '15',
+          'start' => Carbon::now()->startOfMonth(), // In current month
+          'end' => Carbon::now()->startOfMonth()->addMinutes(60),
+        ]);
+
         $activity1->addJockey($jockey);
         $activity2->addJockey($jockey);
         $activity3->addJockey($jockey);
@@ -239,8 +249,9 @@ class UserTest extends TestCase
         $activityInCurrentMonthButFuture->addJockey($jockey);
         $activityWithDifferentJockey->addJockey($differentJockey);
         // dd($coach->activities);
+        $groupActivity->addJockeysById([$jockey->id, $differentJockey->id]);
 
-        $this->assertEquals($jockey->trainingTimeThisMonth(), 2);
+        $this->assertEquals($jockey->trainingTimeThisMonth(), 2.12);
     }
 
     /** @test */

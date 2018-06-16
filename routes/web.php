@@ -25,7 +25,11 @@ Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.i
 Route::get('/profile/edit', 'Jockey\ProfileController@edit')->name('jockey.profile.edit');
 Route::put('/profile/edit', 'Jockey\ProfileController@update')->name('jockey.profile.update');
 
+Route::get('/activity/list', 'Jockey\ActivityController@index')->name('jockey.activity-list');
+
 Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jockey.activity.show');
+
+
 
 // Comment
 Route::post('/activity/{activity}/comment', 'Comment\CommentController@store')->name('comment.store');
@@ -41,6 +45,7 @@ Route::get('/coach/auth', 'Coach\TokenAccessController@index')->name('coach.toke
 Route::get('/coach/profile/password', 'Coach\PasswordController@edit')->name('coach.password.edit');
 
 // Admin
+Route::get('/admin/coaches/create', 'Admin\CoachController@create')->name('admin.coach.create');
 Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.store');
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
 
@@ -54,9 +59,11 @@ Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store'
 Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
 
 
-// Competency Assessment
-Route::get('/competency-assessment/{competencyAssessment}', 'CompetencyAssessmentController@show')->name('competency-assessment.show');
+// Competency Assessment - Coach
+Route::get('/competency-assessment/{competencyAssessment}', 'CompetencyAssessment\CompetencyAssessmentController@show')->name('competency-assessment.show');
 Route::post('/coach/competency-assessment', 'CompetencyAssessment\CompetencyAssessmentController@store')->name('competency-assessment.store');
+Route::get('/competency-assessment/{competencyAssessment}/edit', 'CompetencyAssessment\CompetencyAssessmentController@edit')->name('competency-assessment.edit');
+Route::put('/competency-assessment/{competencyAssessment}/update', 'CompetencyAssessment\CompetencyAssessmentController@update')->name('competency-assessment.update');
 
 // Documents
 Route::get('/admin/documents/create', 'Admin\DocumentController@create')->name('admin.document.create');
@@ -68,3 +75,7 @@ Route::get('/documents', 'Document\DocumentController@index')->name('documents.i
 // Messages
 Route::get('/messages', 'Message\MessageController@index')->name('messages.index');
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
+
+// Change Password
+Route::get('/profile/password', 'Auth\PasswordController@edit')->name('profile.password.edit');
+Route::put('/profile/password', 'Auth\PasswordController@update')->name('profile.password.update');

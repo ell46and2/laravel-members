@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Filters\RacingExcellence\RacingExcellenceFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class RacingExcellence extends Model
 { 
-	protected $fillable = ['coach_id', 'start', 'location'];
+	protected $fillable = ['coach_id', 'start', 'location_id', 'series_id'];
+
+	protected $dates = ['created_at', 'updated_at', 'start'];
 
 	/*
 		Relationships
@@ -40,6 +44,16 @@ class RacingExcellence extends Model
 		return $this->hasMany(RacingExcellenceDivision::class);
 	}
 
+	public function location()
+	{
+		return $this->belongsTo(RacingLocation::class, 'location_id');
+	}
+
+	public function series()
+	{
+		return $this->belongsTo(SeriesType::class);
+	}
+
 	public function notifications()
     {
     	return $this->morphMany(Notification::class, 'notifiable');
@@ -51,7 +65,10 @@ class RacingExcellence extends Model
     */
 	public static function createRace(Request $request)
 	{
-		$racingExcellence = self::create($request->only(['coach_id', 'start', 'location']));
+		$racingExcellence = self::create($request->only([
+			'coach_id', 'start', 'location_id', 'series_id'
+		]));
+
 		$racingExcellence->addDivisions(collect(request()->only(['divisions'])['divisions']));
 
 		return $racingExcellence;
@@ -65,4 +82,29 @@ class RacingExcellence extends Model
 			$division->addExternalParticipants(collect($divisionData['external_participants']));
 		});
 	}
+
+	public function getFormattedTypeAttribute()
+    {
+        return 'Racing Excellence';
+    }
+
+    public function getFormattedStartAttribute()
+    {
+        return $this->start->format('l jS F Y');
+    }
+
+    public function getFormattedStartTimeAttribute()
+    {
+        return $this->start->format('H:i');
+    }
+
+    public function getFormattedLocationAttribute()
+    {
+        return ucfirst($this->location->name);
+    }
+
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new RacingExcellenceFilters($request))->filter($builder);
+    }
 }

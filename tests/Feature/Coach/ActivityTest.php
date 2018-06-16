@@ -3,6 +3,8 @@
 namespace Tests\Feature\Coach;
 
 use App\Models\Activity;
+use App\Models\ActivityLocation;
+use App\Models\ActivityType;
 use App\Models\Coach;
 use App\Models\Jockey;
 use App\Models\Notification;
@@ -17,6 +19,17 @@ class ActivityTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private function validParams($overrides = [])
+    {
+        return array_merge([
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location_name' => 'Cheltenham racecourse',
+        ], $overrides);
+    }
+
     /** @test */
     public function a_coach_can_create_an_activity()
     {
@@ -28,7 +41,7 @@ class ActivityTest extends TestCase
             'start_date' => '06/11/2018',
             'start_time' => '13:00',
             'duration' => 30,
-            'location' => 'Cheltenham racecourse',
+            'location_name' => 'Cheltenham racecourse',
             'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
         ]);
 
@@ -43,7 +56,12 @@ class ActivityTest extends TestCase
         	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
         	$this->assertEquals(30, $activity->duration);
         	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
-        	$this->assertEquals('Cheltenham racecourse', $activity->location);
+        	$this->assertEquals('Cheltenham racecourse', $activity->location_name);
+            $this->assertEquals('Cheltenham racecourse', $activity->location);
+            $this->assertNull($activity->location_id);
+
+            $this->assertEquals(1, $activity->activity_type_id);
+            $this->assertEquals(ActivityType::find(1)->name, $activity->type->name);
 
         	// Need to test 'new activity' notification is created for $jockey
         	// Probably add notification creation to a queue - as can be for many jockeys
@@ -60,9 +78,183 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
-    public function cannot_add_a_jockey_they_are_not_assigned_to_an_activity()
+    public function activity_type_id_is_required()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'activity_type_id' => '',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('activity_type_id');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());  
+    }
+
+    /** @test */
+    public function activity_type_id_must_exist_on_the_activity_types_table()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'activity_type_id' => 9999,
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('activity_type_id');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());  
+    }
+
+    /** @test */
+    public function start_date_is_required()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'start_date' => '',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('start_date');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());
+    }
+
+    /** @test */
+    public function start_date_must_be_a_valid_date()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'start_date' => 'not a date',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('start_date');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());  
+    }
+
+    /** @test */
+    public function start_time_is_required()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'start_time' => '',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('start_time');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());
+    }
+
+    /** @test */
+    public function start_time_must_be_a_valid_time()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'start_time' => 'not a valid time',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('start_time');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());
+    }  
+
+    /** @test */
+    public function duration_is_optional()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'duration' => '',
+            'jockeys' => [$jockey->id]
+        ]));
+
+        tap(Activity::first(), function($activity) use ($response) {
+            $response->assertStatus(302);
+            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $this->assertEquals(null, $activity->duration);
+            $this->assertEquals(null, $activity->end);
+        });
+    }
+
+    /** @test */
+    public function duration_must_be_a_whole_number()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'duration' => 30.25,
+            'jockeys' => [$jockey->id]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('duration');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());
+    }
+
+    /** @test */
+    public function cannot_add_a_jockey_they_are_not_assigned_to_to_an_activity()
     {
         	
+    }
+
+    /** @test */
+    public function an_activity_can_either_have_a_location_id_or_a_location_name()
+    {
+        // location can come from a drop down of locations OR can be free text.  
+        // It can't have both sent in the form request - look at validating this.
+        // Also on editing if free text chnges to location_id or vice versa will need to null
+        // the other value. - possibly an observer could handle this for us.
+        
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->post("/coach/activity", [
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location_name' => '',
+            'location_id' => 1,
+            'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
+        ]);
+
+        tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
+            $this->assertNull($activity->location_name);
+            $this->assertEquals(1, $activity->location_id);
+            $this->assertEquals(ActivityLocation::find(1)->name, $activity->activityLocation->name);
+            $this->assertEquals(ActivityLocation::find(1)->name, $activity->location);
+        });
     }
 
     /** @test */
@@ -130,7 +322,7 @@ class ActivityTest extends TestCase
             'start_date' => '06/11/2018',
             'start_time' => '13:00',
             'duration' => 30,
-            'location' => 'Cheltenham racecourse',
+            'location_name' => 'Cheltenham racecourse',
             'jockeys' => [$jockey1->id, $jockey2->id, $jockey3->id], // array of selected jockeys from checkboxes
             "feedback" => [
                 [$jockey1->id => 'Jockey1 feedback from coach'],
@@ -156,7 +348,7 @@ class ActivityTest extends TestCase
             $this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
             $this->assertEquals(30, $activity->duration);
             $this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
-            $this->assertEquals('Cheltenham racecourse', $activity->location);
+            $this->assertEquals('Cheltenham racecourse', $activity->location_name);
 
             // Need to test 'new activity' notification is created for $jockey
             // Probably add notification creation to a queue - as can be for many jockeys

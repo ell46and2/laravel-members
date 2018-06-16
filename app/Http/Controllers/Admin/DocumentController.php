@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Document\StorePostFormRequest;
+use App\Http\Requests\Document\UpdatePostFormRequest;
 use App\Jobs\EditedDocumentNotify;
 use App\Jobs\UploadDocument;
 use App\Jobs\UploadDocumentNotify;
@@ -16,7 +18,7 @@ class DocumentController extends Controller
 		return view('admin.document.create');
 	}
 
-	public function store(Request $request) // add Form Request validation
+	public function store(StorePostFormRequest $request)
 	{
 		if($request->file('document')) {
 
@@ -34,7 +36,7 @@ class DocumentController extends Controller
         return redirect()->route('documents.index');
 	}
 
-	public function update(Document $document, Request $request) // add Form Request validation
+	public function update(Document $document, UpdatePostFormRequest $request)
 	{
 		$document->update($request->only(['title']));
 

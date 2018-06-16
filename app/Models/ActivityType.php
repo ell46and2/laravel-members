@@ -8,6 +8,8 @@ class ActivityType extends Model
 {
     protected $guarded = [];
 
+    public $timestamps = false;
+
     public function activities()
     {
     	return $this->hasMany(Activity::class);

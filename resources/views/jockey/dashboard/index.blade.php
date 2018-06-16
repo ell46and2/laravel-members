@@ -36,8 +36,24 @@
 					<br>
 					<div>
 						<h3>Upcoming Activities</h3>
-						@foreach($jockey->upcomingActivities as $activity)
-							{{ $activity->activityType->name }}<br>
+						{{-- Split out into a partial --}}
+						@foreach($jockey->dashboardUpcomingActivities as $activity)
+							{{ $activity->id }}<br>
+							{{ $activity->type->name }}<br>
+							{{ $activity->start->format('d/m/Y') }}<br>
+							{{ $activity->start->format('H:i') }}<br>
+							{{ $activity->location }}<br>
+							<a href="{{ route('jockey.activity.show', $activity) }}">View</a>
+							<br><br>
+						@endforeach
+					</div>
+					<br>
+					<div>
+						<h3>Recent Activities</h3>
+						{{-- Split out into a partial --}}
+						@foreach($jockey->dashboardRecentActivities as $activity)
+							{{ $activity->id }}<br>
+							{{ $activity->type->name }}<br>
 							{{ $activity->start->format('d/m/Y') }}<br>
 							{{ $activity->start->format('H:i') }}<br>
 							{{ $activity->location }}<br>

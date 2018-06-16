@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Jockey extends User
 {
@@ -37,7 +38,7 @@ class Jockey extends User
 
     public function competencyAsssessments()
     {
-        return $this->hasMany(CompetencyAsssessment::class, 'coach_id');
+        return $this->hasMany(CompetencyAssessment::class, 'jockey_id');
     }
 
     public function racingExcellenceDivisions()
@@ -66,6 +67,63 @@ class Jockey extends User
     	Utilities
      */
     
+    public function events(Request $request)
+    {
+        $activities = collect($this->getEventActivities($request));
+
+        $racingExcellences = collect($this->getEventRacingEcellence($request));
+
+        $competencyAsssessments = collect($this->getEventCompetencyAssessments($request));
+
+        $events = ($activities->merge($racingExcellences))
+            ->merge($competencyAsssessments);
+
+        if($request->order === 'desc') {
+            return $events->sortByDesc('start');
+        }
+
+        return $events->sortBy('start');
+    }
+
+    public function getEventCompetencyAssessments($request)
+    {
+        if($request->type === 'ca' || !$request->type) {
+            return $this->competencyAsssessments()
+                ->with(['coach'])->filter($request)->get();
+        }
+
+        return [];
+    }
+
+    public function getEventActivities($request)
+    {
+        if(is_numeric($request->type) || !$request->type) {
+            return $this->activities()->with([
+                'coach',
+                'activityType',
+                'location',
+            ])
+            ->filter($request)
+            ->get();
+        }
+
+        return [];
+    }
+
+    public function getEventRacingEcellence($request)
+    {
+        if($request->type === 're' || !$request->type) {
+            return $this->racingExcellences()->with([
+                'coach',
+                'location',
+            ])
+            ->filter($request)
+            ->get();
+        }
+
+        return [];
+    }
+    
     public function upcomingEvents() // activities and Racing Excellence
     {
         $activities = collect($this->upcomingActivities()->get());
@@ -75,24 +133,43 @@ class Jockey extends User
     
     public function upcomingActivities()
     {
-        return $this->activities()->whereDate('start', '>', Carbon::now())->orderBy('start');
+        // dd(Carbon::now());
+        return $this->activities()->with('type')->where('start', '>', Carbon::now())->orderBy('start');
+    }
+
+    public function dashboardUpcomingActivities()
+    {
+        return $this->upcomingActivities()->take(10);
     }
 
     public function recentActivities()
     {
-        return $this->activities()->whereDate('end', '<', Carbon::now())->orderBy('end', 'desc');
+        return $this->activities()->with('type')->where('end', '<', Carbon::now())->orderBy('end', 'desc');
     }
 
+    public function dashboardRecentActivities()
+    {
+        return $this->recentActivities()->take(10);
+    }
+
+    /*
+        Get activities for this month that have the jockey in and get the duration.
+        If activity is a group activity divide duration by number of jockeys and 
+        rounded down to nearest whole number.
+        Sum the duration and divide by 60 to get in hours.
+     */
     public function trainingTimeThisMonth()
     {   
-        $startOfMonth = Carbon::now()->startOfMonth();
+        $activities =  $this->activities()
+            ->with('jockeys')
+            ->whereBetween('end', [Carbon::now()->startOfMonth(), Carbon::now()])
+            ->get();
 
-        return $this->activities()
-            ->whereBetween('end', [$startOfMonth, Carbon::now()])
-            ->sum('duration') / 60;
+        $duration = $activities->sum(function($activity){
+            return floor($activity->duration / $activity->jockeys->count());
+        });
 
-        // get activities for this month that have the jockey in.
-        // sum the duration and divide by 60 to get in hours..
+        return round($duration / 60, 2); // round to two decimal places.
     }
 
     public function trainingTimeThisMonthPercentage()
