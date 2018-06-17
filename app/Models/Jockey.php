@@ -100,7 +100,7 @@ class Jockey extends User
         if(is_numeric($request->type) || !$request->type) {
             return $this->activities()->with([
                 'coach',
-                'activityType',
+                'type',
                 'location',
             ])
             ->filter($request)

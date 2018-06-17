@@ -39,10 +39,10 @@
 						{{-- Split out into a partial --}}
 						@foreach($jockey->dashboardUpcomingActivities as $activity)
 							{{ $activity->id }}<br>
-							{{ $activity->type->name }}<br>
+							{{ $activity->formattedType }}<br>
 							{{ $activity->start->format('d/m/Y') }}<br>
 							{{ $activity->start->format('H:i') }}<br>
-							{{ $activity->location }}<br>
+							{{ $activity->formattedLocation }}<br>
 							<a href="{{ route('jockey.activity.show', $activity) }}">View</a>
 							<br><br>
 						@endforeach
@@ -53,10 +53,10 @@
 						{{-- Split out into a partial --}}
 						@foreach($jockey->dashboardRecentActivities as $activity)
 							{{ $activity->id }}<br>
-							{{ $activity->type->name }}<br>
+							{{ $activity->formattedType }}<br>
 							{{ $activity->start->format('d/m/Y') }}<br>
 							{{ $activity->start->format('H:i') }}<br>
-							{{ $activity->location }}<br>
+							{{ $activity->formattedLocation }}<br>
 							<a href="{{ route('jockey.activity.show', $activity) }}">View</a>
 							<br><br>
 						@endforeach

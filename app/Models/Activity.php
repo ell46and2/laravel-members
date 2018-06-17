@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location'];
+	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name'];
 
 	protected $dates = ['created_at', 'updated_at', 'start', 'end'];
 
@@ -36,9 +36,9 @@ class Activity extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function activityType()
+    public function type()
     {
-        return $this->belongsTo(ActivityType::class);
+        return $this->belongsTo(ActivityType::class, 'activity_type_id');
     }
 
     public function location()
@@ -68,9 +68,22 @@ class Activity extends Model
     	$this->jockeys()->sync($jockeyIds); 
     }
 
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new ActivityFilters($request))->filter($builder);
+    }
+
+    /*
+        Attributes
+    */
+    // public function getLocationAttribute()
+    // {
+    //    return $this->location_name ?? $this->location->name;  
+    // }
+
     public function getFormattedTypeAttribute()
     {
-        return ucfirst($this->activityType->name);
+        return ucfirst($this->type->name);
     }
 
     public function getFormattedStartAttribute()
@@ -90,10 +103,5 @@ class Activity extends Model
         }
 
         return ucfirst($this->location_name);
-    }
-
-    public function scopeFilter(Builder $builder, $request)
-    {
-        return (new ActivityFilters($request))->filter($builder);
     }
 }

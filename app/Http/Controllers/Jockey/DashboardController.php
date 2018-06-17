@@ -15,9 +15,11 @@ class DashboardController extends Controller
     	$jockey = Jockey::with([
     		'coaches',
     		'dashboardUpcomingActivities',
-    		'dashboardUpcomingActivities.activityLocation',
+    		'dashboardUpcomingActivities.location',
+            'dashboardUpcomingActivities.type',
     		'dashboardRecentActivities',
-    		'dashboardRecentActivities.activityLocation',
+    		'dashboardRecentActivities.location',
+            'dashboardRecentActivities.type',
     		'racingExcellences',
     	])
     	->findOrFail(auth()->user()->id);

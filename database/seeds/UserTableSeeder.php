@@ -238,6 +238,7 @@ class UserTableSeeder extends Seeder
                 'start' => Carbon::now()->addDays($i),
                 'end' => Carbon::now()->addDays($i),
                 'activity_type_id' => rand(1, 5),
+                'coach_id' => $coach->id,
             ]);
             $recentActivity->addJockey($jockey);
         }
