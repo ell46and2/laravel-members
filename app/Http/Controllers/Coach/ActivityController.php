@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Coach;
 use App\Events\Coach\Activity\NewActivityCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Coach\Activity\StorePostFormRequest;
+use App\Models\Activity;
 use App\Models\Jockey;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -57,5 +58,10 @@ class ActivityController extends Controller
                     ]);
             });
         });
+    }
+
+    public function show(Activity $activity)
+    {   
+        return view('coach.activity.show', compact('activity'));
     }
 }

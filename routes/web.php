@@ -76,6 +76,9 @@ Route::get('/documents', 'Document\DocumentController@index')->name('documents.i
 Route::get('/messages', 'Message\MessageController@index')->name('messages.index');
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
 
+// Attachments
+Route::post('/attachment', 'Attachment\AttachmentController@store');
+
 // Change Password
 Route::get('/profile/password', 'Auth\PasswordController@edit')->name('profile.password.edit');
 Route::put('/profile/password', 'Auth\PasswordController@update')->name('profile.password.update');

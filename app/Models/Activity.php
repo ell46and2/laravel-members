@@ -30,6 +30,11 @@ class Activity extends Model
     {
     	return $this->morphMany(Notification::class, 'notifiable');
     }
+
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'attachable');
+    }
     
     public function comments()
     {
