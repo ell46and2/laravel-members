@@ -21,6 +21,7 @@ class Jockey extends User
         });
     }
 
+
     /*
     	Relationships
     */
@@ -46,11 +47,6 @@ class Jockey extends User
            return $this->belongsToMany(RacingExcellenceDivision::class, 'racing_excellence_participants', 'jockey_id', 'division_id');
     }
 
-    // public function racingExcellences()
-    // {
-    //        return $this->racingExcellenceDivisions->racingExellence();
-    // }
-
     public function racingExcellences()
     {
         return $this->hasManyThrough(
@@ -63,12 +59,16 @@ class Jockey extends User
         );
     }
 
+
     /*
     	Utilities
      */
     
     public function events(Request $request)
     {
+        // NOTE: need to default to go back 2 years max as default
+        // and if 'from' request is present remove the default.  
+
         $activities = collect($this->getEventActivities($request));
 
         $racingExcellences = collect($this->getEventRacingEcellence($request));
@@ -102,6 +102,8 @@ class Jockey extends User
                 'coach',
                 'type',
                 'location',
+                'commentsForOrFromJockey',
+                'unreadCommentsOnActivityForCurentUser',
             ])
             ->filter($request)
             ->get();

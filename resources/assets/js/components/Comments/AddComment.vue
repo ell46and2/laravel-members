@@ -1,0 +1,73 @@
+<template>
+	<div class="mb-5">
+		<a 
+			href="#"
+			class="btn btn-primary btn-block"
+			@click.prevent="active = true"
+			v-if="!active"
+		>
+			Add comment
+		</a>
+
+		<template v-if="active">
+			<form @submit.prevent="store">
+				<div class="form-group">
+					<textarea 
+						id="body" 
+						rows="10"
+						class="form-control"
+						autofocus="autofocus"
+						v-model="form.body"
+					></textarea>
+
+				</div>
+
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Save</button>
+					<a 
+						href="#" 
+						class="btn btn-link" 
+						@click.prevent="active = false"
+					>Cancel</a>
+				</div>
+			</form>
+		</template>
+	</div>
+</template>
+
+<script>
+	import axios from 'axios';
+	import bus from '../../bus';
+
+	export default {
+		data() {
+			return {
+				active: false,
+				form: {
+					body: '',
+					recipient_id: this.recipientId
+				}
+			}
+		},
+		props: {
+			endpoint: {
+				required: true,
+				type: String
+			},
+			recipientId: {
+				required: false,
+				type: String
+			}
+		},
+		methods: {
+			async store() {
+				let comment = await axios.post(this.endpoint, this.form);
+
+				bus.$emit('comment:stored', comment.data.data);
+
+				this.active = false;
+				this.form.body = '';
+			}
+		}
+	}
+</script>

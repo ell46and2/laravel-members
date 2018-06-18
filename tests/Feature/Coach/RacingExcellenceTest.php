@@ -14,6 +14,6 @@ class RacingExcellenceTest extends TestCase
     /** @test */
     public function can_add_results_to_a_racing_excellence_if_they_are_the_assigned_coach()
     {
-        	
+        // The 'total' field gets calculated by an observer 	
     }
 }

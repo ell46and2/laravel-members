@@ -30,6 +30,8 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->foreign('division_id')->references('id')->on('racing_excellence_divisions');
             $table->foreign('jockey_id')->references('id')->on('users');
 
+            // Need a total field (that will accumalate all the points) - probably use an observer to set.
+
             // Needs a feedback text field for coach comment/feedback.
             // Did not attend race (boolean, default true) (If didn't attend, points are not required from the coach)
             // Did not finish race (boolean, default true) (points are still required from the coach))

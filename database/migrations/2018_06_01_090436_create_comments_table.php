@@ -15,17 +15,17 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('activity_id')->unsigned()->index();
+            $table->integer('commentable_id')->unsigned()->index();
+            $table->string('commentable_type');
             $table->integer('author_id')->unsigned();
             $table->integer('recipient_id')->unsigned()->index();
+            $table->boolean('read')->default(false);
+            $table->boolean('private')->default(false);
             $table->string('body');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');
             $table->foreign('recipient_id')->references('id')->on('users');
-            $table->foreign('activity_id')->references('id')->on('activities');
-
-            // Needs a private (boolean) field
         });
     }
 

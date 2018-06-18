@@ -14,13 +14,11 @@ class ActivityController extends Controller
 {
 	public function index(Request $request)
 	{
-		// dd($request->coach);
-
 		$jockey = Jockey::find(auth()->user()->id);
 
 		$activityTypes = ActivityType::get();
 
-		$events = (new Collection($jockey->events($request)))->paginate(10);
+		$events = (new Collection($jockey->events($request)))->paginate(15);
 
 		$coaches = $this->getAllCoachesWorkedWithJockey($jockey);
 
@@ -29,6 +27,9 @@ class ActivityController extends Controller
 
     public function show(Activity $activity)
     {
+    	// NOTE: mark activity comments for current user as read using vue/javascript,
+    	// so we can highlight new comments to the user, and also set them as read for the next time
+    	// they view the 'show' page.
 
     	return view('jockey.activity.show', compact('activity'));
     }
@@ -37,8 +38,11 @@ class ActivityController extends Controller
     {
     	$ownCoachesIds = $jockey->coaches->pluck('id');
 
-		$racingExcelCoachesIds = $jockey->racingExcellences->pluck('coach_id');
+    	// incase they have been reassigned
+    	$activityCoachesIds = $jockey->activities->pluck('coach_id')->unique();
 
-		return Coach::find($ownCoachesIds->merge($racingExcelCoachesIds));
+		$racingExcelCoachesIds = $jockey->racingExcellences->pluck('coach_id')->unique();
+
+		return Coach::find(($ownCoachesIds->merge($activityCoachesIds))->merge($racingExcelCoachesIds))->sortBy('first_name');
     }
 }

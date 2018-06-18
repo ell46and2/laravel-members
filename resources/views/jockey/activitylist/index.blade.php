@@ -120,7 +120,12 @@
                                     <td>{{ $event->formattedStart }}</td>
                                     <td>{{ $event->formattedStartTime }}</td>
                                     <td>{{ $event->formattedLocation }}</td>
-                                    <td>-No. Comments here-</td>
+                                    <td>
+                                    {{-- Number of comments for or from current user--}}
+                                    {{ $event->commentsForOrFromJockey ? $event->commentsForOrFromJockey->count() : '' }}
+                                    {{-- any unread for current user --}}
+                                    {{ $event->unreadCommentsOnActivityForCurentUser ? $event->unreadCommentsOnActivityForCurentUser->count() > 0 ? '*new' : '' : '' }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

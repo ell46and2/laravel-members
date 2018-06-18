@@ -31,8 +31,15 @@ Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jock
 
 
 
-// Comment
-Route::post('/activity/{activity}/comment', 'Comment\CommentController@store')->name('comment.store');
+// Comments
+Route::put('/comment/{comment}', 'Comment\CommentController@update');
+Route::delete('/comment/{comment}', 'Comment\CommentController@destroy');
+
+// Activity Comments
+Route::get('/activity/{activity}/comment', 'Comment\ActivityCommentController@index')->name('activity.comment.index');
+Route::post('/activity/{activity}/comment', 'Comment\ActivityCommentController@store')->name('activity.comment.store');
+Route::put('/activity/{activity}/comment/{comment}', 'Comment\ActivityCommentController@update')->name('activity.comment.update');
+Route::delete('/activity/{activity}/comment/{comment}', 'Comment\ActivityCommentController@destroy')->name('activity.comment.delete');
 
 Route::get('/dashboard', 'Jockey\DashboardController@index')->name('jockey.dashboard.index');
 

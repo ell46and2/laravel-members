@@ -3,17 +3,29 @@
 namespace App\Http\Controllers\Comment;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity;
+use App\Http\Resources\CommentResource;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Activity $activity)
+    public function update(Comment $comment) // form request validation
     {
-    	$activity->comments()->create([
-    		'body' => request()->body,
-    		'author_id' => request()->user()->id,
-    		'recipient_id' => request()->recipient_id
+    	// add policy to check current user is author or user is an admin
+    	
+    	// Note: need to add attachment - adding/changing/removing
+    	
+    	$comment->update([
+    		'body' => request()->body
     	]);
+
+    	return new CommentResource($comment);
+    }
+
+    public function destroy(Comment $comment)
+    {
+    	// Note: look at soft deleting any attachments
+    	
+    	$comment->delete();
     }
 }

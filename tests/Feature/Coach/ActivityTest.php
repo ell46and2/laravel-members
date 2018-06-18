@@ -385,6 +385,12 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
+    public function a_coach_can_only_create_an_activity_if_they_have_an_least_one_jockey_assigned_to_them()
+    {
+            
+    }
+
+    /** @test */
     public function a_coach_can_only_add_jockeys_from_their_group_to_the_group_activity()
     {
         	
@@ -406,29 +412,5 @@ class ActivityTest extends TestCase
     public function an_activity_must_have_a_jockey_assigned_unless_its_an_away_day() // requires more thought
     {
         	
-    }
-
-    /** @test */
-    public function can_add_a_comment_for_an_individaul_jockey_to_an_activity_they_are_coach_for()
-    {
-            
-    }
-
-    /** @test */
-    public function cannot_add_a_comment_for_an_activity_they_are_not_coach_for()
-    {
-            
-    }
-
-    /** @test */
-    public function can_add_a_comment_for_all_jockeys_that_belong_to_an_activity()
-    {
-            
-    }
-
-    /** @test */
-    public function can_view_all_comments_for_an_activity_including_other_coaches()
-    {
-            
     }
 }

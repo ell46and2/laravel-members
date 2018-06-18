@@ -53,7 +53,8 @@ class ActivityTest extends TestCase
         ]);
 
         $comment = factory(Comment::class)->create([
-            'activity_id' => $activity->id,
+            'commentable_id' => $activity->id,
+            'commentable_type' => 'activity',
             'author_id' => $coach->id,
             'recipient_id' => $jockey->id
         ]);

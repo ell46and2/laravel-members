@@ -15,7 +15,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('attachment-upload', require('./components/AttachmentUpload.vue'));
+Vue.component('attachment-upload', require('./components/Attachments/AttachmentUpload.vue'));
+
+Vue.component('comments', require('./components/Comments/Comments.vue'));
 
 const app = new Vue({
     el: '#app'

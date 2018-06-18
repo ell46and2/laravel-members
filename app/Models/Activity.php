@@ -38,7 +38,15 @@ class Activity extends Model
     
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function commentsForOrFromJockey()
+    {
+        return $this->comments()->where(function($query) {
+            $query->where('author_id', auth()->user()->id)
+            ->orWhere('recipient_id', auth()->user()->id);
+        });
     }
 
     public function type()
@@ -78,6 +86,19 @@ class Activity extends Model
         return (new ActivityFilters($request))->filter($builder);
     }
 
+    public function unreadCommentsOnActivityForCurentUser()
+    {
+        return $this->comments()->where(function($query) {
+            $query->where('recipient_id', auth()->user()->id)
+            ->where('read', false);
+        });
+    }
+
+    public function isThereUnreadCommentsOnActivityForCurentUser()
+    {
+        return (bool) $this->unreadCommentsOnActivityForCurentUser->count();
+    }
+
     /*
         Attributes
     */
@@ -109,4 +130,9 @@ class Activity extends Model
 
         return ucfirst($this->location_name);
     }
+
+    public function getFormattedCommentNameAttribute()
+    {
+        return "{$this->FormattedType} activity";
+    }   
 }
