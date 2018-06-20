@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Activity;
+use App\Models\Comment;
 use App\Models\CompetencyAssessment;
 use App\Models\Document;
 use App\Models\RacingExcellence;
@@ -25,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
             'activity' => Activity::class,
             'racing-excellence' => RacingExcellence::class,
             'document' => Document::class,
-            'competency-assessment' => CompetencyAssessment::class
+            'competency-assessment' => CompetencyAssessment::class,
+            'comment' => Comment::class,
         ]);
     }
 

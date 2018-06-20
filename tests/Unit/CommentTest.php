@@ -39,7 +39,7 @@ class CommentTest extends TestCase
 			'commentable_type' => 'activity',
 			'author_id' => $coach->id,
 			'recipient_id' => $jockey->id,
-		]);   
+		]);
 	    
 	    // comment by jockey
 	    $jockeyCommentForCoachA = factory(Comment::class)->create([

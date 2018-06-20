@@ -15,6 +15,7 @@ class CreateRacingExcellenceDivisionsTable extends Migration
     {
         Schema::create('racing_excellence_divisions', function (Blueprint $table) {
             $table->increments('id');
+            // $table->integer('division_number')->unsigned(); // 1 for div1, 2 for div2 (So easier to order divisions)
             $table->integer('racing_excellence_id')->unsigned()->index();
             $table->timestamps();
 

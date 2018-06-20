@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -27,9 +27,10 @@ class HomeController extends Controller
             // if($user->is_admin) {
             //     return redirect()->route('admin.meets.index');
             // }
+    
 
             // return redirect()->route('meets.index');
-            return view('home');
+            return redirect('/dashboard');
         }
 
         return redirect('/login');

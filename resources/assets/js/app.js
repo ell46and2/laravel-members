@@ -19,6 +19,8 @@ Vue.component('attachment-upload', require('./components/Attachments/AttachmentU
 
 Vue.component('comments', require('./components/Comments/Comments.vue'));
 
+Vue.component('racing-excellence-results', require('./components/RacingExcellence/RacingExcellenceResults.vue'));
+
 const app = new Vue({
     el: '#app'
 });

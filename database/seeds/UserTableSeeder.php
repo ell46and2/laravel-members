@@ -7,6 +7,7 @@ use App\Models\CompetencyAssessment;
 use App\Models\Jockey;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
+use App\Models\RacingExcellenceParticipant;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -32,6 +33,73 @@ class UserTableSeeder extends Seeder
         $coach = factory(Coach::class)->create([
             'email' => 'coach@jcp.com',
             'password' => bcrypt('secret'),
+        ]);
+
+        $racingExcellence = factory(RacingExcellence::class)->create([
+            'series_id' => 1,
+            'coach_id' => $coach->id
+        ]);
+
+        $division1 = factory(RacingExcellenceDivision::class)->create([
+            'racing_excellence_id' => $racingExcellence->id
+        ]);
+
+        $division2 = factory(RacingExcellenceDivision::class)->create([
+            'racing_excellence_id' => $racingExcellence->id
+        ]);
+
+        $participant1 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => $jockey->id
+        ]);
+
+        $participant2 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
+        ]);
+
+        $participant3 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
+        ]);
+
+        $participant4 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
+        ]);
+
+        $participant5 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division2->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
+        ]);
+
+        $participant6 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division2->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
+        ]);
+
+        $participant7 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division2->id,
+            'jockey_id' => function() {
+                return factory(Jockey::class)->create()->id;
+            }
         ]);
 
         $coach2 = factory(Coach::class)->create([

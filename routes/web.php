@@ -32,7 +32,7 @@ Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jock
 
 
 // Comments
-Route::put('/comment/{comment}', 'Comment\CommentController@update');
+Route::post('/comment/{comment}', 'Comment\CommentController@update');
 Route::delete('/comment/{comment}', 'Comment\CommentController@destroy');
 
 // Activity Comments
@@ -62,8 +62,12 @@ Route::post('/admin/jockeys/{jockey}/approve', 'Admin\ApprovedJockeyController@c
 Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('admin.jockeys.pending');
 
 
+// Racing Excellence
 Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');
 Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
+
+Route::get('/racing-excellence/{racingExcellence}/results', 'RacingExcellence\RacingExcellenceResultController@create')->name('racing-excellence.results.create');
+Route::put('/racing-excellence/participant/{participant}', 'RacingExcellence\ParticipantResultController@update');
 
 
 // Competency Assessment - Coach

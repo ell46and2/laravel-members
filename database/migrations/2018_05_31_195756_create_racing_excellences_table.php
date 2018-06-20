@@ -35,7 +35,7 @@ class CreateRacingExcellencesTable extends Migration
             // 'pending results': - if 'start' is past and 'completed' = false
             // 'completed': - 'completed' field = true.
             
-
+            // racing excellence is completed when all participants have a place or marked as race_completed = false.
         });
     }
 

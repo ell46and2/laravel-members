@@ -34,7 +34,7 @@ class NotifyNewComment implements ShouldQueue
     {
         $commentable = $comment->commentable;
 
-        $body = "You have a new comment from {$this->comment->author->full_name} on {$commentable->formattedCommentName}";
+        $body = "There is a new comment from {$this->comment->author->full_name} on {$commentable->formattedCommentName}";
 
         $this->$commentable->notifications()->create([
             'user_id' => $this->comment->recipient_id,

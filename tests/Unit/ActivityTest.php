@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Activity;
+use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\Jockey;
 use App\Models\User;
@@ -217,6 +218,50 @@ class ActivityTest extends TestCase
 			$activity3,
 			$activity4
 		]);	
+    }
+
+    /** @test */
+    public function has_relationship_with_user_returns_true_if_user_is_the_assigned_coach()
+    {
+        $coach = factory(Coach::class)->create();
+        $coachAssignedToOtherActivity = factory(Coach::class)->create();
+
+        $activity = factory(Activity::class)->create([
+            'coach_id' => $coach->id
+        ]);
+
+        $otherActivity = factory(Activity::class)->create([
+            'coach_id' => $coachAssignedToOtherActivity->id
+        ]);
+
+        $this->assertTrue($activity->isAssignedToUser($coach));
+        $this->assertFalse($activity->isAssignedToUser($coachAssignedToOtherActivity));
+    }
+
+    /** @test */
+    public function is_assigned_to_user_returns_true_if_user_is_an_assigned_jockey()
+    {
+        $jockey = factory(Jockey::class)->create();
+        $jockeyAssignedToOtherActivity = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create();
+        $activity->addJockey($jockey);
+
+        $otherActivity = factory(Activity::class)->create();
+        $otherActivity->addJockey($jockeyAssignedToOtherActivity);
+
+        $this->assertTrue($activity->isAssignedToUser($jockey));
+        $this->assertFalse($activity->isAssignedToUser($jockeyAssignedToOtherActivity));
+    }
+
+    /** @test */
+    public function is_assigned_to_user_returns_false_if_user_is_an_admin()
+    {
+        $admin = factory(Admin::class)->create();
+
+        $activity = factory(Activity::class)->create();
+
+        $this->assertFalse($activity->isAssignedToUser($admin));
     }
 
     /** @test */

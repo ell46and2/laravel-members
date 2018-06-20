@@ -39,3 +39,29 @@ $factory->define(App\Models\RacingLocation::class, function (Faker $faker) {
         'name' => $faker->word,
     ];
 });
+
+$factory->define(App\Models\RacingExcellenceParticipant::class, function (Faker $faker) {
+    return [
+        'racing_excellence_id' => function() {
+            return factory(App\Models\RacingExcellence::class)->create()->id;
+        },
+        'division_id' => function() {
+            return factory(App\Models\RacingDivision::class)->create([
+                'racing_excellence_id' => 1
+            ])->id;
+        },
+        'jockey_id' => function() {
+            return factory(App\Models\Jockey::class)->create()->id;
+        },
+        'name' => null,
+        'place' => null,
+        'completed_race' => true,
+        'presentation_points' => null,
+        'professionalism_points' => null,
+        'coursewalk_points' => null,
+        'riding_points' => null,
+        'total_points' => null, 
+    ];
+});
+
+

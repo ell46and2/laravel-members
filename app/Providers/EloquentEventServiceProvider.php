@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Activity;
+use App\Models\RacingExcellenceParticipant;
 use App\Observers\ActivityObserver;
+use App\Observers\RacingExcellenceParticipantObserver;
 use Illuminate\Support\ServiceProvider;
 
 class EloquentEventServiceProvider extends ServiceProvider
@@ -16,6 +18,7 @@ class EloquentEventServiceProvider extends ServiceProvider
     public function boot()
     {
         Activity::observe(ActivityObserver::class);
+        RacingExcellenceParticipant::observe(RacingExcellenceParticipantObserver::class);
     }
 
     /**

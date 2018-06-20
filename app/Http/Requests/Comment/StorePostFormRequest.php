@@ -26,7 +26,7 @@ class StorePostFormRequest extends FormRequest
         return [
             'body' => 'required',
             'recipient_id' => 'required|exists:users,id',
-            'private' => 'nullable|boolean',
+            // 'private' => 'nullable|boolean',
         ];
     }
 }

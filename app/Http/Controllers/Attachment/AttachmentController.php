@@ -19,7 +19,7 @@ class AttachmentController extends Controller
     		'filename' => "{$uid}.{$request->fileExtension}", 
     		'attachable_type' => $request->modelType,
     		'attachable_id' => $request->modelId,
-    		'filetype' => $fileType = explode('/', $request->file('attachment')->getMimeType())[0]
+    		'filetype' => $fileType = getFileType($request->file('attachment'))
     	]);
 
     	$request->file('attachment')->move(storage_path() . '/uploads', $attachment->filename);

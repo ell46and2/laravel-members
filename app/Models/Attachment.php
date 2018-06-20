@@ -16,8 +16,24 @@ class Attachment extends Model
 		return 'uid';
 	}
 
+	/*
+		Relationships
+	*/
     public function attachable()
 	{
 		return $this->morphTo();
 	}
+
+	/*
+		Utilities
+	*/
+	public function getThumb()
+    {
+        if (!$this->processed) {
+        	// NOTE: need to return different placeholders for video and images.
+            return config('jcp.buckets.avatars') . 'default_avatar.png';
+        }
+
+        // return the actual thumbnail here.
+    }
 }

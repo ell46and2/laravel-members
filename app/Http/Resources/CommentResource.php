@@ -13,13 +13,18 @@ class CommentResource extends JsonResource
      * @return array
      */
     public function toArray($request)
-    {
+    {   
+        $userId = $request->user()->id;
+
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'owner' => optional($request->user())->id === $this->author_id,
+            'owner' => $userId === $this->author_id,
             'created_at' => $this->created_at->diffForHumans(),
             'author' => new UserResource($this->author),
+            'private' => $this->private,
+            'read' => $this->read || $this->author_id === $userId,
+            'attachment' => new AttachmentResource($this->attachment),
         ];
     }
 }

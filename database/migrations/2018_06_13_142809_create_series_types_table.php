@@ -16,6 +16,7 @@ class CreateSeriesTypesTable extends Migration
         Schema::create('series_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->boolean('total_just_from_place')->default(false); // Need as Salisbury total is only calculated from the finishing place.
         });
     }
 

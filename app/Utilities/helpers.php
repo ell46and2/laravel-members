@@ -10,3 +10,19 @@ if (! function_exists('daysToSubmitInvoice')) {
     	return $endOfMonth->diffInDays(Carbon::now());
     }
 }
+
+if (! function_exists('asBoolean')) {
+	function asBoolean($value) {
+	   if ($value && strtolower($value) !== "false") {
+	      return true;
+	   } else {
+	      return false;
+	   }
+	}
+}
+
+if (! function_exists('getFileType')) {
+	function getFileType($file) {
+		return explode('/', $file->getMimeType())[0];
+	}
+}

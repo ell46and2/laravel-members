@@ -25,7 +25,7 @@ class UpdatePutFormRequest extends FormRequest
     {
         return [
             'body' => 'required',
-            'private' => 'nullable|boolean',
+            // 'private' => 'nullable|boolean',
         ];
     }
 }

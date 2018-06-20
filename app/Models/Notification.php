@@ -16,7 +16,7 @@ class Notification extends Model
     ];
 
     /*
-        Realtionships
+        Relationships
      */
 
     public function user()

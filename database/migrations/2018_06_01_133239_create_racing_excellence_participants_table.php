@@ -20,10 +20,13 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->integer('jockey_id')->unsigned()->nullable()->index();
             $table->string('name')->nullable(); // For jockeys not on the system.
             $table->integer('place')->nullable(); // What position they came in the race.
+            $table->boolean('completed_race')->default(true);
             $table->integer('presentation_points')->nullable();
             $table->integer('professionalism_points')->nullable();
             $table->integer('coursewalk_points')->nullable();
             $table->integer('riding_points')->nullable();
+            $table->integer('total_points')->nullable();
+            $table->text('feedback')->nullable();
             $table->timestamps();
 
             // $table->foreign('racing_excellence_id')->references('id')->on('racing_excellences');

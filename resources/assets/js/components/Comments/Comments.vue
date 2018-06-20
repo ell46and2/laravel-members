@@ -7,13 +7,20 @@
 					v-for="comment in comments"
 					:key="comment.id"
 					:comment="comment"
+					:is-current-user-jockey="isCurrentUserJockey"
+					:recipient-id="recipientId"
 				/>
 			</ul>
 		</template>
 
+		<!-- need to not show if current user isn't assigned to the activity
+			i.e they are an admin or another coach (not assigned coach)
+		 -->
 		<add-comment 
+			v-if="canUserAddComments"
 			:endpoint="endpoint"
 			:recipient-id="recipientId"
+			:is-current-user-jockey="isCurrentUserJockey"
 		></add-comment>
 	</div>
 </template>
@@ -38,6 +45,18 @@
 			recipientId: {
 				required: false,
 				type: String
+			},
+			jockeyId: {
+				required: false,
+				type: String
+			},
+			isCurrentUserJockey: {
+				required: true,
+				type: String
+			},
+			canUserAddComments: {
+				required: true,
+				type: String
 			}
 		},
 		components: {
@@ -52,9 +71,11 @@
 		},
 		methods: {
 			async loadComments() {
-				let comments = await axios.get(this.endpoint);
+				let comments = await axios.get(`${this.endpoint}?jockey=${this.jockeyId}`);
 
 				this.comments = comments.data.data;
+
+				// this.setCommentsAsRead()
 			},
 			editComment(comment) {
 				_.assign(_.find(this.comments, { id: comment.id }), comment);
@@ -64,7 +85,7 @@
 			},
 			async prependComment(comment) {
 				this.comments.push(comment);
-			},
+			}
 		}
 	}
 </script>

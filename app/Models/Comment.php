@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['body', 'author_id', 'recipient_id', 'private'];
+    protected $fillable = ['body', 'author_id', 'recipient_id', 'private', 'read'];
 
     protected $casts = [
     	'read' => 'boolean',
@@ -27,4 +27,9 @@ class Comment extends Model
 	{
 		return $this->morphTo();
 	}
+
+	public function attachment() // can only have one attachment
+    {
+        return $this->morphOne(Attachment::class, 'attachable');
+    }
 }

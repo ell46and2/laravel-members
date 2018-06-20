@@ -41,11 +41,15 @@ class Activity extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
-    public function commentsForOrFromJockey()
+    public function commentsForOrFromJockey($jockeyId = null)
     {
-        return $this->comments()->where(function($query) {
-            $query->where('author_id', auth()->user()->id)
-            ->orWhere('recipient_id', auth()->user()->id);
+        if($jockeyId === null) {
+            $jockeyId = auth()->user()->id;
+        }
+
+        return $this->comments()->where(function($query) use($jockeyId) {
+            $query->where('author_id', $jockeyId)
+            ->orWhere('recipient_id', $jockeyId);
         });
     }
 
@@ -97,6 +101,15 @@ class Activity extends Model
     public function isThereUnreadCommentsOnActivityForCurentUser()
     {
         return (bool) $this->unreadCommentsOnActivityForCurentUser->count();
+    }
+
+    public function isAssignedToUser(User $user)
+    {
+        if($this->coach_id === $user->id || $this->jockeys->pluck('id')->contains($user->id)) {
+            return true;
+        }
+
+        return false;
     }
 
     /*
