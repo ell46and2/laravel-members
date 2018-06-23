@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class Coach extends User
 {
@@ -27,7 +28,7 @@ class Coach extends User
    
    	public function jockeys() // could order alphabetically here ->orderBy('last_name', 'desc')
     {
-        return $this->belongsToMany(User::class, 'coach_jockey', 'jockey_id', 'coach_id');
+        return $this->belongsToMany(Jockey::class, 'coach_jockey', 'coach_id', 'jockey_id');
     }
 
     public function activities()
@@ -40,10 +41,76 @@ class Coach extends User
         return $this->hasMany(CompetencyAssessment::class);
     }
 
+    public function racingExcellences()
+    {
+        return $this->hasMany(RacingExcellence::class, 'coach_id');
+    }  
 
     /*
         Utilities
      */
+    public function events(Request $request)
+    {
+        // NOTE: need to default to go back 2 years max as default
+        // and if 'from' request is present remove the default.  
+
+        $activities = collect($this->getEventActivities($request));
+
+        $racingExcellences = collect($this->getEventRacingExcellence($request));
+
+        $competencyAssessments = collect($this->getEventCompetencyAssessments($request));
+
+        $events = ($activities->merge($racingExcellences))
+            ->merge($competencyAssessments);
+
+        if($request->order === 'desc') {
+            return $events->sortByDesc('start');
+        }
+
+        return $events->sortBy('start');
+    }
+
+    public function getEventActivities($request)
+    {
+        if(is_numeric($request->type) || !$request->type) {
+            return $this->activities()->with([
+                'jockeys',
+                'type',
+                'location',
+                'comments',
+                'unreadCommentsOnActivityForCurentUser',
+            ])
+            ->filter($request)
+            ->get();
+        }
+
+        return [];
+    }
+
+    public function getEventRacingExcellence($request)
+    {
+        if($request->type === 're' || !$request->type) {
+            return $this->racingExcellences()->with([
+                'jockeys',
+                'location',
+            ])
+            ->filter($request)
+            ->get();
+        }
+
+        return [];
+    }
+
+    public function getEventCompetencyAssessments($request)
+    {
+        if($request->type === 'ca' || !$request->type) {
+            return $this->competencyAssessments()
+                ->with(['jockey'])->filter($request)->get();
+        }
+
+        return [];
+    }
+
     
     public function scopeByAccessToken(Builder $builder, $email, $token)
     {

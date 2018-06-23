@@ -47,7 +47,6 @@
                 this.file = document.getElementById('attachment').files[0];
             },
             submit() {
-                console.log('submitted');
                 if(this.file !== null) {
                    this.uploading = true;
                    this.failed = false;
@@ -80,14 +79,15 @@
                 }            
             },
             uploadProgress(percent) {
-                console.log('percent', percent);
                 this.fileProgress = percent;
             }
         },
         mounted() {
-            console.log(this.modelId);
-            console.log('Component mounted.')
-            console.log(this.modelType);
+            window.onbeforeunload = () => {
+                if(this.uploading && !this.uploadingComplete && !this.failed) {
+                    return 'Are you sure you want to navigate away. Your attachment is currently uploading.'
+                }
+            }
         }
     }
 </script>

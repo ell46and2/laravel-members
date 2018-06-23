@@ -6,10 +6,15 @@
 			<div class="form-group">
 			    <label for="exampleFormControlSelect1">Place</label>
 			    <select 
-			    	class="form-control" 
+			    	class="form-control"
+			    	v-model="form.place" 
 			    >
-			    	<option value="">Select Place</option>
-			      	<option v-for="i in numberOfParticipants" :value="i">{{ i }}</option>
+			    	<option disabled :selected="form.place == null" value="">Select Place</option>
+			      	<option 
+			      		v-for="i in numberOfParticipants" 
+			      		:value="i"
+			      		:selected="form.place == i"
+			      	>{{ i }}</option>
 			    </select>
 			</div>
 
@@ -46,9 +51,19 @@
 					id="body" 
 					rows="10"
 					class="form-control"
-					autofocus="autofocus"
 					v-model="form.feedback"
 				></textarea>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">
+					{{ participant.place || !participant.completed_race ? 'Update' : 'Save' }}
+				</button>
+				<a 
+					href="#" 
+					class="btn btn-link" 
+					@click.prevent="cancel"
+				>Cancel</a>
 			</div>
 		</form>
 	</div>
@@ -56,6 +71,7 @@
 
 <script>
 	import PointsRadios from './PointsRadios';
+	import bus from '../../bus';
 
 	export default {
 		data() {
@@ -67,6 +83,13 @@
 					coursewalk_points: this.participant.coursewalk_points,
 					riding_points: this.participant.riding_points,
 					feedback: this.participant.feedback,
+				},
+				validationFailed: {
+					place: false,
+					presentation_points: false,
+					professionalism_points: false,
+					coursewalk_points: false,
+					riding_points: false,
 				}
 			}
 		},
@@ -78,6 +101,10 @@
 			numberOfParticipants: {
 				required: true,
 				type: Number
+			},
+			placeOnlyRequired: {
+				required: true,
+				type: Boolean
 			}
 		},
 		components: {
@@ -88,15 +115,17 @@
 				// alert(value);
 				this.form[`${field}`] = value;
 			},
-			submit() {
+			async submit() {
 				if(this.validate()) {
-					// post form data
-					// receive the new participant resource back
-					// emit using bus to RacingExcellenceResults component
-					// That component will then update the data.
+					let participant = await axios.put(`/racing-excellence/participant/${this.participant.id}`, this.form);
+
+					bus.$emit('participant:updated', participant.data.data);
 				}
 			},
 			validate() {
+				if(this.form.place === null) {
+					this.validationFailed.place = true;
+				}
 				// check all required fields are not null
 				// if salisbury the radios can be null
 				// feedback can always be null

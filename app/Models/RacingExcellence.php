@@ -14,6 +14,10 @@ class RacingExcellence extends Model
 
 	protected $dates = ['created_at', 'updated_at', 'start'];
 
+    protected $casts = [
+        'completed' => 'boolean'
+    ];
+
 	/*
 		Relationships
 	*/
@@ -83,6 +87,15 @@ class RacingExcellence extends Model
 		});
 	}
 
+    public function scopeFilter(Builder $builder, $request)
+    {
+        return (new RacingExcellenceFilters($request))->filter($builder);
+    }
+
+    /*
+        Attributes
+     */
+
 	public function getFormattedTypeAttribute()
     {
         return 'Racing Excellence';
@@ -103,8 +116,14 @@ class RacingExcellence extends Model
         return ucfirst($this->location->name);
     }
 
-    public function scopeFilter(Builder $builder, $request)
+    public function getFormattedJockeyOrGroupAttribute()
     {
-        return (new RacingExcellenceFilters($request))->filter($builder);
+        return 'Group';
+    }
+
+    public function getNotificationLinkAttribute()
+    {
+        // NOTE: need to have different urls depending on the users role.
+        return config('app.url') . urlAppendByRole() . "/racing-excellence/{$this->id}";
     }
 }

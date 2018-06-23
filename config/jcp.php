@@ -10,6 +10,9 @@ return [
 	'buckets' => [
 		'avatars' => 'https://s3.eu-west-2.amazonaws.com/images.jcp/avatars/',
         'documents' => 'https://s3.eu-west-2.amazonaws.com/documents.jcp/',
+        'videos_out' => 'https://s3.eu-west-1.amazonaws.com/video-out.jcp/',
+        'video_thumbnails' => 'https://s3.eu-west-1.amazonaws.com/video-thumbs.jcp/',
+        'images' => 'https://s3.eu-west-2.amazonaws.com/images.jcp/images/',
         // attachment_videos
         // attachment_videos_encoded
         // attachment_images

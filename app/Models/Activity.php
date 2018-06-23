@@ -147,5 +147,20 @@ class Activity extends Model
     public function getFormattedCommentNameAttribute()
     {
         return "{$this->FormattedType} activity";
-    }   
+    }
+
+    public function getFormattedJockeyOrGroupAttribute()
+    {
+        if($this->jockeys->count() === 1) {
+            return $this->jockeys->first()->full_name;
+        } else if($this->jockeys->count() > 1) {
+            return 'Group';
+        }
+    }
+
+    public function getNotificationLinkAttribute()
+    {
+        // NOTE: need to have different urls depending on the users role.
+        return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
+    }  
 }

@@ -5,6 +5,7 @@ use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\CompetencyAssessment;
 use App\Models\Jockey;
+use App\Models\Notification;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
 use App\Models\RacingExcellenceParticipant;
@@ -34,6 +35,7 @@ class UserTableSeeder extends Seeder
             'email' => 'coach@jcp.com',
             'password' => bcrypt('secret'),
         ]);
+
 
         $racingExcellence = factory(RacingExcellence::class)->create([
             'series_id' => 1,
@@ -318,5 +320,31 @@ class UserTableSeeder extends Seeder
                 'coach_id' => $coach->id
             ]);
         }
+
+        // Coach notifications
+        factory(Notification::class, 4)->create([
+            'user_id' => $coach->id,
+        ]);
+
+        factory(Notification::class, 2)->create([
+            'user_id' => $coach->id,
+            'read' => true,
+        ]);
+
+        factory(Notification::class, 2)->create([
+            'user_id' => $coach->id,
+            'notifiable_id' => 1,
+            'notifiable_type' => 'activity'
+        ]);
+
+        factory(Notification::class, 2)->create([
+            'user_id' => $coach->id,
+            'notifiable_id' => 1,
+            'notifiable_type' => 'racing-excellence'
+        ]);
+
+        factory(Notification::class, 4)->create([
+            'user_id' => $jockey->id,
+        ]);
     }
 }

@@ -26,3 +26,15 @@ if (! function_exists('getFileType')) {
 		return explode('/', $file->getMimeType())[0];
 	}
 }
+
+if (! function_exists('urlAppendByRole')) {
+	function urlAppendByRole() {
+		$role = auth()->user()->role->name;
+
+		if($role === 'jockey') {
+			return '';
+		}
+
+		return "/{$role}";
+	}
+}

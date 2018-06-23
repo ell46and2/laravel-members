@@ -24,10 +24,10 @@ class RacingExcellenceResultsFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'presentation_points' => 'nullable|numeric|between:0,5',
-            'professionalism_points' => 'nullable|numeric|between:0,5',
-            'coursewalk_points' => 'nullable|numeric|between:0,5',
-            'riding_points' => 'nullable|numeric|between:0,5',
+            'presentation_points' => 'nullable|numeric|between:0,2',
+            'professionalism_points' => 'nullable|numeric|between:0,2',
+            'coursewalk_points' => 'nullable|numeric|between:0,2',
+            'riding_points' => 'nullable|numeric|between:0,2',
         ];
     }
 }

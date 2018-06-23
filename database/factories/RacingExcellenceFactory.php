@@ -11,6 +11,7 @@ $factory->define(App\Models\RacingExcellence::class, function (Faker $faker) {
         'location_id' => 1,
         'series_id' => 1,
         'start' => Carbon::parse('2018-11-06 1:00pm'),
+        'completed' => false,
     ];
 });
 

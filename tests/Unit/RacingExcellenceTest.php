@@ -213,4 +213,56 @@ class RacingExcellenceTest extends TestCase
 	    $this->assertEquals(10, $participant2->calculateTotalPoints());
 	    $this->assertEquals(1, $participant3->calculateTotalPoints());
 	}
+
+	/** @test */
+	public function can_get_the_place_points_for_a_participant()
+	{
+	    $series = SeriesType::first();
+
+	    $racingExcellence = factory(RacingExcellence::class)->create([
+	    	'series_id' => $series->id
+	    ]);
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant1 = factory(RacingExcellenceParticipant::class)->create([
+	    	'racing_excellence_id' => $racingExcellence->id,
+	        'division_id' => $division->id,
+	        'jockey_id' => function() {
+	            return factory(Jockey::class)->create()->id;
+	        },
+	        'place' => 1,
+	        'completed_race' => true,
+	        'presentation_points' => 0,
+	        'professionalism_points' => 0,
+	        'coursewalk_points' => 0,
+	        'riding_points' => 0,
+	    ]);
+
+	    $participant2 = factory(RacingExcellenceParticipant::class)->create([
+	    	'racing_excellence_id' => $racingExcellence->id,
+	        'division_id' => $division->id,
+	        'jockey_id' => function() {
+	            return factory(Jockey::class)->create()->id;
+	        },
+	        'place' => 8,
+	        'completed_race' => true,
+	        'presentation_points' => 0,
+	        'professionalism_points' => 0,
+	        'coursewalk_points' => 0,
+	        'riding_points' => 0,
+	    ]);
+
+	    $this->assertEquals(5, $participant1->placePoints());
+	    $this->assertEquals(0, $participant2->placePoints());
+	}
+
+	/** @test */
+	public function if_participant_did_not_complete_the_race()
+	{
+	    // completed_race set to false
+	    // place points set to 0
+	}
 }

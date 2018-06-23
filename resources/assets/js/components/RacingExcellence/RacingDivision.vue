@@ -6,6 +6,7 @@
 			:participant="participant"
 			:key="participant.id"
 			:number-of-participants="division.participants.length"
+			:place-only-required="placeOnlyRequired"
 		></racing-participant>
 
 	</div>
@@ -19,6 +20,10 @@ import RacingParticipant from './RacingParticipant';
 			division: {
 				required: true,
 				type: Object
+			},
+			placeOnlyRequired: {
+				required: true,
+				type: Boolean
 			}
 		},
 		components: {

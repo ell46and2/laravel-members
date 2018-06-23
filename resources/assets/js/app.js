@@ -21,6 +21,8 @@ Vue.component('comments', require('./components/Comments/Comments.vue'));
 
 Vue.component('racing-excellence-results', require('./components/RacingExcellence/RacingExcellenceResults.vue'));
 
+Vue.component('notifications', require('./components/Notifications/Notifications.vue'));
+
 const app = new Vue({
     el: '#app'
 });

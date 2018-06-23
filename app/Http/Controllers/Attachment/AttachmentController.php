@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Attachment;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UploadVideo;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class AttachmentController extends Controller
     	$request->file('attachment')->move(storage_path() . '/uploads', $attachment->filename);
 
     	if($fileType === 'video') {
-    		// dispatch uploadvideo job
+    		$this->dispatch(new UploadVideo($attachment->filename));
     	} else {
     		// dispatch uploadimage job
     		// Create thumbnail too.
@@ -34,5 +35,7 @@ class AttachmentController extends Controller
     	// NOTE: set processed to true once image is uploaded to s3
     	// NOTE: set processed to true for video once its been transcoded.
     	// NOTE: display placeholder thumbnail until processed equals true. 
+        
+        return response()->json(null, 200); 
     }
 }

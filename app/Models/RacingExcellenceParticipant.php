@@ -46,20 +46,29 @@ class RacingExcellenceParticipant extends Model
 	/*
 		Utilities
 	*/
-	public function calculateTotalPoints()
-	{	
-		$total = 0;
-	
-		$series = $this->racingExcellence->series;
+	public function placePoints($series = null)
+	{
+		if(!$series) {
+			$series = $this->racingExcellence->series;
+		}
 
 		// if completed race - calculate points for place
 		if($this->completed_race && $this->place) {
-			$total = $total + $series->pointsForPlace($this->place);
+			return $series->pointsForPlace($this->place);
 		}
+
+		return 0;
+	}
+
+	public function calculateTotalPoints()
+	{	
+		$series = $this->racingExcellence->series;
+
+		$total = $this->placePoints($series);
 
 		if($series->total_just_from_place) {
 			return $total;
-		} 
+		} 		
 		
 		return $total + array_sum([
 			$this->presentation_points,

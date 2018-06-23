@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::post('/webhook/encoding', 'Attachment\EncodingWebhookController@handle');
 
 // Jockey
 Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.index');
@@ -44,9 +45,16 @@ Route::delete('/activity/{activity}/comment/{comment}', 'Comment\ActivityComment
 Route::get('/dashboard', 'Jockey\DashboardController@index')->name('jockey.dashboard.index');
 
 
+// Notifications
+Route::put('/notification/{notification}/dismiss', 'Notification\NotificationController@dismiss');
+Route::post('/notification/{user}/dismiss-all', 'Notification\NotificationController@dismissAll');
+
 // Coach
+Route::get('/coach/activity/list', 'Coach\ActivityController@index')->name('coach.activity-list');
 Route::post('/coach/activity', 'Coach\ActivityController@store')->name('coach.activity.store');
 Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
+
+Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.dashboard.index');
 
 Route::get('/coach/auth', 'Coach\TokenAccessController@index')->name('coach.token-access');
 Route::get('/coach/profile/password', 'Coach\PasswordController@edit')->name('coach.password.edit');
@@ -68,6 +76,7 @@ Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenc
 
 Route::get('/racing-excellence/{racingExcellence}/results', 'RacingExcellence\RacingExcellenceResultController@create')->name('racing-excellence.results.create');
 Route::put('/racing-excellence/participant/{participant}', 'RacingExcellence\ParticipantResultController@update');
+
 
 
 // Competency Assessment - Coach

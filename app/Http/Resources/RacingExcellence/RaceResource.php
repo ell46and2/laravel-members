@@ -19,12 +19,14 @@ class RaceResource extends JsonResource
             'divisions',
             'divisions.participants',
             'divisions.participants.jockey',
-            'divisions.participants.jockey.role'
+            'divisions.participants.jockey.role',
+            'series',
         ]);
 
         return [
             'id' => $this->id,
-            'divisions' => DivisionResource::collection($this->divisions)
+            'divisions' => DivisionResource::collection($this->divisions),
+            'totalJustFromPlace' => $this->series->total_just_from_place
         ];
     }
 }

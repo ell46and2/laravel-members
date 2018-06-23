@@ -18,6 +18,7 @@ class CreateRacingExcellencesTable extends Migration
             $table->integer('coach_id')->unsigned()->index();
             $table->integer('location_id')->unsigned();
             $table->integer('series_id')->unsigned();
+            $table->boolean('completed')->default(false);
             $table->timestamp('start');
             $table->timestamps();
 

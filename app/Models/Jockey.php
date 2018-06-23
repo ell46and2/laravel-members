@@ -28,7 +28,7 @@ class Jockey extends User
    
    	public function coaches()  // could order alphabetically here ->orderBy('last_name', 'desc')
     {
-        return $this->belongsToMany(Coach::class, 'coach_jockey', 'coach_id', 'jockey_id');
+        return $this->belongsToMany(Coach::class, 'coach_jockey', 'jockey_id', 'coach_id');
     }
 
     public function activities()
@@ -37,7 +37,7 @@ class Jockey extends User
             ->withPivot('feedback');
     }
 
-    public function competencyAsssessments()
+    public function competencyAssessments()
     {
         return $this->hasMany(CompetencyAssessment::class, 'jockey_id');
     }
@@ -71,12 +71,12 @@ class Jockey extends User
 
         $activities = collect($this->getEventActivities($request));
 
-        $racingExcellences = collect($this->getEventRacingEcellence($request));
+        $racingExcellences = collect($this->getEventRacingExcellence($request));
 
-        $competencyAsssessments = collect($this->getEventCompetencyAssessments($request));
+        $competencyAssessments = collect($this->getEventCompetencyAssessments($request));
 
         $events = ($activities->merge($racingExcellences))
-            ->merge($competencyAsssessments);
+            ->merge($competencyAssessments);
 
         if($request->order === 'desc') {
             return $events->sortByDesc('start');
@@ -88,7 +88,7 @@ class Jockey extends User
     public function getEventCompetencyAssessments($request)
     {
         if($request->type === 'ca' || !$request->type) {
-            return $this->competencyAsssessments()
+            return $this->competencyAssessments()
                 ->with(['coach'])->filter($request)->get();
         }
 
@@ -112,7 +112,7 @@ class Jockey extends User
         return [];
     }
 
-    public function getEventRacingEcellence($request)
+    public function getEventRacingExcellence($request)
     {
         if($request->type === 're' || !$request->type) {
             return $this->racingExcellences()->with([

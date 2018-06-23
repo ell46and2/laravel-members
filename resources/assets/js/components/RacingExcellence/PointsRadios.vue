@@ -4,19 +4,19 @@
 
 		<div class="btn-group btn-group-toggle" data-toggle="buttons">
 			<br><br>
-	  		<label class="btn btn-secondary" @click="onClick(0)">
+	  		<label class="btn btn-secondary" :class="value === 0 ? 'active' : ''" @click="onClick(0)">
 	    		<input 
 	    			type="radio" 
 	    			autocomplete="off" 
 	    			> 0
 	  		</label>
-	  		<label class="btn btn-secondary" @click="onClick(1)">
+	  		<label class="btn btn-secondary" :class="value === 1 ? 'active' : ''" @click="onClick(1)">
 	    		<input 
 	    			type="radio" 
 	    			autocomplete="off" 
 	    		> 1
 	  		</label>
-	  		<label class="btn btn-secondary" @click="onClick(2)">
+	  		<label class="btn btn-secondary" :class="value === 2 ? 'active' : ''" @click="onClick(2)">
 	    		<input 
 	    			type="radio" 
 	    			autocomplete="off"
@@ -30,7 +30,7 @@
 	export default {
 		data() {
 			return {
-				value: null
+				value: this.currentValue
 			}
 		},
 		props: {
@@ -46,7 +46,7 @@
 		},
 		methods: {
 			onClick(value) {
-				console.log(this.value === value);
+				// set value to null if already selected.
 				if(this.value === value) {
 					this.value = null;
 					this.$emit('valueChange', null, this.field);

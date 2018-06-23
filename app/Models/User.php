@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function unreadNotifications()
     {
-        return $this->notifications()->where('read', false);
+        return $this->notifications()->where('read', false)->orderBy('created_at', 'desc');
     }
 
     public function county()

@@ -21,7 +21,7 @@ class CreateCommentsTable extends Migration
             $table->integer('recipient_id')->unsigned()->index();
             $table->boolean('read')->default(false);
             $table->boolean('private')->default(false);
-            $table->string('body');
+            $table->text('body');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');

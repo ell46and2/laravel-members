@@ -57,4 +57,9 @@ class CompetencyAssessment extends Model
     {
         return '-';
     }
+
+    public function getFormattedJockeyOrGroupAttribute()
+    {
+        return $this->jockey->full_name;      
+    }
 }

@@ -20,6 +20,7 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->integer('jockey_id')->unsigned()->nullable()->index();
             $table->string('name')->nullable(); // For jockeys not on the system.
             $table->integer('place')->nullable(); // What position they came in the race.
+            $table->integer('place_points')->nullable();
             $table->boolean('completed_race')->default(true);
             $table->integer('presentation_points')->nullable();
             $table->integer('professionalism_points')->nullable();
@@ -32,12 +33,6 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             // $table->foreign('racing_excellence_id')->references('id')->on('racing_excellences');
             $table->foreign('division_id')->references('id')->on('racing_excellence_divisions');
             $table->foreign('jockey_id')->references('id')->on('users');
-
-            // Need a total field (that will accumalate all the points) - probably use an observer to set.
-
-            // Needs a feedback text field for coach comment/feedback.
-            // Did not attend race (boolean, default true) (If didn't attend, points are not required from the coach)
-            // Did not finish race (boolean, default true) (points are still required from the coach))
         });
     }
 

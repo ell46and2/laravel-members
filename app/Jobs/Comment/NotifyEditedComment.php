@@ -32,11 +32,11 @@ class NotifyEditedComment implements ShouldQueue
      */
     public function handle()
     {
-        $commentable = $comment->commentable;
+        $commentable = $this->comment->commentable;
 
         $body = "comment from {$this->comment->author->full_name} on {$commentable->formattedCommentName} has been edited";
 
-        $this->$commentable->notifications()->create([
+        $commentable->notifications()->create([
             'user_id' => $this->comment->recipient_id,
             'body' => $body
         ]);
