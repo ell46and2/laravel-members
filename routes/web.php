@@ -98,6 +98,7 @@ Route::get('/messages', 'Message\MessageController@index')->name('messages.index
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
 
 // Attachments
+Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');
 Route::post('/attachment', 'Attachment\AttachmentController@store');
 
 // Change Password

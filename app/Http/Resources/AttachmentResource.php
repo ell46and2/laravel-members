@@ -17,9 +17,11 @@ class AttachmentResource extends JsonResource
         return [
             'id' => $this->id,
             'filetype' => $this->filetype,
-            'filename' => $this->filename,
+            'uid' => $this->uid,
             'processed' => $this->processed,
             'thumbnail' => $this->getThumb(),
+            'video_url' => $this->getStreamUrl(),
+            // 'image_url' => $this->getImageUrl()
         ];
     }
 }

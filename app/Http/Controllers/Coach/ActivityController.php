@@ -78,7 +78,9 @@ class ActivityController extends Controller
 
     public function show(Activity $activity)
     {   
-        return view('coach.activity.show', compact('activity'));
+        $video = $activity->attachments->first(); // NOTE: Remove, for testing purposes
+
+        return view('coach.activity.show', compact('activity', 'video'));
     }
 
     private function getAllJockeysWorkedWithCoach(Coach $coach)

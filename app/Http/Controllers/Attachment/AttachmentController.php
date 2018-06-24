@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Attachment;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AttachmentResource;
 use App\Jobs\UploadVideo;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
@@ -37,5 +38,10 @@ class AttachmentController extends Controller
     	// NOTE: display placeholder thumbnail until processed equals true. 
         
         return response()->json(null, 200); 
+    }
+
+    public function show(Attachment $attachment)
+    {
+        return new AttachmentResource($attachment);
     }
 }

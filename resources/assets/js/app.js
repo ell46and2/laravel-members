@@ -17,6 +17,12 @@ window.Vue = require('vue');
 
 Vue.component('attachment-upload', require('./components/Attachments/AttachmentUpload.vue'));
 
+Vue.component('video-player', require('./components/Attachments/VideoPlayer.vue'));
+
+Vue.component('attachments', require('./components/Attachments/Attachments.vue'));
+
+Vue.component('attachment-modal', require('./components/Attachments/AttachmentModal.vue'));
+
 Vue.component('comments', require('./components/Comments/Comments.vue'));
 
 Vue.component('racing-excellence-results', require('./components/RacingExcellence/RacingExcellenceResults.vue'));

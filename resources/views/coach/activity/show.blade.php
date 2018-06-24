@@ -9,6 +9,18 @@
 
 	<br><br><br><br>
 
+	<attachments></attachments>
+
+	<attachment-modal></attachment-modal>
+
+	{{-- <video-player
+		video-uid="{{ $video->uid }}"
+		video-url="{{ $video->getStreamUrl() }}"
+		thumbnail-url="{{ $video->getThumb() }}"
+	></video-player> --}}
+
+	<br><br><br><br>
+
 	{{-- Loop through each jockey and create tab with comments in  --}}
 	<comments
 		endpoint="{{ route('activity.comment.index', $activity) }}"
