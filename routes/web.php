@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::post('/webhook/encoding', 'Attachment\EncodingWebhookController@handle');
+Route::post('/webhook/encoding', 'Attachment\EncodingWebhookController@handle'); // ./ngrok http -subdomain=jcp 8000
 
 // Jockey
 Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.index');
@@ -71,6 +71,7 @@ Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('ad
 
 
 // Racing Excellence
+Route::get('/admin/racing-excellence/create', 'Admin\RacingExcellenceController@create')->name('admin.racing-excellence.create');
 Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');
 Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
 

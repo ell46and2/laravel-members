@@ -23,6 +23,8 @@ Vue.component('racing-excellence-results', require('./components/RacingExcellenc
 
 Vue.component('notifications', require('./components/Notifications/Notifications.vue'));
 
+Vue.component('autocomplete', require('./components/Search/Autocomplete.vue'));
+
 const app = new Vue({
     el: '#app'
 });

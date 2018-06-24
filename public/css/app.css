@@ -1,4 +1,35 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/*!
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);.autocomplete {
+  position: relative;
+  width: 200px;
+}
+
+.autocomplete__input {
+  width: 200px;
+}
+
+.autocomplete__results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 200px;
+  overflow: auto;
+  width: 200px;
+}
+
+.autocomplete__result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete__result:hover,
+.autocomplete__result.is-active {
+  background-color: #4AAE9B;
+  color: white;
+}
+
+/*!
  * Bootstrap v4.1.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.

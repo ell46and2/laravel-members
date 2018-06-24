@@ -14028,6 +14028,8 @@ Vue.component('racing-excellence-results', __webpack_require__(62));
 
 Vue.component('notifications', __webpack_require__(77));
 
+Vue.component('autocomplete', __webpack_require__(88));
+
 var app = new Vue({
   el: '#app'
 });
@@ -47383,7 +47385,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         submit: function submit() {
             var _this = this;
 
-            console.log('submitted');
             if (this.file !== null) {
                 this.uploading = true;
                 this.failed = false;
@@ -47415,14 +47416,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         uploadProgress: function uploadProgress(percent) {
-            console.log('percent', percent);
             this.fileProgress = percent;
         }
     },
     mounted: function mounted() {
-        console.log(this.modelId);
-        console.log('Component mounted.');
-        console.log(this.modelType);
+        var _this2 = this;
+
+        window.onbeforeunload = function () {
+            if (_this2.uploading && !_this2.uploadingComplete && !_this2.failed) {
+                return 'Are you sure you want to navigate away. Your attachment is currently uploading.';
+            }
+        };
     }
 });
 
@@ -48896,6 +48900,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		fileInputId: function fileInputId() {
 			return 'attachment_' + this.recipientId + '_edit';
 		}
+	},
+	mounted: function mounted() {
+		var _this2 = this;
+
+		window.onbeforeunload = function () {
+			if (_this2.uploading && !_this2.uploadingComplete && !_this2.failed) {
+				return 'Are you sure you want to navigate away. Your attachment is currently uploading.';
+			}
+		};
 	}
 });
 
@@ -49574,6 +49587,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		fileInputId: function fileInputId() {
 			return 'attachment_' + this.recipientId;
 		}
+	},
+	mounted: function mounted() {
+		var _this2 = this;
+
+		window.onbeforeunload = function () {
+			if (_this2.uploading && !_this2.uploadingComplete && !_this2.failed) {
+				return 'Are you sure you want to navigate away. Your attachment is currently uploading.';
+			}
+		};
 	}
 });
 
@@ -51232,6 +51254,286 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(89)
+/* template */
+var __vue_template__ = __webpack_require__(90)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Search/Autocomplete.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6d0f4428", Component.options)
+  } else {
+    hotAPI.reload("data-v-6d0f4428", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: {
+		resource: {
+			type: String,
+			required: true
+		}
+	},
+	data: function data() {
+		return {
+			search: '',
+			resultId: null,
+			results: [],
+			isOpen: false,
+			data: [],
+			arrowCounter: -1
+		};
+	},
+	mounted: function mounted() {
+		this.data = JSON.parse(this.resource);
+
+		document.addEventListener('click', this.handleClickOutside);
+	},
+	destroyed: function destroyed() {
+		document.removeEventListener('click', this.handleClickOutside);
+	},
+
+	methods: {
+		onChange: function onChange() {
+			this.isOpen = true;
+			this.filterResults();
+			this.clearResultId();
+		},
+		filterResults: function filterResults() {
+			var _this = this;
+
+			this.results = this.data.filter(function (user) {
+				console.log(user.name);
+				return user.name.toLowerCase().indexOf(_this.search.toLowerCase()) > -1;
+			});
+			console.log(this.results);
+		},
+		setResult: function setResult(result) {
+			this.search = result.name;
+			this.setResultId(result.id);
+			this.isOpen = false;
+		},
+		clearResultId: function clearResultId() {
+			this.resultId = null;
+			// emit to clear id from parent
+		},
+		setResultId: function setResultId(id) {
+			this.resultId = id;
+			// emit to sent id to parent
+		},
+		onArrowDown: function onArrowDown() {
+			if (this.arrowCounter < this.results.length) {
+				this.arrowCounter = this.arrowCounter + 1;
+			}
+			console.log('counter', this.arrowCounter);
+		},
+		onArrowUp: function onArrowUp() {
+			if (this.arrowCounter > 0) {
+				this.arrowCounter = this.arrowCounter - 1;
+			}
+			console.log('counter', this.arrowCounter);
+		},
+		onEnter: function onEnter() {
+			if (this.arrowCounter >= 0) {
+				this.setResult(this.results[this.arrowCounter]);
+			}
+			this.arrowCounter = -1;
+		},
+		handleClickOutside: function handleClickOutside(evt) {
+			if (!this.$el.contains(evt.target)) {
+				this.isOpen = false;
+				this.arrowCounter = -1;
+			}
+		}
+
+		// Do we have an add button that will emit the id to the parent?
+		// We can disable the button until this.resultId doesn't equal null
+
+	}
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "autocomplete" }, [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search"
+        }
+      ],
+      staticClass: "autocomplete__input",
+      attrs: { type: "text" },
+      domProps: { value: _vm.search },
+      on: {
+        input: [
+          function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          },
+          _vm.onChange
+        ],
+        keyup: [
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "down", 40, $event.key, [
+                "Down",
+                "ArrowDown"
+              ])
+            ) {
+              return null
+            }
+            return _vm.onArrowDown($event)
+          },
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "up", 38, $event.key, ["Up", "ArrowUp"])
+            ) {
+              return null
+            }
+            return _vm.onArrowUp($event)
+          },
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.onEnter($event)
+          }
+        ]
+      }
+    }),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.isOpen,
+            expression: "isOpen"
+          }
+        ],
+        staticClass: "autocomplete__results"
+      },
+      _vm._l(_vm.results, function(result, i) {
+        return _c(
+          "li",
+          {
+            key: i,
+            staticClass: "autocomplete__result",
+            class: { "is-active": i === _vm.arrowCounter },
+            on: {
+              click: function($event) {
+                _vm.setResult(result)
+              }
+            }
+          },
+          [_vm._v("\n      \t\t\t" + _vm._s(result.name) + "\n      \t\t")]
+        )
+      })
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6d0f4428", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
