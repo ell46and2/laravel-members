@@ -28,9 +28,9 @@
 					<template v-if="comment.attachment">
 						Has {{ comment.attachment.filetype }} attachment {{ comment.attachment.filename }}<br>
 						
-						<attachment-thumbnail
+						<attachment
 							:attachment="comment.attachment"
-						></attachment-thumbnail>
+						></attachment>
 						<br>
 					</template>
 
@@ -55,7 +55,7 @@
 
 <script>
 	import CommentEdit from './CommentEdit';
-	import AttachmentThumbnail from '../Attachments/AttachmentThumbnail';
+	import Attachment from '../Attachments/Attachment';
 	import bus from '../../bus';
 	
 	export default {
@@ -80,7 +80,7 @@
 		},
 		components: {
 			CommentEdit,
-			AttachmentThumbnail
+			Attachment
 		},
 		mounted() {
 			bus.$on('comment:edit-cancelled', (comment) => {

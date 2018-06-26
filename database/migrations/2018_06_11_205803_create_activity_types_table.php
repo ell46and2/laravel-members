@@ -17,6 +17,8 @@ class CreateActivityTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             // $table->timestamps();
+            
+            // Possibly add an icon field with the filename to svg?
         });
     }
 

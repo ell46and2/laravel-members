@@ -28,6 +28,7 @@ class ParticipantResource extends JsonResource
             'riding_points' => $this->riding_points,
             'total_points' => $this->total_points,
             'feedback' => $this->feedback,
+            'avatar' => $this->getAvatar(),
         ];
     }
 }

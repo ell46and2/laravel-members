@@ -153,6 +153,11 @@ class User extends Authenticatable
         return $this->role->name === 'coach';
     }
 
+    public function isCoachOrAdmin()
+    {
+        return $this->isCoach() || $this->isAdmin();
+    }
+
     public function approve()
     {
         $this->update([

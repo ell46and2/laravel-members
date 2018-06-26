@@ -77,4 +77,14 @@ class RacingExcellenceParticipant extends Model
 			$this->riding_points
 		]);
 	}
+
+	public function getAvatar()
+	{
+		if($this->name) {
+			// NOTE: Do we want a different avatar image for external jockeys?
+			return config('jcp.buckets.avatars') . 'default_avatar.png';
+		}
+
+		return $this->jockey->getAvatar();
+	}
 }

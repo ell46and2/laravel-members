@@ -17,15 +17,12 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->integer('activity_type_id')->unsigned();
             $table->integer('coach_id')->unsigned()->index();
-
-            // Does this need to be polymorphic for activity types, racing excellence, away days etc?
-            // $table->integer('activity_type_id')->unsigned(); 
-              
             $table->dateTime('start')->index();
             $table->dateTime('end')->index()->nullable();
             $table->integer('duration')->nullable(); // in minutes
             $table->integer('location_id')->unsigned()->nullable(); // location either dropdown id or free test.
             $table->string('location_name')->nullable();
+            $table->boolean('group')->default(false);
             $table->string('group_feedback')->nullable();
             $table->timestamps();
 

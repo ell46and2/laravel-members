@@ -85,6 +85,8 @@
 			},
 			async prependComment(comment) {
 				this.comments.push(comment);
+
+				// set interval to grab actual thumbnail
 			}
 		}
 	}

@@ -2,24 +2,29 @@
 
 @section('content')
 
+	<h1>{{ $activity->formattedType }}</h1>
+	<p>I.D {{ $activity->id }}</p>
+	<p>Last updated on {{ $activity->formattedUpdatedOn }}</p>
+
+	<br><br>
+	<p>Date {{ $activity->formattedStart }}</p>
+	<p>Start Time {{ $activity->formattedStartTimeAmPm }}</p>
+	<p>Duration</p>
+	<p>Location {{ $activity->formattedLocation }}</p>
+	
     <attachment-upload
         model-type="activity"
         model-id="{{ $activity->id }}"
+        resource="{{ json_encode($attachmentsResource) }}"
+        can-edit="{{ auth()->user()->isCoachOrAdmin() }}"
     ></attachment-upload>
 
 	<br><br><br><br>
 
-	<attachments></attachments>
 
 	<attachment-modal></attachment-modal>
 
-	{{-- <video-player
-		video-uid="{{ $video->uid }}"
-		video-url="{{ $video->getStreamUrl() }}"
-		thumbnail-url="{{ $video->getThumb() }}"
-	></video-player> --}}
 
-	<br><br><br><br>
 
 	{{-- Loop through each jockey and create tab with comments in  --}}
 	<comments

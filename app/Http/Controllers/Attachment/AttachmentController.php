@@ -32,16 +32,19 @@ class AttachmentController extends Controller
     		// dispatch uploadimage job
     		// Create thumbnail too.
     	}
-
-    	// NOTE: set processed to true once image is uploaded to s3
-    	// NOTE: set processed to true for video once its been transcoded.
-    	// NOTE: display placeholder thumbnail until processed equals true. 
         
-        return response()->json(null, 200); 
+        return new AttachmentResource($attachment);
     }
 
     public function show(Attachment $attachment)
     {
         return new AttachmentResource($attachment);
+    }
+
+    public function destroy(Attachment $attachment)
+    {
+        $this->authorize('delete', $attachment);
+
+        $attachment->delete();
     }
 }

@@ -1,17 +1,18 @@
 <template>
 	<div>
-		<results-table
-			v-for="division in data.divisions"
-			:key="resultsTableKey(division.id)"
-			:division="division"
-		></results-table>
+		<template v-for="division in data.divisions">
+			<!-- NOTE: need to add tabs -->
+			<results-table				
+				:key="resultsTableKey(division.id)"
+				:division="division"
+			></results-table>
 
-		<racing-division
-			v-for="division in data.divisions"
-			:key="division.id"
-			:division="division"
-			:place-only-required="data.totalJustFromPlace"
-		></racing-division>
+			<racing-division
+				:key="division.id"
+				:division="division"
+				:place-only-required="data.totalJustFromPlace"
+			></racing-division>
+		</template>
 	</div>
 </template>
 

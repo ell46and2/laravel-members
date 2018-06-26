@@ -52,6 +52,8 @@ Route::post('/notification/{user}/dismiss-all', 'Notification\NotificationContro
 // Coach
 Route::get('/coach/activity/list', 'Coach\ActivityController@index')->name('coach.activity-list');
 Route::post('/coach/activity', 'Coach\ActivityController@store')->name('coach.activity.store');
+Route::get('/coach/activity/create', 'Coach\ActivityController@singleCreate')->name('coach.1:1-activity.create');
+Route::get('/coach/activity/group-create', 'Coach\ActivityController@groupCreate')->name('coach.group-activity.create');
 Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
 
 Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.dashboard.index');
@@ -100,6 +102,7 @@ Route::post('/messages', 'Message\MessageController@store')->name('message.store
 // Attachments
 Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');
 Route::post('/attachment', 'Attachment\AttachmentController@store');
+Route::delete('/attachment/{attachment}', 'Attachment\AttachmentController@destroy');
 
 // Change Password
 Route::get('/profile/password', 'Auth\PasswordController@edit')->name('profile.password.edit');

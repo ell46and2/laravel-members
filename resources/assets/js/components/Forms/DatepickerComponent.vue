@@ -1,0 +1,56 @@
+<template>
+	<datepicker 
+		:name="name" 
+		:placeholder="placeholder"
+		format="dd/MM/yyyy"
+		:value="date"
+	></datepicker>
+</template>
+
+<script>
+	import Datepicker from 'vuejs-datepicker';
+
+	export default {
+		components: {
+			Datepicker
+		},
+		data() {
+			return {
+				date: null
+			}
+		},
+		props: {
+			name: {
+				required: true,
+				type: String
+			},
+			placeholder: {
+				default: 'Select Date',
+				type: String
+			},
+			old: {
+				required: false
+			}
+		},
+		mounted() {
+			// if(this.currentDate) {
+			// 	// new Date('1975-12-25')
+			// 	this.date = new Date(this.currentDate);
+			// }
+			
+			// console.log('old', window.oldFormValues.start_date);
+			// console.log(new Date(window.oldFormValues.start_date));
+			
+			// if(window.oldFormValues[this.name]) {
+			// 	let oldDate = window.oldFormValues[this.name];
+			// 	this.date = new Date(oldDate.split('/').reverse().join('/'));
+			// }
+			
+			if(this.old) {
+				
+				this.date = new Date(this.old.split('/').reverse().join('/'));
+			}
+		}
+
+	}
+</script>

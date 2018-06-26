@@ -34,7 +34,7 @@ class NotifyJockeysOfNewActivity
 
         // for each event->activity->jockeys created a notification
         // dd($jockeys);
-        $body = "You have a new [activity type] activity on {$event->activity->start->format('l jS \\of F Y h:i A')} with {$event->activity->coach->full_name}";
+        $body = "You have a new {$event->activity->formattedType} activity on {$event->activity->start->format('l jS \\of F Y h:i A')} with {$event->activity->coach->full_name}";
 
         $jockeys->each(function($jockey) use ($body, $event) {
             $event->activity->notifications()->create([

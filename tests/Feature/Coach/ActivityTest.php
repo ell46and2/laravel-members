@@ -38,11 +38,11 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->post("/coach/activity", [
             'activity_type_id' => 1,
-            'start_date' => '06/11/2018',
+            'start_date' => '26/11/2018',
             'start_time' => '13:00',
             'duration' => 30,
             'location_name' => 'Cheltenham racecourse',
-            'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
+            'jockeys' => [$jockey->id => "on"] // array of selected jockeys from checkboxes
         ]);
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
@@ -53,9 +53,9 @@ class ActivityTest extends TestCase
         	$this->assertEquals($activity->jockeys->count(), 1);
         	$this->assertTrue($activity->jockeys->first()->is($jockey));
 
-        	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
+        	$this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','26/11/2018 13:00'), $activity->start);
         	$this->assertEquals(30, $activity->duration);
-        	$this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
+        	$this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','26/11/2018 13:00')->addMinutes(30), $activity->end);
         	$this->assertEquals('Cheltenham racecourse', $activity->location_name);
             // $this->assertEquals('Cheltenham racecourse', $activity->location);
             $this->assertNull($activity->location_id);
@@ -85,7 +85,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'activity_type_id' => '',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -103,7 +103,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'activity_type_id' => 9999,
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -121,7 +121,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'start_date' => '',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -139,7 +139,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'start_date' => 'not a date',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -157,7 +157,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'start_time' => '',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -175,7 +175,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'start_time' => 'not a valid time',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -193,7 +193,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'duration' => '',
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         tap(Activity::first(), function($activity) use ($response) {
@@ -212,7 +212,7 @@ class ActivityTest extends TestCase
 
         $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
             'duration' => 30.25,
-            'jockeys' => [$jockey->id]
+            'jockeys' => [$jockey->id => "on"]
         ]));
 
         $response->assertStatus(302);
@@ -246,7 +246,7 @@ class ActivityTest extends TestCase
             'duration' => 30,
             'location_name' => '',
             'location_id' => 1,
-            'jockeys' => [$jockey->id] // array of selected jockeys from checkboxes
+            'jockeys' => [$jockey->id => "on"] // array of selected jockeys from checkboxes
         ]);
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
@@ -269,7 +269,7 @@ class ActivityTest extends TestCase
             'start_time' => '13:00',
             'duration' => 30,
             'location' => 'Cheltenham racecourse',
-            'jockeys' => [$jockey->id], // array of selected jockeys from checkboxes
+            'jockeys' => [$jockey->id => "on"], // array of selected jockeys from checkboxes
             "feedback" => [
                 [$jockey->id => 'Jockeys feedback from coach']
             ], // array of feedback with the key being each jockeys id.
@@ -323,7 +323,7 @@ class ActivityTest extends TestCase
             'start_time' => '13:00',
             'duration' => 30,
             'location_name' => 'Cheltenham racecourse',
-            'jockeys' => [$jockey1->id, $jockey2->id, $jockey3->id], // array of selected jockeys from checkboxes
+            'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], // array of selected jockeys from checkboxes
             "feedback" => [
                 [$jockey1->id => 'Jockey1 feedback from coach'],
                 [$jockey2->id => ''],
@@ -382,6 +382,48 @@ class ActivityTest extends TestCase
                 $this->assertRegexp("/{$coach->full_name}/", $notification->body);
             });
         });
+    }
+
+    /** @test */
+    public function an_activity_must_have_at_least_one_jockey()
+    {
+        $coach = factory(Coach::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", [
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location_name' => 'Cheltenham racecourse',
+            'jockeys' => [] // array of selected jockeys from checkboxes
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('jockeys');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());
+    }
+
+    /** @test */
+    public function jockeys_must_exists_on_the_system()
+    {
+        $coach = factory(Coach::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", [
+            'activity_type_id' => 1,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'duration' => 30,
+            'location_name' => 'Cheltenham racecourse',
+            'jockeys' => [999 => "on"] // array of selected jockeys from checkboxes
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('jockeys');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count());  
     }
 
     /** @test */

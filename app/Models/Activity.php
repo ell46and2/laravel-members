@@ -135,6 +135,11 @@ class Activity extends Model
         return $this->start->format('H:i');
     }
 
+    public function getFormattedStartTimeAmPmAttribute()
+    {
+        return $this->start->format('H:i a');
+    }
+
     public function getFormattedLocationAttribute()
     {
         if($this->location) {
@@ -142,6 +147,11 @@ class Activity extends Model
         }
 
         return ucfirst($this->location_name);
+    }
+
+    public function getFormattedUpdatedOnAttribute()
+    {
+        return $this->updated_at->format('l jS F Y');
     }
 
     public function getFormattedCommentNameAttribute()

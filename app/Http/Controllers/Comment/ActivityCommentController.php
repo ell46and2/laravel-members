@@ -8,6 +8,7 @@ use App\Http\Requests\Comment\UpdatePutFormRequest;
 use App\Http\Resources\CommentResource;
 use App\Jobs\Comment\NotifyEditedComment;
 use App\Jobs\Comment\NotifyNewComment;
+use App\Jobs\UploadVideo;
 use App\Models\Activity;
 use App\Models\Attachment;
 use App\Models\Comment;
@@ -86,7 +87,7 @@ class ActivityCommentController extends Controller
     	$request->file('attachment')->move(storage_path() . '/uploads', $attachment->filename);
 
     	if($fileType === 'video') {
-    		// dispatch uploadvideo job
+    		$this->dispatch(new UploadVideo($attachment->filename));
     	} else {
     		// dispatch uploadimage job
     		// Create thumbnail too.

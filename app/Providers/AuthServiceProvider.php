@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Models\Activity;
+use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\RacingExcellence;
 use App\Models\User;
 use App\Policies\ActivityPolicy;
+use App\Policies\AttachmentPolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\RacingExcellencePolicy;
@@ -28,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         RacingExcellence::class => RacingExcellencePolicy::class,
         Notification::class => NotificationPolicy::class,
         User::class => UserPolicy::class,
+        Attachment::class => AttachmentPolicy::class,
     ];
 
     /**
