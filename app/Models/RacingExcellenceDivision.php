@@ -33,6 +33,14 @@ class RacingExcellenceDivision extends Model
         });
     }
 
+    public function addJockeyById($jockeyId)
+    {
+        return $this->participants()->create([
+            'jockey_id' => $jockeyId,
+            'racing_excellence_id' => $this->racingExcellence->id
+        ]);
+    }
+
     public function addExternalParticipants(Collection $externalParticipantNames)
     {
     	$externalParticipantNames->each(function($name) {
@@ -43,5 +51,12 @@ class RacingExcellenceDivision extends Model
     	});	
     }
 
+    public function addExternalParticipant($name)
+    {
+        return $this->participants()->create([
+            'name' => $name,
+            'racing_excellence_id' => $this->racingExcellence->id
+        ]);
+    }
 
 }

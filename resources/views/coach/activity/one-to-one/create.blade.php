@@ -63,6 +63,7 @@
 		<users-selection 
 			resource="{{ json_encode($jockeysResource) }}"
 			:group="false"
+			old="{{ json_encode(old('jockeys')) }}"
 		></users-selection>
 
 		<br><br>

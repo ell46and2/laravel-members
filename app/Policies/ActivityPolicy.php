@@ -15,4 +15,14 @@ class ActivityPolicy
         // must be the coach for the activity OR a jockey who belongs to the activity
         return $user->id == $activity->coach_id || $activity->jockeys->pluck('id')->contains($user->id);
     }
+
+    public function delete(User $user, Activity $activity)
+    {
+    	return $user->id == $activity->coach_id || $user->role->name === 'admin';
+    }
+
+    public function update(User $user, Activity $activity)
+    {
+        return $user->id == $activity->coach_id || $user->role->name === 'admin';
+    }
 }

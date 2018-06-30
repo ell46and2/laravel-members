@@ -49,11 +49,18 @@ Route::get('/dashboard', 'Jockey\DashboardController@index')->name('jockey.dashb
 Route::put('/notification/{notification}/dismiss', 'Notification\NotificationController@dismiss');
 Route::post('/notification/{user}/dismiss-all', 'Notification\NotificationController@dismissAll');
 
+// Activity
+Route::delete('/activity/{activity}', 'Activity\ActivityController@destroy')->name('activity.delete');
+
 // Coach
 Route::get('/coach/activity/list', 'Coach\ActivityController@index')->name('coach.activity-list');
 Route::post('/coach/activity', 'Coach\ActivityController@store')->name('coach.activity.store');
 Route::get('/coach/activity/create', 'Coach\ActivityController@singleCreate')->name('coach.1:1-activity.create');
+Route::get('/coach/activity/{activity}/edit', 'Coach\ActivityController@edit')->name('coach.activity.edit');
+Route::put('/coach/activity/{activity}/single', 'Coach\ActivityController@singleUpdate')->name('coach.1:1-activity.update');
+Route::put('/coach/activity/{activity}/group', 'Coach\ActivityController@groupUpdate')->name('coach.group-activity.update');
 Route::get('/coach/activity/group-create', 'Coach\ActivityController@groupCreate')->name('coach.group-activity.create');
+Route::post('/activity/{activity}/feedback/{jockey}', 'Coach\ActivityJockeyFeedbackController@create');
 Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
 
 Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.dashboard.index');
@@ -67,7 +74,7 @@ Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
 
 Route::post('/admin/jockeys/{jockey}/approve', 'Admin\ApprovedJockeyController@create')->name('admin.jockey.approve');
-
+Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('admin.dashboard.index');
 // Change to PendingJockeyController@index or remove and just have in Admin dashboard.
 Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('admin.jockeys.pending');
 
@@ -76,9 +83,21 @@ Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('ad
 Route::get('/admin/racing-excellence/create', 'Admin\RacingExcellenceController@create')->name('admin.racing-excellence.create');
 Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');
 Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
+Route::put('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@update')->name('admin.racing-excellence.update');
+
+Route::get('/admin/racing-excellence/{racingExcellence}/edit', 'Admin\RacingExcellenceController@edit')->name('admin.racing-excellence.edit');
+
+Route::get('/racing-excellence/jockey/{jockey}', 'RacingExcellence\ParticipantController@jockey');
+Route::post('/racing-excellence/{racingExcellenceDivision}/participant/create', 'RacingExcellence\ParticipantController@create');
+Route::post('/racing-excellence/{racingExcellenceDivision}/participant/external-create', 'RacingExcellence\ParticipantController@externalCreate');
+Route::delete('/racing-excellence/participant/{racingExcellenceParticipant}', 'RacingExcellence\ParticipantController@destroy');
 
 Route::get('/racing-excellence/{racingExcellence}/results', 'RacingExcellence\RacingExcellenceResultController@create')->name('racing-excellence.results.create');
+
 Route::put('/racing-excellence/participant/{participant}', 'RacingExcellence\ParticipantResultController@update');
+
+// RE - Coach
+Route::get('/coach/racing-excellence/{racingExcellence}/edit', 'Coach\RacingExcellenceController@edit')->name('admin.racing-excellence.edit');
 
 
 

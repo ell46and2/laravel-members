@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name'];
+	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name', 'group'];
 
 	protected $dates = ['created_at', 'updated_at', 'start', 'end'];
+
+    protected $casts = [ 'group' => 'boolean' ];
 
 	/*
 		Relationships
@@ -112,6 +114,11 @@ class Activity extends Model
         return false;
     }
 
+    public function isGroup()
+    {
+        return $this->group;
+    }
+
     /*
         Attributes
     */
@@ -128,6 +135,11 @@ class Activity extends Model
     public function getFormattedStartAttribute()
     {
         return $this->start->format('l jS F Y');
+    }
+
+    public function getStartDateAttribute()
+    {
+        return $this->start->format('d/m/Y');
     }
 
     public function getFormattedStartTimeAttribute()
@@ -173,4 +185,12 @@ class Activity extends Model
         // NOTE: need to have different urls depending on the users role.
         return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
     }  
+
+    public function getEditRouteAttribute() {
+        if($this->isGroup()) {
+            return route('coach.group-activity.update', $this);
+        }
+
+        return route('coach.1:1-activity.update', $this);
+    }
 }

@@ -26,7 +26,7 @@ class NotifyJockeysOfNewRacingExcellence
      */
     public function handle(NewRacingExcellenceCreated $event)
     {
-        $jockeyParticipants = $event->racingExcellence->jockeys;
+        $jockeyParticipants = $event->racingExcellence->jockeyParticipants->unique('jockey_id');
 
         $body = "You have a new Racing Excellence on {$event->racingExcellence->start->format('l jS \\of F Y h:i A')} with {$event->racingExcellence->coach->full_name}";
 

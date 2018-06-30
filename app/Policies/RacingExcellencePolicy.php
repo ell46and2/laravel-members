@@ -15,4 +15,9 @@ class RacingExcellencePolicy
         // must be the assigned coach or an admin user
         return $user->id == $racingExcellence->coach_id || $user->role->name === 'admin';
     }
+
+    public function coachEdit(User $user, RacingExcellence $racingExcellence)
+    {
+    	return $user->id == $racingExcellence->coach_id;
+    }
 }

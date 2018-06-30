@@ -19,6 +19,7 @@ class ParticipantResource extends JsonResource
             'id' => $this->id,
             'division_id' => $this->division_id,
             'name' => $this->name ?? $this->jockey->full_name,
+            'jockey_id' => $this->jockey_id,
             'place' => $this->place,
             'place_points' => $this->place_points,
             'completed_race' => $this->completed_race,

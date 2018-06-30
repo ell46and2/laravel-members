@@ -38,7 +38,9 @@ class StorePostFormRequest extends FormRequest
                         return $fail('Please select Jockeys on the system');
                     }
                 }
-            ]
+            ],
+            'location_id' => 'required_without:location_name|exists:activity_locations,id',
+            'location_name' => 'required_without:location_id',
         ];
     }
 }

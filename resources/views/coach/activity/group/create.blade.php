@@ -49,8 +49,7 @@
 
 		<div class="form-group row">
 			<div class="form-control{{ $errors->has('start_time') ? ' is-invalid' : '' }}">
-				<input type="time" name="start_time" id="" value="{{ old('start_time') }}">
-				{{-- <timepicker-component name="start_time" placeholder="Select start time"></timepicker-component> --}}
+				<timepicker-component old="{{ old('start_time') }}"></timepicker-component>		
 			</div>
 			@if ($errors->has('start_time'))
 	            <span class="invalid-feedback">
@@ -64,6 +63,7 @@
 		<users-selection 
 			resource="{{ json_encode($jockeysResource) }}"
 			:group="true"
+			old="{{ json_encode(old('jockeys')) }}"
 		></users-selection>
 
 		<br><br>

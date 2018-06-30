@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Jobs\RacingExcellence\NotifyAddedToRacingExcellence;
+use App\Jobs\RacingExcellence\NotifyRemovedFromRacingExcellence;
+use App\Models\Admin;
 use App\Models\Jockey;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
@@ -9,6 +12,7 @@ use App\Models\RacingExcellenceParticipant;
 use App\Models\SeriesType;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class RacingExcellenceTest extends TestCase
@@ -122,7 +126,7 @@ class RacingExcellenceTest extends TestCase
         $this->assertEquals($participants->count(), 6);
 
         // Actual Jockeys (not including external participants).
-        $jockeyParticipants = $racingExcellence->jockeys;
+        $jockeyParticipants = $racingExcellence->jockeyParticipants;
         $this->assertEquals($jockeyParticipants->count(), 5);
 	}
 
@@ -264,5 +268,200 @@ class RacingExcellenceTest extends TestCase
 	{
 	    // completed_race set to false
 	    // place points set to 0
+	}
+
+	/** @test */
+	public function can_add_a_jockey_participant()
+	{
+		Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+
+		$jockey = factory(Jockey::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $response = $this->actingAs($admin)->post("/racing-excellence/{$division->id}/participant/create", [
+            'id' => $jockey->id,
+        ]);
+
+        $this->assertEquals(1, $racingExcellence->participants->count());
+
+        $this->assertEquals($jockey->id, $racingExcellence->participants->first()->jockey_id);
+
+        // test notification sent
+        Queue::assertPushed(NotifyAddedToRacingExcellence::class, function($job) use ($response, $jockey) {
+            return $job->participant->jockey_id == $jockey->id;
+        });
+	}
+
+	/** @test */
+	public function if_added_jockey_already_exists_in_another_division_do_not_send_another_notification()
+	{
+	    Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+
+		$jockey = factory(Jockey::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division1 = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $division2 = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => $jockey->id
+        ]);
+
+	    $response = $this->actingAs($admin)->post("/racing-excellence/{$division2->id}/participant/create", [
+            'id' => $jockey->id,
+        ]);
+
+        $this->assertEquals(2, $racingExcellence->participants->count());
+        $this->assertEquals($jockey->id, $division1->participants->first()->jockey_id);
+        $this->assertEquals($jockey->id, $division2->participants->first()->jockey_id);
+
+        // test notification sent
+        Queue::assertNotPushed(NotifyAddedToRacingExcellence::class);
+	}
+
+	/** @test */
+	public function can_add_an_external_participant()
+	{
+		Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $response = $this->actingAs($admin)->post("/racing-excellence/{$division->id}/participant/external-create", [
+            'name' => 'John Doe',
+        ]);
+
+	    $this->assertEquals(1, $racingExcellence->participants->count());
+        $this->assertEquals('John Doe', $racingExcellence->participants->first()->name);
+
+        Queue::assertNotPushed(NotifyAddedToRacingExcellence::class);
+	}
+
+	/** @test */
+	public function can_remove_a_jockey_participant()
+	{
+		Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+		$jockey = factory(Jockey::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division->id,
+            'jockey_id' => $jockey->id
+        ]);
+
+        $this->assertEquals(1, $racingExcellence->participants->count());
+
+        $response = $this->actingAs($admin)->delete("/racing-excellence/participant/{$participant->id}");
+
+        $this->assertEquals(0, $racingExcellence->fresh()->participants->count());
+
+        // test notification sent
+        Queue::assertPushed(NotifyRemovedFromRacingExcellence::class, function($job) use ($response, $jockey, $racingExcellence) {
+            return $job->racingExcellence->id == $racingExcellence->id &&
+            	$job->jockeyId = $jockey->id;
+        });
+	}
+
+	/** @test */
+	public function can_remove_an_external_jockey_participant()
+	{
+	    Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division->id,
+            'jockey_id' => '',
+            'name' => 'John Doe',
+        ]);
+
+        $this->assertEquals(1, $racingExcellence->participants->count());
+
+        $response = $this->actingAs($admin)->delete("/racing-excellence/participant/{$participant->id}");
+
+        $this->assertEquals(0, $racingExcellence->fresh()->participants->count());
+
+        // test notification sent
+        Queue::assertNotPushed(NotifyRemovedFromRacingExcellence::class);
+	}
+
+	/** @test */
+	public function if_removed_jockey_still_exists_in_other_division_do_not_send_notification()
+	{
+	    Queue::fake();
+
+		$admin = factory(Admin::class)->create();
+		$jockey = factory(Jockey::class)->create();
+
+		$racingExcellence = factory(RacingExcellence::class)->create();
+
+	    $division1 = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $division2 = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant1 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division1->id,
+            'jockey_id' => $jockey->id
+        ]);
+
+        $participant2 = factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $racingExcellence->id,
+            'division_id' => $division2->id,
+            'jockey_id' => $jockey->id
+        ]);
+
+
+        $this->assertEquals(2, $racingExcellence->participants->count());
+        $this->assertEquals(2, $racingExcellence->jockeyParticipants->count());
+
+        $response = $this->actingAs($admin)->delete("/racing-excellence/participant/{$participant1->id}");
+
+        $this->assertEquals(1, $racingExcellence->fresh()->participants->count());
+        $this->assertEquals(1, $racingExcellence->fresh()->jockeyParticipants->count());
+
+        // test notification sent
+        Queue::assertNotPushed(NotifyRemovedFromRacingExcellence::class);	
 	}
 }

@@ -28,7 +28,7 @@ class NotifyCoachOfNewRacingExcellence
     {
         $coach = $event->racingExcellence->coach;
 
-        $body = "You have been assigned to a Racing Excellence on {$event->racingExcellence->start->format('l jS \\of F Y h:i A')}";
+        $body = "You have been assigned to a Racing Excellence event on {$event->racingExcellence->start->format('l jS \\of F Y h:i A')}";
 
         $event->racingExcellence->notifications()->create([
             'user_id' => $coach->id,

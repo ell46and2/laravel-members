@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\RacingExcellence\RacingExcellenceFilters;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -33,9 +34,21 @@ class RacingExcellence extends Model
         );
     }
 
-    public function jockeys()
+    public function jockeyParticipants()
     {
     	return $this->participants()->whereNotNull('jockey_id');
+    }
+
+    public function jockeys()
+    {     
+        return $this->hasManyThrough(
+            Jockey::class, 
+            RacingExcellenceParticipant::class,
+            'jockey_id',
+            'id',
+            'id',
+            'id'
+        );      
     }
 
     public function coach()
@@ -69,9 +82,12 @@ class RacingExcellence extends Model
     */
 	public static function createRace(Request $request)
 	{
-		$racingExcellence = self::create($request->only([
-			'coach_id', 'start', 'location_id', 'series_id'
-		]));
+		$racingExcellence = self::create([
+            'coach_id' => $request->coach_id,
+            'location_id' => $request->location_id,
+            'series_id' => $request->series_id,
+            'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
+		]);
 
 		$racingExcellence->addDivisions(collect(request()->only(['divisions'])['divisions']));
 
@@ -80,10 +96,17 @@ class RacingExcellence extends Model
 
 	public function addDivisions(Collection $divisionsData)
 	{
-		$divisionsData->each(function($divisionData) {		
+        // dd($divisionsData);
+
+		$divisionsData->each(function($divisionData) {
+            // dd($divisionData);		
 			$division = $this->divisions()->create();
-			$division->addJockeysById(collect($divisionData['jockeys']));
-			$division->addExternalParticipants(collect($divisionData['external_participants']));
+            if(array_key_exists('jockeys', $divisionData)) {
+              $division->addJockeysById(collect(array_keys($divisionData['jockeys'])));  
+            }
+			if(array_key_exists('external_participants', $divisionData)) {
+			 $division->addExternalParticipants(collect(array_keys($divisionData['external_participants'])));
+            }
 		});
 	}
 
@@ -104,6 +127,11 @@ class RacingExcellence extends Model
     public function getFormattedStartAttribute()
     {
         return $this->start->format('l jS F Y');
+    }
+
+    public function getStartDateAttribute()
+    {
+        return $this->start->format('d/m/Y');
     }
 
     public function getFormattedStartTimeAttribute()

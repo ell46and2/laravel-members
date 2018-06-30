@@ -35,6 +35,10 @@ Vue.component('datepicker-component', require('./components/Forms/DatepickerComp
 
 Vue.component('timepicker-component', require('./components/Forms/TimepickerComponent.vue'));
 
+Vue.component('add-feedback', require('./components/Activity/AddFeedback.vue'));
+
+Vue.component('divisions', require('./components/RacingExcellenceDivisions/Divisions.vue'));
+
 const app = new Vue({
     el: '#app'
 });

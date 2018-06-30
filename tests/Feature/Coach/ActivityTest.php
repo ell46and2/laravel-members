@@ -2,9 +2,12 @@
 
 namespace Tests\Feature\Coach;
 
+use App\Jobs\Activity\NotifyCoachDeletedActivity;
+use App\Jobs\Activity\NotifyJockeysDeletedActivity;
 use App\Models\Activity;
 use App\Models\ActivityLocation;
 use App\Models\ActivityType;
+use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\Jockey;
 use App\Models\Notification;
@@ -13,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class ActivityTest extends TestCase
@@ -59,6 +63,7 @@ class ActivityTest extends TestCase
         	$this->assertEquals('Cheltenham racecourse', $activity->location_name);
             // $this->assertEquals('Cheltenham racecourse', $activity->location);
             $this->assertNull($activity->location_id);
+            $this->assertFalse($activity->group);
 
             $this->assertEquals(1, $activity->activity_type_id);
             $this->assertEquals(ActivityType::find(1)->name, $activity->type->name);
@@ -258,6 +263,44 @@ class ActivityTest extends TestCase
     }
 
     /** @test */
+    public function location_id_must_exist_on_the_activity_locations_table()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'location_id' => 9999,
+            'jockeys' => [$jockey->id => "on"]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('location_id');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count()); 
+    }
+
+    /** @test */
+    public function location_id_and_location_name_cannot_both_be_empty()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($coach)->from("/coach/activity/create")->post("/coach/activity", $this->validParams([
+            'location_id' => '',
+            'location_name' => '',
+            'jockeys' => [$jockey->id => "on"]
+        ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/activity/create');
+        $response->assertSessionHasErrors('location_id');
+        $response->assertSessionHasErrors('location_name');
+        $this->assertEquals(0, Activity::count());
+        $this->assertEquals(0, Notification::count()); 
+    }
+
+    /** @test */
     public function a_coach_can_add_jockey_feedback()
     {
         $coach = factory(Coach::class)->create();
@@ -268,7 +311,7 @@ class ActivityTest extends TestCase
             'start_date' => '06/11/2018',
             'start_time' => '13:00',
             'duration' => 30,
-            'location' => 'Cheltenham racecourse',
+            'location_name' => 'Cheltenham racecourse',
             'jockeys' => [$jockey->id => "on"], // array of selected jockeys from checkboxes
             "feedback" => [
                 [$jockey->id => 'Jockeys feedback from coach']
@@ -285,29 +328,9 @@ class ActivityTest extends TestCase
         });   
     }
 
-    /** @test */
-    public function a_coach_can_edit_their_activity()
-    {
-        	
-    }
 
-    /** @test */
-    public function a_coach_can_delete_their_activity()
-    {
-        	
-    }
+    
 
-    /** @test */
-    public function a_coach_cannot_edit_another_coaches_activity()
-    {
-        	
-    }
-
-    /** @test */
-    public function a_coach_cannot_delete_another_coaches_activity()
-    {
-        	
-    }
 
     /** @test */
     public function a_coach_can_create_a_group_activity()
@@ -341,13 +364,15 @@ class ActivityTest extends TestCase
             $activity->jockeys->assertContains($jockey2);
             $activity->jockeys->assertContains($jockey3);
 
+            $this->assertTrue($activity->group);
+
             $this->assertEquals($activity->jockeys->first()->pivot->feedback, 'Jockey1 feedback from coach');
             $this->assertEquals($activity->jockeys->find($jockey2->id)->pivot->feedback, '');
             $this->assertEquals($activity->jockeys->find($jockey3->id)->pivot->feedback, 'Jockey3 feedback from coach');
 
-            $this->assertEquals(Carbon::parse('06/11/2018 1:00pm'), $activity->start);
+            $this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','06/11/2018 13:00'), $activity->start);
             $this->assertEquals(30, $activity->duration);
-            $this->assertEquals(Carbon::parse('06/11/2018 1:00pm')->addMinutes(30), $activity->end);
+            $this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','06/11/2018 13:00')->addMinutes(30), $activity->end);
             $this->assertEquals('Cheltenham racecourse', $activity->location_name);
 
             // Need to test 'new activity' notification is created for $jockey
@@ -424,6 +449,135 @@ class ActivityTest extends TestCase
         $response->assertSessionHasErrors('jockeys');
         $this->assertEquals(0, Activity::count());
         $this->assertEquals(0, Notification::count());  
+    }
+
+    /** @test */
+    public function a_coach_can_delete_their_activity()
+    {
+        // Note: except if its been added to invoice
+        
+        Queue::fake();
+        
+        $coach = factory(Coach::class)->create();
+
+        $jockey = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create([
+            'activity_type_id' => 1,
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->addDays(6),
+            'duration' => null,
+            'end' => null,
+            'location_id' => 1,
+        ]);
+
+        $activity->addJockey($jockey);
+
+        $this->assertEquals(1, Activity::all()->count());
+
+        $activityType = $activity->formattedType;
+        $activityStart = $activity->formattedStart;
+
+        $response = $this->actingAs($coach)->delete("/activity/{$activity->id}");
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/coach/dashboard');
+
+        $this->assertEquals(0, Activity::all()->count());
+
+        // notify jockeys
+        Queue::assertPushed(NotifyJockeysDeletedActivity::class, function($job) use ($activityType, $activityStart, $jockey) {
+            return $job->jockeyIds->contains($jockey->id) &&
+            $job->activityType === $activityType &&
+            $job->activityStart === $activityStart;
+        });
+
+        Queue::assertNotPushed(NotifyCoachDeletedActivity::class);    
+    }
+
+    /** @test */
+    public function an_admin_can_delete_an_activity()
+    {
+        // Note: except if its been added to invoice
+        
+        $admin = factory(Admin::class)->create();
+        
+        Queue::fake();
+        
+        $coach = factory(Coach::class)->create();
+
+        $jockey = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create([
+            'activity_type_id' => 1,
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->addDays(6),
+            'duration' => null,
+            'end' => null,
+            'location_id' => 1,
+        ]);
+
+        $activity->addJockey($jockey);
+
+        $this->assertEquals(1, Activity::all()->count());
+
+        $activityType = $activity->formattedType;
+        $activityStart = $activity->formattedStart;
+
+        $response = $this->actingAs($admin)->delete("/activity/{$activity->id}");
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/dashboard');
+
+        $this->assertEquals(0, Activity::all()->count());
+
+        Queue::assertPushed(NotifyJockeysDeletedActivity::class, function($job) use ($activityType, $activityStart, $jockey) {
+            return $job->jockeyIds->contains($jockey->id) &&
+            $job->activityType === $activityType &&
+            $job->activityStart === $activityStart;
+        });
+        
+        Queue::assertPushed(NotifyCoachDeletedActivity::class, function($job) use ($activityType, $activityStart, $coach) {
+            return $job->coach->id === $coach->id &&
+            $job->activityType === $activityType &&
+            $job->activityStart === $activityStart;
+        });                
+    }
+
+    /** @test */
+    public function a_coach_cannot_delete_another_coaches_activity()
+    {
+        Queue::fake();
+        
+        $coach = factory(Coach::class)->create();
+        $otherCoach = factory(Coach::class)->create();
+
+        $jockey = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create([
+            'activity_type_id' => 1,
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->addDays(6),
+            'duration' => null,
+            'end' => null,
+            'location_id' => 1,
+        ]);
+
+        $activity->addJockey($jockey);
+
+        $this->assertEquals(1, Activity::all()->count());
+
+        $activityType = $activity->formattedType;
+        $activityStart = $activity->formattedStart;
+
+        $response = $this->actingAs($otherCoach)->delete("/activity/{$activity->id}");
+
+        $response->assertStatus(403);
+
+        $this->assertEquals(1, Activity::all()->count());
+
+        Queue::assertNotPushed(NotifyJockeysDeletedActivity::class);
+        Queue::assertNotPushed(NotifyCoachDeletedActivity::class);     
     }
 
     /** @test */

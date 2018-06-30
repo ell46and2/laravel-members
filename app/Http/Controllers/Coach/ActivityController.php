@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Coach;
 
 use App\Events\Coach\Activity\NewActivityCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Activity\OneToOneUpdatePutFormRequest;
 use App\Http\Requests\Coach\Activity\StorePostFormRequest;
 use App\Http\Resources\AttachmentResource;
 use App\Http\Resources\UserSelectResource;
+use App\Jobs\Activity\NotifyJockeyAmendedActivity;
 use App\Models\Activity;
 use App\Models\ActivityLocation;
 use App\Models\ActivityType;
@@ -38,8 +40,6 @@ class ActivityController extends Controller
         
         $coach = Coach::find(auth()->user()->id);
 
-        // dd($coach->activities());
-
         DB::beginTransaction();
 
         try {
@@ -49,6 +49,7 @@ class ActivityController extends Controller
             	'duration' => $request->duration ?? $request->duration,
             	'location_name' => $request->location_name,
                 'location_id' => $request->location_id,
+                'group' => count(request()->jockeys) > 1,
         	]);
 
         	$activity->addJockeysById(array_keys(request()->jockeys));
@@ -101,10 +102,6 @@ class ActivityController extends Controller
         
         $coach = Coach::find(auth()->user()->id);
 
-        // get assigned jockeys as a resource
-        $ids = collect([1, 2, 3, 4]);
-        // dd($ids);
-        request()->request->add(['selectedIds' => $ids]);
         $jockeysResource = UserSelectResource::collection($coach->jockeys);
 
         $activityTypes = ActivityType::all();
@@ -128,12 +125,53 @@ class ActivityController extends Controller
         return $this->create();
     }
 
-    public function edit()
+    public function edit(Activity $activity)
     {
-        $ids = collect([1, 2, 3, 4]); // pluck the ids if the jockeys already added to the activity
+        // $coach = Coach::find(auth()->user()->id);
+
+        // $ids = collect([1, 2, 3, 4]); // pluck the ids of the jockeys already added to the activity
         // dd($ids);
-        request()->request->add(['selectedIds' => $ids]); // append to the reques tos we can access in the Resource.
-        $jockeysResource = UserSelectResource::collection($coach->jockeys);
+        request()->request->add(['selectedIds' => $activity->jockeys->pluck('id')]); // append to the request so we can access in the Resource.
+
+        $activityTypes = ActivityType::all();
+
+        $locations = ActivityLocation::all();
+
+        $jockeysResource = UserSelectResource::collection($activity->coach->jockeys);
+
+        return view('coach.activity.edit', compact('activity', 'jockeysResource', 'activityTypes', 'locations'));
+    }
+
+    public function singleUpdate(OneToOneUpdatePutFormRequest $request, Activity $activity)
+    {
+        $this->authorize('update', $activity);
+
+        $previous = clone $activity;
+
+        $activity->update([
+            'activity_type_id' => $request->activity_type_id,
+            'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
+            'duration' => $request->duration ? $request->duration : null,
+            'location_id' => $request->location_id,
+            'location_name' => $request->location_name
+        ]);
+
+        if($activity->start > Carbon::now() && $this->typeOrStartOrLocationChanged($previous, $activity)) {
+            $this->dispatch(new NotifyJockeyAmendedActivity($activity));
+        }
+        
+
+        return redirect()->route('coach.activity.show', $activity);
+    }
+
+    // Possibly move to trait
+    private function typeOrStartOrLocationChanged(Activity $previous, Activity $activity)
+    {
+        // dd($previous->activity_type_id != $activity->activity_type_id);
+        return $previous->start != $activity->start ||
+            $previous->activity_type_id != $activity->activity_type_id ||
+            $previous->location_id != $activity->location_id ||
+            $previous->location_name != $activity->location_name; 
     }
 
     private function getAllJockeysWorkedWithCoach(Coach $coach)
@@ -148,7 +186,7 @@ class ActivityController extends Controller
 
 
         $racingExcelJockeyIds = $racingExcels->map(function($racingExcel) {
-            return $racingExcel->jockeys->pluck('jockey_id')->unique();
+            return $racingExcel->jockeyParticipants->pluck('jockey_id')->unique();
         });
 
         return Jockey::find($ownJockeys->merge($racingExcelJockeyIds->flatten())->unique())->sortBy('first_name');

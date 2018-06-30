@@ -33,6 +33,10 @@
 			},
 			group: {
 				default: false
+			},
+			old: {
+				required: false,
+				default: null
 			}
 			// endpoint - base url to post to for removing and adding i.e activity/1/jockey // methods create and destroy
 		},
@@ -44,6 +48,18 @@
 					this.selectedIds.push(user.id);
 				}
 			});
+
+			let old = JSON.parse(this.old);
+			console.log('old user select', old);
+			if(old) {
+				Object.keys(old).forEach((id) => {
+					id = Number(id);
+					this.selectedIds.push(id);
+					let user = _.find(this.users, { id: id });
+					console.log('user', user);
+					user.selected = true;
+				});
+			}
 
 			// on remove send delete request - update user in users
 			// on select if edit - update user in users

@@ -2,7 +2,7 @@
 	<datepicker 
 		:name="name" 
 		:placeholder="placeholder"
-		format="dd/MM/yyyy"
+		:format="format"
 		:value="date"
 	></datepicker>
 </template>
@@ -30,6 +30,10 @@
 			},
 			old: {
 				required: false
+			},
+			format: {
+				required: false,
+				default: 'dd/MM/yyyy'
 			}
 		},
 		mounted() {
@@ -47,8 +51,13 @@
 			// }
 			
 			if(this.old) {
+				console.log('old', this.old);
+				if(this.format === 'dd-MM-yyyy') {
+					this.date = new Date(this.old.split('-').reverse().join('/'));
+				} else {
+					this.date = new Date(this.old.split('/').reverse().join('/'));
+				}
 				
-				this.date = new Date(this.old.split('/').reverse().join('/'));
 			}
 		}
 

@@ -178,4 +178,9 @@ class Jockey extends User
     {
         return ($this->trainingTimeThisMonth() / 4) * 100; // to nearest whole number?
     }
+
+    public static function getExternalJockeyAvatar()
+    {
+        return config('jcp.buckets.avatars') . 'default_avatar.png';
+    }
 }

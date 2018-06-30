@@ -8,6 +8,7 @@ use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
+use App\Models\RacingExcellenceParticipant;
 use App\Models\RacingLocation;
 use App\Models\SeriesType;
 use Carbon\Carbon;
@@ -21,109 +22,497 @@ class RacingExcellenceTest extends TestCase
 	use DatabaseMigrations;
 
     /** @test */
-    public function can_create_a_racing_excellence() // Need to add Validation
+    public function can_create_a_racing_excellence()
     {
         $admin = factory(Admin::class)->create();
         $coach = factory(Coach::class)->create();
 
-        $jockeys1 = factory(Jockey::class, 10)->create();
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
 
-        $jockeys2 = factory(Jockey::class, 8)->create();
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
 
         $response = $this->actingAs($admin)->post("/admin/racing-excellence/", [
-        	'coach_id' => $coach->id,
-            'start' => Carbon::parse('2018-11-06 1:00pm'), // NEED TO CHANGE
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
             'location_id' => 1,
             'series_id' => 1,
             "divisions" => [
-            	['jockeys' => $jockeys1->pluck('id')->toArray(), 'external_participants' => ['John Doe', 'Jane Doe']],
-            	['jockeys' => $jockeys2->pluck('id')->toArray(), 'external_participants' => []]
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
             ], // array of selected jockeys from checkboxes and array of external jockey names
         ]);
 
-        tap(RacingExcellence::first(), function($racingExcellence) use ($response, $jockeys1, $jockeys2, $coach) {
-        	$response->assertStatus(302);
-         	$response->assertRedirect("/admin/racing-excellence/{$racingExcellence->id}");
+        tap(RacingExcellence::first(), function($racingExcellence) use ($response, $jockey1, $jockey2, $coach) {
+            $response->assertStatus(302);
+            $response->assertRedirect("/racing-excellence/{$racingExcellence->id}/results");
 
-        	$this->assertTrue($racingExcellence->coach->is($coach));
-        	$this->assertEquals(Carbon::parse('2018-11-06 1:00pm'), $racingExcellence->start);
-        	$this->assertEquals(1, $racingExcellence->location_id);
-        	$this->assertEquals(RacingLocation::find(1)->name, $racingExcellence->location->name);
-        	$this->assertEquals(1, $racingExcellence->series_id);
-        	$this->assertEquals(SeriesType::find(1)->name, $racingExcellence->series->name);
+            $this->assertTrue($racingExcellence->coach->is($coach));
+            $this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','06/11/2018 13:00'), $racingExcellence->start);
+            $this->assertEquals(1, $racingExcellence->location_id);
+            $this->assertEquals(RacingLocation::find(1)->name, $racingExcellence->location->name);
+            $this->assertEquals(1, $racingExcellence->series_id);
+            $this->assertEquals(SeriesType::find(1)->name, $racingExcellence->series->name);
 
-        	$this->assertEquals($racingExcellence->participants->count(), 20);
-        	$this->assertEquals($racingExcellence->jockeys->count(), 18);
+            // dd($racingExcellence->participants);
 
-            // Total number of notifications sent - 18 Jockeys + 1 Coach
-            $this->assertEquals(Notification::all()->count(), 19);
+            $this->assertEquals($racingExcellence->participants->count(), 7);
+            $this->assertEquals($racingExcellence->jockeyParticipants->count(), 5);
+
+            // Total number of notifications sent - 5 Jockeys + 1 Coach
+            $this->assertEquals(Notification::all()->count(), 6);
             
             // Coach Notification
             $this->assertEquals($coach->notifications->count(), 1);
             $this->assertEquals($coach->notifications->first()->notifiable_type, 'racing-excellence');
-        	$this->assertEquals($coach->notifications->first()->notifiable->id, $racingExcellence->id);
+            $this->assertEquals($coach->notifications->first()->notifiable->id, $racingExcellence->id);
 
-        	// Jockeys Notifications - test just first of each division has received a notification
-            $this->assertEquals($jockeys1->first()->notifications->count(), 1);
-            $this->assertEquals($jockeys1->first()->notifications->first()->notifiable_type, 'racing-excellence');
-        	$this->assertEquals($jockeys1->first()->notifications->first()->notifiable->id, $racingExcellence->id);
+            // Jockeys Notifications - test just first of each division has received a notification
+            $this->assertEquals($jockey1->notifications->count(), 1);
+            $this->assertEquals($jockey1->notifications->first()->notifiable_type, 'racing-excellence');
+            $this->assertEquals($jockey1->notifications->first()->notifiable->id, $racingExcellence->id);
 
-        	$this->assertEquals($jockeys2->first()->notifications->count(), 1);
-            $this->assertEquals($jockeys2->first()->notifications->first()->notifiable_type, 'racing-excellence');
-        	$this->assertEquals($jockeys2->first()->notifications->first()->notifiable->id, $racingExcellence->id);
+            $this->assertEquals($jockey2->notifications->count(), 1);
+            $this->assertEquals($jockey2->notifications->first()->notifiable_type, 'racing-excellence');
+            $this->assertEquals($jockey2->notifications->first()->notifiable->id, $racingExcellence->id);
         });
     }
 
     /** @test */
-    public function can_edit_a_racing_excellence() // Needs further looking at.
+    public function coach_id_is_required()
     {
-        // $admin = factory(Admin::class)->create();
-        // $coach = factory(Coach::class)->create();
-        // $newCoach = factory(Coach::class)->create();
+        $admin = factory(Admin::class)->create();
 
-        // $jockeys1ToStay = factory(Jockey::class, 5)->create();
-        // $jockeys1ToRemove = factory(Jockey::class, 5)->create();
-        // $jockeys1ToAdd = factory(Jockey::class, 2)->create();
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
 
-        // $jockeys2ToStay = factory(Jockey::class, 4)->create();
-        // $jockeys2ToRemove = factory(Jockey::class, 4)->create();
-        // $jockeys2ToAdd = factory(Jockey::class, 5)->create();
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
 
-        // $racingExcellence = factory(RacingExcellence::class)->create([
-        // 	'coach_id' => $coach->id,
-        // 	'location' => 'Cheltenham racecourse',
-        // 	'start' => Carbon::parse('2018-11-06 1:00pm'),
-        // ]);
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => '',
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
 
-        // $racingDivision1 = factory(RacingExcellenceDivision::class)->create([
-        // 	'racing_excellence_id' => $racingExcellence->id
-        // ]);
-        // $racingDivision2 = factory(RacingExcellenceDivision::class)->create([
-        // 	'racing_excellence_id' => $racingExcellence->id
-        // ]);
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('coach_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());  
+    }
 
-        // $racingDivision1->addJockeysById($jockeys1ToStay->pluck('id'));
-        // $racingDivision1->addJockeysById($jockeys1ToRemove->pluck('id'));
-        // $racingDivision1->addExternalParticipants(collect(['John Doe', 'Jane Doe']));
-        // $racingDivision2->addJockeysById($jockeys2ToStay->pluck('id'));
-        // $racingDivision2->addJockeysById($jockeys2ToRemove->pluck('id'));
+    /** @test */
+    public function coach_id_must_be_an_existing_coaches_id()
+    {
+        $admin = factory(Admin::class)->create();
 
-        // $this->assertEquals($racingExcellence->participants->count(), 20);
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
 
-        // $response = $this->actingAs($admin)->put("/admin/racing-excellence/{$racingExcellence->id}", [
-        // 	'coach_id' => $newCoach->id,
-        //     'start' => Carbon::parse('2018-12-04 11:00am'),
-        //     'location' => 'New Location',
-        //     "divisions" => [
-        //     	['jockeys' => $jockeys1->pluck('id')->toArray(), 'external_participants' => ['John Doe', 'Jane Doe']],
-        //     	['jockeys' => $jockeys2->pluck('id')->toArray(), 'external_participants' => []]
-        //     ], // array of selected jockeys from checkboxes and array of external jockey names
-        // ]);
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
 
-        // New coach notified of assignment
-        // Old coach notified of removal
-        // New jockeys notified of being added to race
-        // Old jockeys notified of being removed from race
-        // Coach and jockeys notified of Race being amended.
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $jockey1->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('coach_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());  
+    }
+
+    /** @test */
+    public function location_id_is_required()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => '',
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('location_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function location_id_must_be_an_existing_RaceLocation_id()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 9999,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('location_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+     /** @test */
+    public function series_id_is_required()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => '',
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('series_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function series_id_must_be_an_existing_SeriesType_id()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 9999,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('series_id');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function start_date_is_required()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('start_date');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function start_date_must_be_in_the_correct_format()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '2018-05-30',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('start_date');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function start_time_is_required()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('start_time');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function start_time_must_be_in_the_correct_format()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '12:00:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [
+                1 => [
+                    'jockeys' => [$jockey1->id => "on", $jockey2->id => "on", $jockey3->id => "on"], 
+                    'external_participants' => ['John Doe' => "on", 'Jane Doe' => "on"]
+                ],
+                2 => [
+                    'jockeys' => [$jockey4->id => "on", $jockey5->id => "on"], 
+                    'external_participants' => []
+                ]
+            ], // array of selected jockeys from checkboxes and array of external jockey names
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('start_time');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
+    }
+
+    /** @test */
+    public function divisions_is_required()
+    {
+        $admin = factory(Admin::class)->create();
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+
+        $jockey4 = factory(Jockey::class)->create();
+        $jockey5 = factory(Jockey::class)->create();
+
+        $response = $this->actingAs($admin)->from("/admin/racing-excellence/create")->post("/admin/racing-excellence/", [
+            'coach_id' => $coach->id,
+            'start_date' => '06/11/2018',
+            'start_time' => '13:00',
+            'location_id' => 1,
+            'series_id' => 1,
+            "divisions" => [],
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/racing-excellence/create');
+        $response->assertSessionHasErrors('divisions');
+        $this->assertEquals(0, RacingExcellence::count());
+        $this->assertEquals(0, RacingExcellenceDivision::count());
+        $this->assertEquals(0, RacingExcellenceParticipant::count());
+        $this->assertEquals(0, Notification::count());    
     }
 }

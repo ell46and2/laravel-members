@@ -59,7 +59,6 @@
 
 <script>
 	import axios from 'axios';
-	import bus from '../../bus';
 
 	export default {
 		data() {
@@ -102,7 +101,7 @@
 			async store() {
 				let comment = await axios.post(this.endpoint, this.form);
 
-				bus.$emit('comment:stored', comment.data.data);
+				this.$emit('stored', comment.data.data);
 
 				this.resetForm();
 			},
@@ -134,7 +133,7 @@
                    	.then((res) => {
                        this.uploadingComplete = true;
 
-                       bus.$emit('comment:stored', res.data.data);
+                       this.$emit('stored', res.data.data);
 
                        this.resetForm();
                        

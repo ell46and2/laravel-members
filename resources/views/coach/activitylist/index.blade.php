@@ -71,12 +71,24 @@
 
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label text-md-right" for="from">From</label>
-                        <input type="date" name="from" value="{{ request()->from ?? request()->from }}">
+                        <datepicker-component 
+                            name="from" 
+                            placeholder="Select Date"
+                            format="dd-MM-yyyy"
+                            old="{{ request()->from ?? request()->from }}"
+                        ></datepicker-component>
+                        {{-- <input type="date" name="from" value="{{ request()->from ?? request()->from }}"> --}}
                     </div>
 
                     <div class="form-group row">
                         <label class="col-md-4 col-form-label text-md-right" for="to">To</label>
-                        <input type="date" name="to" value="{{ request()->to ?? request()->to }}">
+                        <datepicker-component 
+                            name="to" 
+                            placeholder="Select Date"
+                            format="dd-MM-yyyy"
+                            old="{{ request()->to ?? request()->to }}"
+                        ></datepicker-component>
+                        {{-- <input type="date" name="to" value="{{ request()->to ?? request()->to }}"> --}}
                     </div>
 
                     <div class="form-group row mb-0">

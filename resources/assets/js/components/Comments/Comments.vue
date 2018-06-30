@@ -21,6 +21,7 @@
 			:endpoint="endpoint"
 			:recipient-id="recipientId"
 			:is-current-user-jockey="isCurrentUserJockey"
+			v-on:stored="prependComment"
 		></add-comment>
 	</div>
 </template>
@@ -65,7 +66,7 @@
 		},
 		mounted() {
 			this.loadComments();
-			bus.$on('comment:stored', this.prependComment);
+			// bus.$on('comment:stored', this.prependComment);
 			bus.$on('comment:edited', this.editComment);
 			bus.$on('comment:deleted', this.deleteComment);
 		},
