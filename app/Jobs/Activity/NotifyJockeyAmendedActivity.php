@@ -41,7 +41,7 @@ class NotifyJockeyAmendedActivity implements ShouldQueue
 
         // for each event->activity->jockeys created a notification
         // dd($jockeys);
-        $body = "Your {$event->activity->formattedType} activity has been updated";
+        $body = "Your {$activity->formattedType} activity has been updated";
 
         $jockeys->each(function($jockey) use ($body, $activity) {
             $activity->notifications()->create([

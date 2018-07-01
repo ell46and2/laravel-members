@@ -73,6 +73,11 @@ Route::get('/admin/coaches/create', 'Admin\CoachController@create')->name('admin
 Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.store');
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
 
+Route::post('/admin/activity', 'Admin\ActivityController@store')->name('admin.activity.store');
+Route::get('/admin/activity/create', 'Admin\ActivityController@singleCreate')->name('admin.1:1-activity.create');
+Route::get('admin/jockey-resource/{coach}', 'Admin\ActivityController@getCoachesJockeys');
+Route::get('/admin/activity/{activity}', 'Admin\ActivityController@show')->name('admin.activity.show');
+
 Route::post('/admin/jockeys/{jockey}/approve', 'Admin\ApprovedJockeyController@create')->name('admin.jockey.approve');
 Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('admin.dashboard.index');
 // Change to PendingJockeyController@index or remove and just have in Admin dashboard.

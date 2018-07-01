@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name', 'group'];
+	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name', 'group', 'coach_id'];
 
 	protected $dates = ['created_at', 'updated_at', 'start', 'end'];
 
@@ -85,6 +85,11 @@ class Activity extends Model
     	// look at replacing with sync() 
     	// As sync() will remove any jockeys that are not in the array.
     	$this->jockeys()->sync($jockeyIds); 
+    }
+
+    public function addJockeyById($jockeyId)
+    {
+        $this->jockeys()->attach($jockeyId);
     }
 
     public function scopeFilter(Builder $builder, $request)

@@ -15,6 +15,7 @@
 
 <script>
 	import UserSelect from './UserSelect';
+	import bus from '../../bus';
 
 	export default {
 		components: {
@@ -28,7 +29,7 @@
 		},
 		props: {
 			resource: {
-				required: true,
+				required: false,
 				type: String
 			},
 			group: {
@@ -41,28 +42,31 @@
 			// endpoint - base url to post to for removing and adding i.e activity/1/jockey // methods create and destroy
 		},
 		mounted() {
-			this.users = JSON.parse(this.resource);
+			if(this.resource) {
+				this.users = JSON.parse(this.resource);
 
-			this.users.forEach( (user) => {
-				if(user.selected) {
-					this.selectedIds.push(user.id);
-				}
-			});
-
-			let old = JSON.parse(this.old);
-			console.log('old user select', old);
-			if(old) {
-				Object.keys(old).forEach((id) => {
-					id = Number(id);
-					this.selectedIds.push(id);
-					let user = _.find(this.users, { id: id });
-					console.log('user', user);
-					user.selected = true;
+				this.users.forEach( (user) => {
+					if(user.selected) {
+						this.selectedIds.push(user.id);
+					}
 				});
-			}
 
+				let old = JSON.parse(this.old);
+				console.log('old user select', old);
+				if(old) {
+					Object.keys(old).forEach((id) => {
+						id = Number(id);
+						this.selectedIds.push(id);
+						let user = _.find(this.users, { id: id });
+						console.log('user', user);
+						user.selected = true;
+					});
+				}
+			}			
 			// on remove send delete request - update user in users
 			// on select if edit - update user in users
+			
+			bus.$on('coach:selected', this.getCoachesJockeys);
 		},
 		methods: {
 			handleSelected(id) {
@@ -106,6 +110,11 @@
 						user.selected = false;
 					}
 				});
+			},
+			async getCoachesJockeys(coachId) {
+				let jockeys = await axios.get(`/admin/jockey-resource/${coachId}`);
+
+				this.users = jockeys.data.data;
 			}
 		}
 	}

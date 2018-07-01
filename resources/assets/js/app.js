@@ -31,6 +31,8 @@ Vue.component('autocomplete', require('./components/Search/Autocomplete.vue'));
 
 Vue.component('users-selection', require('./components/Forms/UsersSelection.vue'));
 
+Vue.component('coaches-selection', require('./components/Forms/CoachesSelection.vue'));
+
 Vue.component('datepicker-component', require('./components/Forms/DatepickerComponent.vue'));
 
 Vue.component('timepicker-component', require('./components/Forms/TimepickerComponent.vue'));
