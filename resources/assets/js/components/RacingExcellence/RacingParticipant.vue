@@ -15,6 +15,7 @@
 			      		:value="i"
 			      		:selected="form.place == i"
 			      	>{{ i }}</option>
+			      	<option value="dnf">Did not finish</option>
 			    </select>
 			</div>
 
@@ -109,6 +110,11 @@
 		},
 		components: {
 			PointsRadios
+		},
+		mounted() {
+			if(!this.participant.place && this.participant.total_points) {
+				this.form.place = 'dnf';
+			}
 		},
 		methods: {
 			setPoints(value, field) {

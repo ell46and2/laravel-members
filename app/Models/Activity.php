@@ -65,9 +65,19 @@ class Activity extends Model
         return $this->belongsTo(ActivityLocation::class, 'location_id');
     }
 
+    public function invoiceLine()
+    {
+        return $this->morphOne(InvoiceLine::class, 'invoiceable');
+    }
+
     /*
     	Utilities
     */
+    public function invoicable()
+    {   
+        return is_null($this->invoiceLine);
+    }
+
     public function addJockey(Jockey $jockey)
     {
     	if(!$this->jockeys()->where('jockey_id', $jockey->id)->count()) {
@@ -122,6 +132,13 @@ class Activity extends Model
     public function isGroup()
     {
         return $this->group;
+    }
+
+    public function jockeysOldDataFormat()
+    {
+        return $this->jockeys->pluck('id')->keyBy(function($item) {
+            return $item;
+        });
     }
 
     /*
@@ -193,9 +210,9 @@ class Activity extends Model
 
     public function getEditRouteAttribute() {
         if($this->isGroup()) {
-            return route('coach.group-activity.update', $this);
+            return route(auth()->user()->roleName . '.group-activity.update', $this);
         }
 
-        return route('coach.1:1-activity.update', $this);
+        return route(auth()->user()->roleName . '.1:1-activity.update', $this);
     }
 }

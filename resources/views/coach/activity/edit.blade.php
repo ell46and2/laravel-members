@@ -94,6 +94,29 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-form-label text-md-right" for="location_id">Choose a Location</label>
+            
+            <div class="">
+               <location-selection 
+               		class="form-control{{ $errors->has('location_id') ? ' is-invalid' : '' }}" locations-data="{{ json_encode($locations) }}"
+               		old-location-id="{{ old('location_id', $activity->location_id) }}"
+               		old-location-name="{{ old('location_name', $activity->location_name) }}"
+               	></location-selection>
+
+               <location-name-input 
+					class="form-control{{ $errors->has('location_name') ? ' is-invalid' : '' }}"
+					old-location-name="{{ old('location_name', $activity->location_name) }}"
+               ></location-name-input>
+
+                @if ($errors->has('location_id'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('location_id') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+
         <br><br>
 
 		<div class="form-group row mb-0">

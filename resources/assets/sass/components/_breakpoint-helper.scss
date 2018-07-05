@@ -1,0 +1,73 @@
+/*-----------------------------------------*\
+    BREAKPOINT HELPER
+
+    Importing this component and adding
+    the following element to your template
+    will give you a little tag in the
+    bottom corner of the page indicating
+    which breakpoint is currently active:
+
+    <span class="breakpoint-helper"></span>
+
+    Don't forget to remove it before
+    going live!
+\*-----------------------------------------*/
+
+.breakpoint-helper {
+    display: block;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 9px 10px;
+    background: #FFDC00;
+    color: $black;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 999;
+
+    @include media-breakpoint-up(sm) {
+        background: #01FF70;
+        color: $white;
+        content: "SM";
+    }
+
+    @include media-breakpoint-up(md) {
+        background: #B10DC9;
+        color: $white;
+        content: "MD";
+    }
+
+    @include media-breakpoint-up(lg) {
+        background: #0074D9;
+        color: $white;
+        content: "LG";
+    }
+
+    @include media-breakpoint-up(xl) {
+        background: #FF4136;
+        color: $white;
+        content: "XL";
+    }
+
+    &:after{
+        display: block;
+        content: "XS";
+
+        @include media-breakpoint-up(sm) {
+            content: "SM";
+        }
+
+        @include media-breakpoint-up(md) {
+            content: "MD";
+        }
+
+        @include media-breakpoint-up(lg) {
+            content: "LG";
+        }
+
+        @include media-breakpoint-up(xl) {
+            content: "XL";
+        }
+    }
+}

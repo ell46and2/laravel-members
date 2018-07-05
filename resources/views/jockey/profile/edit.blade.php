@@ -58,13 +58,11 @@
                             <label class="col-md-4 col-form-label text-md-right" for="country_id">Country</label>
                             
                             <div class="col-md-6">
-                                <select class="form-control" name="country_id" id="country_id" required>
-                                   @foreach($countries as $country)
-                                        <option value="{{ $country->id }}"{{ $jockey->country_id === $country->id ? ' selected="selected"' : '' }}>
-                                            {{ ucfirst($country->name) }}
-                                        </option>
-                                   @endforeach
-                                </select>
+                                <country-select 
+                                    class="form-control"
+                                    resource="{{ json_encode($countries) }}"
+                                    old="{{ old('country_id',$jockey->country_id) }}"
+                                ></country-select>
 
                                 @if ($errors->has('country_id'))
                                     <span class="invalid-feedback">
@@ -78,13 +76,12 @@
                             <label class="col-md-4 col-form-label text-md-right" for="county_id">County</label>
                             
                             <div class="col-md-6">
-                                <select class="form-control" name="county_id" id="county_id" required>
-                                   @foreach($counties as $county)
-                                        <option value="{{ $county->id }}"{{ $jockey->county_id === $county->id ? ' selected="selected"' : '' }}>
-                                            {{ ucfirst($county->name) }}
-                                        </option>
-                                   @endforeach
-                                </select>
+                                <county-select 
+                                    class="form-control"
+                                    resource="{{ json_encode($counties) }}"
+                                    country-id="{{ old('country_id',$jockey->country_id) }}"
+                                    old="{{ old('county_id',$jockey->county_id) }}"
+                                ></county-select>
 
                                 @if ($errors->has('county_id'))
                                     <span class="invalid-feedback">

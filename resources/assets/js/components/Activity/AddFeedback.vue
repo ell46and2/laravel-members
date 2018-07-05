@@ -5,7 +5,6 @@
 				id="body" 
 				rows="10"
 				class="form-control"
-				autofocus="autofocus"
 				v-model="form.feedback"
 			></textarea>
 		</div>

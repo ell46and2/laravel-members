@@ -1,0 +1,67 @@
+// Define directions with their margin direction
+$flow__directions: (
+    ("horizontal", "left"),
+    ("vertical", "top")
+);
+
+// Set as either padding or margin
+$flow__property: "margin";
+
+.flow {
+
+    // Loop each option
+    @each $direction in $flow__directions {
+
+        // Build a class up
+        &-#{ nth($direction, 1) } {
+
+            // By default use $spacer as it is
+            &:not([class*="--1"]):not([class*="--2"]):not([class*="--3"]):not([class*="--4"]):not([class*="--5"]) {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer;
+                }
+            }
+
+            // 25%
+            &--1 {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .25 };
+                }
+            }
+
+            // 50%
+            &--2 {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .5 };
+                }
+            }
+
+            // 100%
+            &--3 {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer;
+                }
+            }
+
+            // 150%
+            &--4 {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 1.5 };
+                }
+            }
+
+            // 300%
+            &--5 {
+
+                > * + * {
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 3 };
+                }
+            }
+        }
+    }
+}

@@ -75,6 +75,10 @@ Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.
 
 Route::post('/admin/activity', 'Admin\ActivityController@store')->name('admin.activity.store');
 Route::get('/admin/activity/create', 'Admin\ActivityController@singleCreate')->name('admin.1:1-activity.create');
+Route::get('/admin/activity/group-create', 'Admin\ActivityController@groupCreate')->name('admin.group-activity.create');
+Route::get('/admin/activity/{activity}/edit', 'Admin\ActivityController@edit')->name('admin.activity.edit');
+Route::put('/admin/activity/{activity}/single', 'Admin\ActivityController@singleUpdate')->name('admin.1:1-activity.update');
+Route::put('/admin/activity/{activity}/group', 'Admin\ActivityController@groupUpdate')->name('admin.group-activity.update');
 Route::get('admin/jockey-resource/{coach}', 'Admin\ActivityController@getCoachesJockeys');
 Route::get('/admin/activity/{activity}', 'Admin\ActivityController@show')->name('admin.activity.show');
 
@@ -87,7 +91,7 @@ Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('ad
 // Racing Excellence
 Route::get('/admin/racing-excellence/create', 'Admin\RacingExcellenceController@create')->name('admin.racing-excellence.create');
 Route::post('/admin/racing-excellence', 'Admin\RacingExcellenceController@store')->name('admin.racing-excellence.store');
-Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
+// Route::get('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@show')->name('admin.racing-excellence.show');
 Route::put('/admin/racing-excellence/{racingExcellence}', 'Admin\RacingExcellenceController@update')->name('admin.racing-excellence.update');
 
 Route::get('/admin/racing-excellence/{racingExcellence}/edit', 'Admin\RacingExcellenceController@edit')->name('admin.racing-excellence.edit');
@@ -96,6 +100,9 @@ Route::get('/racing-excellence/jockey/{jockey}', 'RacingExcellence\ParticipantCo
 Route::post('/racing-excellence/{racingExcellenceDivision}/participant/create', 'RacingExcellence\ParticipantController@create');
 Route::post('/racing-excellence/{racingExcellenceDivision}/participant/external-create', 'RacingExcellence\ParticipantController@externalCreate');
 Route::delete('/racing-excellence/participant/{racingExcellenceParticipant}', 'RacingExcellence\ParticipantController@destroy');
+
+// RE - jockey and unassigned coach
+Route::get('/racing-excellence/{racingExcellence}', 'RacingExcellence\RacingExcellenceController@show')->name('racing-excellence.show');
 
 Route::get('/racing-excellence/{racingExcellence}/results', 'RacingExcellence\RacingExcellenceResultController@create')->name('racing-excellence.results.create');
 
@@ -120,8 +127,17 @@ Route::delete('/admin/documents/{document}', 'Admin\DocumentController@destroy')
 Route::get('/documents', 'Document\DocumentController@index')->name('documents.index'); // admin made need own index where they can click to edit the documents.
 
 // Messages
+// admin, coach, jets only
+Route::get('/messages/create', 'Message\MessageController@create')->name('message.create');
+Route::post('/messages/user/{user}', 'Message\MessageController@getUser');
 Route::get('/messages', 'Message\MessageController@index')->name('messages.index');
+Route::get('/messages/sent', 'Message\MessageController@sentIndex')->name('messages.sent');
+Route::get('/messages/{message}', 'Message\MessageController@show')->name('messages.show');
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
+
+
+// Invoice
+Route::post('/invoice/{coach}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
 
 // Attachments
 Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');

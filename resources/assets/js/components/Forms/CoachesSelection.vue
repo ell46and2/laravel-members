@@ -48,16 +48,8 @@
 				}
 			});
 
-			let old = JSON.parse(this.old);
-			console.log('old user select', old);
-			if(old) {
-				Object.keys(old).forEach((id) => {
-					id = Number(id);
-					this.selectedId = id;
-					let user = _.find(this.users, { id: id });
-					console.log('user', user);
-					user.selected = true;
-				});
+			if(this.old) {
+				this.handleSelected(Number(this.old));
 			}
 		},
 		methods: {

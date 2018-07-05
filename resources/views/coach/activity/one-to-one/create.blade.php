@@ -72,16 +72,16 @@
             <label class="col-form-label text-md-right" for="location_id">Choose a Location</label>
             
             <div class="">
-                <select class="form-control" name="location_id" id="location_id" required>
-                   @foreach($locations as $location)
-                        <option 
-                        	value="{{ $location->id }}"
-                        	{{ old('location_id') == $location->id ? 'selected' : '' }}
-                        >
-                            {{ ucfirst($location->name) }}
-                        </option>
-                   @endforeach
-                </select>
+               <location-selection 
+               		class="form-control{{ $errors->has('location_id') ? ' is-invalid' : '' }}" locations-data="{{ json_encode($locations) }}"
+               		old-location-id="{{ old('location_id') }}"
+               		old-location-name="{{ old('location_name') }}"
+               	></location-selection>
+
+               <location-name-input 
+					class="form-control{{ $errors->has('location_name') ? ' is-invalid' : '' }}"
+					old-location-name="{{ old('location_name') }}"
+               ></location-name-input>
 
                 @if ($errors->has('location_id'))
                     <span class="invalid-feedback">

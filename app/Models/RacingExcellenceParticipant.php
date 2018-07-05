@@ -87,4 +87,19 @@ class RacingExcellenceParticipant extends Model
 
 		return $this->jockey->getAvatar();
 	}
+
+	/*
+		Attributes
+	*/
+	public function getFormattedNameAttribute()
+	{
+		return $this->name ?? $this->jockey->full_name;
+	}
+
+	public function getFormattedPlaceAttribute()
+	{
+		return $this->place === 1000000 ? 
+			!$this->completed_race ? 'dnf' : '-'
+			: $this->place;
+	}
 }

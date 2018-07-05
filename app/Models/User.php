@@ -93,12 +93,19 @@ class User extends Authenticatable
 
     public function messages()
     {
-        return $this->hasMany(Message::class, 'recipient_id');
+        return $this->belongsToMany(Message::class, 'message_recipient', 'recipient_id', 'message_id')
+            ->withPivot('read');
+        // return $this->hasMany(Message::class, 'recipient_id');
     }
 
     public function unreadMessages()
     {
-        return $this->messages()->where('read', false);
+        return $this->messages()->wherePivot('read', false);
+    }
+
+    public function unreadMessagesCount()
+    {
+        return $this->unreadMessages->count();
     }
 
     public function sentMessages()
@@ -182,5 +189,13 @@ class User extends Authenticatable
     public function numberOfUnreadMessages()
     {
         return $this->unreadMessages()->count();
+    }
+
+    public function markMessageAsRead(Message $message)
+    {
+        // dd($message);
+        $this->messages()->updateExistingPivot($message->id, [
+            'read' => 1
+        ]);
     }
 }

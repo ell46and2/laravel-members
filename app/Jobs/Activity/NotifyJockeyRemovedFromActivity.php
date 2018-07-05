@@ -4,6 +4,7 @@ namespace App\Jobs\Activity;
 
 use App\Models\Activity;
 use App\Models\Jockey;
+use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,7 +38,7 @@ class NotifyJockeyRemovedFromActivity implements ShouldQueue
     {
         $body = "You have been removed from the {$this->activity->formattedType} activity on {$this->activity->start->format('l jS \\of F Y h:i A')}";
      
-        $this->activity->notifications()->create([
+        Notification::create([
             'user_id' => $this->jockey->id,
             'body' => $body
         ]);

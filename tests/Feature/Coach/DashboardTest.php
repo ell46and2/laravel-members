@@ -48,6 +48,71 @@ class DashboardTest extends TestCase
     }
 
     /** @test */
+    public function jockeys_are_colour_coded_depending_on_last_activity_with_coach_date()
+    {
+        /*
+            within 2 weeks = green
+            2-4 weeks = yellow
+            > 4 = red
+
+            if no last activity default to blue
+        */
+       
+
+       
+        $coach = factory(Coach::class)->create();
+
+        $jockey1 = factory(Jockey::class)->create();
+        $jockey2 = factory(Jockey::class)->create();
+        $jockey3 = factory(Jockey::class)->create();
+        $jockey4 = factory(Jockey::class)->create();
+        $coach->assignJockey($jockey1);
+        $coach->assignJockey($jockey2);
+        $coach->assignJockey($jockey3);
+        $coach->assignJockey($jockey4);
+
+        $jockey1ActivityA = factory(Activity::class)->create([
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->subDays(17)
+        ]);
+
+        $jockey1ActivityA->addJockey($jockey1);
+
+        $jockey1ActivityB = factory(Activity::class)->create([
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->subDays(9)
+        ]);
+
+        $jockey1ActivityB->addJockey($jockey1);
+
+        $jockey1ActivityC = factory(Activity::class)->create([
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->addDays(1)
+        ]);
+
+        $jockey1ActivityC->addJockey($jockey1);
+
+        $jockey2Activity = factory(Activity::class)->create([
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->subDays(15)
+        ]);
+
+        $jockey2Activity->addJockey($jockey2);
+
+        $jockey3Activity = factory(Activity::class)->create([
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->subDays(30)
+        ]);
+
+        $jockey3Activity->addJockey($jockey3);
+
+        $this->assertEquals('green', $coach->lastActivityDateColourCode($jockey1));
+        $this->assertEquals('yellow', $coach->lastActivityDateColourCode($jockey2));
+        $this->assertEquals('red', $coach->lastActivityDateColourCode($jockey3));
+        $this->assertEquals('blue', $coach->lastActivityDateColourCode($jockey4));
+    }
+
+    /** @test */
     public function can_see_number_of_activities_in_the_next_7_days()
     {
     	$coach = factory(Coach::class)->create();
@@ -179,20 +244,20 @@ class DashboardTest extends TestCase
     {
         $coach = factory(Coach::class)->create();
 
-        $unreadMessages = factory(Message::class, 10)->create([
-        	'recipient_id' => $coach->id
-        ]);
+        $message1 = factory(Message::class)->create();
+        $message1->addRecipient($coach);
+        $message2 = factory(Message::class)->create();
+        $message2->addRecipient($coach);
+        $message3 = factory(Message::class)->create();
+        $message3->addRecipient($coach);
 
-        $readMessages = factory(Message::class, 5)->states('read')->create([
-        	'recipient_id' => $coach->id
-        ]);
+        $messageRead = factory(Message::class)->create();
+        $messageRead->addRecipient($coach);
+        $coach->markMessageAsRead($messageRead);
 
-        $this->assertEquals($coach->messages->count(), 15);
 
-        $this->assertEquals($coach->numberOfUnreadMessages(), 10);
+        $this->assertEquals($coach->messages->count(), 4);
+
+        $this->assertEquals($coach->numberOfUnreadMessages(), 3);
     }
-
-    /*
-    	unreadnotifications, unreadmessages numbers can we cache these some how?
-     */
 }

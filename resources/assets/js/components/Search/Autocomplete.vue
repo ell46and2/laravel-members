@@ -40,7 +40,6 @@
 	export default {
 		props: {
 			resource: {
-				type: String,
 				required: true,
 			},
 			excludeIds: {
@@ -64,7 +63,12 @@
 			}
 		},
 		mounted() {
-			this.data = JSON.parse(this.resource);
+			if(typeof this.resource === 'string') {
+				this.data = JSON.parse(this.resource);
+			} else {
+				this.data = this.resource;
+			}
+			
 
 			document.addEventListener('click', this.handleClickOutside);
 		},

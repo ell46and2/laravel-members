@@ -48,7 +48,7 @@ class LoginJockeyTest extends TestCase
             'password' => 'super-secret-password'
         ]);
 
-        $response->assertRedirect('/home');
+        $response->assertRedirect('/dashboard');
         
         $this->assertTrue(Auth::user()->is($jockey));
     }

@@ -44,7 +44,17 @@ class Coach extends User
     public function racingExcellences()
     {
         return $this->hasMany(RacingExcellence::class, 'coach_id');
-    }  
+    } 
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'coach_id');
+    }
+
+    public function latestOpenInvoice()
+    {
+        return $this->hasOne(Invoice::class, 'coach_id')->where('status', 'pending submission');
+    }
 
     /*
         Utilities
@@ -172,5 +182,29 @@ class Coach extends User
         return $this->activities()
             ->whereBetween('start', [Carbon::now(), Carbon::now()->addDays(7)])
             ->count();
+    }
+
+    public function lastActivityDateColourCode($jockey)
+    {
+        $lastActivity = $this->activities()
+            ->with('jockeys')
+            ->where('start', '<', Carbon::now())
+            ->whereHas('jockeys', function($query) use ($jockey) {
+                $query->where('id', $jockey->id);
+            })
+            ->orderBy('start', 'desc')
+            ->first();
+
+        if(!$lastActivity) {
+            return 'blue';
+        }
+
+        if($lastActivity->start > Carbon::now()->subWeeks(2)) {
+            return 'green';
+        } else if($lastActivity->start > Carbon::now()->subWeeks(4)) {
+            return 'yellow';
+        } else {
+            return 'red';
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin\Activity;
 
+use App\Models\Coach;
+use App\Models\Jockey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostFormRequest extends FormRequest
@@ -13,7 +15,7 @@ class StorePostFormRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -47,7 +49,7 @@ class StorePostFormRequest extends FormRequest
                     }
                 }
             ],
-            'location_id' => 'required_without:location_name|exists:activity_locations,id',
+            'location_id' => 'nullable|required_without:location_name|exists:activity_locations,id',
             'location_name' => 'required_without:location_id',
         ];
     }

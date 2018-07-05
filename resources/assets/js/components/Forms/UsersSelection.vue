@@ -38,6 +38,10 @@
 			old: {
 				required: false,
 				default: null
+			},
+			coachId: {
+				required: false,
+				default: null
 			}
 			// endpoint - base url to post to for removing and adding i.e activity/1/jockey // methods create and destroy
 		},
@@ -50,7 +54,22 @@
 						this.selectedIds.push(user.id);
 					}
 				});
-
+				this.populateOldData();
+				
+			} else {
+				if(this.coachId) {
+					this.getCoachesJockeys(this.coachId).then(() => {
+						this.populateOldData();
+					});				
+				}
+			}
+			// on remove send delete request - update user in users
+			// on select if edit - update user in users
+			
+			bus.$on('coach:selected', this.getCoachesJockeys);
+		},
+		methods: {
+			populateOldData() {
 				let old = JSON.parse(this.old);
 				console.log('old user select', old);
 				if(old) {
@@ -62,13 +81,7 @@
 						user.selected = true;
 					});
 				}
-			}			
-			// on remove send delete request - update user in users
-			// on select if edit - update user in users
-			
-			bus.$on('coach:selected', this.getCoachesJockeys);
-		},
-		methods: {
+			},
 			handleSelected(id) {
 				console.log('selected', id);
 				let user = _.find(this.users, { id: id });
@@ -112,6 +125,7 @@
 				});
 			},
 			async getCoachesJockeys(coachId) {
+				console.log('getCoachesJockeys');
 				let jockeys = await axios.get(`/admin/jockey-resource/${coachId}`);
 
 				this.users = jockeys.data.data;

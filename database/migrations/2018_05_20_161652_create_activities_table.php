@@ -27,12 +27,6 @@ class CreateActivitiesTable extends Migration
             $table->timestamps();
 
             $table->foreign('coach_id')->references('id')->on('users');
-            // $table->foreign('activity_type_id')->references('id')->on('activity_types');
-            
-            // Possibly add a group (boolean) field - to save querying number of jockeys.
-            // group activity feedback field
-            // 
-            // Individual feedback needs to go on seperate table.
         });
     }
 

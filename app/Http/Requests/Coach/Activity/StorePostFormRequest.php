@@ -39,7 +39,7 @@ class StorePostFormRequest extends FormRequest
                     }
                 }
             ],
-            'location_id' => 'required_without:location_name|exists:activity_locations,id',
+            'location_id' => 'nullable|required_without:location_name|exists:activity_locations,id',
             'location_name' => 'required_without:location_id',
         ];
     }

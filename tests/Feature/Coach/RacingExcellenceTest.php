@@ -261,9 +261,51 @@ class RacingExcellenceTest extends TestCase
     }
 
     /** @test */
-    public function place_must_be_between_1_and_the_total_number_of_jockeys_in_their_division()
+    public function can_set_a_participant_as_did_not_finish()
     {
-        	
+    	$coach = factory(Coach::class)->create();
+
+        $series = SeriesType::where('total_just_from_place', false)->first();
+        
+        $racingExcellence = factory(RacingExcellence::class)->create([
+	    	'series_id' => $series->id,
+	    	'coach_id' => $coach->id
+	    ]);
+
+	    $division = factory(RacingExcellenceDivision::class)->create([
+        	'racing_excellence_id' => $racingExcellence->id
+	    ]);
+
+	    $participant1 = factory(RacingExcellenceParticipant::class)->create([
+	    	'racing_excellence_id' => $racingExcellence->id,
+	        'division_id' => $division->id,
+	        'jockey_id' => function() {
+	            return factory(Jockey::class)->create()->id;
+	        }
+	    ]);
+
+	    $response = $this->actingAs($coach)->put("/racing-excellence/participant/{$participant1->id}", [
+	    	'place' => 'dnf',
+	    	'presentation_points' => 0,
+	    	'professionalism_points' => 1,
+	    	'coursewalk_points' => 2,
+	    	'riding_points' => 2,
+	    	'feedback' => 'Participants feedback.',
+        ]);
+
+        tap($participant1->fresh(), function($participant1) use ($response) {
+            // $response->assertStatus(302);
+            // Add tests for the Resource returned
+           
+            $this->assertEquals(null, $participant1->place);
+            $this->assertEquals(0, $participant1->presentation_points);
+            $this->assertEquals(1, $participant1->professionalism_points);
+            $this->assertEquals(2, $participant1->coursewalk_points);
+            $this->assertEquals(2, $participant1->riding_points);
+            $this->assertEquals(5, $participant1->total_points);
+            $this->assertFalse($participant1->completed_race);
+            $this->assertEquals('Participants feedback.', $participant1->feedback);
+        });
     }
 
     /** @test */

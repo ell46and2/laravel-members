@@ -9,14 +9,24 @@
 	<form method="POST" action="{{ route('admin.activity.store') }}">
 
 		{{ csrf_field() }}
+	
+		<div class="form-group">
+			<coaches-selection
+				class="form-control{{ $errors->has('coach_id') ? ' is-invalid' : '' }}"
+				resource="{{ json_encode($coachesResource) }}"
+				:group="false"
+				:old="{{ json_encode(old('coach_id')) }}"
+			></coaches-selection>
+			@if ($errors->has('coach_id'))
+		        <span class="invalid-feedback">
+		            <strong>{{ $errors->first('coach_id') }}</strong>
+		        </span>
+		    @endif
+		</div>
 
-		<coaches-selection 
-			resource="{{ json_encode($coachesResource) }}"
-			:group="false"
-			old="{{ json_encode(old('jockeys')) }}"
-		></coaches-selection>
+		<br><br>
 		
-		<div class="form-group row">
+		<div class="form-group">
 			<div class="form-control{{ $errors->has('activity_type_id') ? ' is-invalid' : '' }}">
 				@foreach($activityTypes as $activityType)
 					<input 
@@ -53,7 +63,7 @@
 
 		<br><br>
 
-		<div class="form-group row">
+		<div class="form-group">
 			<div class="form-control{{ $errors->has('start_time') ? ' is-invalid' : '' }}">
 				<timepicker-component old="{{ old('start_time') }}"></timepicker-component>		
 			</div>
@@ -66,11 +76,20 @@
 
 		<br><br>
 		
-		<users-selection 
-			resource=""
-			:group="false"
-			old="{{ json_encode(old('jockeys')) }}"
-		></users-selection>
+		<div class="form-group{{ $errors->has('jockeys') ? ' is-invalid' : '' }}">
+			<users-selection 
+				class="form-control"
+				resource=""
+				:group="false"
+				old="{{ json_encode(old('jockeys')) }}"
+				:coach-id="{{ json_encode(old('coach_id')) }}"
+			></users-selection>
+			@if ($errors->has('jockeys'))
+	            <span class="invalid-feedback">
+	                <strong>{{ $errors->first('jockeys') }}</strong>
+	            </span>
+	        @endif
+		</div>
 
 		<br><br>
 

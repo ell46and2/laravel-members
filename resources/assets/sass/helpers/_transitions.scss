@@ -1,0 +1,63 @@
+%transition-base {
+    backface-visibility: hidden;
+}
+
+%transition {
+
+    @extend %transition-base;
+
+    transition: all 200ms ease;
+}
+
+%transition--snappy {
+
+    @extend %transition-base;
+
+    transition: all 140ms ease;
+}
+
+%transition--fill {
+
+    @extend %transition-base;
+
+    transition: fill 200ms ease;
+}
+
+%transition--crossfade-in {
+
+    @extend %transition-base;
+
+    transition: opacity 2000ms linear;
+}
+
+%transition--crossfade-out {
+
+    @extend %transition-base;
+
+    transition: visibility 0s 2000ms, opacity 2000ms linear;
+}
+
+%transition--slide {
+
+    @extend %transition-base;
+
+    transition: all 200ms cubic-bezier(.59,.17,.24,.78);
+}
+
+%transition--delay-slide {
+
+    @extend %transition--slide;
+
+    transition-delay: 300ms;
+}
+
+%transition--slow-slide {
+
+    @extend %transition-base;
+
+    transition: all 800ms cubic-bezier(.59,.17,.24,.78);
+}
+
+%transition--super-slow-fade {
+    transition: all 2000ms ease;
+}

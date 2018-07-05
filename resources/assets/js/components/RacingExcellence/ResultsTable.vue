@@ -16,7 +16,7 @@
 		  	<tbody>
 		    	<tr v-for="participant in orderedDivision.participants" :key="participant.id">
 		      		<td>{{ participant.name }}</td>
-		      		<td>{{ participant.place }}</td>
+		      		<td>{{ formattedPlace(participant) }}</td>
 		      		<td>{{ participant.place_points }}</td>
 		      		<td>{{ participant.presentation_points }}</td>
 		      		<td>{{ participant.professionalism_points }}</td>
@@ -44,6 +44,15 @@
 				division.participants = _.orderBy(division.participants, ['place'], ['asc']);
 
 				return division;
+			},
+			formattedPlace(participant) {
+				if(participant.place) {
+					return participant.place
+				}
+
+				if(participant.total_points) {
+					return 'dnf';
+				}
 			}
 		},
 		computed: {

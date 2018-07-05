@@ -24,6 +24,12 @@ class RacingExcellenceResultsFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'place' => function($attribute, $value, $fail) {
+
+                if (!is_numeric($value) && $value !== 'dnf' ) {
+                    return $fail('Please select a registered Coach');
+                }
+            },
             'presentation_points' => 'nullable|numeric|between:0,2',
             'professionalism_points' => 'nullable|numeric|between:0,2',
             'coursewalk_points' => 'nullable|numeric|between:0,2',

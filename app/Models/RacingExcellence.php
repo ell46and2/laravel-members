@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class RacingExcellence extends Model
 { 
@@ -76,10 +77,30 @@ class RacingExcellence extends Model
     	return $this->morphMany(Notification::class, 'notifiable');
     }
 
+    public function invoiceLine()
+    {
+        return $this->morphOne(InvoiceLine::class, 'invoiceable');
+    }
+
     
     /*
     	Utilities
     */
+    public function invoicable()
+    {   
+        return is_null($this->invoiceLine);
+    }
+
+    public function divisionResults()
+    {
+        return $this->divisions()->with(['participants' => function($query) {
+            $query->select(['*', DB::raw('IF(`place` IS NOT NULL, `place`, 1000000) `place`')]);
+            $query->orderBy('place', 'asc');
+        },
+        'participants.jockey'
+        ])->get();
+    }
+
 	public static function createRace(Request $request)
 	{
 		$racingExcellence = self::create([
@@ -151,7 +172,8 @@ class RacingExcellence extends Model
 
     public function getNotificationLinkAttribute()
     {
-        // NOTE: need to have different urls depending on the users role.
-        return config('app.url') . urlAppendByRole() . "/racing-excellence/{$this->id}";
+        // if assigned coach send to results page - do we just redirect them from the controller?
+        
+        return config('app.url') . "/racing-excellence/{$this->id}";
     }
 }

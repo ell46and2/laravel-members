@@ -41,6 +41,16 @@ Vue.component('add-feedback', require('./components/Activity/AddFeedback.vue'));
 
 Vue.component('divisions', require('./components/RacingExcellenceDivisions/Divisions.vue'));
 
+Vue.component('location-selection', require('./components/Forms/LocationSelection.vue'));
+
+Vue.component('location-name-input', require('./components/Forms/LocationNameInput.vue'));
+
+Vue.component('country-select', require('./components/Forms/CountrySelect.vue'));
+
+Vue.component('county-select', require('./components/Forms/CountySelect.vue'));
+
+Vue.component('message-create', require('./components/Message/MessageCreate.vue'));
+
 const app = new Vue({
     el: '#app'
 });

@@ -1,0 +1,63 @@
+$number-width: 55px;
+$number-suffix: ".";
+$vertical-flow: 5px;
+
+.nested-ordered-list {
+
+    &,
+    ol {
+        counter-reset: decimal;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ol {
+        margin-top: $vertical-flow;
+
+        &[type="a"] {
+            counter-reset: alpha;
+        }
+
+        &[type="i"] {
+            counter-reset: roman;
+        }
+    }
+
+    li {
+        display: table;
+
+        &:before {
+            display: table-cell;
+            content: counters(decimal, ".") $number-suffix;
+            counter-increment: decimal;
+            width: $number-width;
+        }
+
+        + li {
+            margin-top: $vertical-flow;
+        }
+    }
+
+    ol[type="a"] {
+
+        li {
+
+            &:before {
+                content: counter(alpha, lower-alpha) $number-suffix;
+                counter-increment: alpha;
+            }
+        }
+    }
+
+    ol[type="i"] {
+
+        li {
+
+            &:before {
+                content: counter(roman, lower-roman) $number-suffix;
+                counter-increment: roman;
+            }
+        }
+    }
+}

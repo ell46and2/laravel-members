@@ -164,7 +164,7 @@ class ActivityController extends Controller
         return redirect()->route('coach.activity.show', $activity);
     }
 
-    public function groupUpdate(Request $request, Activity $activity)
+    public function groupUpdate(Request $request, Activity $activity) // Add form request
     {
         $this->authorize('update', $activity);
 
@@ -187,6 +187,7 @@ class ActivityController extends Controller
         return redirect()->route('coach.activity.show', $activity);
     }
 
+    // Move to trait
     private function updateActivitysJockeys(Activity $activity)
     {
         $currentJockeys = $activity->jockeys;
@@ -214,7 +215,7 @@ class ActivityController extends Controller
         }
     }
 
-    // Possibly move to trait
+    // Move to trait
     private function typeOrStartOrLocationChanged(Activity $previous, Activity $activity)
     {
         // dd($previous->activity_type_id != $activity->activity_type_id);

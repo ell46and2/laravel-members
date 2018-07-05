@@ -22,7 +22,8 @@ class ParticipantResultController extends Controller
     	// NOTE: need to handle race not completed 
 
     	$participant->update([
-    		'place' => $request->place,
+    		'place' => $request->place === 'dnf' ? null : $request->place,
+            'completed_race' => $request->place === 'dnf' ? false : true,
 	    	'presentation_points' => $request->presentation_points,
 	    	'professionalism_points' => $request->professionalism_points,
 	    	'coursewalk_points' => $request->coursewalk_points,

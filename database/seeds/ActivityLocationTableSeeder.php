@@ -18,8 +18,7 @@ class ActivityLocationTableSeeder extends Seeder
             'JBH',
             'Racecourse',
             'In-yard',
-            'Home',
-            'Other (free-text)'
+            'Home'
         ];
 
         foreach ($locations as $location) {

@@ -59,4 +59,8 @@ class RacingExcellenceDivision extends Model
         ]);
     }
 
+    public function getDivisionParticipantsByJockeyIds(Array $ids)
+    {
+        return $this->participants->whereIn('jockey_id', $ids);
+    }
 }

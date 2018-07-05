@@ -2,6 +2,7 @@
 
 namespace App\Jobs\RacingExcellence;
 
+use App\Models\Notification;
 use App\Models\RacingExcellence;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -38,7 +39,7 @@ class NotifyRemovedFromRacingExcellence implements ShouldQueue
 
         $body = "You have been removed from Racing Excellence on {$racingExcellence->start->format('l jS \\of F Y h:i A')}";
    
-        $racingExcellence->notifications()->create([
+        Notification::create([
             'user_id' => $this->jockeyId,
             'body' => $body
         ]);

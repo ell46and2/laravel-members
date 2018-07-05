@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Activity;
+use App\Models\InvoiceLine;
 use App\Models\RacingExcellenceParticipant;
 use App\Observers\ActivityObserver;
+use App\Observers\InvoiceLineObserver;
 use App\Observers\RacingExcellenceParticipantObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +21,7 @@ class EloquentEventServiceProvider extends ServiceProvider
     {
         Activity::observe(ActivityObserver::class);
         RacingExcellenceParticipant::observe(RacingExcellenceParticipantObserver::class);
+        InvoiceLine::observe(InvoiceLineObserver::class);
     }
 
     /**

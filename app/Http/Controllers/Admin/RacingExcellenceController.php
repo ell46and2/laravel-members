@@ -51,13 +51,6 @@ class RacingExcellenceController extends Controller
   		// return redirect()->route('admin.racing-excellence.show', $racingExcellence);
     }
 
-    public function show()
-    {
-        // NOTE: Do we need or just show the results page?
-
-    	return 'test';
-    }
-
     public function edit(RacingExcellence $racingExcellence)
     {
     	$jockeysResource = UserSearchResource::collection(Jockey::all()->sortBy('full_name'));
