@@ -29,7 +29,20 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        dd($invoice);
+        $coach = $invoice->coach->load('jockeys');
+
+        $invoice->load('lines', 'lines.invoiceable');
+
+        return view('invoice.show', compact('invoice', 'coach'));
+    }
+
+    public function add(Invoice $invoice)
+    {
+        $coach = $invoice->coach->load('jockeys');
+
+        $invoiceables = $coach->invoiceableList();
+
+        return view('invoice.lines.add', compact('invoice', 'coach', 'invoiceables'));
     }
 
     public function addLines(Request $request, Invoice $invoice)
@@ -48,22 +61,26 @@ class InvoiceController extends Controller
 
     private function addActivityLines(Invoice $invoice)
     {
-    	foreach (request()->activities as $activityId) {
-    		$activity = Activity::find($activityId);
-    		$activity->invoiceLine()->create([
-	            'invoice_id' => $invoice->id,
-	        ]);
-    	}
+        if(request()->activities) {
+           foreach (request()->activities as $activityId) {
+                $activity = Activity::find($activityId);
+                $activity->invoiceLine()->create([
+                    'invoice_id' => $invoice->id,
+                ]);
+            } 
+        }   	
     }
 
     private function addRacingExcellenceLines(Invoice $invoice)
     {
-        foreach (request()->racingexcellences as $raceExcelId) {
-            $raceExcel = RacingExcellence::find($raceExcelId);
-            $raceExcel->invoiceLine()->create([
-                'invoice_id' => $invoice->id,
-            ]);
-        }
+        if(request()->racingexcellences) {
+            foreach (request()->racingexcellences as $raceExcelId) {
+                $raceExcel = RacingExcellence::find($raceExcelId);
+                $raceExcel->invoiceLine()->create([
+                    'invoice_id' => $invoice->id,
+                ]);
+            }
+        }      
     }
 
     private function getLatestOrCreateInvoice(Coach $coach)

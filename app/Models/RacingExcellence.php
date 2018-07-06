@@ -176,4 +176,9 @@ class RacingExcellence extends Model
         
         return config('app.url') . "/racing-excellence/{$this->id}";
     }
+
+    public function getInvoiceableGroupAttribute()
+    {
+        return 'racingexcellences';
+    }
 }

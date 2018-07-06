@@ -202,6 +202,11 @@ class Activity extends Model
         }
     }
 
+    public function getInvoiceableGroupAttribute()
+    {
+        return 'activities';
+    }
+
     public function getNotificationLinkAttribute()
     {
         // NOTE: need to have different urls depending on the users role.

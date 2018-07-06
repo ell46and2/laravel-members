@@ -138,6 +138,7 @@ Route::post('/messages', 'Message\MessageController@store')->name('message.store
 
 // Invoice
 Route::post('/invoices/{invoice}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
+Route::get('/invoices/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
 Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
 Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');

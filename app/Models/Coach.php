@@ -226,6 +226,7 @@ class Coach extends User
             ->whereBetween('start', [Carbon::now()->subMonths(2), Carbon::now()])
             ->whereNotNull('duration')
             ->doesntHave('invoiceLine')
+            ->with('type')
             ->get();
     }
 
