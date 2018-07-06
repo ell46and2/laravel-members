@@ -44,7 +44,7 @@ class InvoiceTest extends TestCase
 	    $this->assertTrue($activity->invoicable());
 	    $this->assertTrue($racingExcellence->invoicable());
 
-	    $response = $this->actingAs($coach)->post("/invoice/$coach->id/invoice-lines", [
+	    $response = $this->actingAs($coach)->post("/invoices/$invoice->id/invoice-lines", [
             'activities' => [$activity->id], // array of selected activities - will need one for RE too.
             'racingexcellences' => [$racingExcellence->id], // array of selected activities - will need one for RE too.
         ]);
@@ -80,7 +80,7 @@ class InvoiceTest extends TestCase
 
 
 /*
-	Views: create_invoice, add_activities/Re, add_mileage, submitted_view
+	Views: create_invoice, add_activities/Re, add_mileage, submitted_view, invoice_index
 
 	an invoiceable activity/RE:
 		- must be in the past

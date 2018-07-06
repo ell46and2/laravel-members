@@ -11,7 +11,28 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function addLines(Request $request, Coach $coach)
+    public function index(Coach $coach)
+    {
+        // Policy: $coach is the current user or user is an admin.
+
+        $invoices = $coach->invoices; // paginate?
+
+        return view('invoice.index', compact('invoices', 'coach'));
+    }
+
+    public function store(Coach $coach)
+    {
+        $invoice = $this->getLatestOrCreateInvoice($coach);
+
+        return redirect()->route('invoice.show', $invoice);
+    }
+
+    public function show(Invoice $invoice)
+    {
+        dd($invoice);
+    }
+
+    public function addLines(Request $request, Invoice $invoice)
     {
         // validate that invoiceable:
         //  - belongs to coach
@@ -19,8 +40,6 @@ class InvoiceController extends Controller
         //  - start_date is in the past
         
         // Policy: $coach is the current user or user is an admin.
-
-    	$invoice = $this->getLatestInvoice($coach);
 
     	$this->addActivityLines($invoice);
         $this->addRacingExcellenceLines($invoice);
@@ -47,12 +66,12 @@ class InvoiceController extends Controller
         }
     }
 
-    private function getLatestInvoice(Coach $coach)
+    private function getLatestOrCreateInvoice(Coach $coach)
     {
-    	if($invoice = $coach->latestOpenInvoice) {
-    		return $invoice;
-    	}
+        if($invoice = $coach->latestOpenInvoice) {
+            return $invoice;
+        }
 
-    	return $coach->invoices()->create();
+        return $coach->invoices()->create();
     }
 }

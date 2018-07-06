@@ -59,6 +59,11 @@ class Coach extends User
     /*
         Utilities
      */
+    public function hasOpenInvoice()
+    {
+        return (bool) $this->latestOpenInvoice()->count();
+    }
+
     public function events(Request $request)
     {
         // NOTE: need to default to go back 2 years max as default
@@ -206,5 +211,29 @@ class Coach extends User
         } else {
             return 'red';
         }
+    }
+
+    public function invoiceableList()
+    {
+        return (collect($this->invoiceableActivities())
+            ->merge(collect($this->invoiceableRacingExcellence())))
+            ->sortBy('start');
+    }
+
+    public function invoiceableActivities()
+    {
+        return $this->activities()
+            ->whereBetween('start', [Carbon::now()->subMonths(2), Carbon::now()])
+            ->whereNotNull('duration')
+            ->doesntHave('invoiceLine')
+            ->get();
+    }
+
+    public function invoiceableRacingExcellence()
+    {
+        return $this->racingExcellences()
+            ->whereBetween('start', [Carbon::now()->subMonths(2), Carbon::now()])
+            ->doesntHave('invoiceLine')
+            ->get();
     }
 }

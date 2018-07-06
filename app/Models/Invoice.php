@@ -19,4 +19,12 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceLine::class);
     }
+
+    /*
+        Utilities
+    */
+    public function isOpen()
+    {
+        return $this->status === 'pending submission';
+    }
 }

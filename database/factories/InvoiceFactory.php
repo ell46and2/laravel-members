@@ -10,3 +10,15 @@ $factory->define(App\Models\Invoice::class, function (Faker $faker) {
 		},
     ];
 });
+
+$factory->define(App\Models\InvoiceLine::class, function (Faker $faker) {
+    return [
+        'invoice_id' => function() {
+			return factory(App\Models\Invoice::class)->create()->id;
+		},
+		'invoiceable_id' => null,
+		'invoiceable_type' => null,
+		'name' => null,
+		'value' => null
+    ];
+});
