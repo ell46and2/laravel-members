@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Coach;
 use App\Models\Invoice;
+use App\Models\InvoiceLine;
 use App\Models\RacingExcellence;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,15 @@ class InvoiceController extends Controller
     {
         $coach = $invoice->coach->load('jockeys');
 
-        $invoice->load('lines', 'lines.invoiceable');
+        $invoice->load([
+            'activityLines', 
+            'activityLines.activity', 
+            'activityLines.activity.type', 
+            'activityLines.activity.jockeys',
+            'racingExcellenceLines',
+            'racingExcellenceLines.racingExcellence',
+            'racingExcellenceLines.racingExcellence.divisions',
+        ]);
 
         return view('invoice.show', compact('invoice', 'coach'));
     }
@@ -57,6 +66,14 @@ class InvoiceController extends Controller
     	$this->addActivityLines($invoice);
         $this->addRacingExcellenceLines($invoice);
     	
+        return redirect()->route('invoice.show', $invoice);
+    }
+
+    public function removeLine(Invoice $invoice, InvoiceLine $invoiceLine)
+    {
+        $invoiceLine->delete();
+
+        return redirect()->route('invoice.show', $invoice);
     }
 
     private function addActivityLines(Invoice $invoice)

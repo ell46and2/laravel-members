@@ -14401,7 +14401,30 @@ Vue.component('county-select', __webpack_require__(165));
 Vue.component('message-create', __webpack_require__(168));
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  mounted: function mounted() {
+    var invoiceableCheckboxes = document.getElementsByClassName('js-invoiceable-checkbox');
+
+    var selectAll = document.getElementsByClassName('js-select-all')[0];
+    var unselectAll = document.getElementsByClassName('js-unselect-all')[0];
+
+    if (selectAll && unselectAll) {
+      console.log('y');
+      selectAll.addEventListener("click", function () {
+        selectToggle(true);
+      });
+
+      unselectAll.addEventListener("click", function () {
+        selectToggle(false);
+      });
+    }
+
+    function selectToggle(bool) {
+      for (var i = 0; i < invoiceableCheckboxes.length; i++) {
+        invoiceableCheckboxes[i].checked = bool;
+      }
+    }
+  }
 });
 
 /***/ }),

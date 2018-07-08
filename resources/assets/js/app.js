@@ -52,5 +52,32 @@ Vue.component('county-select', require('./components/Forms/CountySelect.vue'));
 Vue.component('message-create', require('./components/Message/MessageCreate.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    mounted() {
+    	var invoiceableCheckboxes = document.getElementsByClassName('js-invoiceable-checkbox');
+
+    	var selectAll = document.getElementsByClassName('js-select-all')[0];
+    	var unselectAll = document.getElementsByClassName('js-unselect-all')[0];
+
+    	if(selectAll && unselectAll) {
+    		console.log('y');
+    		selectAll.addEventListener("click", function() {
+				selectToggle(true)
+			});
+
+			unselectAll.addEventListener("click", function() {
+				selectToggle(false)
+			});
+    	}
+		
+
+		function selectToggle(bool) {
+			for(var i = 0; i < invoiceableCheckboxes.length; i++) {
+			    invoiceableCheckboxes[i].checked = bool;   
+			}	
+		}
+
+	 
+
+    }
 });

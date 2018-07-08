@@ -76,6 +76,12 @@ class InvoiceTest extends TestCase
 	    // use validation to check that activity, RE, mileage aren't already invoicelines
 	}
 
+	/** @test */
+	public function calculate_group_cost()
+	{
+	    	
+	}
+
 }
 
 

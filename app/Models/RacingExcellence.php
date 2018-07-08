@@ -181,4 +181,9 @@ class RacingExcellence extends Model
     {
         return 'racingexcellences';
     }
+
+    public function getNumDivisionsAttribute()
+    {
+        return $this->divisions->count();
+    }
 }

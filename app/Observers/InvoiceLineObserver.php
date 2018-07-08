@@ -31,7 +31,7 @@ class InvoiceLineObserver
       // NOTE: need to add group activity logic
 
       $activity = $invoiceLine->invoiceable;
-      return ($activity->duration / 60) * config('jcp.activity.rate');
+      return (($activity->duration / 60)) * config('jcp.activity.rate');
     }
 
     private function getRacingExcellenceValue(InvoiceLine $invoiceLine)

@@ -14,4 +14,32 @@ class InvoiceLine extends Model
 	{
 		return $this->morphTo();
 	}
+
+	public function activity()
+	{
+		return $this->belongsTo(Activity::class, 'invoiceable_id');
+	}
+
+	public function racingExcellence()
+	{
+		return $this->belongsTo(RacingExcellence::class, 'invoiceable_id');
+	}
+
+	/*
+		Utilities
+	*/
+
+
+	/*
+		Attributes
+	*/
+	public function getFormattedValueAttribute()
+	{
+		return '£' . $this->value;
+	}
+
+	public function getFormattedValuePerJockeyAttribute()
+	{
+		return '£' . ($this->value / $this->activity->jockeys->count());
+	}
 }
