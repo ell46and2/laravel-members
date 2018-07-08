@@ -8,6 +8,7 @@ use App\Models\Coach;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\RacingExcellence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -40,9 +41,19 @@ class InvoiceController extends Controller
             'racingExcellenceLines',
             'racingExcellenceLines.racingExcellence',
             'racingExcellenceLines.racingExcellence.divisions',
+            'miscellaneousLines',
         ]);
 
         return view('invoice.show', compact('invoice', 'coach'));
+    }
+
+    public function submit(Invoice $invoice)
+    {
+        // check has at least one invoiceline
+        
+        $invoice->submitForReview();
+
+        return redirect()->route('invoice.show', $invoice);
     }
 
     public function add(Invoice $invoice)
@@ -52,6 +63,25 @@ class InvoiceController extends Controller
         $invoiceables = $coach->invoiceableList();
 
         return view('invoice.lines.add', compact('invoice', 'coach', 'invoiceables'));
+    }
+
+    public function addMisc(Request $request, Invoice $invoice) // add form request validation
+    {
+        InvoiceLine::create([
+            'invoice_id' => $invoice->id,
+            'misc_name' => $request->misc_name,
+            'misc_date' => Carbon::createFromFormat('d/m/Y', $request->misc_date),
+            'value' => $request->value,
+        ]);
+
+        return redirect()->route('invoice.show', $invoice);
+    }
+
+    public function destroyMisc(Invoice $invoice, InvoiceLine $invoiceLine)
+    {
+        $invoiceLine->delete();
+
+        return redirect()->route('invoice.show', $invoice);
     }
 
     public function addLines(Request $request, Invoice $invoice)

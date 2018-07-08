@@ -5,6 +5,8 @@ namespace Tests\Feature\Coach;
 use App\Models\Activity;
 use App\Models\Coach;
 use App\Models\Invoice;
+use App\Models\InvoiceLine;
+use App\Models\Jockey;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
 use Carbon\Carbon;
@@ -80,6 +82,89 @@ class InvoiceTest extends TestCase
 	public function calculate_group_cost()
 	{
 	    	
+	}
+
+	/** @test */
+	public function a_miscellaneous_item_can_be_added()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/$invoice->id/misc", [
+	    	'misc_name' => 'Misc name',
+	    	'misc_date' => '26/11/2018',
+	    	'value' => 100
+	    ]);
+
+	    tap(InvoiceLine::first(), function($invoiceLine) use ($response, $invoice) {
+	    	$response->assertStatus(302);
+         	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoiceLine->misc_name, 'Misc name');
+         	$this->assertEquals($invoiceLine->misc_date, Carbon::createFromFormat('d/m/Y', '26/11/2018'));
+         	$this->assertEquals($invoiceLine->value, 100);
+         	$this->assertEquals($invoiceLine->invoiceable_id, null);
+         	$this->assertEquals($invoiceLine->invoiceable_type, null);
+
+         	$this->assertTrue($invoice->fresh()->lines->first()->is($invoiceLine));
+	    });
+	}
+
+	/** @test */
+	public function can_submit_invoice_for_review()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $activity1 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 30,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity2 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 60,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity1->addJockey($jockey);
+	    $activity1->addJockey($jockey);
+
+	    $invoiceLine1 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity1->id,
+			'invoiceable_type' => 'activity',
+			'value' => 17.5
+	    ]);
+
+	    $invoiceLine2 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity2->id,
+			'invoiceable_type' => 'activity',
+			'value' => 35
+	    ]);
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/$invoice->id/submit");
+
+	    tap($invoice->fresh(), function($invoice) use ($response) {
+        	$response->assertStatus(302);
+         	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoice->status, 'pending review');
+         	$this->assertEquals($invoice->total, 52.5);
+         	$this->assertEquals($invoice->label, Carbon::now()->subMonths(1)->format('F Y'));
+        });
 	}
 
 }

@@ -143,6 +143,9 @@ Route::get('/invoices/{invoice}/add', 'Invoice\InvoiceController@add')->name('in
 Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
 Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
+Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
+Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
+Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
 
 // Attachments
 Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');

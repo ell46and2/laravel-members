@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -30,12 +31,26 @@ class Invoice extends Model
         return $this->lines()->whereInvoiceableType('racing-excellence');
     }
 
+    public function miscellaneousLines()
+    {
+        return $this->lines()->whereInvoiceableType(null);
+    }
+
     /*
         Utilities
     */
     public function isOpen()
     {
         return $this->status === 'pending submission';
+    }
+
+    public function submitForReview()
+    {
+        $this->update([
+            'status' => 'pending review',
+            'label' => Carbon::now()->subMonths(1)->format('F Y'),
+            'total' => $this->calculateOverallValue()
+        ]);
     }
 
     public function calculateOverallValue()

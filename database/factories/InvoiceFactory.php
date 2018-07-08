@@ -18,7 +18,8 @@ $factory->define(App\Models\InvoiceLine::class, function (Faker $faker) {
 		},
 		'invoiceable_id' => null,
 		'invoiceable_type' => null,
-		'name' => null,
+		'misc_name' => null,
+		'misc_date' => null,
 		'value' => null
     ];
 });

@@ -18,7 +18,8 @@ class CreateInvoiceLinesTable extends Migration
             $table->integer('invoice_id')->unsigned()->index();
             $table->integer('invoiceable_id')->unsigned()->nullable();
             $table->string('invoiceable_type')->nullable();
-            $table->string('name')->nullable();
+            $table->string('misc_name')->nullable();
+            $table->date('misc_date')->nullable();
             $table->float('value')->nullable();
             $table->timestamps();
         });
