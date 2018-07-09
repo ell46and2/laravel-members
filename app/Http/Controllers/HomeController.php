@@ -30,7 +30,7 @@ class HomeController extends Controller
     
 
             // return redirect()->route('meets.index');
-            return redirect('/dashboard');
+            return redirect(urlAppendByRole() . '/dashboard');
         }
 
         return redirect('/login');

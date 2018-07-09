@@ -21,6 +21,20 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::post('/webhook/encoding', 'Attachment\EncodingWebhookController@handle'); // ./ngrok http -subdomain=jcp 8000
 
+
+Route::group(['middleware' => ['auth','role:coach,admin']], function() {
+	// Invoice
+	Route::post('/invoices/{invoice}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
+	Route::delete('/invoices/{invoice}/invoice-lines/{invoiceLine}', 'Invoice\InvoiceController@removeLine')->name('invoice.remove-line');
+	Route::get('/invoices/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
+	Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
+	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
+	Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
+	Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
+	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
+	Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
+});
+
 // Jockey
 Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.index');
 Route::get('/profile/edit', 'Jockey\ProfileController@edit')->name('jockey.profile.edit');
@@ -136,16 +150,7 @@ Route::get('/messages/{message}', 'Message\MessageController@show')->name('messa
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
 
 
-// Invoice
-Route::post('/invoices/{invoice}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
-Route::delete('/invoices/{invoice}/invoice-lines/{invoiceLine}', 'Invoice\InvoiceController@removeLine')->name('invoice.remove-line');
-Route::get('/invoices/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
-Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
-Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
-Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
-Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
-Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
-Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
+
 
 // Attachments
 Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');
