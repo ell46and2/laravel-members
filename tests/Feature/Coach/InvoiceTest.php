@@ -205,3 +205,44 @@ class InvoiceTest extends TestCase
 		- The total cost is shown, but not saved to the invoice until it is submitted.
 		- can only be submitted between 1st and 10th - invoice label is set as the previous month plus the year - so if submitted 2nd June 2018 - the label will be May 2018
  */
+
+
+/*
+	MILEAGE
+
+	Invoice (hasOne InvoiceMileage)
+
+	InvoiceMileage (belongs to Invoice, hasMany Mileage)
+	-id
+	-invoice_id
+	-value
+
+	Mileage (belongs to InvoiceMileage)
+	-id
+	-invoice_mileage_id
+	-mileagable_id
+	-mileagable_type
+	-name/desc
+	-miles
+
+	On adding Mileage to invoice
+	 - if not already exists an invoiceMileage is created for that invoice
+	 - else the invoiceMileage is retrieved
+	 - the Mileage row is inserted into the Mileage table and linked to the invoiceMileage.
+	 - on creating Mileage the InvoiceMileage value is calculated, this is the accumalated sum of all the Mileage attached and will work using the correct rates using the calculateMileageValue function below.
+	 - this way the rate is worked out on all the attached mileage and not indivdually. So if mileage is added, amended or removed, we just recalculate the total value again using the calculateMileageValue function.
+	 - when Admin marks an invoice as paid the mileage for that invoice is added to the coach->mileage (coach's total mileage for year)
+
+	 - the invoice Total is then the sum of all the InvoiceLines (activities, RE, misc) plus the invoiceMileage value.
+
+	function calculateMileageValue() {
+		$currentCoachMileage = $coach->mileage;
+		$numOfInvoiceMiles = $invoiceMileage->mileage->sum('miles');
+		$total = $currentCoachMileage + $numOfInvoiceMiles;
+		
+		$milesAbove = $total - 10000;
+		$milesUnder = $numOfInvoiceMiles - $milesAbove;
+
+		return ($milesAbove * 10000Rate) + ($milesUnder * below10000Rate);
+	}
+ */
