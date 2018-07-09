@@ -255,13 +255,32 @@ class InvoiceTest extends TestCase
 	    - Jockeys in first 3 months from start of license have 6 hours per invoicing period
 	    - After 3 months reduces to 4 hours
 
-	**Query if Jockey doesn't submit for a moth then submitts a combined two month invoice, what happens with the
-	allocated time? As jockey is allowed 4 hours, but we're showing 2 months/invoice periods.
-	
 	- can submit an invoice between 1st and 10th
 	- cannot submit at other times
 
 	- can only submit one invoice per month
 	- once submitted new items cannot be added to a new invoice until the 11th
+
+	**Queries
+		--if Jockey doesn't submit for a month then submits a combined two month invoice, what happens with the
+		allocated time? As jockey is allowed 4 hours, but we're showing 2 months/invoice periods.
+		Do we need to show Jockeys training time per month for previous two months on each invoice?
+
+		--how does a Admin edit an activity thats on the invoice?
+		-- At what point does editing the activity become locked - for Coach and for Admin?
+		-- Do we make it that when an activity is edited, we check if their is an invoice line for it and update the value/price if needed? That way an Admin can edit the activity when its on the invoice.
+		--Would an Admin need to edit a Racing Excellence thats on an invoice?
+		--Do we not have an edit button, but have it so an Admin can click through on the invoice to the Activity's edit page. The only issue is that they can't get back to the invoice easily from the edit.
+
+		--when does a Coachs mileage reset? As if it resets at the start of the year the December invoice
+		 hasn't been submitted yet, so the mileage rates won't work.
+
+		-- Can we have a date by which the admin will have processed the invoices? I.e. the 14th
+
+		--In the admin invoice email is says 'The admin is unable to view/edit/delete (if a coach has created it) the current invoice (May)'. 
+			- We're not currently storing who created the invoice.
+			- Why can't an admin do these things for an unsubmitted invoice, could there not be a case where a coach is away, and they have contacted the admin via phone to say they want to submit the invoice?
+
+		--The way we are doing it now Mileage is added to the invoice, when its removed it is deleted. There isn't a list of unattached (to invoice) Mileage that can be added (says this in the email).
 
  */
