@@ -36,10 +36,8 @@ class ActivityController extends Controller
         return view('coach.activitylist.index', compact('events', 'jockeys', 'activityTypes'));
     }
 
-    public function store(Request $request) // StorePostFormRequest
+    public function store(StorePostFormRequest $request) // StorePostFormRequest
     {    
-        dd(request()->jockeys);
-
         $coach = Coach::find(auth()->user()->id);
 
         DB::beginTransaction();

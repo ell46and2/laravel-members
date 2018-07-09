@@ -245,4 +245,23 @@ class InvoiceTest extends TestCase
 
 		return ($milesAbove * 10000Rate) + ($milesUnder * below10000Rate);
 	}
+
+	TESTS
+	- an activity that has an invoice line cannot be edited by a coach
+
+	- an RE that has an invoice line cannot be edited (location, time, divisions) by a coach - can still add/amends results
+
+	- invoice shows jockeys overall training time and shows/highlights when a Jockey has gone over their training allowance -
+	    - Jockeys in first 3 months from start of license have 6 hours per invoicing period
+	    - After 3 months reduces to 4 hours
+
+	**Query if Jockey doesn't submit for a moth then submitts a combined two month invoice, what happens with the
+	allocated time? As jockey is allowed 4 hours, but we're showing 2 months/invoice periods.
+	
+	- can submit an invoice between 1st and 10th
+	- cannot submit at other times
+
+	- can only submit one invoice per month
+	- once submitted new items cannot be added to a new invoice until the 11th
+
  */
