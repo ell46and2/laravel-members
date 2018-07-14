@@ -26,124 +26,127 @@
             @csrf
         </form>
 	</div>
-</div>
 
-<div class="flow-vertical--2">
-	<div class="panel">
-        <div class="panel__inner">
-            <div class="panel__main panel__main--3-columns">
-                <div class="profile-summary">
-                    <div class="[ profile-summary__avatar ] [ avatar avatar--red ]">
-                        <div class="avatar__image" style="background-image:url({{ auth()->user()->getAvatar() }});"></div>
-                    </div>
-                    <div class="profile-summary__main">
-                        <h2 class="profile-summary__greeting-primary">Hi {{ $coach->full_name }},</h2>
-                        <div class="profile-summary__greeting-secondary">Welcome back to your coaching dashboard</div>
-                        <div>
-                            <a class="button button--primary" href="">View profile</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    {{-- <dl class="definition-list">
-                        <dt>Licence type</dt>
-                        <dd>Apprentice</dd>
 
-                        <dt>Season rides</dt>
-                        <dd>51</dd>
+	<div class="flow-vertical--2">
+		<div class="panel">
+	        <div class="panel__inner">
+	            <div class="panel__main panel__main--3-columns">
+	                <div class="profile-summary">
+	                    <div class="[ profile-summary__avatar ] [ avatar avatar--red ]">
+	                        <div class="avatar__image" style="background-image:url({{ auth()->user()->getAvatar() }});"></div>
+	                    </div>
+	                    <div class="profile-summary__main">
+	                        <h2 class="profile-summary__greeting-primary">Hi {{ $coach->full_name }},</h2>
+	                        <div class="profile-summary__greeting-secondary">Welcome back to your coaching dashboard</div>
+	                        <div>
+	                            <a class="button button--primary" href="">View profile</a>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div>
+	                    {{-- <dl class="definition-list">
+	                        <dt>Licence type</dt>
+	                        <dd>Apprentice</dd>
 
-                        <dt>Season wins</dt>
-                        <dd>376</dd>
+	                        <dt>Season rides</dt>
+	                        <dd>51</dd>
 
-                        <dt>Prize money</dt>
-                        <dd>&pound;306,146.25</dd>
-                    </dl> --}}
-                </div>
-                <div>
-                    {{-- <dl class="definition-list">
-                        <dt>Current trainer</dt>
-                        <dd>Name Surname</dd>
+	                        <dt>Season wins</dt>
+	                        <dd>376</dd>
 
-                        <dt>Riding weight</dt>
-                        <dd>8st 5lbs</dd>
+	                        <dt>Prize money</dt>
+	                        <dd>&pound;306,146.25</dd>
+	                    </dl> --}}
+	                </div>
+	                <div>
+	                    {{-- <dl class="definition-list">
+	                        <dt>Current trainer</dt>
+	                        <dd>Name Surname</dd>
 
-                        <dt>Associated content</dt>
-                        <dd><a class="link--underlined" href="">Stewards enquiries/reports</a></dd>
-                    </dl> --}}
-                </div>
-            </div>
-        </div>
-    </div>
+	                        <dt>Riding weight</dt>
+	                        <dd>8st 5lbs</dd>
 
-    <div class="alert alert--error">
-        <div>
-            You have <span class="badge badge-light">{{ $numUnreadMessages }} new</span> unread {{ str_plural('message', $numUnreadMessages) }}
-        </div>
-        <div>
-            <a class="button button--white" href="{{ route('messages.index') }}">View messages</a>
-        </div>
-    </div>
+	                        <dt>Associated content</dt>
+	                        <dd><a class="link--underlined" href="">Stewards enquiries/reports</a></dd>
+	                    </dl> --}}
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 
-    <div class="row">
-        <div class="[ col-md-12 col-xl-8 mb-2 mb-xl-0 ] [ flow-vertical--2 ]">  
-             {{-- Panel - Recent Activities --}}
-            <div class="panel panel--is-stack">
-                <div class="panel__inner">
-                    <div class="panel__header">
-                        <h2 class="panel__heading">
-                            Recent Activities
-                        </h2>
-                        <div class="panel__nav-buttons">
-                            <button class="panel__nav-button" type="button" disabled>
-                                <span class="sr-only">Previous</span>
-                                @svg('angle-left', 'icon')
-                                {{-- {% include "svg/angle-left.svg" %} --}}
-                            </button>
-                            <button class="panel__nav-button" type="button">
-                                <span class="sr-only">Next</span>
-                                @svg('angle-right', 'icon')
-                                {{-- {% include "svg/angle-right.svg" %} --}}
-                            </button>
-                        </div>
-                    </div>
+	    <div class="alert alert--error">
+	        <div>
+	            You have <span class="badge badge-light">{{ $numUnreadMessages }} new</span> unread {{ str_plural('message', $numUnreadMessages) }}
+	        </div>
+	        <div>
+	            <a class="button button--white" href="{{ route('messages.index') }}">View messages</a>
+	        </div>
+	    </div>
 
-                    <div class="panel__main">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Activity type</th>
-                                    <th>Jockey</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Location</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($coach->dashboardUpcomingActivities as $activity)
-                                    <tr>
-                                        <td>
-                                            <a class="table__link" href="">{{ $activity->formattedType }}</a>
-                                        </td>
-                                        <td>jockey</td>
-                                        <td>{{ $activity->formattedStartDayMonth }}</td>
-                                        <td>{{ $activity->formattedStartTime }}</td>
-                                        <td>{{ $activity->formattedLocation }}</td>
-                                        <td class="text-right">
-                                            <a class="button button--primary" href="{{ route('coach.activity.show', $activity) }}">View</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+	    <div class="row">
+	        <div class="[ col-md-12 col-xl-8 mb-2 mb-xl-0 ] [ flow-vertical--2 ]">  
+	             {{-- Panel - Recent Activities --}}
+	            <div class="panel panel--is-stack">
+	                <div class="panel__inner">
+	                    <div class="panel__header">
+	                        <h2 class="panel__heading">
+	                            Recent Activities
+	                        </h2>
+	                        <div class="panel__nav-buttons">
+	                            <button class="panel__nav-button" type="button" disabled>
+	                                <span class="sr-only">Previous</span>
+	                                @svg('angle-left', 'icon')
+	                                {{-- {% include "svg/angle-left.svg" %} --}}
+	                            </button>
+	                            <button class="panel__nav-button" type="button">
+	                                <span class="sr-only">Next</span>
+	                                @svg('angle-right', 'icon')
+	                                {{-- {% include "svg/angle-right.svg" %} --}}
+	                            </button>
+	                        </div>
+	                    </div>
 
-                    <a class="panel__call-to-action" href="{{ route('coach.activity-log') }}">View all activities</a>
-                </div>
-                <button class="panel__stack" type="button">
-                    <span class="sr-only">Go to next page</span>
-                </button>
-            </div>
+	                    <div class="panel__main">
+	                        <table class="table">
+	                            <thead>
+	                                <tr>
+	                                    <th>Activity type</th>
+	                                    <th>Jockey</th>
+	                                    <th>Date</th>
+	                                    <th>Time</th>
+	                                    <th>Location</th>
+	                                    <th></th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                @foreach($coach->dashboardRecentActivities as $activity)
+	                                    <tr>
+	                                        <td>
+	                                            <a class="table__link" href="">{{ $activity->formattedType }}</a>
+	                                        </td>
+	                                        <td>{{ $activity->formattedJockeyOrGroup }}</td>
+	                                        <td>{{ $activity->formattedStartDayMonth }}</td>
+	                                        <td>{{ $activity->formattedStartTime }}</td>
+	                                        <td>{{ $activity->formattedLocation }}</td>
+	                                        <td class="text-right">
+	                                            <a class="button button--primary" href="{{ route('coach.activity.show', $activity) }}">View</a>
+	                                        </td>
+	                                    </tr>
+	                                @endforeach
+	                            </tbody>
+	                        </table>
+	                    </div>
+
+	                    <a class="panel__call-to-action" href="{{ route('coach.activity-log') }}">View all activities</a>
+	                </div>
+	                <button class="panel__stack" type="button">
+	                    <span class="sr-only">Go to next page</span>
+	                </button>
+	            </div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="container">

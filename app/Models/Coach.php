@@ -267,7 +267,7 @@ class Coach extends User
 
     public function upcomingActivities()
     {
-        return $this->activities()->with('type', 'location')->where('start', '>',now())->orderBy('start');
+        return $this->activities()->with('type', 'location', 'jockeys')->where('start', '>',now())->orderBy('start');
     }
 
     public function dashboardUpcomingActivities()
@@ -277,7 +277,7 @@ class Coach extends User
 
     public function recentActivities()
     {
-        return $this->activities()->with('type', 'location')->where('end', '<', now())->orderBy('end', 'desc');
+        return $this->activities()->with('type', 'location', 'jockeys')->where('end', '<', now())->orderBy('end', 'desc');
     }
 
     public function dashboardRecentActivities()
