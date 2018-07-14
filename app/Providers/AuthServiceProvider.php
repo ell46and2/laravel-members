@@ -5,12 +5,14 @@ namespace App\Providers;
 use App\Models\Activity;
 use App\Models\Attachment;
 use App\Models\Comment;
+use App\Models\Invoice;
 use App\Models\Notification;
 use App\Models\RacingExcellence;
 use App\Models\User;
 use App\Policies\ActivityPolicy;
 use App\Policies\AttachmentPolicy;
 use App\Policies\CommentPolicy;
+use App\Policies\InvoicePolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\RacingExcellencePolicy;
 use App\Policies\UserPolicy;
@@ -31,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Notification::class => NotificationPolicy::class,
         User::class => UserPolicy::class,
         Attachment::class => AttachmentPolicy::class,
+        Invoice::class => InvoicePolicy::class,
     ];
 
     /**

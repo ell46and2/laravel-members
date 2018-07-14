@@ -17,7 +17,8 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->integer('author_id')->unsigned(); 
             $table->string('subject');
-            $table->text('body');            
+            $table->text('body');
+            $table->boolean('deleted')->default(false);            
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('users');

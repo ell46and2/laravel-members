@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class Jockey extends User
@@ -63,6 +62,10 @@ class Jockey extends User
     /*
     	Utilities
      */
+    public static function awaitingApproval()
+    {
+        return self::where('approved', false);
+    }
     
     public function events(Request $request)
     {
@@ -129,14 +132,16 @@ class Jockey extends User
     public function upcomingEvents() // activities and Racing Excellence
     {
         $activities = collect($this->upcomingActivities()->get());
-        $racingExcellences = collect($this->racingExcellences()->whereDate('start', '>', Carbon::now())->get());
+        $racingExcellences = collect($this->racingExcellences()
+            ->whereDate('start', '>', now())
+            ->get());
+
         return $activities->merge($racingExcellences)->sortBy('start');
     }
     
     public function upcomingActivities()
     {
-        // dd(Carbon::now());
-        return $this->activities()->with('type')->where('start', '>', Carbon::now())->orderBy('start');
+        return $this->activities()->with('type')->where('start', '>', now())->orderBy('start');
     }
 
     public function dashboardUpcomingActivities()
@@ -146,7 +151,7 @@ class Jockey extends User
 
     public function recentActivities()
     {
-        return $this->activities()->with('type')->where('end', '<', Carbon::now())->orderBy('end', 'desc');
+        return $this->activities()->with('type')->where('end', '<', now())->orderBy('end', 'desc');
     }
 
     public function dashboardRecentActivities()
@@ -160,18 +165,48 @@ class Jockey extends User
         rounded down to nearest whole number.
         Sum the duration and divide by 60 to get in hours.
      */
-    public function trainingTimeThisMonth()
+    public function trainingTimeThisMonth($forInvoice = false)
     {   
-        $activities =  $this->activities()
-            ->with('jockeys')
-            ->whereBetween('end', [Carbon::now()->startOfMonth(), Carbon::now()])
-            ->get();
+        $activities = $this->activitiesThisMonth($forInvoice);
 
         $duration = $activities->sum(function($activity){
             return floor($activity->duration / $activity->jockeys->count());
         });
 
         return round($duration / 60, 2); // round to two decimal places.
+    }
+
+    public function activitiesThisMonth($forInvoice)
+    {
+        $times = $this->getTrainingTimeStartAndEnd($forInvoice);
+
+        return $this->activities()
+            ->with('jockeys')
+            ->whereBetween('end', [$times->start, $times->end])
+            ->get();
+    }
+
+    private function getTrainingTimeStartAndEnd($forInvoice)
+    {
+        $start = now()->startOfMonth();
+        $end = now();
+
+        if($forInvoice) {
+            $currentDay = now()->day;
+            if($currentDay >= config('jcp.invoice.start_period') && 
+                $currentDay <= config('jcp.invoice.end_period')) 
+            {
+                $start = now()->subMonth()->startOfMonth();
+                $end =  now()->subMonth()->endOfMonth();
+            }
+             
+        }
+
+        $times = new \stdClass();
+        $times->start = $start;
+        $times->end = $end;
+
+        return $times;
     }
 
     public function trainingTimeThisMonthPercentage()

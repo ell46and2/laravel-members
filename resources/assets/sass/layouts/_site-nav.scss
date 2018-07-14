@@ -1,0 +1,206 @@
+.site-nav {
+    $self: &;
+
+    position: fixed;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    max-width: calc(100% - #{ $sidebar-gutter-mobile });
+    height: 100vh;
+    background-color: $blue;
+    background-image: url("../images/side-nav-bg.jpg");
+    background-size: cover;
+    background-position: left top;
+    background-repeat: no-repeat;
+    // has z-index
+
+    @include media-breakpoint-up(sm) {
+        max-width: $nav-width-tablet;
+    }
+
+    @include media-breakpoint-up(lg) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: $nav-width-desktop;
+        height: 100vh;
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        -ms-scroll-chaining: none;
+        overscroll-behavior: none;
+
+        @include bounce-scroll();
+    }
+
+    &__overlay-toggle {
+        @extend %button-reset;
+        @extend %transition;
+
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100vw;
+        height: 100vh;
+        background: rgba($black, 0.8);
+        box-shadow: inset 20px 0 10px -10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        // has z-index
+
+        @include media-breakpoint-up(lg) {
+            display: none;
+        }
+
+        #{ $self }.is-active & {
+            opacity: 1;
+            visibility: visible;
+            // has z-index
+
+            @include media-breakpoint-up(lg) {
+                opacity: 1;
+                visibility: hidden;
+                // has z-index
+            }
+        }
+
+        &:active,
+        &:hover {
+            @extend %button-reset--hover;
+
+            background: rgba($black, 0.8);
+
+            @include media-breakpoint-up(lg) {
+                background: transparent;
+            }
+        }
+
+        &:focus {
+            @extend %button-reset--focus;
+        }
+    }
+
+    &__header {
+        padding: $box-padding;
+
+        @media (min-height: 700px) {
+            padding-top: $box-padding--double;
+            padding-bottom: $box-padding--double;
+        }
+
+        @media (min-height: 800px) {
+            padding-top: $box-padding--treble;
+            padding-bottom: $box-padding--treble;
+        }
+    }
+
+    &__brand {
+        display: inline-block;
+    }
+
+    &__brand-logo {
+        width: 140px;
+        height: auto;
+
+        @media (min-height: 700px) {
+            width: 195px;
+        }
+    }
+
+    &__nav-items {
+        flex: 1;
+        list-style: none;
+        padding-left: 0;
+    }
+
+    &__nav-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 8px $box-padding 6px #{ $box-padding - 5px };
+        color: $white;
+
+        @include hover() {
+            color: $white;
+            text-decoration: none;
+        }
+
+        @media (min-height: 800px) {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        #{ $self }__nav-item.is-active & {
+            font-weight: $font-weight-bold;
+
+            @include font-size(17px, true, $line-height-sm);
+
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                background: $white;
+                border-radius: 0 5px 5px 0;
+            }
+        }
+    }
+
+    &__nav-item-text {
+        @extend %transition;
+
+        opacity: 1;
+
+        #{ $self }__nav-link:active &,
+        #{ $self }__nav-link:hover & {
+            opacity: 0.75;
+        }
+    }
+
+    &__nav-icon {
+        display: flex;
+        align-items: center;
+        width: 23px;
+        height: 23px;
+        margin-right: 15px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $white;
+        }
+    }
+
+    &__badge {
+        margin-left: 10px;
+        text-transform: uppercase;
+
+        &.badge-light {
+            color: $blue--dark;
+        }
+    }
+
+    &__footer {
+        padding: $box-padding;
+
+        @media (min-height: 800px) {
+            padding-top: $box-padding--double;
+        }
+    }
+
+    &__bha-logo {
+        width: 140px;
+        height: 33px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

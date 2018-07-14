@@ -1,0 +1,45 @@
+.progress-bar {
+    $self: &;
+
+    &__bar {
+        position: relative;
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        background: $progress-bar-color;
+        overflow: hidden;
+
+        #{ $self }--trans & {
+            background: transparent;
+        }
+    }
+
+    &__primary,
+    &__secondary {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        border-radius: 0 3px 3px 0;
+    }
+
+    &__primary {
+        background: $progress-bar-grad;
+        box-shadow: 1px 0 0 2px $white;
+        z-index: 2;
+    }
+
+    &__secondary {
+        background: $blue--dark;
+        z-index: 1;
+    }
+
+    &__labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
+        color: $blue--lighter;
+
+        @include font-size(12px, true);
+    }
+}

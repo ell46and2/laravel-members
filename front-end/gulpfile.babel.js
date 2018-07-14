@@ -288,7 +288,7 @@ function watchFiles() {
     if(mode.images) { gulp.watch(src.images + '/**/*', images); }
     if(mode.svg) { gulp.watch(src.svg + '/**/*', svg); }
     if(mode.templates) {
-        gulp.watch(src.templates + '/**/*.html', templates);
+        gulp.watch(src.templates + '/**/*', templates);
         gulp.watch(src.data, templates);
     }
 }

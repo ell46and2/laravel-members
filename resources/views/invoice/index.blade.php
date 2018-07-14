@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
 
-    	@if(!$coach->hasOpenInvoice())
+    	@if($coach->canCreateInvoice())
     		<form method="POST" action="{{ route('invoice.store', $coach) }}">
     			{{ csrf_field() }}
     			<button class="btn btn-primary" type="submit">Create Invoice</button>
@@ -38,6 +38,8 @@
 		    			</tr>
 		    		@endif
 		    	@endforeach
+		    </tbody>
+		</table>
     </div>
 </div>
 @endsection

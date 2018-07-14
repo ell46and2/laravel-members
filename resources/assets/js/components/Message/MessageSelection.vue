@@ -34,6 +34,7 @@
 <script>
 	import Autocomplete from '../Search/Autocomplete';
 	import MessageRecipient from './MessageRecipient';
+	import pluralize from 'pluralize';
 	
 	export default {
 		data() {
@@ -67,10 +68,11 @@
 			},
 			sendToAllCopy() {
 				// NOTE: add pluralize so we get coaches, instead of coachs
-				return `Sending to all ${this.resource.length} ${this.role}s`;
+				return `Sending to ${this.resource.length} ${pluralize(this.role, this.resource.length)}`;
 			}
 		},
 		methods: {
+			pluralize, // adds the pluralize filter method from the import.
 			async addUser(id) {
 				// need route to get any user - messages/user/${id}
 				let result = await axios.post(`/messages/user/${id}`);

@@ -18,7 +18,14 @@
                     <tr>
                         <td>{{ $message->subject }}</td>
                         <td>{{ $message->created_at->diffForHumans() }}</td>
-                        <td><a href="{{ route('messages.show', $message) }}" class="btn btn-primary">View</a></td>
+                        <td>
+                            <a href="{{ route('messages.show', $message) }}" class="btn btn-primary">View</a>
+                            <form method="POST" action="{{ route('sent-message.delete', $message) }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="delete" />
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

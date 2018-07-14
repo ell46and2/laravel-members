@@ -1,3 +1,147 @@
-.site-head {
+$burger__decor-width: 24px;
 
+.site-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: $blue;
+    background-image: url("../images/site-head-bg.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    @include media-breakpoint-up(lg) {
+        display: none;
+    }
+
+    &__burger {
+        @extend %button-reset;
+
+        // has z-index
+
+        display: flex;
+        text-decoration: none;
+        border-radius: 50px;
+        align-items: center;
+
+        @include media-breakpoint-up(lg) {
+            display: none;
+        }
+    }
+
+    &__burger-decor {
+        display: block;
+        width: $burger__decor-width;
+        height: 18px;
+        position: relative;
+    }
+
+    &__burger-bars {
+
+        &,
+        &:before,
+        &:after {
+            display: block;
+            height: 2px;
+            background: $white;
+            position: absolute;
+            left: 0;
+        }
+
+        & {
+            @extend %transition;
+
+            width: $burger__decor-width;
+            top: 50%;
+            margin-top: -1px;
+
+            .site-head__burger.is-active & {
+                @extend %transition--slide;
+
+                width: 0px;
+            }
+        }
+
+        &:before,
+        &:after {
+            @extend %transition;
+
+            content: "";
+            speak: none;
+            width: $burger__decor-width;
+
+            .site-head__burger.is-active & {
+                @extend %transition--delay-slide;
+
+                top: 0;
+            }
+        }
+
+        &:before {
+            top: -8px;
+
+            .site-head__burger.is-active & {
+                transform: rotate(45deg);
+            }
+        }
+
+        &:after {
+            top: 8px;
+
+            .site-head__burger.is-active & {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    &__brand {
+        flex: 1;
+        text-align: center;
+    }
+
+    &__brand-link {
+        display: inline-block;
+
+        .icon {
+            width: 87px;
+            height: 28px;
+        }
+    }
+
+    &__notifications-toggle {
+        @extend %button-reset;
+        @extend %transition;
+
+        display: flex;
+        align-items: flex-start;
+        opacity: 1;
+
+        .icon {
+            width: 27px;
+            height: 27px;
+            fill: $white;
+            margin-top: 6px;
+        }
+
+        &.is-active {
+            opacity: 0;
+        }
+    }
+
+    &__notifications-count {
+        display: inline-flex;
+        align-items: center;
+        margin-left: -15px;
+        height: 18px;
+        line-height: 1;
+        padding: 1px 6px 0;
+        border-radius: 9px;
+        background: $white;
+        color: $blue--dark;
+        font-weight: $font-weight-bold;
+        // has z-index
+
+        @include font-size(12px);
+    }
 }

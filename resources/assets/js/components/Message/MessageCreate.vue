@@ -37,7 +37,11 @@
 
 		<br><br><br>
 
-		<button class="btn btn-primary" type="submit">
+		<button
+			:disabled="disabledButton()"
+			class="btn btn-primary" 
+			type="submit"
+		>
 			Send Message
 		</button>
 	</form>
@@ -204,6 +208,13 @@
 			},
 			sendToAllCoachesCancelled() {
 				this.form.allCoaches = false;
+			},
+			disabledButton() {
+				if(!this.form.recipients.jockey.length && !this.form.recipients.coach.length && !this.form.recipients.jets.length && !this.form.allJockeys && !this.form.allCoaches && !this.form.allJets) {
+					return true;
+				}
+
+				return false;
 			}
 		}
 	}

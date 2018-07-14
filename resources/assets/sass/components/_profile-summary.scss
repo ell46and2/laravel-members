@@ -1,0 +1,31 @@
+.profile-summary {
+    display: flex;
+    align-items: flex-start;
+
+    &__avatar {
+        width: 110px
+    }
+
+    &__main {
+        flex: 1;
+        padding-top: 5px;
+        padding-left: 15px;
+
+        > * + * {
+            margin-top: 5px;
+        }
+    }
+
+    &__greeting-primary {
+        color: $blue--dark;
+        font-weight: $font-weight-bold;
+
+        @include font-size(30px, true, $line-height-sm);
+    }
+
+    &__greeting-secondary {
+        font-weight: $font-weight-bold;
+
+        @include font-size(14px, true);
+    }
+}

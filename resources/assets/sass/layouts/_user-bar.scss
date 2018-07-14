@@ -1,0 +1,18 @@
+.user-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    &__avatar {
+        width: 46px;
+    }
+
+    &__name {
+        color: $blue--dark;
+    }
+
+    &__sign-out {
+
+        @include font-size(12px, true);
+    }
+}

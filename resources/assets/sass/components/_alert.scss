@@ -1,0 +1,21 @@
+.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: $radius;
+    box-shadow: 0 2px 9px 0 rgba(0,0,0,0.02);
+    color: $white;
+
+    &--success {
+        background: $success--grad;
+    }
+
+    &--error {
+        background: $error--grad;
+    }
+
+    &--centered {
+        justify-content: center;
+    }
+}

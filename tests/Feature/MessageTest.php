@@ -123,18 +123,93 @@ class MessageTest extends TestCase
     /** @test */
     public function a_message_must_have_a_subject()
     {
-            
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+        $coach->assignJockey($jockey);
+
+        $response = $this->actingAs($coach)->from("/messages/create")->post("/messages", [
+            'recipients' => [$jockey->id], 
+            'subject' => '',
+            'body' => 'This is the message body', // may need to include links, bold etc
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/messages/create');
+        $response->assertSessionHasErrors('subject');
+        $this->assertEquals(0, Message::count());
     }
 
     /** @test */
     public function a_message_must_have_a_body()
     {
-            
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+        $coach->assignJockey($jockey);
+
+        $response = $this->actingAs($coach)->from("/messages/create")->post("/messages", [
+            'recipients' => [$jockey->id], 
+            'subject' => 'Message subject',
+            'body' => '',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/messages/create');
+        $response->assertSessionHasErrors('body');
+        $this->assertEquals(0, Message::count());
+    }
+
+    // /** @test */
+    // public function a_message_must_have_at_least_one_recipient()
+    // {
+    //     $coach = factory(Coach::class)->create();
+    //     $jockey = factory(Jockey::class)->create();
+    //     $coach->assignJockey($jockey);
+
+    //     $response = $this->actingAs($coach)->from("/messages/create")->post("/messages", [
+    //         'recipients' => [$jockey->id], 
+    //         'subject' => 'Message subject',
+    //         'body' => 'This is the message body',
+    //     ]);
+
+    //     $response->assertStatus(302);
+    //     $response->assertRedirect('/messages/create');
+    //     $response->assertSessionHasErrors('recipients');
+    //     $this->assertEquals(0, Message::count());
+    // }
+
+    /** @test */
+    public function a_recipient_can_mark_a_message_as_deleted_so_its_no_longer_seen()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $message = factory(Message::class)->create([
+            'author_id' => $coach->id
+        ]);
+        $message->addRecipient($jockey);
+
+        $this->assertEquals($jockey->messages()->count(), 1);
+
+        $response = $this->actingAs($jockey)->delete("/messages/{$message->id}");
+
+        $this->assertEquals($jockey->fresh()->messages()->count(), 0);
     }
 
     /** @test */
-    public function a_message_must_have_at_least_one_recipient()
+    public function an_author_can_mark_a_message_as_deleted_so_its_no_longer_seen_in_their_sent_messages()
     {
-            
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $message = factory(Message::class)->create([
+            'author_id' => $coach->id
+        ]);
+        $message->addRecipient($jockey);
+
+        $this->assertEquals($coach->sentMessages()->count(), 1);
+
+        $response = $this->actingAs($coach)->delete("/messages/sent/{$message->id}");
+
+        $this->assertEquals($coach->fresh()->sentMessages()->count(), 0);  
     }
 }

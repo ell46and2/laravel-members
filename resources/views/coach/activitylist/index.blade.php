@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 <div class="container">
@@ -96,7 +96,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Filter
                             </button>
-                            <a href="{{ route('coach.activity-list') }}" class="btn btn-outline">Reset</a>
+                            <a href="{{ route('coach.activity-log') }}" class="btn btn-outline">Reset</a>
                         </div>
                     </div>
                 </form>
@@ -110,7 +110,7 @@
                             <th scope="col">
                                 Date
                                 <a 
-                                    href="{{ route('coach.activity-list', array_merge(request()->query(), [
+                                    href="{{ route('coach.activity-log', array_merge(request()->query(), [
                                         'order' => request()->order == 'desc' ? 'asc' : 'desc', 
                                         'page' => 1
                                     ])) }}" 

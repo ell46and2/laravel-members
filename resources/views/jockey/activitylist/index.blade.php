@@ -96,7 +96,7 @@
                             <button type="submit" class="btn btn-primary">
                                 Filter
                             </button>
-                            <a href="{{ route('jockey.activity-list') }}" class="btn btn-outline">Reset</a>
+                            <a href="{{ route('jockey.activity-log') }}" class="btn btn-outline">Reset</a>
                         </div>
                     </div>
                 </form>
@@ -110,7 +110,7 @@
                             <th scope="col">
                                 Date
                                 <a 
-                                    href="{{ route('jockey.activity-list', array_merge(request()->query(), [
+                                    href="{{ route('jockey.activity-log', array_merge(request()->query(), [
                                         'order' => request()->order == 'desc' ? 'asc' : 'desc', 
                                         'page' => 1
                                     ])) }}" 

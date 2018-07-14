@@ -5,3 +5,53 @@
     Keeping them all in one place makes it easier
     to keep track of various elements in the stack.
 \*-------------------------------------------------*/
+
+.site-nav {
+    z-index: 10;
+
+    &__overlay-toggle {
+        z-index: -1;
+
+        .site-nav.is-active & {
+            z-index: 10;
+
+            @include media-breakpoint-up(lg) {
+                z-index: -1;
+            }
+        }
+    }
+}
+
+.notification-panel {
+    z-index: 10;
+
+    &__overlay-toggle {
+        z-index: -1;
+
+        .notification-panel.is-active & {
+            z-index: 10;
+
+            @include media-breakpoint-up(lg) {
+                z-index: -1;
+            }
+        }
+    }
+}
+
+.site-head {
+
+    &__burger {
+        z-index: 20;
+    }
+
+    &__notifications-count {
+        z-index: 10;
+    }
+}
+
+.notification-panel {
+
+    &__status-icon-count {
+        z-index: 10;
+    }
+}

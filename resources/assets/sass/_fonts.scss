@@ -1,0 +1,39 @@
+// DIN regular
+@font-face {
+    font-family: "DIN";
+    src: url("/fonts/DIN-Medium.woff2") format("woff2"),
+         url("/fonts/DIN-Medium.woff") format("woff"),
+         url("/fonts/DIN-Medium.otf") format("opentype");
+    font-style: normal;
+    font-weight: 400;
+}
+
+// DIN regular italic
+@font-face {
+    font-family: "DIN";
+    src: url("/fonts/DIN-MediumItalic.woff2") format("woff2"),
+         url("/fonts/DIN-MediumItalic.woff") format("woff"),
+         url("/fonts/DIN-MediumItalic.otf") format("opentype");
+    font-style: italic;
+    font-weight: 400;
+}
+
+// DIN bold
+@font-face {
+    font-family: "DIN";
+    src: url("/fonts/DIN-Bold.woff2") format("woff2"),
+         url("/fonts/DIN-Bold.woff") format("woff"),
+         url("/fonts/DIN-Bold.otf") format("opentype");
+    font-style: normal;
+    font-weight: 700;
+}
+
+// DIN bold italic
+@font-face {
+    font-family: "DIN";
+    src: url("/fonts/DIN-BoldItalic.woff2") format("woff2"),
+         url("/fonts/DIN-BoldItalic.woff") format("woff"),
+         url("/fonts/DIN-BoldItalic.otf") format("opentype");
+    font-style: italic;
+    font-weight: 700;
+}

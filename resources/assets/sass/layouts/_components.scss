@@ -1,0 +1,45 @@
+.components {
+    $self: &;
+
+    &__heading {
+        color: $blue--dark;
+        font-weight: bold;
+
+        @include font-size(30px, true);
+    }
+
+    &__component-heading {
+        color: $blue--dark;
+        font-weight: bold;
+        margin-bottom: 6px;
+
+        @include font-size(20px, true);
+    }
+
+    &__component-main {
+        padding: 20px;
+        border: 2px solid $gray-200;
+        border-radius: $radius;
+        background: $white;
+
+        #{ $self }__component--blue-bg & {
+            background: $blue;
+        }
+
+        #{ $self }__component--trans-bg & {
+            background: transparent;
+        }
+
+        #{ $self }__component--half & {
+            max-width: 100%;
+
+            @include media-breakpoint-up(md) {
+                max-width: 50%;
+            }
+        }
+
+        #{ $self }__component--extra-padded & {
+            padding: 40px;
+        }
+    }
+}

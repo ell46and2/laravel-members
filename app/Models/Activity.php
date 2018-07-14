@@ -159,6 +159,11 @@ class Activity extends Model
         return $this->start->format('l jS F Y');
     }
 
+    public function getFormattedStartDayMonthAttribute()
+    {
+        return $this->start->format('l jS F');
+    }
+
     public function getStartDateAttribute()
     {
         return $this->start->format('d/m/Y');

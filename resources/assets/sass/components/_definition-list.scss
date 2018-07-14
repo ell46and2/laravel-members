@@ -1,0 +1,23 @@
+.definition-list {
+
+    dt {
+        display: inline-block;
+        margin: 0 5px 2px 0;
+
+        @include font-size(14px, true);
+    }
+
+    dd {
+        margin: 0;
+        display: inline;
+        color: $blue--dark;
+
+        @include font-size(16px, true);
+
+        &:after {
+            content: "\a";
+            white-space: pre;
+        }
+
+    }
+}

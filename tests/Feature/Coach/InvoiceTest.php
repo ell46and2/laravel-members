@@ -20,9 +20,46 @@ class InvoiceTest extends TestCase
 	use DatabaseMigrations;
 
 	/** @test */
+	public function can_create_an_invoice()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $this->assertTrue($coach->canCreateInvoice());
+	}
+
+	/** @test */
+	public function cannot_create_an_invoice_if_they_currently_have_one_open()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id
+	    ]);
+
+	    $this->assertFalse($coach->canCreateInvoice());
+	}
+
+	/** @test */
+	public function cannot_create_an_invoice_if_they_have_already_submitted_for_the_month()
+	{
+	    Carbon::setTestNow(Carbon::parse('2018-03-5'));
+
+	    $coach = factory(Coach::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'submitted' => Carbon::parse('2018-03-2'),
+	    	'status' => 'pending review'
+	    ]);
+
+	    $this->assertFalse($coach->canCreateInvoice());
+	}
+
+	/** @test */
 	public function a_coach_can_add_activities_and_racing_excellence_to_their_invoice()
 	{
 	    $coach = factory(Coach::class)->create();
+	    $jockey = factory(Jockey::class)->create();
 
 	    $activity = factory(Activity::class)->create([
 	    	'coach_id' => $coach->id,
@@ -30,6 +67,7 @@ class InvoiceTest extends TestCase
 	    	'duration' => 30,
         	'end' => Carbon::now()->subDays(2),
 	    ]);
+	    $activity->addJockey($jockey);
 
 	    $racingExcellence = factory(RacingExcellence::class)->create([
 	    	'coach_id' => $coach->id
@@ -71,6 +109,11 @@ class InvoiceTest extends TestCase
         });
 	}
 
+	/*
+		invoiceable list contains activities and RE from last months
+		Except if the current date is between the 1st and 10th, do not show for the current month.
+	 */
+
 
 	/** @test */
 	public function an_invoiceable_can_only_be_added_to_an_invoice_once()
@@ -81,7 +124,7 @@ class InvoiceTest extends TestCase
 	/** @test */
 	public function calculate_group_cost()
 	{
-	    	
+	    
 	}
 
 	/** @test */
@@ -139,7 +182,7 @@ class InvoiceTest extends TestCase
 	    ]);
 
 	    $activity1->addJockey($jockey);
-	    $activity1->addJockey($jockey);
+	    $activity2->addJockey($jockey);
 
 	    $invoiceLine1 = factory(InvoiceLine::class)->create([
 	    	'invoice_id' => $invoice->id,
@@ -223,6 +266,7 @@ class InvoiceTest extends TestCase
 	-mileagable_id
 	-mileagable_type
 	-name/desc
+	-date (maybe only need this if free text (not assigned to activity or RE))
 	-miles
 
 	On adding Mileage to invoice
@@ -231,7 +275,7 @@ class InvoiceTest extends TestCase
 	 - the Mileage row is inserted into the Mileage table and linked to the invoiceMileage.
 	 - on creating Mileage the InvoiceMileage value is calculated, this is the accumalated sum of all the Mileage attached and will work using the correct rates using the calculateMileageValue function below.
 	 - this way the rate is worked out on all the attached mileage and not indivdually. So if mileage is added, amended or removed, we just recalculate the total value again using the calculateMileageValue function.
-	 - when Admin marks an invoice as paid the mileage for that invoice is added to the coach->mileage (coach's total mileage for year)
+	 - when Admin marks an invoice as paid, the mileage for that invoice is added to the coach->mileage (coach's total mileage for year)
 
 	 - the invoice Total is then the sum of all the InvoiceLines (activities, RE, misc) plus the invoiceMileage value.
 
@@ -261,9 +305,10 @@ class InvoiceTest extends TestCase
 	- can only submit one invoice per month
 	- once submitted new items cannot be added to a new invoice until the 11th
 
+	- the mileage date must be within last 2 months - add validation
+
 	**Queries
-		--if Jockey doesn't submit for a month then submits a combined two month invoice, what happens with the
-		allocated time? As jockey is allowed 4 hours, but we're showing 2 months/invoice periods.
+		--if Jockey doesn't submit for a month then submits a combined two month invoice, what happens with the allocated time? As jockey is allowed 4 hours, but we're showing 2 months/invoice periods.
 		Do we need to show Jockeys training time per month for previous two months on each invoice?
 
 		--how does a Admin edit an activity thats on the invoice?
@@ -282,5 +327,39 @@ class InvoiceTest extends TestCase
 			- Why can't an admin do these things for an unsubmitted invoice, could there not be a case where a coach is away, and they have contacted the admin via phone to say they want to submit the invoice?
 
 		--The way we are doing it now Mileage is added to the invoice, when its removed it is deleted. There isn't a list of unattached (to invoice) Mileage that can be added (says this in the email).
+
+
+		function calculateMileageValue() {
+			$currentYear = now()->year;
+			$currentMileageForCurrentYear = $coach->mileageForYear($currentYear);
+
+			// Get all mileage claims that are for the current year
+				$currentYearInvoiceMiles = $invoiceMileage->mileage->whereYear('date', '=', $currentYear);
+				$totalForCurrentYear = $currentMileageForCurrentYear + $currentYearInvoiceMiles;
+				
+				$valueForCurrentYear = getMileageValue($totalForCurrentYear, $currentYearInvoiceMiles);
+
+
+			// if $currentYearInvoiceMiles->count() === the count of all invoice mileage - then all mileage is for the current year
+			//	so just return $valueForCurrentYear
+			
+
+			// else we have some mileage from last year
+				$lastYear = $currentYear - 1;
+				$mileageForLastYear = $coach->mileageForYear($mileageForLastYear);
+				$previousYearInvoiceMiles = $invoiceMileage->mileage->whereYear('date', '=', $lastYear);
+				$totalForPreviousYear = $mileageForLastYear + $previousYearInvoiceMiles;
+
+				$valueForLastYear = getMileageValue($totalForPreviousYear, $previousYearInvoiceMiles);
+
+				return $valueForCurrentYear + $valueForLastYear;
+		}
+
+		function getMileageValue($total, $newMiles) {
+			$milesAbove = $total - 10000; // get 10000 from jcp.mileage.threshold
+			$milesUnder = $newMiles - $milesAbove;
+
+			return ($milesAbove * jcp.mileage.rate_above_threshold) + ($milesUnder * jcp.mileage.rate_below_threshold);
+		}
 
  */

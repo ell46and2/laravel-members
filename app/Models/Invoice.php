@@ -9,7 +9,7 @@ class Invoice extends Model
 {
 	protected $fillable = ['coach_id', 'submitted', 'status', 'total', 'label'];
 
-	protected $dates = ['created_at', 'updated_at'];
+	protected $dates = ['created_at', 'updated_at', 'submitted'];
 
     public function coach()
     {
@@ -65,5 +65,30 @@ class Invoice extends Model
         }
 
         return number_format($this->calculateOverallValue(), 2, '.', ',');
+    }
+
+    public static function inSubmitInvoicePeriod()
+    {
+        $day = now()->day;
+
+        if(withinInvoicingPeriod($day)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function canBeSubmitted()
+    {
+        if($this->inSubmitInvoicePeriod() && $this->isOpen()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getSubmittedDateAttribute()
+    {
+        return $this->submitted->format('l jS F');
     }
 }

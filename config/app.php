@@ -151,6 +151,7 @@ return [
          * Package Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
+        BladeSvg\BladeSvgServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -161,7 +162,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\EloquentEventServiceProvider::class
+        App\Providers\EloquentEventServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
     ],
 
     /*

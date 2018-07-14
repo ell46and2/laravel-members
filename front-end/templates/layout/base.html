@@ -23,25 +23,67 @@
     <link rel="stylesheet" href="http://jcp.local/css/app.css" media="all">
 
 </head>
-
-{% macro icon(id) %}
-    <svg class="icon" aria-hidden="true" role="presentation">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svg/svg-symbols.svg#{{ id }}"></use>
-    </svg>
-{% endmacro %}
-
 <body>
+    <div class="app js-app">
 
-    {% include "partials/site-head.html" %}
+        {% include "partials/site-head.html" %}
+        {% include "partials/site-nav.html" %}
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+        <main class="main">
+            {% block content %}
+            {% endblock %}
 
-    {% include "partials/site-foot.html" %}
+            {% include "partials/site-foot.html" %}
+        </main>
+
+        {% include "partials/notification-panel.html" %}
+
+    </div>
+
+    <div class="breakpoint-helper"></div>
 
     <script src="http://jcp.local/js/app.js"></script>
+
+    {# Temp JS #}
+    <script>
+        /*****************************************
+            Sidebar toggles
+        ******************************************/
+
+        /* General elements */
+        var app = document.querySelector('.js-app');
+        var body = document.querySelector('body');
+
+        /* Sidebar nav elements */
+        var navToggles = document.querySelectorAll('.js-nav-toggle');
+        var burger = document.querySelector('.js-nav-toggle--burger');
+        var nav = document.querySelector('.js-site-nav');
+
+        /* Notification panel elements */
+        var notificationPanelToggles = document.querySelectorAll('.js-notification-panel-toggle');
+        var notificationPanel = document.querySelector('.js-notification-panel');
+        var headerNotificationPanelToggle = document.querySelector('.js-notification-panel-toggle--site-head');
+
+        // On click of a nav toggle element
+        navToggles.forEach(function(item) {
+            item.addEventListener('click', function() {
+                app.classList.toggle('is-active--left');
+                nav.classList.toggle('is-active');
+                burger.classList.toggle('is-active');
+                body.classList.toggle('is-no-scroll');
+            });
+        });
+
+        /* On click of a notification panel toggle */
+        notificationPanelToggles.forEach(function(item) {
+            item.addEventListener('click', function() {
+                app.classList.toggle('is-active--right');
+                notificationPanel.classList.toggle('is-active');
+                headerNotificationPanelToggle.classList.toggle('is-active');
+                body.classList.toggle('is-no-scroll');
+            });
+        });
+    </script>
 
 </body>
 </html>

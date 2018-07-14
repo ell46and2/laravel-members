@@ -54,7 +54,7 @@ class User extends Authenticatable
         'approved' => 'boolean' // returns 0 or 1 from db, so casts to boolean so we can assertTrue or assertFalse
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'date_of_birth'];
+    protected $dates = ['created_at', 'updated_at', 'date_of_birth', 'last_login'];
 
     protected $appends = ['full_name', 'role_name'];
     /*
@@ -94,7 +94,7 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->belongsToMany(Message::class, 'message_recipient', 'recipient_id', 'message_id')
-            ->withPivot('read');
+            ->withPivot('read')->wherePivot('deleted', false);
         // return $this->hasMany(Message::class, 'recipient_id');
     }
 
@@ -105,12 +105,12 @@ class User extends Authenticatable
 
     public function unreadMessagesCount()
     {
-        return $this->unreadMessages->count();
+        return $this->unreadMessages()->count();
     }
 
     public function sentMessages()
     {
-        return $this->hasMany(Message::class, 'author_id');
+        return $this->hasMany(Message::class, 'author_id')->where('deleted', false);
     }
 
 
@@ -197,5 +197,26 @@ class User extends Authenticatable
         $this->messages()->updateExistingPivot($message->id, [
             'read' => 1
         ]);
+    }
+
+    public function markMessageAsDeleted(Message $message)
+    {
+        $this->messages()->updateExistingPivot($message->id, [
+            'deleted' => 1
+        ]);
+    }
+
+    public function getFormattedLastLoginAttribute()
+    {
+        if(!$this->last_login) {
+            return '-';
+        }
+
+        return $this->last_login->diffForHumans();    
+    }
+
+    public function getFormattedJoinedAttribute()
+    {
+        return $this->created_at->format('l jS F');
     }
 }

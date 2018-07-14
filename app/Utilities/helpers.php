@@ -1,13 +1,46 @@
 <?php
 
-use Carbon\Carbon;
-
 if (! function_exists('daysToSubmitInvoice')) {
     function daysToSubmitInvoice()
     {
-       	$endOfMonth = Carbon::now()->endOfMonth();
+    	$day = now()->day;
 
-    	return $endOfMonth->diffInDays(Carbon::now());
+    	if(withinInvoicingPeriod($day))
+        {
+    		return config('jcp.invoice.end_period') - $day;
+    	}
+
+       	$invoiceDeadline = now()->endOfMonth()->addDays(config('jcp.invoice.end_period'));
+
+    	return $invoiceDeadline->diffInDays(now());
+    }
+}
+
+if (! function_exists('withinInvoicingPeriod')) {
+    function withinInvoicingPeriod($day)
+    {
+        if($day >= config('jcp.invoice.start_period') && 
+            $day <= config('jcp.invoice.end_period'))
+        {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if (! function_exists('currentInvoicingMonth')) {
+    function currentInvoicingMonth()
+    {
+    	$day = now()->day;
+
+    	if(withinInvoicingPeriod($day)) 
+        {
+    		// last month
+    		return now()->subMonths(1)->format('F');
+    	}
+
+    	return now()->format('F');
     }
 }
 
@@ -37,4 +70,15 @@ if (! function_exists('urlAppendByRole')) {
 
 		return "/{$role}";
 	}
+}
+
+if (! function_exists('isRoute')) {
+    function isRoute($routeName)
+    {
+        if(strpos(request()->path(), $routeName)) {
+           return true; 
+        }
+        
+        return false;
+    }
 }

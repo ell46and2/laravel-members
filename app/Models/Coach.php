@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -36,6 +35,22 @@ class Coach extends User
         return $this->hasMany(Activity::class, 'coach_id');
     }
 
+    public function activitiesNotYetInvoicedCount()
+    {
+        return $this->activities()
+            ->where('start', '<', now())
+            ->doesntHave('invoiceLine')
+            ->count();
+    }
+
+    // public function lastestActivities()
+    // {
+    //     return $this->hasOne(Activity::class, 'coach_id')
+    //         ->where('start', '<', now())
+    //         ->orderBy('start', 'desc')
+    //         ->first();
+    // }
+
     public function competencyAssessments()
     {
         return $this->hasMany(CompetencyAssessment::class);
@@ -44,7 +59,15 @@ class Coach extends User
     public function racingExcellences()
     {
         return $this->hasMany(RacingExcellence::class, 'coach_id');
-    } 
+    }
+
+    public function racingExcellencesNotYetInvoicedCount()
+    {
+        return $this->racingExcellences()
+            ->where('start', '<', now())
+            ->doesntHave('invoiceLine')
+            ->count();
+    }
 
     public function invoices()
     {
@@ -56,12 +79,56 @@ class Coach extends User
         return $this->hasOne(Invoice::class, 'coach_id')->where('status', 'pending submission');
     }
 
+    public function pendingReviewInvoice()
+    {
+        return $this->hasOne(Invoice::class, 'coach_id')->where('status', 'pending review');
+    }
+
     /*
         Utilities
      */
+    public function lastSubmittedInvoice()
+    {
+        return $this->invoices->where('status', '!=', 'pending submission')->last();
+    }
+
     public function hasOpenInvoice()
     {
         return (bool) $this->latestOpenInvoice()->count();
+    }
+
+    public function canCreateInvoice()
+    {
+        // No current invoice && not already submitted for the month
+        if(!$this->hasOpenInvoice()) {
+            if(Invoice::inSubmitInvoicePeriod() 
+                && optional(optional($this->lastSubmittedInvoice())->submitted)->month === now()->month
+            ) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static function mostActive()
+    {
+        $coaches = self::with([
+            'activities' => function($q) {
+                $q->where('start', '<', now());
+                $q->orderBy('start', 'desc');
+            },
+            'jockeys',
+            'pendingReviewInvoice'
+        ])
+        ->get();
+
+        return $coaches->sortByDesc(function($coach) {
+            if($coach->activities->count()) {
+                return $coach->activities->first()->start;
+            }          
+            return null;
+        });
     }
 
     public function events(Request $request)
@@ -169,7 +236,7 @@ class Coach extends User
     {   
         $activities = $this->activities()
             ->with('jockeys')
-            ->whereBetween('end', [Carbon::now()->startOfMonth(), Carbon::now()])
+            ->whereBetween('end', [now()->startOfMonth(), now()])
             ->whereHas('jockeys', function($query) use ($jockeyId) {
                 $query->where('id', $jockeyId);
             })
@@ -182,18 +249,47 @@ class Coach extends User
         return round($duration / 60, 2);
     }
 
+    public function overallTrainingTimeThisMonth()
+    {
+        $duration = $this->activities()
+            ->whereBetween('end', [now()->startOfMonth(), now()])
+            ->sum('duration');
+
+        return round($duration / 60, 2);
+    }
+
     public function activitiesInNextSevenDays()
     {
         return $this->activities()
-            ->whereBetween('start', [Carbon::now(), Carbon::now()->addDays(7)])
+            ->whereBetween('start', [now(), now()->addDays(7)])
             ->count();
+    }
+
+    public function upcomingActivities()
+    {
+        return $this->activities()->with('type', 'location')->where('start', '>',now())->orderBy('start');
+    }
+
+    public function dashboardUpcomingActivities()
+    {
+        return $this->upcomingActivities()->take(10);
+    }
+
+    public function recentActivities()
+    {
+        return $this->activities()->with('type', 'location')->where('end', '<', now())->orderBy('end', 'desc');
+    }
+
+    public function dashboardRecentActivities()
+    {
+        return $this->recentActivities()->take(10);
     }
 
     public function lastActivityDateColourCode($jockey)
     {
         $lastActivity = $this->activities()
             ->with('jockeys')
-            ->where('start', '<', Carbon::now())
+            ->where('start', '<', now())
             ->whereHas('jockeys', function($query) use ($jockey) {
                 $query->where('id', $jockey->id);
             })
@@ -204,9 +300,9 @@ class Coach extends User
             return 'blue';
         }
 
-        if($lastActivity->start > Carbon::now()->subWeeks(2)) {
+        if($lastActivity->start > now()->subWeeks(2)) {
             return 'green';
-        } else if($lastActivity->start > Carbon::now()->subWeeks(4)) {
+        } else if($lastActivity->start > now()->subWeeks(4)) {
             return 'yellow';
         } else {
             return 'red';
@@ -215,25 +311,40 @@ class Coach extends User
 
     public function invoiceableList()
     {
-        return (collect($this->invoiceableActivities())
-            ->merge(collect($this->invoiceableRacingExcellence())))
+        // NOTE: if current days is between 1st and 10th, don't show any
+        // invoiceables for the current month
+        
+        // NOTE: if Admin we sub 4 months
+        $subMonths = 2;
+        if(auth()->user()->isAdmin()) {
+            $subMonths = 4;
+        }
+
+        $invoiceables = (collect($this->invoiceableActivities($subMonths))
+            ->merge(collect($this->invoiceableRacingExcellence($subMonths))))
             ->sortBy('start');
+
+        if(Invoice::inSubmitInvoicePeriod()) { // exclude current months
+            $invoiceables->where('start', '<', now()->startOfMonth());
+        }
+
+        return $invoiceables;
     }
 
-    public function invoiceableActivities()
+    public function invoiceableActivities($subMonths)
     {
         return $this->activities()
-            ->whereBetween('start', [Carbon::now()->subMonths(2), Carbon::now()])
+            ->whereBetween('start', [now()->subMonths($subMonths), now()])
             ->whereNotNull('duration')
             ->doesntHave('invoiceLine')
             ->with('type')
             ->get();
     }
 
-    public function invoiceableRacingExcellence()
+    public function invoiceableRacingExcellence($subMonths)
     {
         return $this->racingExcellences()
-            ->whereBetween('start', [Carbon::now()->subMonths(2), Carbon::now()])
+            ->whereBetween('start', [now()->subMonths($subMonths), now()])
             ->doesntHave('invoiceLine')
             ->get();
     }

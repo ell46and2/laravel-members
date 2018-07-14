@@ -15,8 +15,6 @@ class InvoiceController extends Controller
 {
     public function index(Coach $coach)
     {
-        // Policy: $coach is the current user or user is an admin.
-
         $invoices = $coach->invoices; // paginate?
 
         return view('invoice.index', compact('invoices', 'coach'));
@@ -31,6 +29,8 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
+    	$this->authorize('invoice', $invoice);
+
         $coach = $invoice->coach->load('jockeys');
 
         $invoice->load([
@@ -38,9 +38,11 @@ class InvoiceController extends Controller
             'activityLines.activity', 
             'activityLines.activity.type', 
             'activityLines.activity.jockeys',
+            'activityLines.activity.location',
             'racingExcellenceLines',
             'racingExcellenceLines.racingExcellence',
             'racingExcellenceLines.racingExcellence.divisions',
+            'racingExcellenceLines.racingExcellence.location',
             'miscellaneousLines',
         ]);
 
@@ -49,6 +51,7 @@ class InvoiceController extends Controller
 
     public function submit(Invoice $invoice)
     {
+    	$this->authorize('invoice', $invoice);
         // check has at least one invoiceline
         
         $invoice->submitForReview();
@@ -58,6 +61,8 @@ class InvoiceController extends Controller
 
     public function add(Invoice $invoice)
     {
+    	$this->authorize('invoice', $invoice);
+
         $coach = $invoice->coach->load('jockeys');
 
         $invoiceables = $coach->invoiceableList();
@@ -65,8 +70,17 @@ class InvoiceController extends Controller
         return view('invoice.lines.add', compact('invoice', 'coach', 'invoiceables'));
     }
 
+    public function createMisc(Invoice $invoice)
+    {
+    	$this->authorize('invoice', $invoice);
+    	
+    	return view('invoice.miscellaneous.create', compact('invoice'));
+    }
+
     public function addMisc(Request $request, Invoice $invoice) // add form request validation
     {
+    	$this->authorize('invoice', $invoice);
+
         InvoiceLine::create([
             'invoice_id' => $invoice->id,
             'misc_name' => $request->misc_name,
@@ -86,6 +100,7 @@ class InvoiceController extends Controller
 
     public function addLines(Request $request, Invoice $invoice)
     {
+    	$this->authorize('invoice', $invoice);
         // validate that invoiceable:
         //  - belongs to coach
         //  - is not already an invoiceLine
@@ -101,6 +116,8 @@ class InvoiceController extends Controller
 
     public function removeLine(Invoice $invoice, InvoiceLine $invoiceLine)
     {
+    	$this->authorize('invoice', $invoice);
+
         $invoiceLine->delete();
 
         return redirect()->route('invoice.show', $invoice);

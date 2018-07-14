@@ -45,6 +45,6 @@ class InvoiceLine extends Model
 
 	public function getFormattedMiscDateAttribute()
 	{
-		return $this->misc_date->format('d/m/Y');
+		return $this->misc_date->format('l jS F');
 	}
 }

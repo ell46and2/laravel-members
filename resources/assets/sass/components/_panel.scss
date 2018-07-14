@@ -1,0 +1,163 @@
+.panel {
+    position: relative;
+    z-index: 2;
+
+    &__inner {
+        position: relative;
+        border-radius: $radius;
+        overflow: hidden;
+        background: $white;
+        box-shadow: 0 2px 9px 0 rgba(0, 48, 78, 0.02);
+        z-index: 2;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: $box-padding $box-padding 0;
+
+        > * + * {
+            margin-left: $spacer;
+        }
+    }
+
+    &__heading {
+        position: relative;
+        color: $blue--dark;
+        margin-top: -15px;
+        margin-left: -#{ $box-padding };
+        padding-top: 8px;
+        padding-left: $box-padding;
+        font-weight: $font-weight-bold;
+        flex: 1;
+
+        @include font-size(20px, true, $line-height-base);
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 44px;
+            background: $blue;
+            border-radius: 0 5px 5px 0;
+        }
+    }
+
+    &__main {
+        padding: $box-padding;
+        border-radius: 0 0 $radius $radius;
+
+        &--3-columns {
+            display: flex;
+
+            > * {
+
+                @include media-breakpoint-up(xl) {
+                    width: percentage(1/3);
+                    padding: 0 $box-padding;
+                    border-right: 2px solid $blue--lightest;
+                    border-left: 2px solid $blue--lightest;
+
+                    &:first-child {
+                        padding-left: 0;
+                        border-left: 0;
+                    }
+
+                    &:last-child {
+                        padding-right: 0;
+                        border-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &__call-to-action {
+        @extend %transition;
+
+        position: relative;
+        display: block;
+        padding: #{ 10px + $radius } $box-padding 10px;
+        background-image: linear-gradient(to right, $blue 0%, $blue--light 100%);
+        color: $white;
+        text-align: center;
+
+        @include font-size(16px, true);
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: $radius;
+            width: 100%;
+            background: $white;
+            border-radius: 0 0 $radius $radius;
+        }
+
+        &:active,
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            color: $white;
+            box-shadow: inset 0 10px 10px 2px rgba(0, 48, 78, 0.2);
+        }
+    }
+
+    &__stack {
+        @extend %button-reset;
+
+        content: "";
+        position: absolute;
+        top: #{ $box-padding / 2 };
+        bottom: $box-padding;
+        left: 100%;
+        width: #{ $spacer / 2 };
+        border-radius: 0 $radius $radius 0;
+        background: $gray-100;
+        box-shadow: 0 2px 9px 0 rgba(0, 48, 78, 0.02);
+        z-index: 0;
+
+        &:active,
+        &:hover {
+            @extend %button-reset--hover;
+        }
+
+        &:focus {
+            @extend %button-reset--focus;
+        }
+    }
+
+    &__header-meta {
+        color: $blue--lighter;
+
+        @include font-size(12px, true);
+    }
+
+    &__nav-buttons {
+
+    }
+
+    &__nav-button {
+        @extend %button-reset;
+        @extend %transition;
+
+        width: 16px;
+        height: 16px;
+        opacity: 1;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue--dark;
+        }
+
+        &:disabled,
+        .is-disabled {
+            opacity: 0.25;
+        }
+    }
+}

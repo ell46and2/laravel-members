@@ -23,6 +23,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "pluralize": "^7.0.0",
         "vue2-timepicker": "^0.1.4",
         "vuejs-datepicker": "^1.5.2"
     }

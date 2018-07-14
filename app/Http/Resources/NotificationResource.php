@@ -14,7 +14,8 @@ class NotificationResource extends JsonResource
             'id' => $this->id,
             'body' => $this->body,
             'created_at' => $this->created_at->diffForHumans(),
-            'linkUrl' => optional($this->notifiable)->notificationLink
+            'linkUrl' => optional($this->notifiable)->notificationLink,
+            'type' => $this->notifiable_type,
         ];
     }
 }

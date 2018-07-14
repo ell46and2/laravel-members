@@ -19,6 +19,11 @@ return [
         // documents
 	],
 
+    'site' => [
+        'pagination' => 15,
+        // 'invoicing_address' => 
+    ],
+
     'racing_excellence' => [
         'set_fee' => 120,
         'additional_divisions' => 60,
@@ -32,6 +37,33 @@ return [
         '2' => 1.5,
         '3+' => 1.75
     ],
+
+    'mileage' => [
+        'threshold' => 10000,
+        'rate_below_threshold' => 45,
+        'rate_above_threshold' => 25,
+    ],
+
+    'invoice' => [
+        'start_period' => 1,
+        'end_period' => 10
+    ],
+
+    'jockey_hours_training_allowance' => [
+        'months_for_initial_period' => 3,
+        'initial' => 6,
+        'after' => 4
+    ],
+
+    'sports_office_api' => [
+        'auth_params' => [
+            'grant_type' => 'password',
+            'client_id' => env('SPORTS_OFFICE_API_CLIENT_ID'),
+            'client_secret' => env('SPORTS_OFFICE_API_CLIENT_SECRET'),
+            'username' => env('SPORTS_OFFICE_API_USERNAME'),
+            'password' => env('SPORTS_OFFICE_API_PASSWORD'),
+        ]
+    ]
 
     // VAT
     // Hours jockeys are chargable for - i.e. 4hrs and 6hrs if first 3 months of license

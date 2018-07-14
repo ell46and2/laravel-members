@@ -1,0 +1,49 @@
+.table {
+    margin: 0;
+
+    thead {
+
+        th {
+            border: 0;
+            color: $blue--lighter;
+
+            @include font-size(12px, true);
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+
+    tbody {
+
+        @include font-size(14px, true);
+
+        td {
+            border-top: 2px solid $blue--lightest;
+            vertical-align: middle;
+
+            &:first-child {
+                padding-left: 0;
+            }
+
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+
+    &__link {
+        color: $blue--dark;
+
+        @include font-size(16px, true);
+
+        @include hover(true) {
+            text-decoration: none;
+        }
+    }
+}

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Message;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Message\StoreMessageFormRequest;
 use App\Http\Resources\EmailResource;
 use App\Http\Resources\UserResource;
-use App\Utilities\Collection;
 use App\Models\Coach;
 use App\Models\Jockey;
 use App\Models\Message;
 use App\Models\User;
+use App\Utilities\Collection;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -33,7 +34,7 @@ class MessageController extends Controller
         return view('message.sent-index', compact('messages'));
     }
 
-    public function store(Request $request) // Add form request validation
+    public function store(StoreMessageFormRequest $request) // Add form request validation
     {
         $user = auth()->user();
 
@@ -88,6 +89,26 @@ class MessageController extends Controller
     public function getUser(User $user)
     {
        return new UserResource($user); 
+    }
+
+    public function destroy(Message $message)
+    {
+        //validate user is a recipient of the message
+
+        auth()->user()->markMessageAsDeleted($message);
+
+        session()->flash('message', "Message deleted");
+
+        return redirect()->route('messages.index');
+    }
+
+    public function destroySentMessage(Message $message)
+    {
+        $message->markAsDeleted();
+
+        session()->flash('message', "Message deleted");
+
+        return redirect()->route('messages.sent');
     }
 
     private function sendToAllJockeys(Message $message, $roleName)

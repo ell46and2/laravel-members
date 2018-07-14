@@ -26,13 +26,15 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	// Invoice
 	Route::post('/invoices/{invoice}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
 	Route::delete('/invoices/{invoice}/invoice-lines/{invoiceLine}', 'Invoice\InvoiceController@removeLine')->name('invoice.remove-line');
-	Route::get('/invoices/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
+	Route::get('/invoices/invoice/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
 	Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
 	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 	Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
 	Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
-	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
+	
 	Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
+	Route::get('invoice/{invoice}/misc/add', 'Invoice\InvoiceController@createMisc')->name('invoice.create-misc');
+	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
 });
 
 // Jockey
@@ -40,7 +42,7 @@ Route::get('/profile', 'Jockey\ProfileController@index')->name('jockey.profile.i
 Route::get('/profile/edit', 'Jockey\ProfileController@edit')->name('jockey.profile.edit');
 Route::put('/profile/edit', 'Jockey\ProfileController@update')->name('jockey.profile.update');
 
-Route::get('/activity/list', 'Jockey\ActivityController@index')->name('jockey.activity-list');
+Route::get('/activity/log', 'Jockey\ActivityController@index')->name('jockey.activity-log');
 
 Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jockey.activity.show');
 
@@ -67,7 +69,7 @@ Route::post('/notification/{user}/dismiss-all', 'Notification\NotificationContro
 Route::delete('/activity/{activity}', 'Activity\ActivityController@destroy')->name('activity.delete');
 
 // Coach
-Route::get('/coach/activity/list', 'Coach\ActivityController@index')->name('coach.activity-list');
+Route::get('/coach/activity/log', 'Coach\ActivityController@index')->name('coach.activity-log');
 Route::post('/coach/activity', 'Coach\ActivityController@store')->name('coach.activity.store');
 Route::get('/coach/activity/create', 'Coach\ActivityController@singleCreate')->name('coach.1:1-activity.create');
 Route::get('/coach/activity/{activity}/edit', 'Coach\ActivityController@edit')->name('coach.activity.edit');
@@ -78,6 +80,7 @@ Route::post('/activity/{activity}/feedback/{jockey}', 'Coach\ActivityJockeyFeedb
 Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
 
 Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.dashboard.index');
+Route::get('/coach/jockeys', 'Coach\JockeyController@index')->name('coach.jockeys.index');
 
 Route::get('/coach/auth', 'Coach\TokenAccessController@index')->name('coach.token-access');
 Route::get('/coach/profile/password', 'Coach\PasswordController@edit')->name('coach.password.edit');
@@ -148,7 +151,8 @@ Route::get('/messages', 'Message\MessageController@index')->name('messages.index
 Route::get('/messages/sent', 'Message\MessageController@sentIndex')->name('messages.sent');
 Route::get('/messages/{message}', 'Message\MessageController@show')->name('messages.show');
 Route::post('/messages', 'Message\MessageController@store')->name('message.store');
-
+Route::delete('/messages/{message}', 'Message\MessageController@destroy')->name('message.delete');
+Route::delete('/messages/sent/{message}', 'Message\MessageController@destroySentMessage')->name('sent-message.delete');
 
 
 

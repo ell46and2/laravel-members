@@ -150,6 +150,11 @@ class RacingExcellence extends Model
         return $this->start->format('l jS F Y');
     }
 
+    public function getFormattedStartDayMonthAttribute()
+    {
+        return $this->start->format('l jS F');
+    }
+
     public function getStartDateAttribute()
     {
         return $this->start->format('d/m/Y');
@@ -168,6 +173,11 @@ class RacingExcellence extends Model
     public function getFormattedJockeyOrGroupAttribute()
     {
         return 'Group';
+    }
+
+    public function getFormattedSeriesNameAttribute()
+    {
+        return $this->series->name;
     }
 
     public function getNotificationLinkAttribute()

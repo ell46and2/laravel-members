@@ -17,6 +17,7 @@ class CreateMessageRecipient extends Migration
             $table->integer('message_id')->unsigned();
             $table->integer('recipient_id')->unsigned()->index();
             $table->boolean('read')->default(false);
+            $table->boolean('deleted')->default(false);
 
             // $table->foreign('recipient_id')->references('id')->on('users');
             // $table->foreign('message_id')->references('id')->on('messages');

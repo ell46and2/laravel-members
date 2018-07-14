@@ -1,6 +1,153 @@
 {
     "project_settings": {
-        "name": "Genesis",
+        "name": "JCP",
         "asset_version": "1.0.0"
+    },
+    "content": {
+        "notifications": [
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "18 hours ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "23 hours ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "1 day ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "1 day ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "2 days ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "3 days ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "1 week ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "2 weeks ago"
+            },
+            {
+                "message": "Lorem ipsum dolor sit amet, malorum vivendum at has, agam populo at cum. Case eruditi vel et.",
+                "time": "1 month ago"
+            }
+        ],
+        "recent_activities": [
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            },
+            {
+                "activity_type": "Simulator training",
+                "coach": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
+            }
+        ],
+        "competency_assessment": {
+            "max_value": 5,
+            "items": [
+                {
+                    "label": "Riding",
+                    "value": 4
+                },
+                {
+                    "label": "Simulator",
+                    "value": 2
+                },
+                {
+                    "label": "Race riding skills",
+                    "value": 1
+                },
+                {
+                    "label": "Use of the whip",
+                    "value": 3
+                },
+                {
+                    "label": "Fitness",
+                    "value": 1
+                },
+                {
+                    "label": "Weight and nutrition",
+                    "value": 5
+                },
+                {
+                    "label": "Communication",
+                    "value": 3
+                },
+                {
+                    "label": "Approach",
+                    "value": 1
+                }
+            ]
+        },
+        "coaches": [
+            {
+                "image": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "coaching_hours": 25
+            },
+            {
+                "image": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "coaching_hours": 18
+            }
+        ]
     }
 }

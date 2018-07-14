@@ -1,0 +1,56 @@
+<div class="[ notification-panel ] [ js-notification-panel ]">
+    <button class="[ notification-panel__toggle ] [ js-notification-panel-toggle ]">
+        <div class="notification-panel__status-icon">
+            {% include "svg/bell.svg" %}
+            <span class="notification-panel__status-icon-count">3</span>
+        </div>
+
+        <span class="notification-panel__toggle-handle">
+            <span class="sr-only">Click to view your notifications</span>
+        </span>
+    </button>
+
+    <div class="notification-panel__main">
+        <div class="notification-panel__header">
+            <h2 class="notification-panel__heading">Your notifications</h2>
+            <div class="text-right">
+                <button class="notification-panel__mark-as-read" type="button">
+                    Mark all as read
+                </button>
+            </div>
+        </div>
+
+        <div class="notification-panel__notifications">
+            {% for item in content.notifications %}
+                <div class="[ notification-panel__notification ] [ notification ]">
+                    <div class="notification__icon">
+                        {% include "svg/nav-racing-excellence.svg" %}
+                    </div>
+                    <div class="notification__main">
+                        <div class="[ notification__message ] [ flow-vertical--1 ]">
+                            <p>{{ item.message }}</p>
+                        </div>
+                        <div class="notification__footer">
+                            <div class="notification__datetime">
+                                {{ item.time }}
+                            </div>
+                            <div>
+                                <button type="button" class="button button--primary">View</button>
+                                <button type="button" class="button button--white">Dismiss</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button class="[ notification-panel__close-button ] [ js-notification-panel-toggle ]">
+        <span class="sr-only">Close the notifications panel</span>
+        {% include "svg/times.svg" %}
+    </button>
+
+    <button class="[ notification-panel__overlay-toggle ] [ js-notification-panel-toggle ]" aria-hidden="true" role="presentation">
+        {% include "svg/times.svg" %}
+    </button>
+</div>

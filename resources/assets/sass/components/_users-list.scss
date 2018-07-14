@@ -1,0 +1,98 @@
+.users-list {
+    $self: &;
+
+    &__item {
+
+        & + & {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid $blue--lightest;
+        }
+    }
+
+    &__main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    &__avatar {
+        width: 50px;
+        flex-shrink: 0;
+    }
+
+    &__details {
+        flex: 1;
+        padding: 10px 15px 0;
+    }
+
+    &__name {
+        display: flex;
+        align-items: flex-end;
+        color: $blue--dark;
+    }
+
+    &__edit-user-button {
+        @extend %transition;
+
+        position: relative;
+        display: block;
+        width: 24px;
+        height: 24px;
+        margin-top: -10px;
+        margin-left: 20px;
+        margin-bottom: 5px;
+        opacity: 1;
+
+        @include hover(true) {
+            opacity: 0.8;
+        }
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue;
+        }
+    }
+
+    &__info {
+        color: $blue--lighter;
+
+        @include font-size(12px, true);
+    }
+
+    &__stats {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 10px -10px -5px;
+    }
+
+    &__stats-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 0 10px 5px;
+    }
+
+    &__stats-icon {
+        width: 24px;
+        height: 24px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue;
+        }
+    }
+
+    &__stats-label {
+        padding-left: 10px;
+        padding-top: 4px;
+
+        @include font-size(14px, true, $line-height-base);
+    }
+
+    &__progress-bar {
+        margin-top: 10px;
+    }
+}

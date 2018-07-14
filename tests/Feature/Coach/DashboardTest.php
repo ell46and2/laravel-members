@@ -21,12 +21,14 @@ class DashboardTest extends TestCase
     /** @test */
     public function a_coach_can_see_the_days_remaining_to_submit_their_invoice()
     {
-    	// Get the number of days till end of current month
-    	$endOfMonth = Carbon::now()->endOfMonth();
+        Carbon::setTestNow(Carbon::parse('2018-03-1'));
+        $this->assertEquals(daysToSubmitInvoice(), 9);
 
-    	$daysLeft = $endOfMonth->diffInDays(Carbon::now());
+        Carbon::setTestNow(Carbon::parse('2018-03-10'));
+    	$this->assertEquals(daysToSubmitInvoice(), 0);
 
-    	$this->assertEquals(daysToSubmitInvoice(), $daysLeft);
+        Carbon::setTestNow(Carbon::parse('2018-03-11'));
+        $this->assertEquals(daysToSubmitInvoice(), 30);
     }
 
     /** @test */

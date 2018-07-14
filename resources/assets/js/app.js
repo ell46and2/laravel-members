@@ -27,6 +27,8 @@ Vue.component('racing-excellence-results', require('./components/RacingExcellenc
 
 Vue.component('notifications', require('./components/Notifications/Notifications.vue'));
 
+Vue.component('notification-badge', require('./components/Notifications/NotificationBadge.vue'));
+
 Vue.component('autocomplete', require('./components/Search/Autocomplete.vue'));
 
 Vue.component('users-selection', require('./components/Forms/UsersSelection.vue'));
@@ -60,7 +62,6 @@ const app = new Vue({
     	var unselectAll = document.getElementsByClassName('js-unselect-all')[0];
 
     	if(selectAll && unselectAll) {
-    		console.log('y');
     		selectAll.addEventListener("click", function() {
 				selectToggle(true)
 			});
@@ -70,14 +71,45 @@ const app = new Vue({
 			});
     	}
 		
-
 		function selectToggle(bool) {
 			for(var i = 0; i < invoiceableCheckboxes.length; i++) {
 			    invoiceableCheckboxes[i].checked = bool;   
 			}	
 		}
 
-	 
 
+		/* */
+		var app = document.querySelector('.js-app');
+        var body = document.querySelector('body');
+
+        /* Sidebar nav elements */
+        var navToggles = document.querySelectorAll('.js-nav-toggle');
+        var burger = document.querySelector('.js-nav-toggle--burger');
+        var nav = document.querySelector('.js-site-nav');
+
+        /* Notification panel elements */
+        var notificationPanelToggles = document.querySelectorAll('.js-notification-panel-toggle');
+        var notificationPanel = document.querySelector('.js-notification-panel');
+        var headerNotificationPanelToggle = document.querySelector('.js-notification-panel-toggle--site-head');
+
+        // On click of a nav toggle element
+        navToggles.forEach(function(item) {
+            item.addEventListener('click', function() {
+                app.classList.toggle('is-active--left');
+                nav.classList.toggle('is-active');
+                burger.classList.toggle('is-active');
+                body.classList.toggle('is-no-scroll');
+            });
+        });
+
+        /* On click of a notification panel toggle */
+        notificationPanelToggles.forEach(function(item) {
+            item.addEventListener('click', function() {
+                app.classList.toggle('is-active--right');
+                notificationPanel.classList.toggle('is-active');
+                headerNotificationPanelToggle.classList.toggle('is-active');
+                body.classList.toggle('is-no-scroll');
+            });
+        });
     }
 });

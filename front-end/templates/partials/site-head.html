@@ -1,5 +1,17 @@
-<header class="site-head mt-5" role="banner">
-    <div class="container">
-        <h1>{{ project_settings.name }}</h1>
+<header class="site-head" role="banner">
+    <button class="[ site-head__burger ] [ js-nav-toggle js-nav-toggle--burger ]" type="button">
+        <span class="sr-only">Open menu</span>
+        <span class="site-head__burger-decor" aria-hidden="true" role="presentation">
+            <span class="site-head__burger-bars"></span>
+        </span>
+    </button>
+    <div class="site-head__brand">
+        <a class="site-head__brand-link" href="">
+            {% include "svg/jcp-logo-small.svg" %}
+        </a>
     </div>
+    <button class="[ site-head__notifications-toggle ] [ js-notification-panel-toggle js-notification-panel-toggle--site-head ]" type="button">
+        {% include "svg/bell.svg" %}
+        <span class="site-head__notifications-count">3</span>
+    </button>
 </header>

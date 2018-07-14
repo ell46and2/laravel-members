@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-	protected $fillable = ['subject', 'body', 'author_id'];
+	protected $fillable = ['subject', 'body', 'author_id', 'deleted'];
 
 	protected $dates = ['created_at', 'updated_at'];
 
-  // protected $casts = [
-  //     'read' => 'boolean'
-  // ];
+  protected $casts = [
+      'deleted' => 'boolean'
+  ];
 
   /*
   	Relationships
@@ -35,9 +35,16 @@ class Message extends Model
  	public function markAsRead()
  	{
  		$this->update([
-          'read' => true
-      ]);
+      'read' => true
+    ]);
  	}
+
+  public function markAsDeleted()
+  {
+    $this->update([
+      'deleted' => true
+    ]);
+  }
 
   public function addRecipient(User $user)
   {
