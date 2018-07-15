@@ -19,10 +19,7 @@ class TokenAccessTest extends TestCase
 
 		$response = $this->get("coach/auth?token={$coach->access_token}&email={$coach->email}");
 
-		$response->assertStatus(302);
-        $response->assertRedirect("/coach/profile/password");
-
-        $this->assertTrue(auth()->user()->is($coach));
+		$response->assertStatus(200);
 	}
 
 	/** @test */

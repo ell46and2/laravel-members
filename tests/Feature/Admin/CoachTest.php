@@ -384,13 +384,4 @@ class CoachTest extends TestCase
             $this->assertNull($coach->vat_number);
         });    
     }
-
-    /** @test */
-    public function only_admin_users_can_create_a_coach()
-    {
-         // not jockey
-         // not coach
-         // not jcp
-         // not guest   
-    }
 }
