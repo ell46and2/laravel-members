@@ -75,7 +75,7 @@ if (! function_exists('urlAppendByRole')) {
 if (! function_exists('isRoute')) {
     function isRoute($routeName)
     {
-        if(strpos(request()->path(), $routeName)) {
+        if(strpos(request()->path(), $routeName) !== false) {
            return true; 
         }
         

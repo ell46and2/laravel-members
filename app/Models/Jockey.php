@@ -141,7 +141,7 @@ class Jockey extends User
     
     public function upcomingActivities()
     {
-        return $this->activities()->with('type')->where('start', '>', now())->orderBy('start');
+        return $this->activities()->with('type', 'coach', 'location')->where('start', '>', now())->orderBy('start');
     }
 
     public function dashboardUpcomingActivities()
@@ -151,7 +151,7 @@ class Jockey extends User
 
     public function recentActivities()
     {
-        return $this->activities()->with('type')->where('end', '<', now())->orderBy('end', 'desc');
+        return $this->activities()->with('type', 'coach', 'location')->where('end', '<', now())->orderBy('end', 'desc');
     }
 
     public function dashboardRecentActivities()

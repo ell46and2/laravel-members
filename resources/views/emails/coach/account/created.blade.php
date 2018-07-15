@@ -4,7 +4,7 @@
 New coach account created
 
 @component('mail::button', ['url' => route('coach.token-access', [
-	'token' => $coach->activation_token,
+	'token' => $coach->access_token,
 	'email' => $coach->email
 ])])
 Go to site

@@ -23,6 +23,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('coach.dashboard.index', function($view) {
             $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
         });
+        view()->composer('jockey.dashboard.index', function($view) {
+            $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
+        });
 
     }
 

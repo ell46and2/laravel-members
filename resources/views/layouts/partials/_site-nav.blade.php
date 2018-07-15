@@ -27,7 +27,7 @@
                     @endif                
                 </a>
             </li>
-            <li class="site-nav__nav-item">
+            <li class="site-nav__nav-item{{ isRoute('log') ? ' is-active' : '' }}">
                 <a class="site-nav__nav-link" href="{{ urlAppendByRole() . '/activity/log' }}">
                     <span class="site-nav__nav-icon">
                         @svg('nav-activity-log', 'icon')

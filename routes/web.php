@@ -83,6 +83,7 @@ Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.d
 Route::get('/coach/jockeys', 'Coach\JockeyController@index')->name('coach.jockeys.index');
 
 Route::get('/coach/auth', 'Coach\TokenAccessController@index')->name('coach.token-access');
+Route::post('/coach/auth', 'Coach\TokenAccessController@update')->name('coach.token-access.update');
 Route::get('/coach/profile/password', 'Coach\PasswordController@edit')->name('coach.password.edit');
 
 // Admin
