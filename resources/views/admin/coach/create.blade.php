@@ -56,12 +56,20 @@
                             </div>
                         </div>
 
-                        @include('form.partials._input', [
-                            'label' => 'Date of birth',
-                            'field' => 'date_of_birth',
-                            'type' => 'text',
-                            'errors' => $errors
-                        ])
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right" for="name">Date of birth</label>
+                            
+                            <div class="col-md-6">
+                                <div class="form-control{{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}">
+                                    <datepicker-component name="date_of_birth" placeholder="Date of birth" old="{{ old('date_of_birth') }}"></datepicker-component>
+                                </div>
+                                @if ($errors->has('date_of_birth'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('date_of_birth') }}</strong>
+                                    </span>
+                                @endif
+                            </div>                          
+                        </div>
 
                         @include('form.partials._input', [
                             'label' => 'Address line 1',

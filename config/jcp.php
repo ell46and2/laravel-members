@@ -40,8 +40,8 @@ return [
 
     'mileage' => [
         'threshold' => 10000,
-        'rate_below_threshold' => 45,
-        'rate_above_threshold' => 25,
+        'rate_below_threshold' => 0.45,
+        'rate_above_threshold' => 0.25,
     ],
 
     'invoice' => [

@@ -153,6 +153,10 @@ class InvoiceController extends Controller
             return $invoice;
         }
 
-        return $coach->invoices()->create();
+        $invoice = $coach->invoices()->create();
+
+        $invoice->invoiceMileage()->create();
+
+        return $invoice;
     }
 }

@@ -36,6 +36,11 @@ class Invoice extends Model
         return $this->lines()->whereInvoiceableType(null);
     }
 
+    public function invoiceMileage()
+    {
+        return $this->hasOne(InvoiceMileage::class, 'invoice_id');
+    }
+
     /*
         Utilities
     */

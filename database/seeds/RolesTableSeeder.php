@@ -27,6 +27,9 @@ class RolesTableSeeder extends Seeder
         	'label' => 'Admin'
         ])->save();
 
-        
+        Role::create([
+            'name' => 'jets',
+            'label' => 'Jets'
+        ])->save();
     }
 }

@@ -73,7 +73,7 @@ class CoachTest extends TestCase
         	$this->assertEquals('Jane', $coach->first_name);
         	$this->assertEquals('Doe', $coach->last_name);
             $this->assertEquals('Lee', $coach->middle_name);
-            $this->assertEquals(Carbon::parse('1980-11-06'), $coach->date_of_birth);
+            $this->assertEquals('11/06/1980', $coach->date_of_birth->format('d/m/Y'));
         	$this->assertEquals('123 street', $coach->address_1);
         	$this->assertEquals('Cheltenham', $coach->address_2);
             $this->assertEquals(1, $coach->county_id);
@@ -83,9 +83,10 @@ class CoachTest extends TestCase
             $this->assertEquals('01242 222333', $coach->telephone);
             $this->assertEquals('jdoe', $coach->twitter_handle);
         	$this->assertEquals('jane@example.com', $coach->email);
-            $this->assertEquals(1000, $coach->mileage);
             $this->assertEquals('12345678A', $coach->vat_number);
             $this->assertNotNull($coach->access_token);
+
+            $this->assertEquals(1000, $coach->currentMileage->miles);
 
         	$this->assertTrue($coach->isCoach());
         	$this->assertTrue($coach->approved);
@@ -96,10 +97,6 @@ class CoachTest extends TestCase
         		$mail->hasTo($coach->email);
         	});
         });
-
-        // Need to add creating a unique activation token, so that the coach can login straight from the activation email
-        // They will be logged in to a account - set password page.
-        // The page is only visible if the coach has an activation token, once the password has been set the activation token is removed.
     }
 
     /** @test */

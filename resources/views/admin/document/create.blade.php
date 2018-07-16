@@ -24,6 +24,14 @@
                             'errors' => $errors
                         ])
 
+                        @include('form.partials._input', [
+                            'label' => 'Document description',
+                            'field' => 'description',
+                            'type' => 'text',
+                            'attributes' => 'required',
+                            'errors' => $errors
+                        ])
+
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right" for="document">Document</label>
                             <div class="col-md-6">

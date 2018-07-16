@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,7 +36,6 @@ class User extends Authenticatable
         'password',
         'approved',
         'avatar_path',
-        'mileage',
         'vat_number',
         'last_login',
         'access_token'
@@ -117,6 +117,10 @@ class User extends Authenticatable
     /*
         Utilities
      */
+    public function scopeByAccessToken(Builder $builder, $email, $token)
+    {
+        return $builder->where('email', $email)->where('access_token', $token)->whereNotNull('access_token');
+    }
       
     // Convert date of birth to Carbon when saving to db.
     public function setDateOfBirthAttribute($value)

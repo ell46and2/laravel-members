@@ -7,6 +7,7 @@ use App\Models\Coach;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Jockey;
+use App\Models\Mileage;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
 use Carbon\Carbon;
@@ -136,7 +137,7 @@ class InvoiceTest extends TestCase
 	    	'coach_id' => $coach->id,
 	    ]);
 
-	    $response = $this->actingAs($coach)->post("/invoices/invoice/$invoice->id/misc", [
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/{$invoice->id}/misc", [
 	    	'misc_name' => 'Misc name',
 	    	'misc_date' => '26/11/2018',
 	    	'value' => 100
@@ -147,12 +148,114 @@ class InvoiceTest extends TestCase
          	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
 
          	$this->assertEquals($invoiceLine->misc_name, 'Misc name');
-         	$this->assertEquals($invoiceLine->misc_date, Carbon::createFromFormat('d/m/Y', '26/11/2018'));
+         	$this->assertEquals($invoiceLine->misc_date->format('d/m/Y'), '26/11/2018');
          	$this->assertEquals($invoiceLine->value, 100);
          	$this->assertEquals($invoiceLine->invoiceable_id, null);
          	$this->assertEquals($invoiceLine->invoiceable_type, null);
 
          	$this->assertTrue($invoice->fresh()->lines->first()->is($invoiceLine));
+	    });
+	}
+
+	/** @test */
+	public function mileage_can_be_added()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 1000
+        ]);
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/{$invoice->id}/mileage", [
+	    	'description' => 'Mileage description',
+	    	'mileage_date' => now()->subMonth()->format('d/m/Y'),
+	    	'miles' => 104.5
+	    ]);
+
+	    tap(Mileage::first(), function($mileage) use ($coach, $invoice, $response) {
+	    	$response->assertStatus(302);
+         	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($mileage->description, 'Mileage description');
+         	$this->assertEquals($mileage->mileage_date->format('d/m/Y'), now()->subMonth()->format('d/m/Y'));
+         	$this->assertEquals($mileage->miles, 104.5);
+
+         	$this->assertEquals($invoice->invoiceMileage->value, number_format(104.5 * config('jcp.mileage.rate_below_threshold'), 2)); // 47.03
+	    });
+	}
+
+	/** @test */
+	public function mileage_can_be_added_where_already_above_threshold()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => (config('jcp.mileage.threshold') + 100)
+        ]);
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/{$invoice->id}/mileage", [
+	    	'description' => 'Mileage description',
+	    	'mileage_date' => now()->subMonth()->format('d/m/Y'),
+	    	'miles' => 104.5
+	    ]);
+
+	    tap(Mileage::first(), function($mileage) use ($coach, $invoice, $response) {
+	    	$response->assertStatus(302);
+         	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($mileage->description, 'Mileage description');
+         	$this->assertEquals($mileage->mileage_date->format('d/m/Y'), now()->subMonth()->format('d/m/Y'));
+         	$this->assertEquals($mileage->miles, 104.5);
+
+         	$this->assertEquals($invoice->invoiceMileage->value, number_format(104.5 * config('jcp.mileage.rate_above_threshold'), 2)); // 26.13
+	    });
+	}
+
+	/** @test */
+	public function mileage_can_be_added_where_new_miles_pushes_over_threshold()
+	{
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => (config('jcp.mileage.threshold') - 50)
+        ]);
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/{$invoice->id}/mileage", [
+	    	'description' => 'Mileage description',
+	    	'mileage_date' => now()->subMonth()->format('d/m/Y'),
+	    	'miles' => 104.5
+	    ]);
+
+	    tap(Mileage::first(), function($mileage) use ($coach, $invoice, $response) {
+	    	$response->assertStatus(302);
+         	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($mileage->description, 'Mileage description');
+         	$this->assertEquals($mileage->mileage_date->format('d/m/Y'), now()->subMonth()->format('d/m/Y'));
+         	$this->assertEquals($mileage->miles, 104.5);
+
+         	$this->assertEquals($invoice->invoiceMileage->value, number_format((54.5 * config('jcp.mileage.rate_above_threshold')) + (50 * config('jcp.mileage.rate_below_threshold')), 2)); // 36.13
 	    });
 	}
 
@@ -211,6 +314,14 @@ class InvoiceTest extends TestCase
 	}
 
 }
+
+/*
+	Potential issue when invoice is submitted and we add the invoice miles to the coach current Mileage, what happens if the
+	invoice has mileage from last year also.
+
+	So, need to work out if all mileage from current year, and if not split between this yea and last year by mileage_date.
+
+ */
 
 
 /*
@@ -330,8 +441,10 @@ class InvoiceTest extends TestCase
 
 
 		function calculateMileageValue() {
-			$currentYear = now()->year;
-			$currentMileageForCurrentYear = $coach->mileageForYear($currentYear);
+
+			$currentMileageForCurrentYear = optional($coach->currentMileage)->miles;
+
+			if no $coach->currentMileage then create new CoachMileage and set the miles to 0.
 
 			// Get all mileage claims that are for the current year
 				$currentYearInvoiceMiles = $invoiceMileage->mileage->whereYear('date', '=', $currentYear);

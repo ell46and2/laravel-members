@@ -25,7 +25,7 @@ class TokenAccessController extends Controller
 
     public function update(TokenAccessPasswordSetRequest $request) // validate email, token, password, confirmed
     {   
-        $coach = Coach::ByAccessToken($request->email, $request->token)->firstOrFail();
+        $user = Coach::ByAccessToken($request->email, $request->token)->firstOrFail();
 
         $coach->update([
             'password' => Hash::make($request->password),

@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
 	Route::get('invoice/{invoice}/misc/add', 'Invoice\InvoiceController@createMisc')->name('invoice.create-misc');
 	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
+
+	Route::post('invoices/invoice/{invoice}/mileage', 'Invoice\MileageController@store')->name('invoice.mileage.store');
 });
 
 // Jockey
@@ -91,6 +93,10 @@ Route::get('/admin/coaches/create', 'Admin\CoachController@create')->name('admin
 Route::post('/admin/coaches', 'Admin\CoachController@store')->name('admin.coach.store');
 Route::get('/admin/coaches/{coach}', 'Admin\CoachController@show')->name('admin.coach.show');
 
+Route::get('/admin/jets/create', 'Admin\JetController@create')->name('admin.jet.create');
+Route::post('/admin/jets', 'Admin\JetController@store')->name('admin.jet.store');
+Route::get('/admin/jets/{jet}', 'Admin\JetController@show')->name('admin.jet.show');
+
 Route::post('/admin/activity', 'Admin\ActivityController@store')->name('admin.activity.store');
 Route::get('/admin/activity/create', 'Admin\ActivityController@singleCreate')->name('admin.1:1-activity.create');
 Route::get('/admin/activity/group-create', 'Admin\ActivityController@groupCreate')->name('admin.group-activity.create');
@@ -105,6 +111,11 @@ Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('admin.d
 // Change to PendingJockeyController@index or remove and just have in Admin dashboard.
 Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('admin.jockeys.pending');
 
+
+// Jets
+Route::get('/jets/dashboard', 'Jet\DashboardController@index')->name('jet.dashboard.index');
+Route::get('/jet/auth', 'Jet\TokenAccessController@index')->name('jet.token-access');
+Route::post('/jet/auth', 'Jet\TokenAccessController@update')->name('jet.token-access.update');
 
 // Racing Excellence
 Route::get('/admin/racing-excellence/create', 'Admin\RacingExcellenceController@create')->name('admin.racing-excellence.create');

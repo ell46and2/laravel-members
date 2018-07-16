@@ -27,14 +27,14 @@
 		    				<td>{{ $invoice->id }}</td>
 		    				<td>Current</td>
 		    				<td>£{{ $invoice->overallValue }}</td>
-		    				<th><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></th>
+		    				<td><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></td>
 		    			</tr>
 		    		@else
 		    			<tr>
 		    				<td>{{ $invoice->id }}</td>
 		    				<td>{{ $invoice->label }}</td>
 		    				<td>£{{ $invoice->overallValue }}</td>
-		    				<th><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></th>
+		    				<td><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></td>
 		    			</tr>
 		    		@endif
 		    	@endforeach

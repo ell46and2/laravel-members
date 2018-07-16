@@ -27,7 +27,8 @@ class DocumentCreateTest extends TestCase
 
     	$response = $this->actingAs($admin)->post("/admin/documents", [
     		'title' => 'Document title',
-    		'document' => UploadedFile::fake()->create('file to upload.pdf', 100) // 100 is size in kb
+    		'document' => UploadedFile::fake()->create('file to upload.pdf', 100), // 100 is size in kb
+            'description' => 'The description'
     	]);
 
     	tap(Document::first(), function($document) use ($response) {
@@ -35,6 +36,7 @@ class DocumentCreateTest extends TestCase
         	$response->assertRedirect('/documents');
 
     		$this->assertEquals($document->title, 'Document title');
+            $this->assertEquals($document->description, 'The description');
 
             Queue::assertPushed(UploadDocument::class, function($job) use ($response, $document) {
                 return $job->document->id == $document->id &&
@@ -68,6 +70,39 @@ class DocumentCreateTest extends TestCase
         $this->assertEquals(0, Document::count());
         Queue::assertNotPushed(UploadDocument::class);
         Queue::assertNotPushed(UploadDocumentNotify::class);
+    }
+
+    /** @test */
+    public function document_description_is_optional()
+    {
+        Queue::fake();
+
+        $admin = factory(Admin::class)->create();
+
+        $response = $this->actingAs($admin)->post("/admin/documents", [
+            'title' => 'Document title',
+            'document' => UploadedFile::fake()->create('file to upload.pdf', 100), // 100 is size in kb
+            'description' => ''
+        ]);
+
+        tap(Document::first(), function($document) use ($response) {
+            $response->assertStatus(302);
+            $response->assertRedirect('/documents');
+
+            $this->assertEquals($document->title, 'Document title');
+            $this->assertEquals($document->description, null);
+
+            Queue::assertPushed(UploadDocument::class, function($job) use ($response, $document) {
+                return $job->document->id == $document->id &&
+                    $job->fileName == 'filetoupload.pdf';
+            });
+
+            // Do we need to notify all coaches and jockeys
+            // Best to queue a job and use chunk to create all those notifications.
+            Queue::assertPushed(UploadDocumentNotify::class, function($job) use ($response, $document) {
+                return $job->document->id == $document->id;
+            });
+        });  
     }
 
     /** @test */

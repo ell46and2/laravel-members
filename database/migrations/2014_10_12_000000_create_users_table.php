@@ -48,7 +48,7 @@ class CreateUsersTable extends Migration
             $table->string('access_token')->nullable();
 
             // Coach only
-            $table->integer('mileage')->default(0);
+            // $table->integer('mileage')->default(0);
             $table->string('vat_number')->nullable();
 
             $table->rememberToken();

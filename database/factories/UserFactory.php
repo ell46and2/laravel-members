@@ -101,25 +101,27 @@ $factory->define(App\Models\Admin::class, function (Faker $faker) {
     ];
 });
 
-// $factory->state(App\Models\User::class, 'jockey', function($faker) {
-// 	return [
-// 		'role_id' => 1, // jockey
-// 	];
-// });
+$factory->define(App\Models\Jet::class, function (Faker $faker) {
+    static $password;
 
-// $factory->state(App\Models\User::class, 'coach', function($faker) {
-// 	return [
-// 		'role_id' => 2, // coach
-// 		'approved' => true
-// 	];
-// });
-
-// $factory->state(App\Models\User::class, 'admin', function($faker) {
-// 	return [
-// 		'role_id' => 3, // admin
-// 		'approved' => true
-// 	];
-// });
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'gender' => 'male',
+        'address_1' => $faker->secondaryAddress,
+        'address_2' => $faker->streetAddress,
+        'county_id' => 1,
+        'country_id' => 1,
+        'nationality_id' => 1,
+        'postcode' => $faker->postcode,
+        'telephone' => $faker->phoneNumber,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => str_random(10),
+        'role_id' => 4, // jets
+        'approved' => true
+    ];
+});
 
 $factory->state(App\Models\Jockey::class, 'approved', function($faker) {
 	return [

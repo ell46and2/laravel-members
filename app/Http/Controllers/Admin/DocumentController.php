@@ -22,7 +22,7 @@ class DocumentController extends Controller
 	{
 		if($request->file('document')) {
 
-			$document = Document::create($request->only(['title']));
+			$document = Document::create($request->only(['title', 'description']));
 
    			$this->uploadDocument($document, $request);
 
@@ -38,7 +38,7 @@ class DocumentController extends Controller
 
 	public function update(Document $document, UpdatePostFormRequest $request)
 	{
-		$document->update($request->only(['title']));
+		$document->update($request->only(['title', 'description']));
 
 		if($request->file('document')) {
 			// Do we remove the current document_filename here?

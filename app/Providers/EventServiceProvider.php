@@ -23,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Admin\Coach\NewCoachCreated' => [
             'App\Listeners\Admin\Coach\SendToCoachAccountCreatedEmail',
         ],
+        'App\Events\Admin\Jet\NewJetCreated' => [
+            'App\Listeners\Admin\Jet\SendToJetAccountCreatedEmail',
+        ],
         'App\Events\Coach\Activity\NewActivityCreated' => [
             'App\Listeners\Coach\Activity\NotifyJockeysOfNewActivity',
         ],

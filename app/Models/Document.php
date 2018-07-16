@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Document extends Model
 {
-	protected $fillable = ['document_filename', 'title'];
+	protected $fillable = ['document_filename', 'title', 'description'];
 
 	protected $dates = ['created_at', 'updated_at'];
 

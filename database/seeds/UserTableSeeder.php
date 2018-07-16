@@ -4,6 +4,7 @@ use App\Models\Activity;
 use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\CompetencyAssessment;
+use App\Models\Jet;
 use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\RacingExcellence;
@@ -23,6 +24,11 @@ class UserTableSeeder extends Seeder
     {
         factory(Admin::class)->create([
         	'email' => 'admin@jcp.com',
+            'password' => bcrypt('secret'),
+        ]);
+
+        factory(Jet::class)->create([
+            'email' => 'jet@jcp.com',
             'password' => bcrypt('secret'),
         ]);
 

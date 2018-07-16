@@ -28,11 +28,13 @@ class DocumentEditTest extends TestCase
 
     	$document = factory(Document::class)->create([
 			'title' => 'Document title',
+            'description' => 'The description'
     	]);
 
 		$response = $this->actingAs($admin)->put("/admin/documents/{$document->id}", [
     		'title' => 'New title',
-    		'document' => UploadedFile::fake()->create('file to upload.pdf', 100) // 100 is size in kb
+    		'document' => UploadedFile::fake()->create('file to upload.pdf', 100), // 100 is size in kb
+            'description' => 'New description'
     	]);
 
     	tap($document->fresh(), function($document) use ($response) {
@@ -40,6 +42,7 @@ class DocumentEditTest extends TestCase
         	$response->assertRedirect('/documents');
 
     		$this->assertEquals($document->title, 'New title');
+            $this->assertEquals($document->description, 'New description');
 
     		Queue::assertPushed(UploadDocument::class, function($job) use ($response, $document) {
                 return $job->document->id == $document->id &&
@@ -72,6 +75,42 @@ class DocumentEditTest extends TestCase
         $response->assertSessionHasErrors('title');
         Queue::assertNotPushed(UploadDocument::class);
         Queue::assertNotPushed(EditedDocumentNotify::class);
+    }
+
+    /** @test */
+    public function description_is_optional()
+    {
+        Queue::fake();
+
+        $admin = factory(Admin::class)->create();
+
+        $document = factory(Document::class)->create([
+            'title' => 'Document title',
+            'description' => 'The description'
+        ]);
+
+        $response = $this->actingAs($admin)->put("/admin/documents/{$document->id}", [
+            'title' => 'New title',
+            'document' => UploadedFile::fake()->create('file to upload.pdf', 100), // 100 is size in kb
+            'description' => ''
+        ]);
+
+        tap($document->fresh(), function($document) use ($response) {
+            $response->assertStatus(302);
+            $response->assertRedirect('/documents');
+
+            $this->assertEquals($document->title, 'New title');
+            $this->assertEquals($document->description, '');
+
+            Queue::assertPushed(UploadDocument::class, function($job) use ($response, $document) {
+                return $job->document->id == $document->id &&
+                    $job->fileName == 'filetoupload.pdf';
+            });
+
+            Queue::assertPushed(EditedDocumentNotify::class, function($job) use ($response, $document) {
+                return $job->document->id == $document->id;
+            });
+        });  
     }
 
 

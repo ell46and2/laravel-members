@@ -43,14 +43,6 @@ class Coach extends User
             ->count();
     }
 
-    // public function lastestActivities()
-    // {
-    //     return $this->hasOne(Activity::class, 'coach_id')
-    //         ->where('start', '<', now())
-    //         ->orderBy('start', 'desc')
-    //         ->first();
-    // }
-
     public function competencyAssessments()
     {
         return $this->hasMany(CompetencyAssessment::class);
@@ -82,6 +74,21 @@ class Coach extends User
     public function pendingReviewInvoice()
     {
         return $this->hasOne(Invoice::class, 'coach_id')->where('status', 'pending review');
+    }
+
+    public function mileages()
+    {
+        return $this->hasMany(CoachMileage::class, 'coach_id');
+    }
+
+    public function currentMileage()
+    {
+        return $this->hasOne(CoachMileage::class, 'coach_id')->where('year', now()->year);
+    }
+
+    public function lastYearsMileage()
+    {
+        return $this->hasOne(CoachMileage::class, 'coach_id')->where('year', now()->subYear()->year);
     }
 
     /*
@@ -191,12 +198,6 @@ class Coach extends User
         }
 
         return [];
-    }
-
-    
-    public function scopeByAccessToken(Builder $builder, $email, $token)
-    {
-        return $builder->where('email', $email)->where('access_token', $token)->whereNotNull('access_token');
     }
     
     public function numberOfJockeysCoaching()
