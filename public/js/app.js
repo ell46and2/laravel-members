@@ -14340,7 +14340,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(22);
-module.exports = __webpack_require__(187);
+module.exports = __webpack_require__(194);
 
 
 /***/ }),
@@ -106573,7 +106573,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(184)
 /* template */
-var __vue_template__ = __webpack_require__(186)
+var __vue_template__ = __webpack_require__(193)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -106617,7 +106617,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VueSlider__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VueSlider__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VueSlider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VueSlider__);
 //
 //
@@ -106641,7 +106641,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
-			value: 4,
+			value: 2,
 			slider: {
 				data: [0, 0.5, 1, 1.5, 2, 2.5, 3]
 			}
@@ -106675,59 +106675,98 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 185 */,
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(186)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(191)
+/* template */
+var __vue_template__ = __webpack_require__(192)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-52b338c0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Forms/VueSlider.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-52b338c0", Component.options)
+  } else {
+    hotAPI.reload("data-v-52b338c0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("vue-slide-bar", {
-        attrs: {
-          min: 0,
-          max: 3,
-          data: _vm.slider.data,
-          tooltipStyles: { backgroundColor: "#333", borderColor: "#333" },
-          processStyle: _vm.processStyle,
-          lineHeight: 8,
-          "is-disabled": false
-        },
-        model: {
-          value: _vm.value,
-          callback: function($$v) {
-            _vm.value = $$v
-          },
-          expression: "value"
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-60593e57", module.exports)
-  }
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(187);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(189)("513ed7b1", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ }),
 /* 187 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+exports = module.exports = __webpack_require__(188)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.vue-slide-bar-component[data-v-52b338c0] {\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  padding-top: 40px !important;\n}\n.vue-slide-bar[data-v-52b338c0] {\n  position: relative;\n  display: block;\n  border-radius: 15px;\n  background-color: #d8d8d8;\n  cursor: pointer;\n}\n.vue-slide-bar[data-v-52b338c0]::after {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n}\n.vue-slide-bar-process[data-v-52b338c0] {\n  position: absolute;\n  border-radius: 15px;\n  background-color: #1066FD;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  z-index: 1;\n  width: 0;\n  height: 100%;\n  top: 0;\n  left: 0;\n  will-change: width;\n}\n.vue-slide-bar-dot[data-v-52b338c0] {\n  position: absolute;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  will-change: transform;\n  cursor: pointer;\n  z-index: 4;\n  left: 0;\n  top: 4px;\n}\n.vue-slide-bar-tooltip-wrap[data-v-52b338c0] {\n  /* display: none; */\n  position: absolute;\n  z-index: 9;\n  width: 100%;\n  height: 100%;\n  display: block !important;\n}\n.vue-slide-bar-tooltip-top[data-v-52b338c0] {\n  top: -10px;\n  left: 40%;\n  -webkit-transform: translate(-50%, -100%);\n          transform: translate(-50%, -100%);\n}\n.vue-slide-bar-tooltip[data-v-52b338c0] {\n  position: relative;\n  font-size: 14px;\n  white-space: nowrap;\n  /*padding: 5px 20px;*/\n  width: 50px;\n  height: 20px;\n  text-align: center;\n  color: #fff;\n  border-radius: 14px;\n  border: 1px solid #1066FD;\n  background-color: #1066FD;\n}\n/*.vue-slide-bar-tooltip::before {\n  content: '';\n  position: absolute;\n  bottom: -10px;\n  left: 50%;\n  width: 0;\n  height: 0;\n  border: 5px solid transparent;\n  border-top-color: inherit;\n  transform: translate(-50%, 0);\n}*/\n.vue-slide-bar-range[data-v-52b338c0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 0;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.vue-slide-bar-separate[data-v-52b338c0] {\n  position: relative;\n  width: 2px;\n  background-color: #9e9e9e;\n  height: 5px;\n  cursor: pointer;\n}\n.vue-slide-bar-separate-text[data-v-52b338c0] {\n  text-align: center;\n  position: absolute;\n  white-space: nowrap;\n  -webkit-transform: translate(-50%, 0);\n          transform: translate(-50%, 0);\n  top: 6px;\n}\nspan.label-max[data-v-52b338c0] {\n    position: absolute;\n    right: 0px;\n    bottom: -35px;\n}\nspan.label-min[data-v-52b338c0] {\n    position: absolute;\n    left: 0px;\n    bottom: -35px;\n}\n", ""]);
+
+// exports
+
 
 /***/ }),
-/* 188 */,
-/* 189 */,
-/* 190 */
+/* 188 */
 /***/ (function(module, exports) {
 
 /*
@@ -106809,102 +106848,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(196)
-}
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(200)
-/* template */
-var __vue_template__ = __webpack_require__(201)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-52b338c0"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Forms/VueSlider.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-52b338c0", Component.options)
-  } else {
-    hotAPI.reload("data-v-52b338c0", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 196 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(197);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(198)("513ed7b1", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 197 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(190)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.vue-slide-bar-component[data-v-52b338c0] {\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  padding-top: 40px !important;\n}\n.vue-slide-bar[data-v-52b338c0] {\n  position: relative;\n  display: block;\n  border-radius: 15px;\n  background-color: #d8d8d8;\n  cursor: pointer;\n}\n.vue-slide-bar[data-v-52b338c0]::after {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n}\n.vue-slide-bar-process[data-v-52b338c0] {\n  position: absolute;\n  border-radius: 15px;\n  background-color: #1066FD;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  z-index: 1;\n  width: 0;\n  height: 100%;\n  top: 0;\n  left: 0;\n  will-change: width;\n}\n.vue-slide-bar-dot[data-v-52b338c0] {\n  position: absolute;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  will-change: transform;\n  cursor: pointer;\n  z-index: 4;\n  left: 0;\n  top: 4px;\n}\n.vue-slide-bar-tooltip-wrap[data-v-52b338c0] {\n  /* display: none; */\n  position: absolute;\n  z-index: 9;\n  width: 100%;\n  height: 100%;\n  display: block !important;\n}\n.vue-slide-bar-tooltip-top[data-v-52b338c0] {\n  top: -10px;\n  left: 40%;\n  -webkit-transform: translate(-50%, -100%);\n          transform: translate(-50%, -100%);\n}\n.vue-slide-bar-tooltip[data-v-52b338c0] {\n  position: relative;\n  font-size: 14px;\n  white-space: nowrap;\n  padding: 5px 20px;\n  min-width: 20px;\n  text-align: center;\n  color: #fff;\n  border-radius: 14px;\n  border: 1px solid #1066FD;\n  background-color: #1066FD;\n}\n/*.vue-slide-bar-tooltip::before {\n  content: '';\n  position: absolute;\n  bottom: -10px;\n  left: 50%;\n  width: 0;\n  height: 0;\n  border: 5px solid transparent;\n  border-top-color: inherit;\n  transform: translate(-50%, 0);\n}*/\n.vue-slide-bar-range[data-v-52b338c0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 0;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.vue-slide-bar-separate[data-v-52b338c0] {\n  position: relative;\n  width: 2px;\n  background-color: #9e9e9e;\n  height: 5px;\n  cursor: pointer;\n}\n.vue-slide-bar-separate-text[data-v-52b338c0] {\n  text-align: center;\n  position: absolute;\n  white-space: nowrap;\n  -webkit-transform: translate(-50%, 0);\n          transform: translate(-50%, 0);\n  top: 6px;\n}\nspan.label-max[data-v-52b338c0] {\n    position: absolute;\n    right: 0px;\n    bottom: -35px;\n}\nspan.label-min[data-v-52b338c0] {\n    position: absolute;\n    left: 0px;\n    bottom: -35px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 198 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -106923,7 +106867,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(199)
+var listToStyles = __webpack_require__(190)
 
 /*
 type StyleObject = {
@@ -107132,7 +107076,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 199 */
+/* 190 */
 /***/ (function(module, exports) {
 
 /**
@@ -107165,7 +107109,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 200 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -107210,6 +107154,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   name: 'VueSlideBar',
   data: function data() {
     return {
+      changeValueTimeout: null,
       flag: false,
       size: 0,
       currentValue: 0,
@@ -107336,7 +107281,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   },
   watch: {
     value: function value(val) {
-      if (this.flag) this.setValue(val, true);else this.setValue(val, true, this.speed);
+      var _this = this;
+
+      if (this.flag) {
+        clearInterval(this.changeValueTimeout);
+        this.changeValueTimeout = setTimeout(function () {
+          _this.setValue(val, true);
+        }, 200);
+      }
+      // else this.setValue(val, true, this.speed)
     },
     max: function max(val) {
       if (val < this.min) {
@@ -107406,6 +107359,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       }
       this.flag = false;
       this.setPosition();
+      this.$emit('input', this.val);
     },
     setValueOnPos: function setValueOnPos(pos, isDrag) {
       var range = this.limit;
@@ -107436,6 +107390,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     setCurrentValue: function setCurrentValue(val, bool) {
       if (val < this.minimum || val > this.maximum) return false;
+      console.log('this.isDiff(this.currentValue, val)', this.isDiff(this.currentValue, val));
       if (this.isDiff(this.currentValue, val)) {
         this.currentValue = val;
         if (!this.lazy || !this.flag) {
@@ -107449,7 +107404,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.setCurrentValue(val);
     },
     setValue: function setValue(val, noCb, speed) {
-      var _this = this;
+      var _this2 = this;
 
       if (this.isDiff(this.val, val)) {
         var resetVal = this.limitValue(val);
@@ -107457,7 +107412,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.syncValue(noCb);
       }
       this.$nextTick(function () {
-        return _this.setPosition(speed);
+        return _this2.setPosition(speed);
       });
     },
     setPosition: function setPosition(speed) {
@@ -107480,18 +107435,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.$refs.process.style.WebkitTransitionDuration = time + 's';
     },
     limitValue: function limitValue(val) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.data) {
         return val;
       }
       var inRange = function inRange(v) {
-        if (v < _this2.min) {
-          _this2.printError('[VueSlider warn]: The value of the slider is ' + val + ', the minimum value is ' + _this2.min + ', the value of this slider can not be less than the minimum value');
-          return _this2.min;
-        } else if (v > _this2.max) {
-          _this2.printError('[VueSlider warn]: The value of the slider is ' + val + ', the maximum value is ' + _this2.max + ', the value of this slider can not be greater than the maximum value');
-          return _this2.max;
+        if (v < _this3.min) {
+          _this3.printError('[VueSlider warn]: The value of the slider is ' + val + ', the minimum value is ' + _this3.min + ', the value of this slider can not be less than the minimum value');
+          return _this3.min;
+        } else if (v > _this3.max) {
+          _this3.printError('[VueSlider warn]: The value of the slider is ' + val + ', the maximum value is ' + _this3.max + ', the value of this slider can not be greater than the maximum value');
+          return _this3.max;
         }
         return v;
       };
@@ -107502,7 +107457,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       if (this.range) {
         this.$emit('callbackRange', this.range[this.currentIndex]);
       }
+
       this.$emit('input', val);
+
       noCb || this.$emit('callback', val);
     },
     getValue: function getValue() {
@@ -107528,17 +107485,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.isComponentExists = true;
     if (typeof window === 'undefined' || typeof document === 'undefined') {
       return this.printError('[VueSlider error]: window or document is undefined, can not be initialization.');
     }
     this.$nextTick(function () {
-      if (_this3.isComponentExists) {
-        _this3.getStaticData();
-        _this3.setValue(_this3.limitValue(_this3.value), true, 0);
-        _this3.bindEvents();
+      if (_this4.isComponentExists) {
+        _this4.getStaticData();
+        _this4.setValue(_this4.limitValue(_this4.value), true, 0);
+        _this4.bindEvents();
       }
     });
   },
@@ -107549,7 +107506,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 201 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -107593,7 +107550,7 @@ var render = function() {
                       [
                         _vm._t("tooltip", [
                           _c(
-                            "span",
+                            "div",
                             {
                               staticClass: "vue-slide-bar-tooltip",
                               style: _vm.tooltipStyles
@@ -107659,6 +107616,55 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-52b338c0", module.exports)
   }
 }
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("vue-slide-bar", {
+        attrs: {
+          min: 0,
+          max: 3,
+          data: _vm.slider.data,
+          tooltipStyles: { backgroundColor: "#333", borderColor: "#333" },
+          processStyle: _vm.processStyle,
+          lineHeight: 8,
+          "is-disabled": false
+        },
+        model: {
+          value: _vm.value,
+          callback: function($$v) {
+            _vm.value = $$v
+          },
+          expression: "value"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-60593e57", module.exports)
+  }
+}
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

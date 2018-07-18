@@ -20,7 +20,7 @@
 	export default {
 		data() {
 			return {
-				value: 4,
+				value: 2,
 				slider: {
 					data: [
 						0,

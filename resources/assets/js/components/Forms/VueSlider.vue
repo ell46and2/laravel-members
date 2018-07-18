@@ -13,7 +13,7 @@
           @touchstart="moveStart">
           <span class="vue-slide-bar-tooltip-top vue-slide-bar-tooltip-wrap" v-if="showTooltip">
             <slot name="tooltip">
-              <span class="vue-slide-bar-tooltip" :style="tooltipStyles">{{ val }}</span>
+              <div class="vue-slide-bar-tooltip" :style="tooltipStyles">{{ val }}</div>
             </slot>
           </span>
         </div>
@@ -36,6 +36,7 @@ export default {
   name: 'VueSlideBar',
   data () {
     return {
+      changeValueTimeout: null,
       flag: false,
       size: 0,
       currentValue: 0,
@@ -161,8 +162,14 @@ export default {
   },
   watch: {
     value (val) {
-      if (this.flag) this.setValue(val, true)
-      else this.setValue(val, true, this.speed)
+      if (this.flag) {
+        clearInterval(this.changeValueTimeout);
+        this.changeValueTimeout = setTimeout(() => {
+          this.setValue(val, true);
+        }, 200);
+        
+      }
+      // else this.setValue(val, true, this.speed)
     },
     max (val) {
       if (val < this.min) {
@@ -231,7 +238,8 @@ export default {
         return false
       }
       this.flag = false
-      this.setPosition()
+      this.setPosition();
+      this.$emit('input', this.val)
     },
     setValueOnPos (pos, isDrag) {
       let range = this.limit
@@ -240,7 +248,8 @@ export default {
         this.setTransform(pos)
         let v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + (this.minimum * this.multiple)) / this.multiple
         this.setCurrentValue(v, isDrag)
-      } else if (pos < range[0]) {
+      } 
+      else if (pos < range[0]) {
         this.setTransform(range[0])
         this.setCurrentValue(valueRange[0])
         if (this.currentSlider === 1) this.currentSlider = 0
@@ -260,6 +269,7 @@ export default {
     },
     setCurrentValue (val, bool) {
       if (val < this.minimum || val > this.maximum) return false
+        console.log('this.isDiff(this.currentValue, val)', this.isDiff(this.currentValue, val));
       if (this.isDiff(this.currentValue, val)) {
         this.currentValue = val
         if (!this.lazy || !this.flag) {
@@ -321,7 +331,10 @@ export default {
       if (this.range) {
         this.$emit('callbackRange', this.range[this.currentIndex])
       }
-      this.$emit('input', val)
+      
+        this.$emit('input', val)
+      
+      
       noCb || this.$emit('callback', val)
     },
     getValue () {
@@ -427,8 +440,9 @@ export default {
   position: relative;
   font-size: 14px;
   white-space: nowrap;
-  padding: 5px 20px;
-  min-width: 20px;
+  /*padding: 5px 20px;*/
+  width: 50px;
+  height: 20px;
   text-align: center;
   color: #fff;
   border-radius: 14px;
