@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\ActivityLocation;
 use App\Models\ActivityType;
 use App\Models\Coach;
+use App\Models\Invoice;
 use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\User;
@@ -586,7 +587,37 @@ class ActivityOneToOneEditTest extends TestCase
         ]);
 
        
+        $response->assertStatus(403);          
+    }
+
+    /** @test */
+    public function coach_cannot_edit_their_activity_if_its_been_added_to_an_invoice()
+    {
+        $coach = factory(Coach::class)->create();
+        $jockey = factory(Jockey::class)->create();
+
+        $activity = factory(Activity::class)->create([
+            'activity_type_id' => 1,
+            'coach_id' => $coach->id,
+            'start' => Carbon::now()->addDays(6),
+            'duration' => null,
+            'end' => null,
+            'location_id' => 1,
+        ]);
+
+        $activity->addJockey($jockey);
+
+        $invoice = factory(Invoice::class)->create([
+            'coach_id' => $coach->id,
+            'status' => 'pending review'
+        ]);
+
+        $activity->invoiceLine()->create([
+            'invoice_id' => $invoice->id,
+        ]);
+
+        $response = $this->actingAs($coach)->get("/coach/activity/{$activity->id}/edit");
+
         $response->assertStatus(403);
-           
     }
 }

@@ -25,6 +25,11 @@ class InvoiceLine extends Model
 		return $this->belongsTo(RacingExcellence::class, 'invoiceable_id');
 	}
 
+	public function invoice()
+	{
+		return $this->belongsTo(Invoice::class, 'invoice_id');
+	}
+
 	/*
 		Utilities
 	*/
@@ -35,12 +40,12 @@ class InvoiceLine extends Model
 	*/
 	public function getFormattedValueAttribute()
 	{
-		return '£' . $this->value;
+		return '£' . toTwoDecimals($this->value);
 	}
 
 	public function getFormattedValuePerJockeyAttribute()
 	{
-		return '£' . ($this->value / $this->activity->jockeys->count());
+		return '£' . toTwoDecimals($this->value / $this->activity->jockeys->count());
 	}
 
 	public function getFormattedMiscDateAttribute()

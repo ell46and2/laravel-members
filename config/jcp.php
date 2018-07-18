@@ -46,7 +46,15 @@ return [
 
     'invoice' => [
         'start_period' => 1,
-        'end_period' => 10
+        'end_period' => 10,
+        'address' => [
+            'name' => 'Junnie Durrans',
+            'line1' => 'The British Racing School',
+            'line2' => 'Snailwell Road',
+            'line3' => 'Newmarket',
+            'county' => 'Suffolk',
+            'postcode' => 'CB8 7NU'
+        ]
     ],
 
     'jockey_hours_training_allowance' => [

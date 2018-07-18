@@ -33,7 +33,7 @@ class Invoice extends Model
 
     public function miscellaneousLines()
     {
-        return $this->lines()->whereInvoiceableType(null);
+        return $this->lines()->whereInvoiceableType(null)->orderBy('misc_date');
     }
 
     public function invoiceMileage()
@@ -58,18 +58,48 @@ class Invoice extends Model
         ]);
     }
 
+    public function approve()
+    {
+        $this->update([
+            'status' => 'approved',
+            'total' => $this->calculateOverallValue()
+        ]);
+    }
+
     public function calculateOverallValue()
     {
-        return $this->lines()->sum('value');
+        return $this->lines()->sum('value') + $this->invoiceMileage->value;
     }
 
     public function getOverallValueAttribute()
     {
         if($this->total) {
-            return number_format($this->total, 2, '.', ',');
+            return $this->total;
         }
 
-        return number_format($this->calculateOverallValue(), 2, '.', ',');
+        return $this->calculateOverallValue();
+    }
+
+    public function getFormattedStatusAttribute()
+    {
+        switch ($this->status) {
+            case 'pending submission': 
+                return 'Open';
+                break;
+            case 'pending review':
+                return 'Submitted';
+                break;
+            case 'approved':
+                return 'Approved';
+                break;
+        }
+    }
+
+    public function recalculateAndSetTotal()
+    {
+        $this->update([
+            'total' => $this->calculateOverallValue()
+        ]);
     }
 
     public static function inSubmitInvoicePeriod()
@@ -92,8 +122,39 @@ class Invoice extends Model
         return false;
     }
 
+    public function submittableButOutOfWindow()
+    {
+        if(!$this->inSubmitInvoicePeriod() && $this->isOpen()) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getSubmittedDateAttribute()
     {
         return $this->submitted->format('l jS F');
+    }
+
+    public function isEditable()
+    {
+        if($this->status == 'approved') {
+            return false;
+        }
+
+        if(auth()->user()->isCoach() && $this->status == 'pending review') {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isEditableAndPendingReview()
+    {
+        if($this->status === 'pending review' && auth()->user()->isAdmin()) {
+            return true;
+        }  
+
+        return false;   
     }
 }

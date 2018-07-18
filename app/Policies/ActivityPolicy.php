@@ -25,4 +25,20 @@ class ActivityPolicy
     {
         return $user->id == $activity->coach_id || $user->role->name === 'admin';
     }
+
+    public function edit(User $user, Activity $activity)
+    {
+        // if no invoice line
+        $invoiceLine = $activity->invoiceLine;
+        if(!$invoiceLine) {
+           return $user->id == $activity->coach_id || $user->role->name === 'admin'; 
+        }
+        
+        $invoice = $invoiceLine->invoice;
+        if($invoice->status == 'approved') {
+            return false;
+        }
+
+        return $user->role->name === 'admin';
+    }
 }

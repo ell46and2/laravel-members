@@ -13,10 +13,11 @@
         
         <table class="table">
             <thead>
-                <th scope="col">Id</th>
+                <th scope="col">Invoice Number</th>
                 <th scope="col">Name</th>
-                <th scope="col">Value</th>
-                <th></th>
+                <th scope="col">Submitted Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Amount</th>
                 <th></th>
             </thead>
         
@@ -26,13 +27,17 @@
 		    			<tr>
 		    				<td>{{ $invoice->id }}</td>
 		    				<td>Current</td>
+		    				<td>-</td>
+		    				<td>Open</td>
 		    				<td>£{{ $invoice->overallValue }}</td>
-		    				<td><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></td>
+		    				<td><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">Update</a></td>
 		    			</tr>
 		    		@else
 		    			<tr>
 		    				<td>{{ $invoice->id }}</td>
 		    				<td>{{ $invoice->label }}</td>
+							<td>{{ $invoice->submittedDate }}</td>
+		    				<td>{{ $invoice->formattedStatus }}</td>
 		    				<td>£{{ $invoice->overallValue }}</td>
 		    				<td><a href="{{ route('invoice.show', $invoice) }}" class="btn btn-primary">View</a></td>
 		    			</tr>

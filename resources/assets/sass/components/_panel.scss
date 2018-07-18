@@ -1,4 +1,6 @@
 .panel {
+    $self: &;
+
     position: relative;
     z-index: 2;
 
@@ -75,6 +77,10 @@
         }
     }
 
+    &__split-call-to-action {
+        display: flex;
+    }
+
     &__call-to-action {
         @extend %transition;
 
@@ -104,6 +110,31 @@
             text-decoration: none;
             color: $white;
             box-shadow: inset 0 10px 10px 2px rgba(0, 48, 78, 0.2);
+        }
+
+        #{ $self }__split-call-to-action & {
+            width: 50%;
+
+            // The left button
+            &:first-child {
+                background-image: linear-gradient(to right, $blue 0%, #227EBB 100%);
+                text-align: left;
+
+                &:before {
+                    border-radius: 0 0 0 $radius;
+                }
+            }
+
+            // The right button
+            &:last-child {
+                background-image: linear-gradient(to right, #227EBB 0%, $blue--light 100%);
+                text-align: right;
+
+                &:before {
+                    border-radius: 0 0 $radius 0;
+                }
+            }
+
         }
     }
 

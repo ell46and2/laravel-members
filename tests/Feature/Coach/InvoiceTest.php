@@ -3,6 +3,7 @@
 namespace Tests\Feature\Coach;
 
 use App\Models\Activity;
+use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
@@ -260,8 +261,154 @@ class InvoiceTest extends TestCase
 	}
 
 	/** @test */
+	public function mileage_can_be_removed()
+	{
+		Carbon::setTestNow(Carbon::parse('2018-12-01'));
+
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 200
+        ]);
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $mileageA = $invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(4),
+    		'miles' => 100
+    	]);
+
+    	$mileageB = $invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(5),
+    		'miles' => 50
+    	]);
+
+    	$this->assertEquals($invoice->invoiceMileage->mileages->count(), 2);
+    	$this->assertEquals(toTwoDecimals($invoice->invoiceMileage->fresh()->value), toTwoDecimals(150 * config('jcp.mileage.rate_below_threshold')));
+
+    	$response = $this->actingAs($coach)->delete("/invoices/invoice/{$invoice->id}/mileage/{$mileageA->id}");
+
+    	tap($invoice->fresh(), function($invoice) use ($coach, $response) {
+	    	// $response->assertStatus(302);
+      //    	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoice->invoiceMileage->mileages->count(), 1);
+
+         	$this->assertEquals($invoice->invoiceMileage->value, (50 * config('jcp.mileage.rate_below_threshold')));
+	    });
+	}
+
+	/** @test */
+	public function if_all_mileage_removed_mileage_value_is_zero()
+	{
+	    Carbon::setTestNow(Carbon::parse('2018-12-01'));
+
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 200
+        ]);
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $mileageA = $invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(4),
+    		'miles' => 100
+    	]);
+
+    	$this->assertEquals($invoice->invoiceMileage->mileages->count(), 1);
+    	$this->assertEquals(toTwoDecimals($invoice->invoiceMileage->fresh()->value), toTwoDecimals(100 * config('jcp.mileage.rate_below_threshold')));
+
+    	$response = $this->actingAs($coach)->delete("/invoices/invoice/{$invoice->id}/mileage/{$mileageA->id}");
+    	
+
+    	tap($invoice->fresh(), function($invoice) use ($coach, $response) {
+	    	// $response->assertStatus(302);
+      //    	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoice->invoiceMileage->mileages->count(), 0);
+
+         	$this->assertEquals($invoice->invoiceMileage->value, 0);
+	    });	
+	}
+
+	/** @test */
+	public function cannot_delete_mileage_that_not_on_the_current_invoice()
+	{
+	    Carbon::setTestNow(Carbon::parse('2018-12-01'));
+
+	    $coach = factory(Coach::class)->create();
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 200
+        ]);
+
+        $otherCoach = factory(Coach::class)->create();
+        $otherCoach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 500
+        ]);
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $otherInvoice = factory(Invoice::class)->create([
+	    	'coach_id' => $otherCoach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+	    $otherInvoice->invoiceMileage()->create();
+
+	    $mileageA = $otherInvoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(4),
+    		'miles' => 100
+    	]);
+
+    	$this->assertEquals($invoice->invoiceMileage->mileages->count(), 0);
+    	$this->assertEquals($otherInvoice->invoiceMileage->mileages->count(), 1);
+    
+
+    	$response = $this->actingAs($coach)->delete("/invoices/invoice/{$invoice->id}/mileage/{$mileageA->id}");
+    	
+
+    	tap($otherInvoice->fresh(), function($otherInvoice) use ($response) {
+	    	// $response->assertStatus(302);
+      //    	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($otherInvoice->invoiceMileage->mileages->count(), 1);
+
+         	$this->assertEquals($otherInvoice->invoiceMileage->value, (100 * config('jcp.mileage.rate_below_threshold')));
+	    });		
+	}
+
+	/** @test */
 	public function can_submit_invoice_for_review()
 	{
+		Carbon::setTestNow(Carbon::parse('2018-11-05'));
+
 	    $coach = factory(Coach::class)->create();
 
 	    $jockey = factory(Jockey::class)->create();
@@ -269,6 +416,8 @@ class InvoiceTest extends TestCase
 	    $invoice = factory(Invoice::class)->create([
 	    	'coach_id' => $coach->id,
 	    ]);
+
+	    $invoice->invoiceMileage()->create();
 
 	    $activity1 = factory(Activity::class)->create([
 	    	'coach_id' => $coach->id,
@@ -313,15 +462,242 @@ class InvoiceTest extends TestCase
         });
 	}
 
+	/** @test */
+	public function can_only_submit_an_invoice_between_the_first_and_tenth_of_each_month()
+	{
+	    Carbon::setTestNow(Carbon::parse('2018-12-11'));
+
+	    $coach = factory(Coach::class)->create();
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $activity1 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 30,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity2 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 60,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity1->addJockey($jockey);
+	    $activity2->addJockey($jockey);
+
+	    $invoiceLine1 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity1->id,
+			'invoiceable_type' => 'activity',
+			'value' => 17.5
+	    ]);
+
+	    $invoiceLine2 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity2->id,
+			'invoiceable_type' => 'activity',
+			'value' => 35
+	    ]);
+
+	    $response = $this->actingAs($coach)->post("/invoices/invoice/$invoice->id/submit");	 
+
+	    // assert that exception is thrown and that the invoice is still at status 'pending submission'   
+	}
+
+	/** @test */
+	public function admin_can_mark_a_pending_review_invoice_as_approved()
+	{
+	    Carbon::setTestNow(Carbon::parse('2018-12-11'));
+
+	    $admin = factory(Admin::class)->create();
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 200
+        ]);
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(2),
+    		'miles' => 100
+    	]);
+
+    	$invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => now()->subDays(3),
+    		'miles' => 50
+    	]);
+
+	    $activity1 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 30,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity2 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 60,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity1->addJockey($jockey);
+	    $activity2->addJockey($jockey);
+
+	    $invoiceLine1 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity1->id,
+			'invoiceable_type' => 'activity',
+			'value' => 17.5
+	    ]);
+
+	    $invoiceLine2 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity2->id,
+			'invoiceable_type' => 'activity',
+			'value' => 35
+	    ]);
+
+	    $response = $this->actingAs($admin)->post("/invoices/invoice/$invoice->id/approve");	 
+
+	    tap($invoice->fresh(), function($invoice) use ($response, $coach) {
+        	// $response->assertStatus(302);
+         // 	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoice->status, 'approved');
+         	$this->assertEquals($invoice->total, 52.5 + (150 * config('jcp.mileage.rate_below_threshold')));
+
+         	$this->assertEquals($coach->currentMileage->miles, 350);
+        });
+	}
+
+
+	/** @test */
+	public function if_mileage_submitted_contains_last_year_as_well_as_current_the_relevant_mileages_are_updated()
+	{
+		/*
+		Wwhen invoice is submitted and we add the invoice miles to the coach current Mileage, what happens if the
+		invoice has mileage from last year also.
+
+		So, need to work out if all mileage from current year, and if not split between this year and last year by mileage_date.
+
+	 */
+	    Carbon::setTestNow(Carbon::parse('2019-01-11'));
+
+	    $admin = factory(Admin::class)->create();
+	    $coach = factory(Coach::class)->create();
+
+	    $coach->mileages()->create([
+            'year' => now()->year,
+            'miles' => 200
+        ]);
+
+        $coach->mileages()->create([
+            'year' => now()->subYear()->year,
+            'miles' => 4000
+        ]);
+
+	    $jockey = factory(Jockey::class)->create();
+
+	    $invoice = factory(Invoice::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'status' => 'pending review'
+	    ]);
+
+	    $invoice->invoiceMileage()->create();
+
+	    $invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => Carbon::parse('2019-01-04'),
+    		'miles' => 100
+    	]);
+
+    	$invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => Carbon::parse('2019-01-02'),
+    		'miles' => 50
+    	]);
+
+    	$invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => Carbon::parse('2018-12-22'),
+    		'miles' => 160
+    	]);
+
+    	$invoice->invoiceMileage->mileages()->create([
+    		'description' => 'description',
+    		'mileage_date' => Carbon::parse('2018-12-28'),
+    		'miles' => 80
+    	]);
+
+	    $activity1 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 30,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity2 = factory(Activity::class)->create([
+	    	'coach_id' => $coach->id,
+	    	'start' => Carbon::now()->subDays(2),
+	    	'duration' => 60,
+        	'end' => Carbon::now()->subDays(2),
+	    ]);
+
+	    $activity1->addJockey($jockey);
+	    $activity2->addJockey($jockey);
+
+	    $invoiceLine1 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity1->id,
+			'invoiceable_type' => 'activity',
+			'value' => 17.5
+	    ]);
+
+	    $invoiceLine2 = factory(InvoiceLine::class)->create([
+	    	'invoice_id' => $invoice->id,
+			'invoiceable_id' => $activity2->id,
+			'invoiceable_type' => 'activity',
+			'value' => 35
+	    ]);
+
+	    $response = $this->actingAs($admin)->post("/invoices/invoice/$invoice->id/approve");	 
+
+	    tap($invoice->fresh(), function($invoice) use ($response, $coach) {
+        	// $response->assertStatus(302);
+         // 	$response->assertRedirect("/invoices/invoice/{$invoice->id}");
+
+         	$this->assertEquals($invoice->status, 'approved');
+         	$this->assertEquals($invoice->total, 52.5 + (390 * config('jcp.mileage.rate_below_threshold')));
+
+         	$this->assertEquals($coach->currentMileage->miles, 350.00);
+         	$this->assertEquals($coach->lastYearsMileage->miles, 4240);
+        });
+	}
+
 }
 
-/*
-	Potential issue when invoice is submitted and we add the invoice miles to the coach current Mileage, what happens if the
-	invoice has mileage from last year also.
 
-	So, need to work out if all mileage from current year, and if not split between this yea and last year by mileage_date.
-
- */
 
 
 /*

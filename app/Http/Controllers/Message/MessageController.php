@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Message;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Message\StoreMessageFormRequest;
-use App\Http\Resources\EmailResource;
+use App\Http\Resources\MessageResource;
 use App\Http\Resources\UserResource;
 use App\Models\Coach;
 use App\Models\Jockey;
@@ -79,11 +79,9 @@ class MessageController extends Controller
 
     public function create()
     {
-        $emailResource = new EmailResource(request());
+        $messageResource = new MessageResource(request());
 
-        // dd($emailResource);
-
-        return view('message.create', compact('emailResource'));
+        return view('message.create', compact('messageResource'));
     }
 
     public function getUser(User $user)

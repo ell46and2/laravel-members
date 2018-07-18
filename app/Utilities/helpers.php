@@ -82,3 +82,18 @@ if (! function_exists('isRoute')) {
         return false;
     }
 }
+
+if (! function_exists('toTwoDecimals')) {
+    function toTwoDecimals($value)
+    {
+        return number_format($value, 2, '.', '');
+    }
+}
+
+if (! function_exists('invoiceNumberFormat')) {
+    function invoiceNumberFormat($value)
+    {
+        return number_format($value, 2, '.', ',');
+    }
+}
+

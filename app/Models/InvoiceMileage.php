@@ -17,6 +17,6 @@ class InvoiceMileage extends Model
 
     public function mileages()
     {
-    	return $this->hasMany(Mileage::class, 'invoice_mileage_id');
+    	return $this->hasMany(Mileage::class, 'invoice_mileage_id')->orderBy('mileage_date');
     }
 }

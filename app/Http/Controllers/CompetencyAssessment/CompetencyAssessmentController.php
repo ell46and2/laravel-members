@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class CompetencyAssessmentController extends Controller
 {
+    public function create()
+    {
+        return view('competency.create');
+    }
+
 	public function show(CompetencyAssessment $competencyAssessment)
 	{
 		

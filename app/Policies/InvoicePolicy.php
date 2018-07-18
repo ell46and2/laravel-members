@@ -15,4 +15,9 @@ class InvoicePolicy
         // must be the author or an admin user
         return $user->id == $invoice->coach_id || $user->role->name === 'admin';
     }
+
+    public function invoiceApprove(User $user, Invoice $invoice)
+    {
+    	return $user->role->name === 'admin';
+    }
 }

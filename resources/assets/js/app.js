@@ -53,6 +53,8 @@ Vue.component('county-select', require('./components/Forms/CountySelect.vue'));
 
 Vue.component('message-create', require('./components/Message/MessageCreate.vue'));
 
+Vue.component('range-slider', require('./components/Forms/RangeSlider.vue'));
+
 const app = new Vue({
     el: '#app',
     mounted() {

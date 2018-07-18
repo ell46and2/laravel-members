@@ -349,4 +349,31 @@ class Coach extends User
             ->doesntHave('invoiceLine')
             ->get();
     }
+
+    public function addInvoiceMilesToYearlyMileage(Invoice $invoice)
+    {
+        $currentYearInvoiceMileage = $invoice->invoiceMileage->mileages()->where('mileage_date', '>=', now()->startOfYear())->get();
+        $currentYearInvoiceMiles = $currentYearInvoiceMileage->sum('miles');
+
+        $this->currentMileage()->update([
+            'miles' => toTwoDecimals($currentYearInvoiceMiles + $this->currentMileage->miles)
+        ]);
+        
+        // if all mileage just from this year then return.
+        if($invoice->invoiceMileage->mileages()->count() === $currentYearInvoiceMileage->count()) {
+            return;
+        }
+
+        // we have mileage from last year
+        $lastYearInvoiceMiles = $invoice->invoiceMileage->mileages()->where('mileage_date', '<', now()->startOfYear())->sum('miles');
+
+        $this->lastYearsMileage()->update([
+            'miles' => toTwoDecimals($lastYearInvoiceMiles + $this->lastYearsMileage->miles)
+        ]);
+    }
+
+    public function isVatRegistered()
+    {
+        return $this->vat_number !== null;
+    }
 }

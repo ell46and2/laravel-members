@@ -31,12 +31,19 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 	Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
 	Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
+	Route::post('/invoices/invoice/{invoice}/approve', 'Invoice\InvoiceController@approve')->name('invoice.approve');
 	
-	Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\InvoiceController@destroyMisc')->name('invoice.delete-misc');
-	Route::get('invoice/{invoice}/misc/add', 'Invoice\InvoiceController@createMisc')->name('invoice.create-misc');
-	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\InvoiceController@addMisc')->name('invoice.add-misc');
+	Route::delete('/invoices/{invoice}/misc/{invoiceLine}', 'Invoice\MiscController@destroy')->name('invoice.misc.delete');
+	Route::get('/invoice/{invoice}/misc/add', 'Invoice\MiscController@create')->name('invoice.misc.create');
+	Route::post('/invoices/invoice/{invoice}/misc', 'Invoice\MiscController@store')->name('invoice.misc.store');
+	Route::get('/invoices/invoice/{invoice}/misc/{invoiceLine}', 'Invoice\MiscController@edit')->name('invoice.misc.edit');
+	Route::put('/invoices/invoice/{invoice}/misc/{invoiceLine}', 'Invoice\MiscController@update')->name('invoice.misc.update');
 
-	Route::post('invoices/invoice/{invoice}/mileage', 'Invoice\MileageController@store')->name('invoice.mileage.store');
+	Route::get('/invoices/invoice/{invoice}/mileage/add', 'Invoice\MileageController@create')->name('invoice.mileage.add');
+	Route::post('/invoices/invoice/{invoice}/mileage', 'Invoice\MileageController@store')->name('invoice.mileage.store');
+	Route::get('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@edit')->name('invoice.mileage.edit');
+	Route::put('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@update')->name('invoice.mileage.update');
+	Route::delete('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@destroy')->name('invoice.mileage.delete');
 });
 
 // Jockey
@@ -143,6 +150,7 @@ Route::get('/coach/racing-excellence/{racingExcellence}/edit', 'Coach\RacingExce
 
 
 // Competency Assessment - Coach
+Route::get('/competency-assessment/create', 'CompetencyAssessment\CompetencyAssessmentController@create')->name('competency-assessment.create');
 Route::get('/competency-assessment/{competencyAssessment}', 'CompetencyAssessment\CompetencyAssessmentController@show')->name('competency-assessment.show');
 Route::post('/coach/competency-assessment', 'CompetencyAssessment\CompetencyAssessmentController@store')->name('competency-assessment.store');
 Route::get('/competency-assessment/{competencyAssessment}/edit', 'CompetencyAssessment\CompetencyAssessmentController@edit')->name('competency-assessment.edit');

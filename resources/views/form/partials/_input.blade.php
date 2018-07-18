@@ -9,6 +9,9 @@
             name="{{ $field }}" 
             value="{{ $type !== 'password' ? old($field) ?? $value ?? '' : '' }}" {{ 
             $attributes ?? '' }}
+            @if($type === 'number')
+            step="any"
+            @endif
         >
 
         @if ($errors->has($field))

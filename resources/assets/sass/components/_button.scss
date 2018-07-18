@@ -37,4 +37,42 @@
             color: $blue;
         }
     }
+
+    &--dark {
+        background: $blue--dark;
+        color: $white;
+
+        @include hover() {
+            box-shadow: 0 2px 9px 0 rgba(30,112,183,0.20), inset 0 1px 6px 0 rgba(0,0,0,0.20);
+        }
+    }
+
+    &--success {
+        background: $success--grad;
+        color: $white;
+
+        @include hover() {
+            box-shadow: 0 2px 9px 0 rgba(10,69,49,0.20), inset 0 1px 6px 0 rgba(0,0,0,0.20);
+        }
+    }
+
+    &--error {
+        background: $error--grad;
+        color: $white;
+
+        @include hover() {
+            box-shadow: 0 2px 9px 0 rgba(87,16,24,0.20), inset 0 1px 6px 0 rgba(0,0,0,0.20);
+        }
+    }
+
+    &--block {
+        display: block;
+        width: 100%;
+        border-radius: $radius;
+        font-weight: $font-weight-bold;
+        line-height: 44px;
+        text-align: center;
+
+        @include font-size(20px);
+    }
 }

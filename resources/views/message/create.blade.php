@@ -6,7 +6,7 @@
 <div class="container">
 	
 	<message-create
-		resources="{{ json_encode($emailResource) }}"
+		resources="{{ json_encode($messageResource) }}"
 	></message-create>
 
 </div>

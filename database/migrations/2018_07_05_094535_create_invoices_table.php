@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->enum('status', [
                 'pending submission',
                 'pending review',
-                'invoiced'
+                'approved'
             ])->default('pending submission');
             $table->string('label')->nullable(); // May 2018 - the previous month from when it was submitted.
             $table->float('total')->nullable();

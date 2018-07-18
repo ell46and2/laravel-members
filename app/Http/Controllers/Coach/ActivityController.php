@@ -127,10 +127,8 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
-        // $coach = Coach::find(auth()->user()->id);
+        $this->authorize('edit', $activity);
 
-        // $ids = collect([1, 2, 3, 4]); // pluck the ids of the jockeys already added to the activity
-        // dd($ids);
         request()->request->add(['selectedIds' => $activity->jockeys->pluck('id')]); // append to the request so we can access in the Resource.
 
         $activityTypes = ActivityType::all();

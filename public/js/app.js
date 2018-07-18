@@ -14340,7 +14340,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(22);
-module.exports = __webpack_require__(183);
+module.exports = __webpack_require__(187);
 
 
 /***/ }),
@@ -14401,6 +14401,8 @@ Vue.component('country-select', __webpack_require__(167));
 Vue.component('county-select', __webpack_require__(170));
 
 Vue.component('message-create', __webpack_require__(173));
+
+Vue.component('range-slider', __webpack_require__(183));
 
 var app = new Vue({
     el: '#app',
@@ -106564,9 +106566,1099 @@ if (false) {
 
 /***/ }),
 /* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(184)
+/* template */
+var __vue_template__ = __webpack_require__(186)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Forms/RangeSlider.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60593e57", Component.options)
+  } else {
+    hotAPI.reload("data-v-60593e57", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 184 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VueSlider__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VueSlider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__VueSlider__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			value: 4,
+			slider: {
+				data: [0, 0.5, 1, 1.5, 2, 2.5, 3]
+			}
+		};
+	},
+
+	components: {
+		VueSlideBar: __WEBPACK_IMPORTED_MODULE_0__VueSlider___default.a
+	},
+	computed: {
+		processStyle: function processStyle() {
+			var color = 'blue';
+
+			switch (true) {
+				case this.value <= 2:
+					color = 'red';
+					break;
+				case this.value <= 5:
+					color = 'orange';
+					break;
+				default:
+					color = 'green';
+					break;
+			}
+
+			return {
+				backgroundColor: color
+			};
+		}
+	}
+});
+
+/***/ }),
+/* 185 */,
+/* 186 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("vue-slide-bar", {
+        attrs: {
+          min: 0,
+          max: 3,
+          data: _vm.slider.data,
+          tooltipStyles: { backgroundColor: "#333", borderColor: "#333" },
+          processStyle: _vm.processStyle,
+          lineHeight: 8,
+          "is-disabled": false
+        },
+        model: {
+          value: _vm.value,
+          callback: function($$v) {
+            _vm.value = $$v
+          },
+          expression: "value"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-60593e57", module.exports)
+  }
+}
+
+/***/ }),
+/* 187 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 188 */,
+/* 189 */,
+/* 190 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(196)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(200)
+/* template */
+var __vue_template__ = __webpack_require__(201)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-52b338c0"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Forms/VueSlider.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-52b338c0", Component.options)
+  } else {
+    hotAPI.reload("data-v-52b338c0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(197);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(198)("513ed7b1", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52b338c0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VueSlider.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 197 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(190)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.vue-slide-bar-component[data-v-52b338c0] {\n  position: relative;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  padding-top: 40px !important;\n}\n.vue-slide-bar[data-v-52b338c0] {\n  position: relative;\n  display: block;\n  border-radius: 15px;\n  background-color: #d8d8d8;\n  cursor: pointer;\n}\n.vue-slide-bar[data-v-52b338c0]::after {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2;\n}\n.vue-slide-bar-process[data-v-52b338c0] {\n  position: absolute;\n  border-radius: 15px;\n  background-color: #1066FD;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  z-index: 1;\n  width: 0;\n  height: 100%;\n  top: 0;\n  left: 0;\n  will-change: width;\n}\n.vue-slide-bar-dot[data-v-52b338c0] {\n  position: absolute;\n  -webkit-transition: all 0s;\n  transition: all 0s;\n  will-change: transform;\n  cursor: pointer;\n  z-index: 4;\n  left: 0;\n  top: 4px;\n}\n.vue-slide-bar-tooltip-wrap[data-v-52b338c0] {\n  /* display: none; */\n  position: absolute;\n  z-index: 9;\n  width: 100%;\n  height: 100%;\n  display: block !important;\n}\n.vue-slide-bar-tooltip-top[data-v-52b338c0] {\n  top: -10px;\n  left: 40%;\n  -webkit-transform: translate(-50%, -100%);\n          transform: translate(-50%, -100%);\n}\n.vue-slide-bar-tooltip[data-v-52b338c0] {\n  position: relative;\n  font-size: 14px;\n  white-space: nowrap;\n  padding: 5px 20px;\n  min-width: 20px;\n  text-align: center;\n  color: #fff;\n  border-radius: 14px;\n  border: 1px solid #1066FD;\n  background-color: #1066FD;\n}\n/*.vue-slide-bar-tooltip::before {\n  content: '';\n  position: absolute;\n  bottom: -10px;\n  left: 50%;\n  width: 0;\n  height: 0;\n  border: 5px solid transparent;\n  border-top-color: inherit;\n  transform: translate(-50%, 0);\n}*/\n.vue-slide-bar-range[data-v-52b338c0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding: 5px 0;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.vue-slide-bar-separate[data-v-52b338c0] {\n  position: relative;\n  width: 2px;\n  background-color: #9e9e9e;\n  height: 5px;\n  cursor: pointer;\n}\n.vue-slide-bar-separate-text[data-v-52b338c0] {\n  text-align: center;\n  position: absolute;\n  white-space: nowrap;\n  -webkit-transform: translate(-50%, 0);\n          transform: translate(-50%, 0);\n  top: 6px;\n}\nspan.label-max[data-v-52b338c0] {\n    position: absolute;\n    right: 0px;\n    bottom: -35px;\n}\nspan.label-min[data-v-52b338c0] {\n    position: absolute;\n    left: 0px;\n    bottom: -35px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(199)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 200 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'VueSlideBar',
+  data: function data() {
+    return {
+      flag: false,
+      size: 0,
+      currentValue: 0,
+      currentSlider: 0,
+      isComponentExists: true,
+      interval: 1,
+      lazy: false,
+      realTime: false,
+      dataLabelStyles: _extends({
+        'color': '#4a4a4a',
+        'font-family': 'Arial, sans-serif',
+        'font-size': '12px'
+      }, this.$props.labelStyles)
+    };
+  },
+
+  props: {
+    data: {
+      type: Array,
+      default: null
+    },
+    range: {
+      type: Array,
+      default: null
+    },
+    speed: {
+      type: Number,
+      default: 0.5
+    },
+    lineHeight: {
+      type: Number,
+      default: 5
+    },
+    iconWidth: {
+      type: Number,
+      default: 20
+    },
+    value: {
+      type: [String, Number],
+      default: 0
+    },
+    min: {
+      type: Number,
+      default: 0
+    },
+    max: {
+      type: Number,
+      default: 100
+    },
+    showTooltip: {
+      type: Boolean,
+      default: true
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    tooltipStyles: Object,
+    labelStyles: Object,
+    processStyle: Object
+  },
+  computed: {
+    slider: function slider() {
+      return this.$refs.dot;
+    },
+
+    val: {
+      get: function get() {
+        return this.data ? this.data[this.currentValue] : this.currentValue;
+      },
+      set: function set(val) {
+        if (this.data) {
+          var index = this.data.indexOf(val);
+          if (index > -1) {
+            this.currentValue = index;
+          }
+        } else {
+          this.currentValue = val;
+        }
+      }
+    },
+    currentIndex: function currentIndex() {
+      return (this.currentValue - this.minimum) / this.spacing;
+    },
+    indexRange: function indexRange() {
+      return [0, this.currentIndex];
+    },
+    minimum: function minimum() {
+      return this.data ? 0 : this.min;
+    },
+    maximum: function maximum() {
+      return this.data ? this.data.length - 1 : this.max;
+    },
+    multiple: function multiple() {
+      var decimals = ('' + this.interval).split('.')[1];
+      return decimals ? Math.pow(10, decimals.length) : 1;
+    },
+    spacing: function spacing() {
+      return this.data ? 1 : this.interval;
+    },
+    total: function total() {
+      if (this.data) {
+        return this.data.length - 1;
+      } else if (Math.floor((this.maximum - this.minimum) * this.multiple) % (this.interval * this.multiple) !== 0) {
+        this.printError('[VueSlider error]: Prop[interval] is illegal, Please make sure that the interval can be divisible');
+      }
+      return (this.maximum - this.minimum) / this.interval;
+    },
+    gap: function gap() {
+      return this.size / this.total;
+    },
+    position: function position() {
+      return (this.currentValue - this.minimum) / this.spacing * this.gap;
+    },
+    limit: function limit() {
+      return [0, this.size];
+    },
+    valueLimit: function valueLimit() {
+      return [this.minimum, this.maximum];
+    },
+    calculateMinHeight: function calculateMinHeight() {
+      return this.range ? { minHeight: '100px' } : {};
+    }
+  },
+  watch: {
+    value: function value(val) {
+      if (this.flag) this.setValue(val, true);else this.setValue(val, true, this.speed);
+    },
+    max: function max(val) {
+      if (val < this.min) {
+        return this.printError('[VueSlider error]: The maximum value can not be less than the minimum value.');
+      }
+      var resetVal = this.limitValue(this.val);
+      this.setValue(resetVal);
+      this.refresh();
+    },
+    min: function min(val) {
+      if (val > this.max) {
+        return this.printError('[VueSlider error]: The minimum value can not be greater than the maximum value.');
+      }
+      var resetVal = this.limitValue(this.val);
+      this.setValue(resetVal);
+      this.refresh();
+    }
+  },
+  methods: {
+    bindEvents: function bindEvents() {
+      if (!this.isDisabled) {
+        document.addEventListener('touchmove', this.moving, { passive: false });
+        document.addEventListener('touchend', this.moveEnd, { passive: false });
+        document.addEventListener('mousemove', this.moving);
+        document.addEventListener('mouseup', this.moveEnd);
+        document.addEventListener('mouseleave', this.moveEnd);
+        window.addEventListener('resize', this.refresh);
+      }
+    },
+    unbindEvents: function unbindEvents() {
+      if (!this.isDisabled) {
+        window.removeEventListener('resize', this.refresh);
+        document.removeEventListener('touchmove', this.moving);
+        document.removeEventListener('touchend', this.moveEnd);
+        document.removeEventListener('mousemove', this.moving);
+        document.removeEventListener('mouseup', this.moveEnd);
+        document.removeEventListener('mouseleave', this.moveEnd);
+      }
+    },
+    getPos: function getPos(e) {
+      this.realTime && this.getStaticData();
+      return e.clientX - this.offset;
+    },
+    wrapClick: function wrapClick(e) {
+      if (this.isDisabled) return false;
+      var pos = this.getPos(e);
+      this.setValueOnPos(pos);
+    },
+    moveStart: function moveStart(e, index) {
+      this.flag = true;
+      this.$emit('drag-start', this);
+    },
+    moving: function moving(e) {
+      if (!this.flag) return false;
+      e.preventDefault();
+      if (e.targetTouches && e.targetTouches[0]) e = e.targetTouches[0];
+      this.setValueOnPos(this.getPos(e), true);
+    },
+    moveEnd: function moveEnd(e) {
+      if (this.flag) {
+        this.$emit('drag-end', this);
+        if (this.lazy && this.isDiff(this.val, this.value)) {
+          this.syncValue();
+        }
+      } else {
+        return false;
+      }
+      this.flag = false;
+      this.setPosition();
+    },
+    setValueOnPos: function setValueOnPos(pos, isDrag) {
+      var range = this.limit;
+      var valueRange = this.valueLimit;
+      if (pos >= range[0] && pos <= range[1]) {
+        this.setTransform(pos);
+        var v = (Math.round(pos / this.gap) * (this.spacing * this.multiple) + this.minimum * this.multiple) / this.multiple;
+        this.setCurrentValue(v, isDrag);
+      } else if (pos < range[0]) {
+        this.setTransform(range[0]);
+        this.setCurrentValue(valueRange[0]);
+        if (this.currentSlider === 1) this.currentSlider = 0;
+      } else {
+        this.setTransform(range[1]);
+        this.setCurrentValue(valueRange[1]);
+        if (this.currentSlider === 0) this.currentSlider = 1;
+      }
+    },
+    isDiff: function isDiff(a, b) {
+      if (Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)) {
+        return true;
+      } else if (Array.isArray(a) && a.length === b.length) {
+        return a.some(function (v, i) {
+          return v !== b[i];
+        });
+      }
+      return a !== b;
+    },
+    setCurrentValue: function setCurrentValue(val, bool) {
+      if (val < this.minimum || val > this.maximum) return false;
+      if (this.isDiff(this.currentValue, val)) {
+        this.currentValue = val;
+        if (!this.lazy || !this.flag) {
+          this.syncValue();
+        }
+      }
+      bool || this.setPosition();
+    },
+    setIndex: function setIndex(val) {
+      val = this.spacing * val + this.minimum;
+      this.setCurrentValue(val);
+    },
+    setValue: function setValue(val, noCb, speed) {
+      var _this = this;
+
+      if (this.isDiff(this.val, val)) {
+        var resetVal = this.limitValue(val);
+        this.val = resetVal;
+        this.syncValue(noCb);
+      }
+      this.$nextTick(function () {
+        return _this.setPosition(speed);
+      });
+    },
+    setPosition: function setPosition(speed) {
+      if (!this.flag) this.setTransitionTime(speed === undefined ? this.speed : speed);else this.setTransitionTime(0);
+      this.setTransform(this.position);
+    },
+    setTransform: function setTransform(val) {
+      var value = val - 8;
+      var translateValue = 'translateX(' + value + 'px)';
+      this.slider.style.transform = translateValue;
+      this.slider.style.WebkitTransform = translateValue;
+      this.slider.style.msTransform = translateValue;
+      this.$refs.process.style.width = val + 'px';
+      this.$refs.process.style['left'] = 0;
+    },
+    setTransitionTime: function setTransitionTime(time) {
+      this.slider.style.transitionDuration = time + 's';
+      this.slider.style.WebkitTransitionDuration = time + 's';
+      this.$refs.process.style.transitionDuration = time + 's';
+      this.$refs.process.style.WebkitTransitionDuration = time + 's';
+    },
+    limitValue: function limitValue(val) {
+      var _this2 = this;
+
+      if (this.data) {
+        return val;
+      }
+      var inRange = function inRange(v) {
+        if (v < _this2.min) {
+          _this2.printError('[VueSlider warn]: The value of the slider is ' + val + ', the minimum value is ' + _this2.min + ', the value of this slider can not be less than the minimum value');
+          return _this2.min;
+        } else if (v > _this2.max) {
+          _this2.printError('[VueSlider warn]: The value of the slider is ' + val + ', the maximum value is ' + _this2.max + ', the value of this slider can not be greater than the maximum value');
+          return _this2.max;
+        }
+        return v;
+      };
+      return inRange(val);
+    },
+    syncValue: function syncValue(noCb) {
+      var val = this.val;
+      if (this.range) {
+        this.$emit('callbackRange', this.range[this.currentIndex]);
+      }
+      this.$emit('input', val);
+      noCb || this.$emit('callback', val);
+    },
+    getValue: function getValue() {
+      return this.val;
+    },
+    getIndex: function getIndex() {
+      return this.currentIndex;
+    },
+    getStaticData: function getStaticData() {
+      if (this.$refs.elem) {
+        this.size = this.$refs.elem.offsetWidth;
+        this.offset = this.$refs.elem.getBoundingClientRect().left;
+      }
+    },
+    refresh: function refresh() {
+      if (this.$refs.elem) {
+        this.getStaticData();
+        this.setPosition();
+      }
+    },
+    printError: function printError(msg) {
+      console.error(msg);
+    }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.isComponentExists = true;
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return this.printError('[VueSlider error]: window or document is undefined, can not be initialization.');
+    }
+    this.$nextTick(function () {
+      if (_this3.isComponentExists) {
+        _this3.getStaticData();
+        _this3.setValue(_this3.limitValue(_this3.value), true, 0);
+        _this3.bindEvents();
+      }
+    });
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.isComponentExists = false;
+    this.unbindEvents();
+  }
+});
+
+/***/ }),
+/* 201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      ref: "wrap",
+      staticClass: "vue-slide-bar-component vue-slide-bar-horizontal",
+      style: _vm.calculateMinHeight,
+      on: { click: _vm.wrapClick }
+    },
+    [
+      _c(
+        "div",
+        {
+          ref: "elem",
+          staticClass: "vue-slide-bar",
+          style: { height: _vm.lineHeight + "px" }
+        },
+        [
+          [
+            _c(
+              "div",
+              {
+                ref: "dot",
+                staticClass: "vue-slide-bar-always vue-slide-bar-dot",
+                style: { width: _vm.iconWidth + "px" },
+                on: { mousedown: _vm.moveStart, touchstart: _vm.moveStart }
+              },
+              [
+                _vm.showTooltip
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "vue-slide-bar-tooltip-top vue-slide-bar-tooltip-wrap"
+                      },
+                      [
+                        _vm._t("tooltip", [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "vue-slide-bar-tooltip",
+                              style: _vm.tooltipStyles
+                            },
+                            [_vm._v(_vm._s(_vm.val))]
+                          )
+                        ])
+                      ],
+                      2
+                    )
+                  : _vm._e()
+              ]
+            )
+          ],
+          _vm._v(" "),
+          _c("div", {
+            ref: "process",
+            staticClass: "vue-slide-bar-process",
+            style: _vm.processStyle
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("span", { staticClass: "label-min" }, [_vm._v(_vm._s(this.min))]),
+      _vm._v(" "),
+      _c("span", { staticClass: "label-max" }, [_vm._v(_vm._s(this.max))]),
+      _vm._v(" "),
+      _vm.range
+        ? _c(
+            "div",
+            { staticClass: "vue-slide-bar-range" },
+            _vm._l(_vm.range, function(r, index) {
+              return _c(
+                "div",
+                {
+                  key: index,
+                  staticClass: "vue-slide-bar-separate",
+                  style: _vm.dataLabelStyles
+                },
+                [
+                  !r.isHide
+                    ? _c(
+                        "span",
+                        { staticClass: "vue-slide-bar-separate-text" },
+                        [_vm._v("\n        " + _vm._s(r.label) + "\n      ")]
+                      )
+                    : _vm._e()
+                ]
+              )
+            })
+          )
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-52b338c0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

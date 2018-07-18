@@ -14,4 +14,21 @@ class Mileage extends Model
     {
     	return $this->belongsTo(InvoiceMileage::class, 'invoice_mileage_id');
     }
+
+    /*
+    	Utilities
+     */
+    public function belongsToInvoice(Invoice $invoice)
+    {
+    	return $this->invoiceMileage->invoice_id == $invoice->id;
+    }
+
+    /*
+        Attributes
+     */
+    public function getFormattedDateAttribute()
+    {
+        return $this->mileage_date->format('l jS F');
+    }
+
 }

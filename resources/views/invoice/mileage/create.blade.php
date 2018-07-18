@@ -4,33 +4,33 @@
 <div class="container">
         
    
-    <h2>Misc</h2>
-    <form method="POST" action="{{ route('invoice.misc.store', $invoice) }}">
+    <h2>Mileage</h2>
+    <form method="POST" action="{{ route('invoice.mileage.store', $invoice) }}">
         {{ csrf_field() }}
 
             @include('form.partials._input', [
                 'label' => 'Description',
-                'field' => 'misc_name',
+                'field' => 'description',
                 'type' => 'text',
                 'attributes' => 'required',
-                'errors' => $errors,
+                'errors' => $errors
             ])
 
             
             <div class="form-group row">
-                <div class="form-control{{ $errors->has('misc_date') ? ' is-invalid' : '' }}">
-                    <datepicker-component name="misc_date" placeholder="Select Date" old="{{ old('misc_date') }}"></datepicker-component>
+                <div class="form-control{{ $errors->has('mileage_date') ? ' is-invalid' : '' }}">
+                    <datepicker-component name="mileage_date" placeholder="Select Date" old="{{ old('mileage_date') }}"></datepicker-component>
                 </div>
-                @if ($errors->has('misc_date'))
+                @if ($errors->has('mileage_date'))
                     <span class="invalid-feedback">
-                        <strong>{{ $errors->first('misc_date') }}</strong>
+                        <strong>{{ $errors->first('mileage_date') }}</strong>
                     </span>
                 @endif
             </div>
 
             @include('form.partials._input', [
-                'label' => 'Amount',
-                'field' => 'value',
+                'label' => 'Miles',
+                'field' => 'miles',
                 'type' => 'number',
                 'attributes' => 'required',
                 'errors' => $errors

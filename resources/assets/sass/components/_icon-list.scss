@@ -1,0 +1,52 @@
+.icon-list {
+    $self: &;
+
+    list-style: none;
+    padding-left: 0;
+
+    &__item {
+        display: flex;
+        align-items: flex-start;
+
+        & + & {
+            margin-top: 10px;
+        }
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue-grey;
+
+            #{ $self }__item--has-emphasis & {
+                fill: $blue;
+            }
+        }
+    }
+
+    &__inner {
+        flex: 1;
+        padding-left: 10px;
+        color: $blue--dark;
+
+        @include font-size(16px, true);
+
+        #{ $self }__item--has-emphasis & {
+            color: $blue;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__link {
+        color: $blue--dark;
+
+        #{ $self }__item--has-emphasis & {
+            color: $blue;
+            font-weight: $font-weight-bold;
+        }
+    }
+}
