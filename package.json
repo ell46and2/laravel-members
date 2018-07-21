@@ -24,7 +24,6 @@
     },
     "dependencies": {
         "pluralize": "^7.0.0",
-        "vue-slide-bar": "^1.1.2",
         "vue2-timepicker": "^0.1.4",
         "vuejs-datepicker": "^1.5.2"
     }

@@ -7,16 +7,16 @@
 			@input="onChange"
 			@keyup.down="onArrowDown"
     		@keyup.up="onArrowUp"
-    		@keyup.enter="onEnter"
+    		@keydown.enter.prevent="onEnter"
     		:placeholder="placeholder"
     	/>
 
     	<!-- disable until resultId  - onclick emit to parent the id -->
-    	<button 
+    	<!-- <button 
     		class="btn btn-primary" 
     		:disabled="resultId === null"
     		@click.prevent="submit"
-    	>+</button>
+    	>+</button> -->
 
     	<ul 
     		class="autocomplete__results"
@@ -93,6 +93,7 @@
 				this.search = result.name;
 				this.setResultId(result.id);
 				this.isOpen = false;
+				this.submit();
 			},
 			clearResultId() {
 				this.resultId = null;

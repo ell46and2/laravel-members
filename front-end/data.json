@@ -139,12 +139,12 @@
         },
         "coaches": [
             {
-                "image": "http://www.jcp.local/images/headshot.jpg",
+                "image": "http://jcp.local/images/headshot.jpg",
                 "name": "Name Surname",
                 "coaching_hours": 25
             },
             {
-                "image": "http://www.jcp.local/images/headshot.jpg",
+                "image": "http://jcp.local/images/headshot.jpg",
                 "name": "Name Surname",
                 "coaching_hours": 18
             }

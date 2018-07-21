@@ -138,6 +138,48 @@
         }
     }
 
+    &__alert {
+        position: relative;
+        display: block;
+        padding: #{ 10px + $radius } 20px 10px;
+        background-image: linear-gradient(52deg, #00304E 0%, #074173 100%);
+        color: $white;
+
+        @include font-size(16px, true);
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: $radius;
+            width: 100%;
+            background: $white;
+            border-radius: 0 0 $radius $radius;
+        }
+
+        &--success {
+            background-image: $success--grad;
+        }
+
+        &--error {
+            background-image: $error--grad;
+        }
+
+        &--has-icon {
+            display: flex;
+            align-items: flex-start;
+
+            .icon {
+                flex-shrink: 0;
+                width: 20px;
+                height: 20px;
+                fill: $white;
+                margin-right: 10px;
+            }
+        }
+    }
+
     &__stack {
         @extend %button-reset;
 

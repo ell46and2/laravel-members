@@ -68,9 +68,10 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            @yield('content')        
         </main>
-       
+        
+       <confirmation></confirmation>
     </div>          
         
 </body>

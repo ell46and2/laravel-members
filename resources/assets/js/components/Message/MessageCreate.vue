@@ -1,25 +1,51 @@
 <template>
-	<form @submit.prevent="handleSubmit">
+	<form>
 
-		<input type="text" v-model="form.subject" placeholder="Enter subject">
+		<input type="text" v-model.trim="form.subject" placeholder="Enter subject">
 		<p style="color: red" v-if="validationFailed.subject">Please enter a subject</p>
 
 		<br><br><br>
 		
+		<button 
+			@click.prevent="sendToAllJockeys"
+			class="btn btn-primary"
+		>
+			Send To All Jockeys
+		</button>
+
+		<button 
+			@click.prevent="sendToAllCoaches"
+			class="btn btn-primary"
+		>
+			Send To All Coaches
+		</button>
+
+		<button 
+			@click.prevent="deselectAll"
+			class="btn btn-primary"
+		>
+			Deselect All
+		</button>
+		
 		<message-selection
 			v-if="jockeyResource"
-			:resource="jockeyResource"
-			:exclude-ids="form.recipients.jockey"
-			role="jockey"
-			v-on:addUser="addJockey"
-			v-on:removeUser="removeJockey"
-			v-on:sendToAll="sendToAllJockeys"
-			v-on:sendToAllCancelled="sendToAllJockeysCancelled"
+			:jockey-resource="jockeyResource"
+			:coach-resource="coachResource"
+			:jets-resource="jetsResource"
+			:exclude-ids="recipientIds"
+			v-on:addUser="addUser"
 		></message-selection>
 		
 		<br><br><br>
 
-		<message-selection
+		<message-recipient
+			v-for="user in form.recipients"
+			:key="user.id"
+			:recipient="user"
+			v-on:remove="removeUser"
+		></message-recipient>
+
+	<!-- 	<message-selection
 			v-if="coachResource"
 			:resource="coachResource"
 			:exclude-ids="form.recipients.coach"
@@ -28,11 +54,11 @@
 			v-on:removeUser="removeCoach"
 			v-on:sendToAll="sendToAllCoaches"
 			v-on:sendToAllCancelled="sendToAllCoachesCancelled"
-		></message-selection>
+		></message-selection> -->
 
 		<br><br><br>
 
-		<textarea v-model="form.body" cols="30" rows="10"></textarea>
+		<textarea v-model.trim="form.body" cols="30" rows="10"></textarea>
 		<p style="color: red" v-if="validationFailed.body">Please enter a message</p>
 
 		<br><br><br>
@@ -41,6 +67,7 @@
 			:disabled="disabledButton()"
 			class="btn btn-primary" 
 			type="submit"
+			@click.prevent="handleSubmit"
 		>
 			Send Message
 		</button>
@@ -49,6 +76,7 @@
 
 <script>
 	import MessageSelection from './MessageSelection';
+	import MessageRecipient from './MessageRecipient';
 
 	export default {
 		data() {
@@ -58,11 +86,7 @@
 				coachResource: null,
 				jetsResource: null,		
 				form: {
-					recipients: {
-						jockey: [],
-						coach: [],
-						jets: []
-					},
+					recipients: [],
 					subject: '',
 					body: '',
 					allJockeys: false,
@@ -82,7 +106,8 @@
 			}
 		},
 		components: {
-			MessageSelection
+			MessageSelection,
+			MessageRecipient
 		},
 		mounted() {
 			// split resources into jockey, coach, jet
@@ -98,6 +123,11 @@
 
 			if(resources.jets) {
 				this.jetsResource = resources.jets;
+			}
+		},
+		computed: {
+			recipientIds() {
+				return _.map(this.form.recipients, 'id');
 			}
 		},
 		methods: {
@@ -126,7 +156,7 @@
 				return false;
 			},
 			validateBody() {
-				if(this.form.body.trim() !== '') {
+				if(this.form.body !== '') {
 					this.validationFailed.body = false;
 					return true;
 				}
@@ -134,20 +164,16 @@
 				return false;
 			},
 			validateSubject() {
-				console.log('subject', this.form.subject.trim());
-				if(this.form.subject.trim() !== '') {
+				if(this.form.subject !== '') {
 					this.validationFailed.subject = false;
 					return true;
 				}
 				// show validation error for subject
-				console.log('sub');
 				this.validationFailed.subject = true;
 				return false;
 			},
 			validateRecipients() {
-				if(this.form.recipients.jockey.length ||
-					this.form.recipients.coach.length ||
-					this.form.recipients.jets.length ||
+				if(this.form.recipients.length ||
 					this.form.allJockeys ||
 					this.form.allCoaches ||
 					this.form.allJets
@@ -160,11 +186,8 @@
 
 			},
 			async submitForm() {
-				let recipients = this.form.recipients.jockey.concat(this.form.recipients.coach);
-				recipients = recipients.concat(this.form.recipients.jets);
-
 				let data = {
-					recipients: recipients,
+					recipients: this.recipientIds,
 					subject: this.form.subject,
 					body: this.form.body,
 					allJockeys: this.form.allJockeys,
@@ -172,49 +195,51 @@
 					allJets: this.form.allJets,
 				};
 
-				console.log('data', data);
 				let result = await axios.post('/messages', data);
 
 				if(result.data === 'success') {
 					window.location.href = '/messages';
 				}
 			},
-			addJockey(id) {
-				this.form.recipients.jockey.push(id);
+			async addUser(id) {
+				let result = await axios.post(`/messages/user/${id}`);
+
+				let user = result.data.data;
+
+				this.form.recipients.push(user);
 			},
-			removeJockey(id) {
-				this.form.recipients.jockey = this.form.recipients.jockey.filter(recipient => {
-					recipient.id !== id;
-				}); 
-			},
-			addCoach(id) {
-				this.form.recipients.coach.push(id);
-			},
-			removeCoach(id) {
-				this.form.recipients.coach = this.form.recipients.coach.filter(recipient => {
-					recipient.id !== id;
+			removeUser(id) {
+				this.form.recipients = this.form.recipients.filter(recipient => {
+					return recipient.id != id;
 				}); 
 			},
 			sendToAllJockeys() {
-				this.form.recipients.jockey = [];
+				this.form.recipients = this.form.recipients.filter(recipient => {
+					return recipient.role != 'jockey';
+				});
 				this.form.allJockeys = true;
 			},
 			sendToAllJockeysCancelled() {
 				this.form.allJockeys = false;
 			},
 			sendToAllCoaches() {
-				this.form.recipients.coach = [];
+				this.form.recipients = this.form.recipients.filter(recipient => {
+					return recipient.role != 'coach';
+				});
 				this.form.allCoaches = true;
 			},
 			sendToAllCoachesCancelled() {
 				this.form.allCoaches = false;
 			},
+			deselectAll() {
+				this.form.recipients = [];
+			},
 			disabledButton() {
-				if(!this.form.recipients.jockey.length && !this.form.recipients.coach.length && !this.form.recipients.jets.length && !this.form.allJockeys && !this.form.allCoaches && !this.form.allJets) {
-					return true;
+				if((this.form.recipients.length || this.form.allJockeys || this.form.allCoaches || this.form.allJets) && this.form.subject && this.form.body) {
+					return false;
 				}
 
-				return false;
+				return true;
 			}
 		}
 	}

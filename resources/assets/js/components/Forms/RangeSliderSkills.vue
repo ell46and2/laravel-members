@@ -5,12 +5,12 @@
 			:min="0"
 			:max="3"
 			:data="slider.data"
-			:tooltipStyles="{ backgroundColor: '#333', borderColor: '#333' }"
 			:processStyle="processStyle"
-			:lineHeight="8"
-			:is-disabled="true"
+			:lineHeight="6"
+			:is-disabled="false"
 		>
 		</vue-slide-bar>
+		<input type="hidden" :name="name" :value="getValue">
 	</div>
 </template>
 
@@ -20,7 +20,7 @@
 	export default {
 		data() {
 			return {
-				value: 2,
+				value: this.oldValue ? this.oldValue : 1.5,
 				slider: {
 					data: [
 						0,
@@ -34,28 +34,43 @@
 				}
 			}
 		},
+		props: {
+			isDisabled: {
+				required: false,
+				default: false,
+			},
+			name: {
+				required: true
+			},
+			oldValue: {
+				required: false
+			}
+		},
 		components: {
 			VueSlideBar
 		},
 		computed: {
 			processStyle() {
-				let color = 'blue';
+				let color = '#F57E23';
 
 				switch(true) {
-					case (this.value <= 2):
-						color = 'red';
+					case (this.value <= 1):
+						color = '#D0021B'; // red
 						break;
-					case (this.value <= 5):
-						color = 'orange';
+					case (this.value <= 2):
+						color = '#F57E23'; // orange
 						break;
 					default:
-						color = 'green';
+						color = '#7ED321'; //green
 						break;
 				}
 
 				return {
 					backgroundColor: color
 				}
+			},
+			getValue() {			
+				return this.value;
 			}
 		}
 	}

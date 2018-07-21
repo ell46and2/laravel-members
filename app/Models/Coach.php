@@ -177,7 +177,10 @@ class Coach extends User
     }
 
     public function getEventRacingExcellence($request)
-    {
+    {   
+        // NOTE: should this be all racingExcellence where coach is the assigned coach
+        // and also any racingExcellence that contains one of their assigned Jockeys?
+        
         if($request->type === 're' || !$request->type) {
             return $this->racingExcellences()->with([
                 'jockeys',

@@ -27,6 +27,7 @@ class UserSelectResource extends JsonResource
             'name' => $this->full_name,
             'avatar' => $this->getAvatar(),
             'selected' => $selectedIds->contains($this->id),
+            'role' => $this->role->name
         ];
     }
 }

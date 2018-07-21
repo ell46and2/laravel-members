@@ -148,6 +148,11 @@ class User extends Authenticatable
     {
         return $this->role->name;
     }
+
+    public function getFormattedRoleNameAttribute()
+    {
+        return ucfirst($this->role_name);
+    }
  
     public function isAdmin()
     {

@@ -19,6 +19,7 @@ class MessageController extends Controller
 	{
         $messages = auth()->user()
             ->messages()
+            ->withPivot('read')
             ->with('author')
             ->paginate(15);
         
@@ -29,6 +30,7 @@ class MessageController extends Controller
     {
         $messages = auth()->user()
             ->sentMessages()
+            ->with('recipients')
             ->paginate(15);
         
         return view('message.sent-index', compact('messages'));

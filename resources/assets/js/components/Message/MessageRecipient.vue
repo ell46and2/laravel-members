@@ -9,6 +9,7 @@
 			>
 				<img class="mr-3" :src="recipient.avatar" :alt="recipient.name">
 				<p>{{ recipient.name }}</p>
+				<p>{{ recipient.role }}</p>
 			</label>
 		</div>
 		<div>

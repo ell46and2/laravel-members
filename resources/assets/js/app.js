@@ -53,9 +53,14 @@ Vue.component('county-select', require('./components/Forms/CountySelect.vue'));
 
 Vue.component('message-create', require('./components/Message/MessageCreate.vue'));
 
-Vue.component('range-slider', require('./components/Forms/RangeSlider.vue'));
+Vue.component('range-slider-skills', require('./components/Forms/RangeSliderSkills.vue'));
+
+Vue.component('range-slider-pdp', require('./components/Forms/RangeSliderPdp.vue'));
+
+Vue.component('confirmation', require('./components/Forms/Confirmation.vue'));
 
 const app = new Vue({
+
     el: '#app',
     mounted() {
     	var invoiceableCheckboxes = document.getElementsByClassName('js-invoiceable-checkbox');
@@ -113,5 +118,31 @@ const app = new Vue({
                 body.classList.toggle('is-no-scroll');
             });
         });
+
+        // Confirmation
+        // let confirmations = document.querySelectorAll('.js-confirmation');
+        // confirmations.forEach(function(item) {
+        //     item.addEventListener('submit', confirmationModal, false);
+        // });
+
+        // function confirmationModal(el) {
+        //     el.preventDefault();
+            
+        //     bus.$emit('confirm:form', el);
+        // }
+
+        // function confirmation() {
+        //     let confirmText = this.getAttribute('data-confirm') || 'Are you sure?';
+        //     let answer = confirm(confirmText);
+        //     if (answer) {
+        //         return true;
+        //     } else {
+        //         if (window.event) { // True with IE, false with other browsers
+        //             window.event.returnValue=false; //IE specific
+        //         } else {
+        //             return false
+        //         }
+        //     }
+        // }
     }
 });

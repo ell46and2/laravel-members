@@ -24,11 +24,12 @@ Route::post('/webhook/encoding', 'Attachment\EncodingWebhookController@handle');
 
 Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	// Invoice
+	Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
+	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 	Route::post('/invoices/{invoice}/invoice-lines', 'Invoice\InvoiceController@addLines')->name('invoice.add-lines');
 	Route::delete('/invoices/{invoice}/invoice-lines/{invoiceLine}', 'Invoice\InvoiceController@removeLine')->name('invoice.remove-line');
 	Route::get('/invoices/invoice/{invoice}/add', 'Invoice\InvoiceController@add')->name('invoice.add');
-	Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
-	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
+
 	Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
 	Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
 	Route::post('/invoices/invoice/{invoice}/approve', 'Invoice\InvoiceController@approve')->name('invoice.approve');

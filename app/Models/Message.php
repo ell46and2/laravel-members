@@ -55,4 +55,17 @@ class Message extends Model
   {
     $this->recipients()->attach($userIds);
   }
+
+  /*
+    Attributes
+  */
+
+  public function getExcerptAttribute()
+  {
+    if(strlen($this->body) <= 50) {
+      return $this->body;
+    }
+
+    return substr($this->body, 0, 50) . '...';
+  }
 }

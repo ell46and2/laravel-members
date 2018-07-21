@@ -29,6 +29,8 @@
             @yield('content')
 
             @include('layouts.partials._site-foot')
+            
+            <confirmation></confirmation>
         </main>
        
         @include('layouts.partials._notification-panel')

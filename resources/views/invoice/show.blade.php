@@ -168,10 +168,19 @@
                     @if($isEditable)
                         <td>
                             <a href="{{ route('invoice.misc.edit', [$invoice, $line]) }}" class="btn btn-primary">Edit</a>
-                            <form method="POST" action="{{ route('invoice.misc.delete', [$invoice, $line]) }}">
+                            <form 
+                                method="POST" 
+                                action="{{ route('invoice.misc.delete', [$invoice, $line]) }}"
+                                class="[ js-confirmation ]"
+                                data-confirm="Are you sure you wish to delete this Miscellaneous item?"
+                            >
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="delete" />
-                                <button class="btn btn-danger" type="submit">Delete</button>
+                                <button 
+                                    class="btn btn-danger" 
+                                    type="submit"
+                                    
+                                >Delete</button>
                             </form>
                         </td>
                     @endif
@@ -184,42 +193,51 @@
 
 
     <br><br>
-    @if($isEditable)
-       <a href="{{ route('invoice.mileage.add', $invoice) }}" class="btn btn-primary">Add Mileage</a>
-    @endif
-    
-    <h2>Mileage</h2>
-    <table class="table">
-        <thead>
-            <th scope="col">Description</th>
-            <th scope="col">Date</th>
-            <th scope="col">Miles</th>
-            @if($isEditable)
-               <th></th> 
-            @endif
-        </thead>
-        <tbody>
-            @foreach($invoice->invoiceMileage->mileages as $mileage)
-                <tr>
-                    <td>{{ $mileage->description }}</td>
-                    <td>{{ $mileage->formattedDate }}</td>
-                    <td>{{ $mileage->miles }}</td>
-                    @if($isEditable)
-                        <td>
-                            <a href="{{ route('invoice.mileage.edit', [$invoice, $mileage]) }}" class="btn btn-primary">Edit</a>
-                            <form method="POST" action="{{ route('invoice.mileage.delete', [$invoice, $mileage]) }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="delete" />
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </td>
-                    @endif                
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <p>Total Mileage Value: £{{ $invoice->invoiceMileage->value }}</p>
-    
+    <div id="mileage">
+        @if($isEditable)
+           <a href="{{ route('invoice.mileage.add', $invoice) }}" class="btn btn-primary">Add Mileage</a>
+        @endif
+        
+        <h2>Mileage</h2>
+        <table class="table">
+            <thead>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Miles</th>
+                @if($isEditable)
+                   <th></th> 
+                @endif
+            </thead>
+            <tbody>
+                @foreach($invoice->invoiceMileage->mileages as $mileage)
+                    <tr>
+                        <td>{{ $mileage->description }}</td>
+                        <td>{{ $mileage->formattedDate }}</td>
+                        <td>{{ $mileage->miles }}</td>
+                        @if($isEditable)
+                            <td>
+                                <a href="{{ route('invoice.mileage.edit', [$invoice, $mileage]) }}" class="btn btn-primary">Edit</a>
+                                <form 
+                                    class="[ js-confirmation ]"
+                                    method="POST" 
+                                    action="{{ route('invoice.mileage.delete', [$invoice, $mileage]) }}"
+                                    data-confirm="Are you sure you wish to delete this Mileage?"
+                                >
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="delete" />
+                                    <button 
+                                        class="btn btn-danger" 
+                                        type="submit"
+                                    >Delete</button>
+                                </form>
+                            </td>
+                        @endif                
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <p>Total Mileage Value: £{{ $invoice->invoiceMileage->value }}</p>
+    </div>
 
     <br><br>
     <h2>Total</h2>

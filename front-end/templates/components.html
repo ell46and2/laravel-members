@@ -48,7 +48,7 @@
                 <div class="components__component-main components__component-main--max-200">
                     {# START #}
                     <div class="[ avatar ]">
-                        <div class="avatar__image" style="background-image:url('http://www.jcp.local/images/headshot.jpg');"></div>
+                        <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
                     </div>
                     {# END #}
                 </div>
@@ -65,7 +65,7 @@
                 <div class="components__component-main components__component-main--max-200">
                     {# START #}
                     <div class="[ avatar avatar--green ]">
-                        <div class="avatar__image" style="background-image:url('http://www.jcp.local/images/headshot.jpg');"></div>
+                        <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
                     </div>
                     {# END #}
                 </div>
@@ -82,7 +82,7 @@
                 <div class="components__component-main components__component-main--max-200">
                     {# START #}
                     <div class="[ avatar avatar--amber ]">
-                        <div class="avatar__image" style="background-image:url('http://www.jcp.local/images/headshot.jpg');"></div>
+                        <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
                     </div>
                     {# END #}
                 </div>
@@ -99,7 +99,7 @@
                 <div class="components__component-main">
                     {# START #}
                     <div class="[ avatar avatar--red ]">
-                        <div class="avatar__image" style="background-image:url('http://www.jcp.local/images/headshot.jpg');"></div>
+                        <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
                     </div>
                     {# END #}
                 </div>
@@ -375,6 +375,38 @@
                     </div>
 
                     <a class="panel__call-to-action" href="">View all activities</a>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Panel (with alert)
+    #####################################}
+    <div class="components__component components__component--trans-bg components__component--extra-padded">
+        <h2 class="components__component-heading">Panel (with alert)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Recent Activities
+                        </h2>
+                        <div class="panel__header-meta">
+                            Last updated on 23/05/2018
+                        </div>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+
+                    <div class="panel__alert panel__alert--has-icon">
+                        {% include "svg/info-circle.svg" %}
+                        George, you have completed 5% of this PDP
+                    </div>
                 </div>
             </div>
             {# END #}

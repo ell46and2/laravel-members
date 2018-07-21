@@ -18,20 +18,20 @@ class MessageResource extends JsonResource
         if($role === 'coach') {
             $coach = Coach::find($user->id);
             return [
-                'jockeys' => UserSelectResource::collection($coach->jockeys->sortBy('full_name'))
+                'jockeys' => UserSelectResource::collection($coach->jockeys->with('role')->sortBy('full_name'))
             ];
         }
 
         // will need one for jets with all jockeys only
         if($role === 'jets') {
             return [
-                'jockeys' => UserSelectResource::collection(Jockey::all()->sortBy('full_name'))
+                'jockeys' => UserSelectResource::collection(Jockey::with('role')->get()->sortBy('full_name'))
             ];
         }
 
         return [
-            'jockeys' => UserSelectResource::collection(Jockey::all()->sortBy('full_name')),
-            'coaches' => UserSelectResource::collection(Coach::all()->sortBy('full_name')),
+            'jockeys' => UserSelectResource::collection(Jockey::with('role')->get()->sortBy('full_name')),
+            'coaches' => UserSelectResource::collection(Coach::with('role')->get()->sortBy('full_name')),
             // 'jets' => UserSelectResource::collection(Jet::all()),
         ];
     }

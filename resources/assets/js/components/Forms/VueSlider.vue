@@ -1,7 +1,7 @@
 <template>
   <div
     ref="wrap"
-    class="vue-slide-bar-component vue-slide-bar-horizontal"
+    :class="`vue-slide-bar-component vue-slide-bar-horizontal${isDisabled ? ' disabled' : ''}`"
     :style="calculateMinHeight"
     @click="wrapClick">
     <div ref="elem" class="vue-slide-bar" :style="{height: `${lineHeight}px`}">
@@ -36,6 +36,7 @@ export default {
   name: 'VueSlideBar',
   data () {
     return {
+      stopped: true,
       changeValueTimeout: null,
       flag: false,
       size: 0,
@@ -163,13 +164,23 @@ export default {
   watch: {
     value (val) {
       if (this.flag) {
-        clearInterval(this.changeValueTimeout);
-        this.changeValueTimeout = setTimeout(() => {
+        if(this.stopped) {
+          clearInterval(this.changeValueTimeout);
           this.setValue(val, true);
-        }, 200);
-        
+          this.changeValueTimeout = setTimeout(() => {
+            this.setValue(val, true);
+          }, 200);
+        } else {
+          clearInterval(this.changeValueTimeout);
+          this.changeValueTimeout = setTimeout(() => {
+            this.setValue(val, true);
+          }, 200);
+        }   
+        // if(this.stopped) {
+        //   this.setValue(val, true);
+        // }   
       }
-      // else this.setValue(val, true, this.speed)
+      else this.setValue(val, true, this.speed)
     },
     max (val) {
       if (val < this.min) {
@@ -196,18 +207,18 @@ export default {
         document.addEventListener('mousemove', this.moving)
         document.addEventListener('mouseup', this.moveEnd)
         document.addEventListener('mouseleave', this.moveEnd)
-        window.addEventListener('resize', this.refresh)
-      }   
+      }  
+      window.addEventListener('resize', this.refresh)
     },
     unbindEvents () {
       if(!this.isDisabled) {
-        window.removeEventListener('resize', this.refresh)
         document.removeEventListener('touchmove', this.moving)
         document.removeEventListener('touchend', this.moveEnd)
         document.removeEventListener('mousemove', this.moving)
         document.removeEventListener('mouseup', this.moveEnd)
         document.removeEventListener('mouseleave', this.moveEnd)
       }
+      window.removeEventListener('resize', this.refresh)
     },
     getPos (e) {
       this.realTime && this.getStaticData()
@@ -225,10 +236,12 @@ export default {
     moving (e) {
       if (!this.flag) return false
       e.preventDefault()
+      this.stopped = false;
       if (e.targetTouches && e.targetTouches[0]) e = e.targetTouches[0]
       this.setValueOnPos(this.getPos(e), true)
     },
     moveEnd (e) {
+      this.stopped = true;
       if (this.flag) {
         this.$emit('drag-end', this)
         if (this.lazy && this.isDiff(this.val, this.value)) {
@@ -385,6 +398,10 @@ export default {
   box-sizing: border-box;
   user-select: none;
   padding-top: 40px !important;
+  margin-bottom: 60px;
+}
+.disabled {
+  opacity: 0.3;
 }
 .vue-slide-bar {
   position: relative;
@@ -432,22 +449,26 @@ export default {
   display: block !important;
 }
 .vue-slide-bar-tooltip-top {
-  top: -10px;
-  left: 40%;
+  top: -15px;
+  left: -50%;
   transform: translate(-50%, -100%);
 }
 .vue-slide-bar-tooltip {
   position: relative;
   font-size: 14px;
   white-space: nowrap;
-  /*padding: 5px 20px;*/
-  width: 50px;
-  height: 20px;
+  padding: 5px 20px;
+  width: 64px;
+  height: 28px;
   text-align: center;
   color: #fff;
   border-radius: 14px;
   border: 1px solid #1066FD;
   background-color: #1066FD;
+
+  background-image: linear-gradient(-196deg, #2392C9 0%, #1E70B7 100%);
+  box-shadow: 0 2px 9px 0 rgba(30,112,183,0.20), inset 0 1px 3px 0 rgba(255,255,255,0.50);
+  /*border-radius: 100px;*/
 }
 /*.vue-slide-bar-tooltip::before {
   content: '';
@@ -485,11 +506,14 @@ span.label-max {
     position: absolute;
     right: 0px;
     bottom: -35px;
+    color: #1E70B7;
 }
 
 span.label-min {
     position: absolute;
     left: 0px;
     bottom: -35px;
+    color: #1E70B7;
 }
+
 </style>
