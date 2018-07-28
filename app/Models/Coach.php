@@ -250,7 +250,11 @@ class Coach extends User
             return floor($activity->duration / $activity->jockeys->count());
         });
 
-        return round($duration / 60, 2);
+        $res = new \stdClass();
+        $res->numActivities = $activities->count();
+        $res->duration = round($duration / 60, 2);
+
+        return $res;
     }
 
     public function overallTrainingTimeThisMonth()

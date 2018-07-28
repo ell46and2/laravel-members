@@ -68,7 +68,7 @@ class CoachTest extends TestCase
 
         tap(Coach::first(), function($coach) use ($response) {
         	$response->assertStatus(302);
-        	$response->assertRedirect("/admin/coaches/{$coach->id}");
+        	$response->assertRedirect("coach/{$coach->id}");
 
         	$this->assertEquals('Jane', $coach->first_name);
         	$this->assertEquals('Doe', $coach->last_name);
@@ -142,7 +142,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->middle_name);
         }); 
@@ -161,7 +161,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->date_of_birth);
         });    
@@ -210,7 +210,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->address_2);
         });      
@@ -259,7 +259,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->nationality_id);
         });       
@@ -308,7 +308,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->twitter_handle);
         });  
@@ -357,7 +357,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertEquals(0, $coach->mileage);
         });     
@@ -376,7 +376,7 @@ class CoachTest extends TestCase
 
         tap(Coach::firstOrFail(), function($coach) use ($response, $admin) {
             $response->assertStatus(302);
-            $response->assertRedirect("/admin/coaches/{$coach->id}");
+            $response->assertRedirect("/coach/{$coach->id}");
 
             $this->assertNull($coach->vat_number);
         });    

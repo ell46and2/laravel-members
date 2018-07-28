@@ -22,7 +22,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county_id' => 1,
+        'county_id' => 26,
         'country_id' => 1,
         'nationality_id' => 1,
         'postcode' => $faker->postcode,
@@ -45,7 +45,7 @@ $factory->define(App\Models\Jockey::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county_id' => 1,
+        'county_id' => 26,
         'country_id' => 1,
         'nationality_id' => 1,
         'postcode' => $faker->postcode,
@@ -54,6 +54,7 @@ $factory->define(App\Models\Jockey::class, function (Faker $faker) {
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'role_id' => 1, // jockey
+        'licence_date' => null
     ];
 });
 
@@ -66,7 +67,7 @@ $factory->define(App\Models\Coach::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county_id' => 1,
+        'county_id' => 26,
         'country_id' => 1,
         'nationality_id' => 1,
         'postcode' => $faker->postcode,
@@ -88,7 +89,7 @@ $factory->define(App\Models\Admin::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county_id' => 1,
+        'county_id' => 26,
         'country_id' => 1,
         'nationality_id' => 1,
         'postcode' => $faker->postcode,
@@ -110,7 +111,7 @@ $factory->define(App\Models\Jet::class, function (Faker $faker) {
         'gender' => 'male',
         'address_1' => $faker->secondaryAddress,
         'address_2' => $faker->streetAddress,
-        'county_id' => 1,
+        'county_id' => 26,
         'country_id' => 1,
         'nationality_id' => 1,
         'postcode' => $faker->postcode,

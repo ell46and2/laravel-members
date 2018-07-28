@@ -24,22 +24,22 @@
 		            <div>
 		                <dl class="definition-list">
 		                    <dt>Licence type</dt>
-		                    <dd>Apprentice</dd>
+		                    <dd>{{ $jockey->formattedLicenceType }}</dd>
 
 		                    <dt>Season rides</dt>
-		                    <dd>51</dd>
+		                    <dd>{{ $jockey->formattedRides }}</dd>
 
 		                    <dt>Season wins</dt>
-		                    <dd>376</dd>
+		                     <dd>{{ $jockey->formattedWins }}</dd>
 
 		                    <dt>Prize money</dt>
-		                    <dd>&pound;306,146.25</dd>
+		                    <dd>{{ $jockey->formattedPrizeMoney }}</dd>
 		                </dl>
 		            </div>
 		            <div>
 		                <dl class="definition-list">
 		                    <dt>Current trainer</dt>
-		                    <dd>Name Surname</dd>
+		                    <dd>{{ $jockey->formattedTrainer }}</dd>
 
 		                    <dt>Riding weight</dt>
 		                    <dd>8st 5lbs</dd>
@@ -181,51 +181,51 @@
 
 		                <div class="panel__main">
 		                    <div class="users-list">
+		                    		@php
+									    $trainingAllowance = $jockey->trainingAllowanceThisMonth();
+
+									@endphp 
 
 		                        @foreach($jockey->coaches as $coach)
+									@php
+									    $trainingTimeWithCoach = $coach->trainingTimeWithJockeyThisMonth($jockey->id);
+
+									    $trainingPercentage = getPercentage($trainingTimeWithCoach->duration, $trainingAllowance);
+									@endphp 
+
 		                            <div class="users-list__item">
 		                                <div class="users-list__main">
-		                                    <div class="[ users-list__avatar ] [ avatar ]">
+		                                    <div class="[ users-list__avatar ] [ avatar avatar--{{ $coach->lastActivityDateColourCode($jockey) }}  }} ]">
 		                                        <div class="avatar__image" style="background-image:url({{ $coach->getAvatar() }});"></div>
 		                                    </div>
 		                                    <div class="users-list__details">
 		                                        <div class="users-list__name">
 		                                            {{ $coach->full_name }}
-		                                            {{-- <a class="users-list__edit-user-button" href=""> --}}
-		                                            	{{-- @svg('edit', 'icon') --}}
-		                                                {{-- {% include "svg/edit.svg" %} --}}
-		                                            {{-- </a> --}}
 		                                        </div>
-		                                        <div class="users-list__info">{{ $coach->trainingTimeWithJockeyThisMonth($jockey->id) }} hours coaching this month</div>
+		                                        <div class="users-list__info">{{ $trainingTimeWithCoach->duration }} hours coaching this month</div>
 		                                    </div>
+		                                    <a class="button button--primary" href="{{ route('coach.show', $coach) }}">View</a>
 		                                </div>
 		                                <div class="users-list__stats">
 		                                    <div class="users-list__stats-item">
 		                                        <div class="users-list__stats-icon">
 		                                            {{-- {% include "svg/nav-my-coaches.svg" %} --}}
+		                                            @svg('nav-activity-log', 'icon')
 		                                        </div>
 		                                        <div class="users-list__stats-label">
-		                                            20 jockeys assigned
-		                                        </div>
-		                                    </div>
-		                                    <div class="users-list__stats-item">
-		                                        <div class="users-list__stats-icon">
-		                                            {{-- {% include "svg/nav-my-coaches.svg" %} --}}
-		                                        </div>
-		                                        <div class="users-list__stats-label">
-		                                            1 pending invoice
+		                                            {{ $trainingTimeWithCoach->numActivities }} Activities
 		                                        </div>
 		                                    </div>
 		                                </div>
 		                                <div class="[ users-list__progress-bar ] [ progress-bar ]">
 		                                    <span class="sr-only">Progress: 70%</span>
 		                                    <div class="progress-bar__bar" aria-hidden="true" role="presentation">
-		                                        <div class="progress-bar__primary" style="width: 60%;"></div>
-		                                        <div class="progress-bar__secondary" style="width: 80%;"></div>
+		                                        <div class="progress-bar__primary" style="width: {{ $trainingPercentage }}%;"></div>
+		                                        {{-- <div class="progress-bar__secondary" style="width: 80%;"></div> --}}
 		                                    </div>
 		                                    <div class="progress-bar__labels">
 		                                        <div>0 hours</div>
-		                                        <div>6 hours</div>
+		                                        <div>{{ $trainingAllowance }} hours</div>
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -269,7 +269,7 @@
 						@foreach($jockey->coaches as $coach)
 							<div>
 								{{ $coach->full_name }} <br>
-								{{ $coach->trainingTimeWithJockeyThisMonth($jockey->id) }} hours coaching this month
+								{{ $coach->trainingTimeWithJockeyThisMonth($jockey->id)->duration }} hours coaching this month
 							</div><br><br>
 						@endforeach
 					</div>

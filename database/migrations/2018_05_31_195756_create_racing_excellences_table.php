@@ -15,14 +15,18 @@ class CreateRacingExcellencesTable extends Migration
     {
         Schema::create('racing_excellences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('coach_id')->unsigned()->index();
-            $table->integer('location_id')->unsigned();
-            $table->integer('series_id')->unsigned();
+            $table->integer('raceId')->unsigned()->index(); // for API lookup
+            $table->integer('yearOfRace')->unsigned()->index(); // for API lookup
+            $table->integer('coach_id')->unsigned()->index()->nullable();
+            // $table->integer('location_id')->unsigned();
+            $table->string('location');
+            // $table->integer('series_id')->unsigned();
+            $table->string('series_name');
             $table->boolean('completed')->default(false);
             $table->dateTime('start');
             $table->timestamps();
 
-            $table->foreign('coach_id')->references('id')->on('users');
+            // $table->foreign('coach_id')->references('id')->on('users');
 
             // Has statuses of 'pending race', 'pending results', 'completed',
             // but will calculate them by:

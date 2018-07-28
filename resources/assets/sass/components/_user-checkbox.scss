@@ -1,0 +1,43 @@
+.user-checkbox {
+    $self: &;
+
+    &__label {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px 20px;
+        border-radius: $radius;
+        cursor: pointer;
+        color: $blue--dark;
+        background: $white;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.10);
+        backface-visibility: hidden;
+        transition: transform 200ms ease;
+
+        @include hover() {
+            box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.10);
+        }
+
+        &:active {
+            box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.10);
+            transform: scale(0.99);
+        }
+
+        // A label associated with a checked checkbox
+        #{ $self }__input:checked + & {
+            color: $white;
+            background: $blue--grad-diagonal;
+        }
+    }
+
+    &__avatar {
+        width: 50px;
+    }
+
+    &__name {
+        padding-left: 20px;
+
+        @include font-size(16px, true);
+    }
+}

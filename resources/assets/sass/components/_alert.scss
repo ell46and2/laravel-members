@@ -7,6 +7,22 @@
     box-shadow: 0 2px 9px 0 rgba(0,0,0,0.02);
     color: $white;
 
+    &__text {
+
+        &--has-icon {
+            display: flex;
+            align-items: flex-start;
+
+            .icon {
+                flex-shrink: 0;
+                width: 20px;
+                height: 20px;
+                fill: $white;
+                margin-right: 10px;
+            }
+        }
+    }
+
     &--success {
         background: $success--grad;
     }

@@ -61,6 +61,8 @@ class LoginController extends Controller
             // check that it exists on the 'users' table and that active is true.
             Rule::exists('users')->where(function($query) {
                 $query->where('approved', true);
+                $query->where('status', '!=', 'suspended');
+                $query->where('status', '!=', 'deleted');
             })
         ],
             'password' => 'required|string',
@@ -70,7 +72,7 @@ class LoginController extends Controller
     protected function validationErrors()
     {
         return [
-            $this->username() . '.exists' => 'No account found, or your account is awaiting approval.'
+            $this->username() . '.exists' => 'You do not have access, or your account is awaiting approval.'
         ];
     }
 }

@@ -231,7 +231,7 @@ function svg(done) {
 \*----------------------------------------------*/
 function templates(done) {
     if(mode.templates) {
-        gulp.src(src.templates + '/*.html')
+        return gulp.src(src.templates + '/*.html')
             .pipe(plumber())
             .pipe(data(function(file) {
                 return JSON.parse(fs.readFileSync(src.data));
@@ -239,7 +239,7 @@ function templates(done) {
             .pipe(nunjucks({
                 path: src.templates
             }))
-            .pipe(prettify({indent_size: 4}))
+            // .pipe(prettify({indent_size: 4}))
             .pipe(gulp.dest(mode.templates))
             .on('end', function(){ log(colors.cyan('Templates processed')); })
             .pipe(gulpif(mode.serve != false, browserSync.stream()));

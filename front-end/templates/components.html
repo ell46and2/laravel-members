@@ -27,10 +27,32 @@
         <div class="components__component-main">
             {# START #}
             <div class="alert alert--error">
-                <div>
+                <div class="alert__text">
                     You have <span class="badge badge-light">7 unread</span> messages
                 </div>
-                <div>
+                <div class="alert__buttons">
+                    <a class="button button--white" href="">View messages</a>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Alert (with icon)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Alert (with icon)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="alert alert--error">
+                <div class="alert__text alert__text--has-icon">
+                    {% include "svg/info-circle.svg" %}
+                    <span class="alert__text-inner">
+                        You have <span class="badge badge-light">7 unread</span> messages
+                    </span>
+                </div>
+                <div class="alert__buttons">
                     <a class="button button--white" href="">View messages</a>
                 </div>
             </div>
@@ -175,8 +197,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6 col-md-3">
+    <div class="row row--grid">
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
              Button (primary)
@@ -191,7 +213,7 @@
             </div>
 
         </div>
-        <div class="col-lg-12 col-xl-3">
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
              Button (white)
@@ -206,7 +228,7 @@
             </div>
 
         </div>
-        <div class="col-lg-12 col-xl-3">
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
              Button (dark)
@@ -221,7 +243,7 @@
             </div>
 
         </div>
-        <div class="col-lg-12 col-xl-3">
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
              Button (success)
@@ -236,7 +258,7 @@
             </div>
 
         </div>
-        <div class="col-lg-12 col-xl-3">
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
              Button (error)
@@ -246,6 +268,27 @@
                 <div class="components__component-main">
                     {# START #}
                     <button class="button button--error" type="button">An error button</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (with icon)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (with icon)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--primary" type="button">
+                        <span class="button__icon">
+                            {% include "svg/plus.svg" %}
+                        </span>
+                        An error button
+                    </button>
                     {# END #}
                 </div>
             </div>
@@ -266,6 +309,55 @@
     </div>
 
     {####################################
+     Form sticky button
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form sticky button</h2>
+        <div class="components__component-main">
+            {# START #}
+            <textarea class="form-control form-control--has-sticky-button" name="name" rows="8" placeholder="Text Details"></textarea>
+            <button class="button button--primary button--block [ form-sticky-button ]" type="button">Attach a photo or video</button>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Comments
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Comments</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="comments">
+                {% for item in content.comments %}
+                    <div class="comments__row comments__row--{{ item.position }} comments__row--{{ item.theme }}">
+                        <div class="comments__comment">
+                            <div class="[ comments__avatar ] [ avatar ]">
+                                <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                            </div>
+                            <div class="[ comments__inner ] [ flow-vertical--1 ]">
+                                {% if item.comment %}
+                                    <p>{{ item.comment }}</p>
+                                {% endif %}
+
+                                {% if item.comment_thumbnail %}
+                                    <div class="comments__comment-thumbnail" style="background-image:url('{{ item.comment_thumbnail }}');"></div>
+                                {% endif %}
+
+                                <div class="comments__comment-meta">
+                                    <span class="comments__comment-author">Name Surname</span>
+                                    <span class="comments__comment-time">3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Definition list
     #####################################}
     <div class="components__component">
@@ -273,6 +365,54 @@
         <div class="components__component-main">
             {# START #}
             <dl class="definition-list">
+                <dt>Licence type</dt>
+                <dd>Apprentice</dd>
+
+                <dt>Season rides</dt>
+                <dd>51</dd>
+
+                <dt>Season wins</dt>
+                <dd>376</dd>
+
+                <dt>Prize money</dt>
+                <dd>&pound;306,146.25</dd>
+            </dl>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Definition list (inline)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Definition list (inline)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <dl class="definition-list definition-list--inline">
+                <dt>Licence type</dt>
+                <dd>Apprentice</dd>
+
+                <dt>Season rides</dt>
+                <dd>51</dd>
+
+                <dt>Season wins</dt>
+                <dd>376</dd>
+
+                <dt>Prize money</dt>
+                <dd>&pound;306,146.25</dd>
+            </dl>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Definition list (inline at LG and up)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Definition list (inline at LG and up)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <dl class="definition-list definition-list--inline-lg">
                 <dt>Licence type</dt>
                 <dd>Apprentice</dd>
 
@@ -335,6 +475,28 @@
     </div>
 
     {####################################
+     Image thumbnail
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Image thumbnail</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="row row--grid">
+                {% for item in content.image_thumbnails %}
+                    <div class="[ col-lg-1 ] [ mb-3 ]">
+                        <a class="image-thumbnail" style="background-image:url('{{ item }}');" href="#">
+                            <span class="image-thumbnail__magnify-icon">
+                                {% include "svg/magnify.svg" %}
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Panel
     #####################################}
     <div class="components__component components__component--trans-bg">
@@ -355,7 +517,7 @@
     {####################################
      Panel (with heading & call-to-action)
     #####################################}
-    <div class="components__component components__component--trans-bg components__component--extra-padded">
+    <div class="components__component components__component--trans-bg">
         <h2 class="components__component-heading">Panel (with heading & call-to-action)</h2>
         <div class="components__component-main">
             {# START #}
@@ -382,41 +544,9 @@
     </div>
 
     {####################################
-     Panel (with alert)
-    #####################################}
-    <div class="components__component components__component--trans-bg components__component--extra-padded">
-        <h2 class="components__component-heading">Panel (with alert)</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="panel">
-                <div class="panel__inner">
-                    <div class="panel__header">
-                        <h2 class="panel__heading">
-                            Recent Activities
-                        </h2>
-                        <div class="panel__header-meta">
-                            Last updated on 23/05/2018
-                        </div>
-                    </div>
-
-                    <div class="panel__main">
-                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                    </div>
-
-                    <div class="panel__alert panel__alert--has-icon">
-                        {% include "svg/info-circle.svg" %}
-                        George, you have completed 5% of this PDP
-                    </div>
-                </div>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
      Panel (split call-to-action)
     #####################################}
-    <div class="components__component components__component--trans-bg components__component--extra-padded">
+    <div class="components__component components__component--trans-bg">
         <h2 class="components__component-heading">Panel (split call-to-action)</h2>
         <div class="components__component-main">
             {# START #}
@@ -446,9 +576,227 @@
     </div>
 
     {####################################
+     Panel (with alert)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (with alert)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Recent Activities
+                        </h2>
+                        <div class="panel__header-meta">
+                            Last updated on 23/05/2018
+                        </div>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+
+                    <div class="panel__alert panel__alert--has-icon">
+                        {% include "svg/info-circle.svg" %}
+                        George, you have completed 5% of this PDP
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Panel (with pre-header)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (with pre-header)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__pre-header">
+                        <div class="panel__pre-header-primary">
+                            <ul class="panel__pre-header-definition-list">
+                                {###############################################################################
+                                    This isn't how the dl/dt/dd elements should be used, but until definition
+                                    lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
+                                ################################################################################}
+                                <li>
+                                    <dl>
+                                        <dt>Coach</dt>
+                                        <dd>Name Surname</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Date</dt>
+                                        <dd>Monday 27th June 2018</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Start time</dt>
+                                        <dd>13:30pm</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Series</dt>
+                                        <dd>Apprentice</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Location</dt>
+                                        <dd>Cheltenham</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel__pre-header-secondary">
+                            <span class="text-nowrap">I.D 12345</span>
+                        </div>
+                    </div>
+
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Recent Activities
+                        </h2>
+                        <div class="panel__header-meta">
+                            Last updated on 23/05/2018
+                        </div>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Panel (with tabs)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (with tabs)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <ul class="panel__tabs">
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button is-active" type="button">Name Surname</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Name Surname</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Name Surname</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Name Surname</button>
+                        </li>
+                    </ul>
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Division one results for Name Surname
+                        </h2>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Panel (with tabs and pre-header)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (with tabs <em>and</em> pre-header)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <ul class="panel__tabs">
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button is-active" type="button">Division One</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Division Two</button>
+                        </li>
+                    </ul>
+
+                    <div class="panel__pre-header">
+                        <div class="panel__pre-header-primary">
+                            <ul class="panel__pre-header-definition-list">
+                                {###############################################################################
+                                    This isn't how the dl/dt/dd elements should be used, but until definition
+                                    lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
+                                ################################################################################}
+                                <li>
+                                    <dl>
+                                        <dt>Coach</dt>
+                                        <dd>Name Surname</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Date</dt>
+                                        <dd>Monday 27th June 2018</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Start time</dt>
+                                        <dd>13:30pm</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Series</dt>
+                                        <dd>Apprentice</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Location</dt>
+                                        <dd>Cheltenham</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel__pre-header-secondary">
+                            <span class="text-nowrap">I.D 12345</span>
+                        </div>
+                    </div>
+
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Division one results for Name Surname
+                        </h2>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      "Stacked" panels
     #####################################}
-    <div class="components__component components__component--trans-bg components__component--extra-padded">
+    <div class="components__component components__component--trans-bg">
         <h2 class="components__component-heading">"Stacked" panels (with call-to-action)</h2>
         <div class="components__component-main">
             {# START #}
@@ -485,6 +833,48 @@
     </div>
 
     {####################################
+     Radio switches
+    #####################################}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="components__component">
+                <h2 class="components__component-heading">Radio switches</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <div class="radio-switches">
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="zero">
+                        <label class="radio-switches__label" for="zero">Zero</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="one">
+                        <label class="radio-switches__label" for="one">One</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="two">
+                        <label class="radio-switches__label" for="two">Two</label>
+                    </div>
+                    {# END #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Select
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Select</h2>
+        <div class="components__component-main">
+            {# START #}
+            <select class="form-control custom-select">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Table
     #####################################}
     <div class="components__component">
@@ -494,17 +884,25 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Activity type</th>
                         <th>Coach</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Location</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in content.recent_activities %}
                         <tr>
+                            <td class="table__checkbox-column">
+                                <div class="[ custom-control custom-checkbox ] [ table__checkbox ]">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ loop.index }}">
+                                    <label class="custom-control-label" for="checkbox-{{ loop.index }}"></label>
+                                </div>
+                            </td>
                             <td>
                                 <a class="table__link" href="">{{ item.activity_type }}</a>
                             </td>
@@ -512,12 +910,74 @@
                             <td>{{ item.date }}</td>
                             <td>{{ item.time }}</td>
                             <td>{{ item.location }}</td>
+                            <td class="table__icon-column">
+                                <a class="table__icon-button" href="">
+                                    {% include "svg/edit.svg" %}
+                                </a>
+                            </td>
                             <td class="text-right">
                                 <a class="button button--primary" href="">View</a>
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
+            </table>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Grouped invoice table
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Grouped invoice table</h2>
+        <div class="components__component-main">
+            {# START #}
+            <table class="table table--grouped">
+                <thead>
+                    <tr>
+                        <th colspan="2">Activity type</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for group in content.invoice.group_activities %}
+                    <tbody>
+                        <tr>
+                            <th colspan="6">
+                                <div class="table__group-head">
+                                    <div class="[ table__group-head-avatar ] [ avatar ]">
+                                        <div class="avatar__image" style="background-image:url('{{ group.jockey_avatar }}');"></div>
+                                    </div>
+                                    <div class="table__group-head-text">
+                                        <div>
+                                            Name Surname
+                                        </div>
+                                        <div class="table__group-header-total-time{% if group.total_hours > 4 %} text-danger{% endif %}">
+                                            {{ group.total_hours }} hours coaching this month
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        {% for item in group.items %}
+                            <tr>
+                                <td class="table__group-item-decor"></td>
+                                <td>
+                                    <a class="table__link" href="">{{ item.activity }}</a>
+                                </td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.duration }}</td>
+                                <td>{{ item.amount }}</td>
+                                <td class="text-right">
+                                    <a class="button button--primary" href="">Remove</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endfor %}
             </table>
             {# END #}
         </div>
@@ -554,6 +1014,111 @@
     </div>
 
     {####################################
+     Textarea
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Textarea</h2>
+        <div class="components__component-main">
+            {# START #}
+
+                <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Text Details"></textarea>
+
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Text input
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Text input</h2>
+        <div class="components__component-main">
+            {# START #}
+                <input class="form-control" type="text" name="" value="" placeholder="Search for Jockey/Coach…">
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     User card
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">User card</h2>
+        <div class="components__component-main">
+            <div class="row row--grid">
+                {% for item in content.user_cards %}
+                    <div class="col-md-3">
+                        {# START #}
+                        <div class="[ user-card ] [ mb-3 ]">
+                            <div class="[ user-card__avatar ] [ avatar ]">
+                                <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                            </div>
+                            <div class="user-card__main">
+                                <div class="user-card__name">{{ item.name }}</div>
+                            </div>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     User card (with meta)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">User card (with meta)</h2>
+        <div class="components__component-main">
+            <div class="row row--grid">
+                {% for item in content.user_cards %}
+                    <div class="col-md-3">
+                        {# START #}
+                        <div class="[ user-card user-card--has-meta ] [ mb-3 ]">
+                            <div class="[ user-card__avatar ] [ avatar ]">
+                                <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                            </div>
+                            <div class="user-card__main">
+                                <div class="user-card__name">{{ item.name }}</div>
+                                <div class="user-card__meta">
+                                    Jockey <button class="[ button button--text ] [ user-card__button ]" type="button">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     User checkbox
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">User checkbox</h2>
+        <div class="components__component-main">
+            <div class="row row--grid">
+                {% for item in content.user_checkboxes %}
+                    <div class="col-md-3">
+                        {# START #}
+                        <div class="[ user-checkbox ] [ mb-3 ]">
+                            <input class="[ user-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="{{ loop.index }}">
+                            <label class="user-checkbox__label" for="{{ loop.index }}">
+                                <div class="[ user-checkbox__avatar ] [ avatar ]">
+                                    <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                </div>
+                                <span class="user-checkbox__name">{{ item.name }}</span>
+                            </label>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
      Users list
     #####################################}
     <div class="components__component components__component--trans-bg components__component--half">
@@ -569,7 +1134,7 @@
                                     <div class="users-list__item">
                                         <div class="users-list__main">
                                             <div class="[ users-list__avatar ] [ avatar ]">
-                                                <div class="avatar__image" style="background-image:url('{{ item.image  }}');"></div>
+                                                <div class="avatar__image" style="background-image:url('{{ item.image }}');"></div>
                                             </div>
                                             <div class="users-list__details">
                                                 <div class="users-list__name">

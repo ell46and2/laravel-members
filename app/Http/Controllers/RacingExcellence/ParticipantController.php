@@ -14,62 +14,62 @@ use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
 {
-    public function jockey(Jockey $jockey)
-    {
-    	return new UserResource($jockey);
-    }
+    // public function jockey(Jockey $jockey)
+    // {
+    // 	return new UserResource($jockey);
+    // }
 
-    public function create(Request $request, RacingExcellenceDivision $racingExcellenceDivision) // add form request
-    {
-    	// form request validation - id must be an exisitng jockeys id
-    	// check jockey isn't already in the division
+    // public function create(Request $request, RacingExcellenceDivision $racingExcellenceDivision) // add form request
+    // {
+    // 	// form request validation - id must be an exisitng jockeys id
+    // 	// check jockey isn't already in the division
     	
-    	$participant = $racingExcellenceDivision->addJockeyById($request->id);
+    // 	$participant = $racingExcellenceDivision->addJockeyById($request->id);
 
-    	if(!$this->existsInBothDivisions($participant)) {
-    		$this->dispatch(new NotifyAddedToRacingExcellence($participant));
-    	}
-    	// notify jockey - added to racing Excellence
+    // 	if(!$this->existsInBothDivisions($participant)) {
+    // 		$this->dispatch(new NotifyAddedToRacingExcellence($participant));
+    // 	}
+    // 	// notify jockey - added to racing Excellence
 
-    	return new ParticipantResource($participant);
-    }
+    // 	return new ParticipantResource($participant);
+    // }
 
-    public function externalCreate(Request $request, RacingExcellenceDivision $racingExcellenceDivision)
-    {
-    	$participant = $racingExcellenceDivision->addExternalParticipant($request->name);
+    // public function externalCreate(Request $request, RacingExcellenceDivision $racingExcellenceDivision)
+    // {
+    // 	$participant = $racingExcellenceDivision->addExternalParticipant($request->name);
 
-    	return new ParticipantResource($participant);
-    }
+    // 	return new ParticipantResource($participant);
+    // }
 
-    public function destroy(RacingExcellenceParticipant $racingExcellenceParticipant)
-    {
-    	// policy admin and assigned coach only
+    // public function destroy(RacingExcellenceParticipant $racingExcellenceParticipant)
+    // {
+    // 	// policy admin and assigned coach only
     	
-    	// notify if a jockey and they don't exist in another division.
-    	if($racingExcellenceParticipant->jockey_id && !$this->existsInBothDivisions($racingExcellenceParticipant)) {
-    		$this->dispatch(new NotifyRemovedFromRacingExcellence(
-    			$racingExcellenceParticipant->jockey_id, 
-    			$racingExcellenceParticipant->racingExcellence
-    			)
-    		);
-    	}
+    // 	// notify if a jockey and they don't exist in another division.
+    // 	if($racingExcellenceParticipant->jockey_id && !$this->existsInBothDivisions($racingExcellenceParticipant)) {
+    // 		$this->dispatch(new NotifyRemovedFromRacingExcellence(
+    // 			$racingExcellenceParticipant->jockey_id, 
+    // 			$racingExcellenceParticipant->racingExcellence
+    // 			)
+    // 		);
+    // 	}
 
-    	$racingExcellenceParticipant->delete();
+    // 	$racingExcellenceParticipant->delete();
 
 
-    	return response()->json(null, 200);
-    }
+    // 	return response()->json(null, 200);
+    // }
 
-    private function existsInBothDivisions(RacingExcellenceParticipant $racingExcellenceParticipant)
-    {
-    	if(!$racingExcellenceParticipant->jockey_id) return false;
+  //   private function existsInBothDivisions(RacingExcellenceParticipant $racingExcellenceParticipant)
+  //   {
+  //   	if(!$racingExcellenceParticipant->jockey_id) return false;
 
-		$timesInRace = $racingExcellenceParticipant
-			->racingExcellence
-			->participants
-			->where('jockey_id', $racingExcellenceParticipant->jockey_id)
-			->count();  	
+		// $timesInRace = $racingExcellenceParticipant
+		// 	->racingExcellence
+		// 	->participants
+		// 	->where('jockey_id', $racingExcellenceParticipant->jockey_id)
+		// 	->count();  	
 
-		return $timesInRace === 2;
-    }
+		// return $timesInRace === 2;
+  //   }
 }

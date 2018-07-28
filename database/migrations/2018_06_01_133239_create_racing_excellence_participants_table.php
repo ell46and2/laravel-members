@@ -18,6 +18,9 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->integer('racing_excellence_id')->unsigned();
             $table->integer('division_id')->unsigned()->index();
             $table->integer('jockey_id')->unsigned()->nullable()->index();
+            $table->integer('api_id')->unsigned()->nullalble();
+            $table->integer('api_animal_id')->unsigned()->nullalble();
+            $table->string('animal_name')->nullable();
             $table->string('name')->nullable(); // For jockeys not on the system.
             $table->integer('place')->nullable(); // What position they came in the race.
             $table->integer('place_points')->nullable();
@@ -30,9 +33,8 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->text('feedback')->nullable();
             $table->timestamps();
 
-            // $table->foreign('racing_excellence_id')->references('id')->on('racing_excellences');
-            $table->foreign('division_id')->references('id')->on('racing_excellence_divisions');
-            $table->foreign('jockey_id')->references('id')->on('users');
+            // $table->foreign('division_id')->references('id')->on('racing_excellence_divisions');
+            // $table->foreign('jockey_id')->references('id')->on('users');
         });
     }
 

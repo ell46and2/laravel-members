@@ -8,8 +8,12 @@ $factory->define(App\Models\RacingExcellence::class, function (Faker $faker) {
         'coach_id' => function() {
 			return factory(App\Models\Coach::class)->create()->id;
 		},
-        'location_id' => 1,
-        'series_id' => 1,
+        'raceId' => $faker->numberBetween($min = 1000, $max = 9000),
+        'yearOfRace' => now()->year,
+        // 'location_id' => 1,
+        'location' => 'Wolverhampton',
+        'series_name' => 'Hands and Heels All Weather Series',
+        // 'series_id' => 1,
         'start' => Carbon::parse('2018-11-06 1:00pm'),
         'completed' => false,
     ];
@@ -20,6 +24,7 @@ $factory->define(App\Models\RacingExcellenceDivision::class, function (Faker $fa
         'racing_excellence_id' => function() {
 			return factory(App\Models\RacingExcellence::class)->create()->id;
 		},
+        'division_number' => 1
     ];
 });
 
@@ -54,6 +59,7 @@ $factory->define(App\Models\RacingExcellenceParticipant::class, function (Faker 
         'jockey_id' => function() {
             return factory(App\Models\Jockey::class)->create()->id;
         },
+        'api_id' => $faker->numberBetween($min = 1000, $max = 90000),
         'name' => null,
         'place' => null,
         'completed_race' => true,

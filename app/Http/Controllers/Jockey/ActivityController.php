@@ -14,7 +14,7 @@ class ActivityController extends Controller
 {
 	public function index(Request $request)
 	{
-		$jockey = Jockey::find(auth()->user()->id);
+		$jockey = Jockey::find($this->currentUser->id);
 
 		$activityTypes = ActivityType::get();
 

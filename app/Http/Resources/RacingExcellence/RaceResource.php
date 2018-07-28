@@ -26,7 +26,8 @@ class RaceResource extends JsonResource
         return [
             'id' => $this->id,
             'divisions' => DivisionResource::collection($this->divisions),
-            'totalJustFromPlace' => $this->series->total_just_from_place
+            'totalJustFromPlace' => false,
+            // 'totalJustFromPlace' => $this->series->total_just_from_place
         ];
     }
 }

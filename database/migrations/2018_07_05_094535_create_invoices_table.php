@@ -27,7 +27,7 @@ class CreateInvoicesTable extends Migration
             $table->float('total')->nullable();
             $table->timestamps();
 
-            $table->foreign('coach_id')->references('id')->on('users');
+            // $table->foreign('coach_id')->references('id')->on('users');
         });
 
         /*

@@ -21,8 +21,8 @@ class CreateActivityJockeyTable extends Migration
 
             // Do we add individual coach feedback here?
 
-            $table->foreign('activity_id')->references('id')->on('activities');
-            $table->foreign('jockey_id')->references('id')->on('users');
+            // $table->foreign('activity_id')->references('id')->on('activities');
+            // $table->foreign('jockey_id')->references('id')->on('users');
 
             $table->primary(array('activity_id', 'jockey_id'));
         });

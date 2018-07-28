@@ -3,27 +3,12 @@
 		<p>{{ participant.name }}</p>
 
 		<form @submit.prevent="submit">
-			<div class="form-group">
-			    <label for="exampleFormControlSelect1">Place</label>
-			    <select 
-			    	class="form-control"
-			    	v-model="form.place" 
-			    >
-			    	<option disabled :selected="form.place == null" value="">Select Place</option>
-			      	<option 
-			      		v-for="i in numberOfParticipants" 
-			      		:value="i"
-			      		:selected="form.place == i"
-			      	>{{ i }}</option>
-			      	<option value="dnf">Did not finish</option>
-			    </select>
-			</div>
-
 			<points-radios 
 				:currentValue="form.presentation_points"
 				field="presentation_points"
 				label="Presentation"
 				v-on:valueChange="setPoints"
+				:participant-id="participant.id"
 			></points-radios>
 
 			<points-radios 
@@ -31,6 +16,7 @@
 				field="professionalism_points"
 				label="Professionalism"
 				v-on:valueChange="setPoints"
+				:participant-id="participant.id"
 			></points-radios>
 
 			<points-radios 
@@ -38,6 +24,7 @@
 				field="coursewalk_points"
 				label="Course Walk"
 				v-on:valueChange="setPoints"
+				:participant-id="participant.id"
 			></points-radios>
 
 			<points-radios 
@@ -45,6 +32,7 @@
 				field="riding_points"
 				label="Riding"
 				v-on:valueChange="setPoints"
+				:participant-id="participant.id"
 			></points-radios>
 
 			<div class="form-group">
@@ -58,7 +46,7 @@
 
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary">
-					{{ participant.place || !participant.completed_race ? 'Update' : 'Save' }}
+					{{ participant.total_points ? 'Update' : 'Save' }}
 				</button>
 				<a 
 					href="#" 
@@ -78,7 +66,6 @@
 		data() {
 			return {
 				form: {
-					place: this.participant.place,
 					presentation_points: this.participant.presentation_points,
 					professionalism_points: this.participant.professionalism_points,
 					coursewalk_points: this.participant.coursewalk_points,
@@ -86,7 +73,6 @@
 					feedback: this.participant.feedback,
 				},
 				validationFailed: {
-					place: false,
 					presentation_points: false,
 					professionalism_points: false,
 					coursewalk_points: false,
@@ -112,13 +98,13 @@
 			PointsRadios
 		},
 		mounted() {
-			if(!this.participant.place && this.participant.total_points) {
-				this.form.place = 'dnf';
-			}
+			// if(!this.participant.place && this.participant.total_points) {
+			// 	this.form.place = 'dnf';
+			// }
 		},
 		methods: {
 			setPoints(value, field) {
-				// alert(value);
+				// alert(field);
 				this.form[`${field}`] = value;
 			},
 			async submit() {
@@ -129,9 +115,9 @@
 				}
 			},
 			validate() {
-				if(this.form.place === null) {
-					this.validationFailed.place = true;
-				}
+				// if(this.form.place === null) {
+				// 	this.validationFailed.place = true;
+				// }
 				// check all required fields are not null
 				// if salisbury the radios can be null
 				// feedback can always be null

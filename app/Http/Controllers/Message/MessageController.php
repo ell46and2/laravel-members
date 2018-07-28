@@ -17,7 +17,7 @@ class MessageController extends Controller
 {
 	public function index()
 	{
-        $messages = auth()->user()
+        $messages = $this->currentUser
             ->messages()
             ->withPivot('read')
             ->with('author')
@@ -28,7 +28,7 @@ class MessageController extends Controller
 
     public function sentIndex()
     {
-        $messages = auth()->user()
+        $messages = $this->currentUser
             ->sentMessages()
             ->with('recipients')
             ->paginate(15);
@@ -38,12 +38,11 @@ class MessageController extends Controller
 
     public function store(StoreMessageFormRequest $request) // Add form request validation
     {
-        $user = auth()->user();
 
         // $recipientIds = array_keys($request->recipients);
         
        
-        $message = $user->sentMessages()->create([
+        $message = $this->currentUser->sentMessages()->create([
             'subject' => $request->subject,
             'body' => $request->body,
         ]);
@@ -53,9 +52,9 @@ class MessageController extends Controller
         // dd($request->alljockeys);
 
 
-        $this->sendToAllJockeys($message, $user->roleName);
+        $this->sendToAllJockeys($message, $this->currentUser->roleName);
 
-        $this->sendToAllCoaches($message, $user->roleName);
+        $this->sendToAllCoaches($message, $this->currentUser->roleName);
 
         // if allJockeys - if coach sent to all the coaches jockeys
         //  - if admin sent to all jockeys
@@ -73,7 +72,7 @@ class MessageController extends Controller
 
     public function show(Message $message)
     {
-        auth()->user()->markMessageAsRead($message);
+        $this->currentUser->markMessageAsRead($message);
         // $message->markAsRead();
 
         return view('message.show', compact('message'));
@@ -95,7 +94,7 @@ class MessageController extends Controller
     {
         //validate user is a recipient of the message
 
-        auth()->user()->markMessageAsDeleted($message);
+        $this->currentUser->markMessageAsDeleted($message);
 
         session()->flash('message', "Message deleted");
 
@@ -117,7 +116,7 @@ class MessageController extends Controller
        if(request()->allJockeys) {
         // dd(request()->allJockeys);
         if($roleName === 'coach') {
-            $message->addRecipients(Coach::find(auth()->user()->id)->jockeys->pluck('id')->toArray());
+            $message->addRecipients(Coach::find($this->currentUser->id)->jockeys->pluck('id')->toArray());
         } else {
             $message->addRecipients(Jockey::all()->pluck('id')->toArray());
         }

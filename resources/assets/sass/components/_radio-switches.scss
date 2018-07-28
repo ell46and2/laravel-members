@@ -1,0 +1,50 @@
+.radio-switches {
+    $self: &;
+
+    display: flex;
+    width: 100%;
+
+    &__label {
+        @extend %transition;
+
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        border-top: 2px solid $blue;
+        border-bottom: 2px solid $blue;
+        text-align: center;
+        color: $blue--lighter;
+        cursor: pointer;
+
+        @include hover(true) {
+            background: darken($white, 3%);
+            color: darken($blue--lighter, 15%);
+        }
+
+        &:first-of-type {
+            border-left: 2px solid $blue;
+            border-radius: $radius 0 0 $radius;
+        }
+
+        &:last-of-type {
+            border-right: 2px solid $blue;
+            border-radius: 0 $radius $radius 0;
+        }
+
+        &:not(:first-of-type) {
+            border-left: 2px solid $blue;
+        }
+
+        // A label associated with a checked radio input
+        #{ $self }__input:checked + & {
+            background: $blue;
+            color: $white;
+
+            @include hover(true) {
+                background: darken($blue, 5%);
+            }
+        }
+    }
+}

@@ -37,8 +37,8 @@ class CreateCompetencyAssessmentsTable extends Migration
             $table->text('summary')->nullable();
             $table->timestamps();
 
-            $table->foreign('jockey_id')->references('id')->on('users');
-            $table->foreign('coach_id')->references('id')->on('users');
+            // $table->foreign('jockey_id')->references('id')->on('users');
+            // $table->foreign('coach_id')->references('id')->on('users');
         });
     }
 

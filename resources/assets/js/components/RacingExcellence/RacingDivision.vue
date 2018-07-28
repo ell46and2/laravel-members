@@ -2,7 +2,7 @@
 	<div>
 		
 		<racing-participant
-			v-for="participant in division.participants"
+			v-for="participant in participants"
 			:participant="participant"
 			:key="participant.id"
 			:number-of-participants="division.participants.length"
@@ -28,6 +28,11 @@ import RacingParticipant from './RacingParticipant';
 		},
 		components: {
 			RacingParticipant
+		},
+		computed: {
+			participants() {
+				return _.orderBy(this.division.participants, ['place'], ['asc']);
+			}
 		}
 	}
 </script>

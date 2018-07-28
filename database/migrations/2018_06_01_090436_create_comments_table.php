@@ -24,8 +24,8 @@ class CreateCommentsTable extends Migration
             $table->text('body');
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('users');
-            $table->foreign('recipient_id')->references('id')->on('users');
+            // $table->foreign('author_id')->references('id')->on('users');
+            // $table->foreign('recipient_id')->references('id')->on('users');
         });
     }
 

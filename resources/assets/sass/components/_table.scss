@@ -1,4 +1,6 @@
 .table {
+    $self: &;
+
     margin: 0;
 
     thead {
@@ -35,6 +37,10 @@
                 padding-right: 0;
             }
         }
+
+        & + tbody {
+            border-top: 2px solid $blue--lightest;
+        }
     }
 
     &__link {
@@ -44,6 +50,120 @@
 
         @include hover(true) {
             text-decoration: none;
+        }
+    }
+
+    &__checkbox-column {
+        width: 1rem;
+    }
+
+    &__checkbox {
+
+        label {
+
+            &:before,
+            &:after {
+                top: -0.6rem;
+            }
+        }
+    }
+
+    &__icon-column {
+        width: 26px;
+    }
+
+    &__icon-button {
+        display: inline-block;
+        width: 26px;
+        height: 26px;
+
+        .icon {
+            @extend %transition;
+
+            width: 100%;
+            height: 100%;
+            fill: $blue;
+        }
+
+        &:active,
+        &:hover {
+
+            .icon {
+                fill: lighten($blue, 15%);
+            }
+        }
+    }
+
+    &__group-head {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+
+    &__group-head-avatar {
+        width: 50px;
+    }
+
+    &__group-head-text {
+        padding-left: 10px;
+        color: $blue--dark;
+        font-weight: $font-weight-normal;
+
+        @include font-size(16px, true);
+    }
+
+    &__group-header-total-time {
+        color: $blue--lighter;
+
+        @include font-size(12px, true);
+    }
+
+    // The first column of each row in a grouped table (excluding the "group head")
+    &__group-item-decor {
+        position: relative;
+        width: calc(60px + #{ $table-cell-padding });
+        border: 0 !important;
+
+        // The vertical line
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -1px;
+            width: 2px;
+            height: 100%;
+            background: $blue--lighter;
+
+            // Extend the top of the line to meet the bottom of the avatar
+            .table tr:nth-child(2) & {
+                top: calc(-#{ $table-cell-padding } - 1px);
+                height: calc(100% + #{ $table-cell-padding } + 2px);
+                border-radius: 0 0 0 1px;
+            }
+
+            // Remove the tail at the bottom of the line
+            .table tr:last-child & {
+                height: calc(50% + 1px);
+                border-radius: 0 0 0 1px;
+            }
+        }
+
+        // The horizontal "notches"
+        &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -1px;
+            width: 10px;
+            height: 2px;
+            border-radius: 0 1px 1px 0;
+            background: $blue--lighter;
+        }
+
+        & + td {
+            padding-left: 0;
         }
     }
 }

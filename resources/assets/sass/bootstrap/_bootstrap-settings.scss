@@ -13,6 +13,8 @@ $body-bg: $blue--lightest;
 $body-color: #6f6f6f;
 $primary: $blue;
 
+$red: #D92036;
+
 // Greys
 $gray-100: #fdfdfd;
 
@@ -23,8 +25,16 @@ $line-height-base: 1.4;
 $line-height-sm: 1.1;
 
 // Metrics
-$spacer: 50px;
+$spacer: 30px;
 $grid-gutter-width: $spacer;
+$grid-gutter-width--narrow: 30px;
+
+// Forms
+$input-border-width: 0;
+$input-border-radius: $radius;
+
+$input-placeholder-color: $blue-grey;
+$custom-select-focus-border-color: $blue--dark;
 
 $grid-breakpoints: (
   xs: 0,

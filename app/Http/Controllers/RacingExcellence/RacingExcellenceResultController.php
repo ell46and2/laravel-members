@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class RacingExcellenceResultController extends Controller
 {
-    public function create(RacingExcellence $racingExcellence)
-    {
-    	$raceResource = new RaceResource($racingExcellence);
+    // public function create(RacingExcellence $racingExcellence)
+    // {
+    // 	$raceResource = new RaceResource($racingExcellence);
 
-    	return view('racing-excellence.results.create', compact('raceResource'));
-    }
+    // 	return view('racing-excellence.results.create', compact('raceResource'));
+    // }
 }

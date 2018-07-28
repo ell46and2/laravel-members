@@ -24,7 +24,9 @@ class UpdateJockeyFormRequest extends FormRequest
     public function rules()
     {
         // So we can make sure email is unique to all other users except current user.
-        $jockeyId = auth()->user()->id;
+ 
+       
+        $jockeyId = $this->jockey ? $this->jockey->id : auth()->user()->id;
 
         return [
             'middle_name' => 'nullable|string|max:255',

@@ -40,7 +40,7 @@ class MileageController extends Controller
             $invoice->recalculateAndSetTotal();
         }
         
-        return redirect("/invoices/invoice/{$invoice->id}?#mileage");
+        return redirect()->route('invoice.show', $invoice);
     }
 
     public function store(MileageFormRequest $request, Invoice $invoice) // add validation
@@ -57,7 +57,7 @@ class MileageController extends Controller
             $invoice->recalculateAndSetTotal();
         }
 
-    	return redirect("/invoices/invoice/{$invoice->id}?#mileage");
+    	return redirect()->route('invoice.show', $invoice);
     }
 
     public function destroy(Invoice $invoice, Mileage $mileage)
@@ -76,6 +76,6 @@ class MileageController extends Controller
             $invoice->recalculateAndSetTotal();
         }
 
-        return redirect("/invoices/invoice/{$invoice->id}?#mileage");
+        return redirect()->route('invoice.show', $invoice);
     }
 }

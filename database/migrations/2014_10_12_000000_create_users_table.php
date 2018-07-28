@@ -33,6 +33,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('approved')->default(false); // May need to change to status (Awaiting approval, Active, Suspended, Deleted, Gone away)
+            $table->enum('status', [
+                'active',
+                'suspended',
+                'gone away',
+                'deleted'
+            ])->default('active');
 
             $table->integer('api_id')->unsigned()->nullable();
             $table->string('licence_type')->nullable();
@@ -40,7 +46,8 @@ class CreateUsersTable extends Migration
             $table->integer('wins')->nullable();
             $table->integer('rides')->nullable();
             $table->integer('lowest_riding_weight')->nullable();
-            $table->float('price_money')->nullable();
+            $table->string('trainer_name')->nullable();
+            $table->float('prize_money')->nullable();
             $table->string('associated_content')->nullable(); //stewards enquiries/reports
 
             $table->string('avatar_filename')->nullable();
@@ -50,6 +57,7 @@ class CreateUsersTable extends Migration
             // Coach only
             // $table->integer('mileage')->default(0);
             $table->string('vat_number')->nullable();
+            $table->text('bio')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

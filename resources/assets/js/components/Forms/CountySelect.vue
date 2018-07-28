@@ -44,7 +44,9 @@
 			}
 
 			if(this.old) {
+				console.log('test', this.old);
 				this.selected = this.old;
+				console.log(this.selected);
 			}
 
 			bus.$on('country:selected', this.handleCountrySelected);
@@ -55,7 +57,7 @@
             },
             handleCountrySelected(id) {
             	if(this.countryId && this.old) {
-            		if(this.countryId !== id) {
+            		if(this.countryId != id) {
             			this.selected = '';
             		}
             	} else {

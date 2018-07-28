@@ -22,7 +22,7 @@ class DashboardController extends Controller
             'dashboardRecentActivities.type',
     		'racingExcellences',
     	])
-    	->findOrFail(auth()->user()->id);
+    	->findOrFail($this->currentUser->id);
 
 
     	return view('jockey.dashboard.index', compact('jockey'));

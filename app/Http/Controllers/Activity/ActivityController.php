@@ -14,7 +14,7 @@ class ActivityController extends Controller
     {
     	$this->authorize('delete', $activity);
 
-    	$usersRole = auth()->user()->roleName;
+    	$usersRole = $this->currentUser->roleName;
 
     	$this->dispatch(new NotifyJockeysDeletedActivity(
     		$activity->jockeys->pluck('id'),

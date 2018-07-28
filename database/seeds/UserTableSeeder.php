@@ -43,72 +43,71 @@ class UserTableSeeder extends Seeder
         ]);
 
 
-        $racingExcellence = factory(RacingExcellence::class)->create([
-            'series_id' => 1,
-            'coach_id' => $coach->id
-        ]);
+        // $racingExcellence = factory(RacingExcellence::class)->create([
+        //     'coach_id' => $coach->id
+        // ]);
 
-        $division1 = factory(RacingExcellenceDivision::class)->create([
-            'racing_excellence_id' => $racingExcellence->id
-        ]);
+        // $division1 = factory(RacingExcellenceDivision::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id
+        // ]);
 
-        $division2 = factory(RacingExcellenceDivision::class)->create([
-            'racing_excellence_id' => $racingExcellence->id
-        ]);
+        // $division2 = factory(RacingExcellenceDivision::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id
+        // ]);
 
-        $participant1 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division1->id,
-            'jockey_id' => $jockey->id
-        ]);
+        // $participant1 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division1->id,
+        //     'jockey_id' => $jockey->id
+        // ]);
 
-        $participant2 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division1->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant2 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division1->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
-        $participant3 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division1->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant3 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division1->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
-        $participant4 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division1->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant4 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division1->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
-        $participant5 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division2->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant5 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division2->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
-        $participant6 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division2->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant6 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division2->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
-        $participant7 = factory(RacingExcellenceParticipant::class)->create([
-            'racing_excellence_id' => $racingExcellence->id,
-            'division_id' => $division2->id,
-            'jockey_id' => function() {
-                return factory(Jockey::class)->create()->id;
-            }
-        ]);
+        // $participant7 = factory(RacingExcellenceParticipant::class)->create([
+        //     'racing_excellence_id' => $racingExcellence->id,
+        //     'division_id' => $division2->id,
+        //     'jockey_id' => function() {
+        //         return factory(Jockey::class)->create()->id;
+        //     }
+        // ]);
 
         $coach2 = factory(Coach::class)->create([
             'email' => 'coach2@jcp.com',
@@ -275,41 +274,41 @@ class UserTableSeeder extends Seeder
         ]);
         $recentActivity11->addJockey($jockey);
 
-        $racingExcellenceA = factory(RacingExcellence::class)->create([
-            'start' => Carbon::now()->addDays(7),
-        ]);
-        $divisionA = factory(RacingExcellenceDivision::class)->create([
-            'racing_excellence_id' => $racingExcellenceA->id
-        ]);
-        $divisionA->addJockeysById(collect([$jockey->id]));
+        // $racingExcellenceA = factory(RacingExcellence::class)->create([
+        //     'start' => Carbon::now()->addDays(7),
+        // ]);
+        // $divisionA = factory(RacingExcellenceDivision::class)->create([
+        //     'racing_excellence_id' => $racingExcellenceA->id
+        // ]);
+        // $divisionA->addJockeysById(collect([$jockey->id]));
 
-        $racingExcellenceB = factory(RacingExcellence::class)->create([
-            'start' => Carbon::now()->subDays(2),
-        ]);
-        $divisionB = factory(RacingExcellenceDivision::class)->create([
-            'racing_excellence_id' => $racingExcellenceB->id
-        ]);
-        $divisionB->addJockeysById(collect([$jockey->id]));
+        // $racingExcellenceB = factory(RacingExcellence::class)->create([
+        //     'start' => Carbon::now()->subDays(2),
+        // ]);
+        // $divisionB = factory(RacingExcellenceDivision::class)->create([
+        //     'racing_excellence_id' => $racingExcellenceB->id
+        // ]);
+        // $divisionB->addJockeysById(collect([$jockey->id]));
 
-        $racingExcellenceC = factory(RacingExcellence::class)->create([
-            'start' => Carbon::now()->addDays(2),
-        ]);
-        $divisionC = factory(RacingExcellenceDivision::class)->create([
-            'racing_excellence_id' => $racingExcellenceC->id
-        ]);
-        $divisionC->addJockeysById(collect([$jockey->id]));
+        // $racingExcellenceC = factory(RacingExcellence::class)->create([
+        //     'start' => Carbon::now()->addDays(2),
+        // ]);
+        // $divisionC = factory(RacingExcellenceDivision::class)->create([
+        //     'racing_excellence_id' => $racingExcellenceC->id
+        // ]);
+        // $divisionC->addJockeysById(collect([$jockey->id]));
 
-        for ($i=0; $i <1000 ; $i++) { 
-            $racingExcellence = factory(RacingExcellence::class)->create([
-                'start' => Carbon::now()->addDays($i),
-            ]);
-            $division = factory(RacingExcellenceDivision::class)->create([
-                'racing_excellence_id' => $racingExcellence->id
-            ]);
-            $division->addJockeysById(collect([$jockey->id]));
-        }
+        // for ($i=0; $i <1000 ; $i++) { 
+        //     $racingExcellence = factory(RacingExcellence::class)->create([
+        //         'start' => Carbon::now()->addDays($i),
+        //     ]);
+        //     $division = factory(RacingExcellenceDivision::class)->create([
+        //         'racing_excellence_id' => $racingExcellence->id
+        //     ]);
+        //     $division->addJockeysById(collect([$jockey->id]));
+        // }
 
-        for ($i=0; $i < 2000; $i++) { 
+        for ($i=0; $i < 200; $i++) { 
             $recentActivity = factory(Activity::class)->create([
                 'start' => Carbon::now()->addDays($i),
                 'end' => Carbon::now()->addDays($i),
@@ -319,7 +318,7 @@ class UserTableSeeder extends Seeder
             $recentActivity->addJockey($jockey);
         }
 
-        for ($i=0; $i <1000 ; $i++) { 
+        for ($i=0; $i <50 ; $i++) { 
             $competencyAssessment = factory(CompetencyAssessment::class)->create([
                 'start' => Carbon::now()->addDays($i),
                 'jockey_id' => $jockey->id,
@@ -343,14 +342,18 @@ class UserTableSeeder extends Seeder
             'notifiable_type' => 'activity'
         ]);
 
-        factory(Notification::class, 2)->create([
-            'user_id' => $coach->id,
-            'notifiable_id' => 1,
-            'notifiable_type' => 'racing-excellence'
-        ]);
+        // factory(Notification::class, 2)->create([
+        //     'user_id' => $coach->id,
+        //     'notifiable_id' => 1,
+        //     'notifiable_type' => 'racing-excellence'
+        // ]);
 
         factory(Notification::class, 4)->create([
             'user_id' => $jockey->id,
         ]);
+
+        factory(Coach::class, 20)->create();
+
+        factory(Jockey::class, 200)->states('approved')->create();
     }
 }

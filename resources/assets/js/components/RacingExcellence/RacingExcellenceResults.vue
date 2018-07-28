@@ -8,6 +8,7 @@
 			></results-table>
 
 			<racing-division
+				v-if="coachId"
 				:key="division.id"
 				:division="division"
 				:place-only-required="data.totalJustFromPlace"
@@ -31,6 +32,10 @@
 			resource: {
 				required: true,
 				type: String
+			},
+			coachId: {
+				required: false,
+				default: null
 			}
 		},
 		components: {

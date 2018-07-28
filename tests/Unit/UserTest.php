@@ -313,7 +313,7 @@ class UserTest extends TestCase
         $activityWithDifferentJockey->addJockey($differentJockey);
         // dd($coach->activities);
 
-        $this->assertEquals($coach->trainingTimeWithJockeyThisMonth($jockey->id), 1.5);
+        $this->assertEquals($coach->trainingTimeWithJockeyThisMonth($jockey->id)->duration, 1.5);
         // dd($coach->trainingTimeWithJockeyThisMonth($jockey->id));
     }
 

@@ -15,14 +15,13 @@
 @import "bootstrap/bootstrap-imports";
 
 /*----------------------------------------------*\
-    GENESIS
+    VENDORS
 \*----------------------------------------------*/
-@import "animations";
-
-// Vendors
 @import "vendors/videojs";
 
-// Mixins
+/*----------------------------------------------*\
+    MIXINS
+\*----------------------------------------------*/
 @import "mixins/bounce-scroll";
 @import "mixins/font-size";
 @import "mixins/hover";
@@ -30,11 +29,15 @@
 @import "mixins/placeholder";
 @import "mixins/word-wrap";
 
-// Helpers
+/*----------------------------------------------*\
+    HELPERS
+\*----------------------------------------------*/
 @import "helpers/button-reset";
 @import "helpers/transitions";
 
-// Components
+/*----------------------------------------------*\
+    COMPONENTS
+\*----------------------------------------------*/
 @import "components/alert";
 @import "components/autocomplete";
 @import "components/avatar";
@@ -43,115 +46,47 @@
 @import "components/bar-chart";
 @import "components/breakpoint-helper";
 @import "components/button";
+@import "components/comments";
 @import "components/container-fluid";
+@import "components/custom-control";
 @import "components/definition-list";
 @import "components/flow";
+@import "components/form-control";
+@import "components/form-sticky-button";
 @import "components/icon";
 @import "components/icon-list";
+@import "components/image-thumbnail";
 @import "components/link";
 @import "components/notification";
 @import "components/panel";
 @import "components/profile-summary";
 @import "components/progress-bar";
+@import "components/radio-switches";
 @import "components/table";
 @import "components/timepicker";
+@import "components/user-card";
+@import "components/user-checkbox";
 @import "components/users-list";
 
-// Layouts
+/*----------------------------------------------*\
+    LAYOUTS
+\*----------------------------------------------*/
 @import "layouts/app";
 @import "layouts/components";
 @import "layouts/main";
 @import "layouts/notification-panel";
+@import "layouts/row";
+@import "layouts/site-foot";
 @import "layouts/site-head";
 @import "layouts/site-nav";
 @import "layouts/user-bar";
 
-// Z-index rules
+/*----------------------------------------------*\
+    Z-INDEX
+\*----------------------------------------------*/
 @import "z-index";
 
-/*------------------------------------*\
-    GLOBAL STYLES
-\*------------------------------------*/
-
-html {
-    font-size: $root-font-size;
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    height: 100%;
-}
-
-body {
-    overflow-x: hidden;
-    min-height: 100%;
-
-    @include media-breakpoint-up("lg") {
-        overflow-x: visible;
-    }
-
-    &.is-no-scroll {
-
-        @include media-breakpoint-down("md") {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-        }
-    }
-
-    /*------------------------------------*\
-        PRINT BREAKPOINT
-        Print current breakpoint key as a
-        pseudo of body. This can then be
-        used in JS to determine the
-        current breakpoint.
-    \*------------------------------------*/
-    &:before {
-        display: none;
-        speak: none;
-
-        @include media-breakpoint-only("xs") {
-            content: "xs";
-        }
-
-        @include media-breakpoint-only("sm") {
-            content: "sm";
-        }
-
-        @include media-breakpoint-only("md") {
-            content: "md";
-        }
-
-        @include media-breakpoint-only("lg") {
-            content: "lg";
-        }
-
-        @include media-breakpoint-only("xl") {
-            content: "xl";
-        }
-    }
-}
-
-a[href^="mailto"] {
-    @include word-wrap();
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-    margin: 0;
-}
-
-ul, ol, dl {
-    margin: 0;
-}
-
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+/*----------------------------------------------*\
+    ELEMENTS
+\*----------------------------------------------*/
+@import "elements";

@@ -25,7 +25,7 @@ class ActivityController extends Controller
 {
     public function index(Request $request)
     {
-        $coach = Coach::find(auth()->user()->id);
+        $coach = Coach::find($this->currentUser->id);
 
         $activityTypes = ActivityType::get();
 
@@ -38,7 +38,7 @@ class ActivityController extends Controller
 
     public function store(StorePostFormRequest $request) // StorePostFormRequest
     {    
-        $coach = Coach::find(auth()->user()->id);
+        $coach = Coach::find($this->currentUser->id);
 
         DB::beginTransaction();
 
@@ -100,7 +100,7 @@ class ActivityController extends Controller
     {
         // policy coach or admin
         
-        $coach = Coach::find(auth()->user()->id);
+        $coach = Coach::find($this->currentUser->id);
 
         $jockeysResource = UserSelectResource::collection($coach->jockeys);
 

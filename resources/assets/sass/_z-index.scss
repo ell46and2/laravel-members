@@ -38,6 +38,19 @@
     }
 }
 
+.form-control {
+
+    &--has-sticky-button {
+        z-index: 5;
+    }
+
+}
+
+.form-sticky-button {
+
+    z-index: 4;
+}
+
 .site-head {
 
     &__burger {
@@ -53,5 +66,43 @@
 
     &__status-icon-count {
         z-index: 10;
+    }
+}
+
+.panel {
+
+    &__header {
+        z-index: 5;
+    }
+
+    &__main {
+        z-index: 5;
+    }
+
+    &__pre-header {
+        z-index: 4;
+    }
+
+    &__alert {
+        z-index: 4;
+    }
+
+    &__call-to-action {
+        z-index: 4;
+    }
+
+    &__tabs {
+        z-index: 4;
+    }
+}
+
+.comments {
+
+    &__comment {
+        z-index: 1;
+    }
+
+    &__avatar {
+        z-index: 2;
     }
 }

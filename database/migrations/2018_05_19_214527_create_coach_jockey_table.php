@@ -17,8 +17,8 @@ class CreateCoachJockeyTable extends Migration
             $table->integer('coach_id')->unsigned();
             $table->integer('jockey_id')->unsigned();
 
-            $table->foreign('coach_id')->references('id')->on('users');
-            $table->foreign('jockey_id')->references('id')->on('users');
+            // $table->foreign('coach_id')->references('id')->on('users');
+            // $table->foreign('jockey_id')->references('id')->on('users');
 
             $table->primary(array('coach_id', 'jockey_id'));
 

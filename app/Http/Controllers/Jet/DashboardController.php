@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-    	$jet = Jet::findOrFail(auth()->user()->id);
+    	$jet = Jet::findOrFail($this->currentUser->id);
 
     	return view('jet.dashboard.index', compact('jet'));
     }

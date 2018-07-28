@@ -21,7 +21,6 @@ return [
 
     'site' => [
         'pagination' => 15,
-        // 'invoicing_address' => 
     ],
 
     'racing_excellence' => [
@@ -64,12 +63,37 @@ return [
     ],
 
     'sports_office_api' => [
-        'auth_params' => [
+        // 'auth_params' => [
+        //     'grant_type' => 'password',
+        //     'client_id' => env('SPORTS_OFFICE_API_CLIENT_ID'),
+        //     'client_secret' => env('SPORTS_OFFICE_API_CLIENT_SECRET'),
+        //     'username' => env('SPORTS_OFFICE_API_USERNAME'),
+        //     'password' => env('SPORTS_OFFICE_API_PASSWORD'),
+        // ],
+        'oauth_params' => [
             'grant_type' => 'password',
-            'client_id' => env('SPORTS_OFFICE_API_CLIENT_ID'),
-            'client_secret' => env('SPORTS_OFFICE_API_CLIENT_SECRET'),
-            'username' => env('SPORTS_OFFICE_API_USERNAME'),
-            'password' => env('SPORTS_OFFICE_API_PASSWORD'),
+            'client_id' => env('BRITISH_HORSE_RACING_OAUTH_CLIENT_ID'),
+            'client_secret' => env('BRITISH_HORSE_RACING_OAUTH_CLIENT_SECRET'),
+            'username' => env('BRITISH_HORSE_RACING_OAUTH_USERNAME'),
+            'password' => env('BRITISH_HORSE_RACING_OAUTH_PASSWORD'),
+            'scope' => 'coaching',
+        ]
+    ],
+
+    're_scoring' => [
+        'default' => [
+            1 => 5,
+            2 => 3,
+            3 => 2,
+            4 => 1,
+        ],
+        'salisbury' => [
+            1 => 10,
+            2 => 6,
+            3 => 4,
+            4 => 3,
+            5 => 2,
+            6 => 1,
         ]
     ]
 

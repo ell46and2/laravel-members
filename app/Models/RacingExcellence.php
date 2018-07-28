@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class RacingExcellence extends Model
 { 
-	protected $fillable = ['coach_id', 'start', 'location_id', 'series_id'];
+	protected $fillable = ['coach_id', 'start', 'location', 'series_name', 'raceId', 'yearOfRace'];
 
 	protected $dates = ['created_at', 'updated_at', 'start'];
 
@@ -131,6 +131,11 @@ class RacingExcellence extends Model
 		});
 	}
 
+    public function hasCoach()
+    {
+        return $this->coach_id !== null;
+    }
+
     public function scopeFilter(Builder $builder, $request)
     {
         return (new RacingExcellenceFilters($request))->filter($builder);
@@ -165,9 +170,14 @@ class RacingExcellence extends Model
         return $this->start->format('H:i');
     }
 
+    public function getFormattedStartTimeFullAttribute()
+    {
+        return $this->start->format('H:ia');
+    }
+
     public function getFormattedLocationAttribute()
     {
-        return ucfirst($this->location->name);
+        return ucfirst($this->location);
     }
 
     public function getFormattedJockeyOrGroupAttribute()
@@ -177,7 +187,7 @@ class RacingExcellence extends Model
 
     public function getFormattedSeriesNameAttribute()
     {
-        return $this->series->name;
+        return $this->series_name;
     }
 
     public function getNotificationLinkAttribute()
@@ -195,5 +205,14 @@ class RacingExcellence extends Model
     public function getNumDivisionsAttribute()
     {
         return $this->divisions->count();
+    }
+
+    public function getFormattedCoachAttribute()
+    {
+        if(!$this->coach_id) {
+            return '-';
+        }
+
+        return $this->coach->full_name;
     }
 }

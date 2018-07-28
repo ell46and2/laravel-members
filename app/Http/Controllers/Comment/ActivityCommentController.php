@@ -22,7 +22,7 @@ class ActivityCommentController extends Controller
     		->with(['author', 'attachment'])
     		->orderBy('created_at');
 
-    	if(auth()->user()->isJockey()) { // don't display private comments to jockeys
+    	if($this->currentUser->isJockey()) { // don't display private comments to jockeys
     		$comments->where('private', false);
     	}
 

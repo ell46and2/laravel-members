@@ -8,29 +8,32 @@
         position: relative;
         border-radius: $radius;
         overflow: hidden;
-        background: $white;
         box-shadow: 0 2px 9px 0 rgba(0, 48, 78, 0.02);
         z-index: 2;
     }
 
     &__header {
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         padding: $box-padding $box-padding 0;
+        border-radius: $radius;
+        background: $white;
 
         > * + * {
-            margin-left: $spacer;
+            margin-left: #{ $spacer * 2 };
         }
     }
 
     &__heading {
         position: relative;
-        color: $blue--dark;
+        min-height: 44px;
         margin-top: -15px;
         margin-left: -#{ $box-padding };
         padding-top: 8px;
         padding-left: $box-padding;
+        color: $blue--dark;
         font-weight: $font-weight-bold;
         flex: 1;
 
@@ -49,8 +52,11 @@
     }
 
     &__main {
+        position: relative;
         padding: $box-padding;
         border-radius: 0 0 $radius $radius;
+        box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.02);
+        background: $white;
 
         &--3-columns {
             display: flex;
@@ -85,24 +91,15 @@
         @extend %transition;
 
         position: relative;
+        top: -#{ $radius };
+        margin-bottom: -#{ $radius };
         display: block;
         padding: #{ 10px + $radius } $box-padding 10px;
-        background-image: linear-gradient(to right, $blue 0%, $blue--light 100%);
+        background-image: $blue--grad;
         color: $white;
         text-align: center;
 
         @include font-size(16px, true);
-
-        &:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: $radius;
-            width: 100%;
-            background: $white;
-            border-radius: 0 0 $radius $radius;
-        }
 
         &:active,
         &:hover,
@@ -138,25 +135,66 @@
         }
     }
 
+    &__pre-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        position: relative;
+        bottom: -#{ $radius };
+        margin-top: -#{ $radius };
+        padding: 10px 20px #{ 10px + $radius };
+        border-radius: $radius $radius 0 0;
+        box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.10);
+        background-image: $blue--grad;
+        color: $white;
+
+        @include font-size(16px, true);
+    }
+
+    &__pre-header-secondary {
+        color: $blue--lighter;
+        padding-left: #{ $spacer * 2 };
+
+        @include font-size(12px, true);
+    }
+
+    &__pre-header-definition-list {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            margin-right: 40px;
+        }
+
+        dt {
+            display: inline-block;
+            margin: 0 5px 2px 0;
+            color: $blue--lighter;
+
+            @include font-size(12px, true);
+        }
+
+        dd {
+            margin: 0;
+            display: inline;
+            color: $white;
+
+            @include font-size(16px, true);
+        }
+    }
+
     &__alert {
         position: relative;
+        top: -#{ $radius };
+        margin-bottom: -#{ $radius };
         display: block;
         padding: #{ 10px + $radius } 20px 10px;
         background-image: linear-gradient(52deg, #00304E 0%, #074173 100%);
         color: $white;
 
         @include font-size(16px, true);
-
-        &:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: $radius;
-            width: 100%;
-            background: $white;
-            border-radius: 0 0 $radius $radius;
-        }
 
         &--success {
             background-image: $success--grad;
@@ -188,7 +226,7 @@
         top: #{ $box-padding / 2 };
         bottom: $box-padding;
         left: 100%;
-        width: #{ $spacer / 2 };
+        width: 20px;
         border-radius: 0 $radius $radius 0;
         background: $gray-100;
         box-shadow: 0 2px 9px 0 rgba(0, 48, 78, 0.02);
@@ -210,10 +248,6 @@
         @include font-size(12px, true);
     }
 
-    &__nav-buttons {
-
-    }
-
     &__nav-button {
         @extend %button-reset;
         @extend %transition;
@@ -231,6 +265,70 @@
         &:disabled,
         .is-disabled {
             opacity: 0.25;
+        }
+    }
+
+    &__tabs {
+        list-style: none;
+        padding-left: 0;
+        display: flex;
+    }
+
+    &__tabs-item {
+        flex: 1;
+
+        & + & {
+            margin-left: 2px;
+        }
+    }
+
+    &__tabs-button {
+        @extend %button-reset;
+        @extend %transition;
+
+        position: relative;
+        bottom: -#{ $radius };
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        min-height: 50px;
+        margin-top: -#{ $radius };
+        padding: 10px 20px #{ 10px + $radius };
+        border-radius: $radius $radius 0 0;
+        background: $white;
+        text-align: center;
+        color: $blue--lighter;
+        box-shadow: inset 0 -10px 15px -5px rgba(0,0,0,0.06);
+
+        &:hover,
+        &:focus {
+            color: darken($blue--lighter, 10%);
+        }
+
+        &:active {
+            box-shadow: inset 0 -10px 15px -10px rgba(0,0,0,0.15);
+            transform: scale(0.95);
+        }
+
+        &.is-active {
+            background-image: $blue--grad;
+            color: $white;
+            box-shadow: none;
+            cursor: default;
+
+            @include font-size(20px, true);
+
+            &:hover,
+            &:focus {
+                box-shadow: none;
+            }
+
+            &:active {
+                box-shadow: none;
+                transform: scale(1);
+            }
         }
     }
 }

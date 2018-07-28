@@ -85,13 +85,10 @@ class Invoice extends Model
         switch ($this->status) {
             case 'pending submission': 
                 return 'Open';
-                break;
             case 'pending review':
                 return 'Submitted';
-                break;
             case 'approved':
                 return 'Approved';
-                break;
         }
     }
 

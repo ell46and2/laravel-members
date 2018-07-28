@@ -52,7 +52,7 @@ class CoachController extends Controller
 
     	event(new NewCoachCreated($coach));
 
-    	return redirect()->route('admin.coach.show', $coach);
+    	return redirect()->route('coach.show', $coach);
     }
 
     public function show(Coach $coach)

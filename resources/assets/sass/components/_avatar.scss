@@ -80,7 +80,7 @@ $red--light: #f44f5f;
         border-radius: 50%;
         border: 2px solid $white;
         width: 100%;
-        padding-bottom: 100%;
+        padding-bottom: calc(100% - 4px);
         z-index: 1;
         background-size: cover;
         background-position: center center;

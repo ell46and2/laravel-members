@@ -15,14 +15,14 @@ class ProfileController extends Controller
 {
     public function index()
     {
-    	$jockey = auth()->user();
+    	$jockey = $this->currentUser;
 
     	return view('jockey.profile.index', compact('jockey'));
     }
 
     public function edit()
     {
-    	$jockey = auth()->user();
+    	$jockey = $this->currentUser;
 
         $countries = Country::all();
         $counties = County::all();
@@ -33,7 +33,7 @@ class ProfileController extends Controller
 
     public function update(UpdateJockeyFormRequest $request)
     {
-    	$jockey = auth()->user(); // check is role jockey?
+    	$jockey = $this->currentUser; // check is role jockey?
 
     	$jockey->update($request->only([
             'middle_name',

@@ -1,0 +1,30 @@
+.user-card {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__avatar {
+        width: 50px;
+    }
+
+    &__main {
+        padding-left: 20px;
+    }
+
+    &__name {
+        color: $blue--dark;
+
+        @include font-size(16px, true);
+    }
+
+    &__meta {
+
+        @include font-size(14px, true);
+    }
+
+    &__button {
+
+        @include font-size(12px, true);
+    }
+}

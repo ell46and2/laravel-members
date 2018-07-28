@@ -100,6 +100,48 @@
                 "location": "Bristol"
             }
         ],
+        "invoice": {
+            "group_activities": [
+                {
+                    "jockey": "Name Surname",
+                    "jockey_avatar": "http://jcp.local/images/headshot.jpg",
+                    "total_hours": "3.75",
+                    "items": [
+                        {
+                            "activity": "Simulator training",
+                            "date": "Monday 16th June",
+                            "duration": "0",
+                            "amount": "£0.00"
+                        },
+                        {
+                            "activity": "Group simulator training",
+                            "date": "Monday 16th June",
+                            "duration": "0",
+                            "amount": "£0.00"
+                        }
+                    ]
+                },
+                {
+                    "jockey": "Name Surname",
+                    "jockey_avatar": "http://jcp.local/images/headshot.jpg",
+                    "total_hours": "5.5",
+                    "items": [
+                        {
+                            "activity": "Simulator training",
+                            "date": "Monday 16th June",
+                            "duration": "0",
+                            "amount": "£0.00"
+                        },
+                        {
+                            "activity": "Simulator training",
+                            "date": "Monday 16th June",
+                            "duration": "0",
+                            "amount": "£0.00"
+                        }
+                    ]
+                }
+            ]
+        },
         "competency_assessment": {
             "max_value": 5,
             "items": [
@@ -148,6 +190,111 @@
                 "name": "Name Surname",
                 "coaching_hours": 18
             }
+        ],
+        "comments" : [
+            {
+                "position": "right",
+                "theme": "dark",
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "time": "3 hours ago",
+                "comment": "Lorem ipsum dolor sit amet consectetur adipiscing elit cursus suspendisse nisl, morbi eleifend blandit orci vivamus gravida ligula phasellus class quam torquent."
+            },
+            {
+                "position": "left",
+                "theme": "light",
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "time": "3 hours ago",
+                "comment": "Lorem ipsum dolor sit amet consectetur adipiscing elit cursus suspendisse."
+            },
+            {
+                "position": "right",
+                "theme": "dark",
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "time": "3 hours ago",
+                "comment": "Lorem ipsum dolor sit amet consectetur adipiscing elit cursus suspendisse nisl, morbi eleifend blandit orci vivamus gravida ligula phasellus class quam torquent, urna pulvinar varius rhoncus quisque bibendum pellentesque fusce egestas. Sollicitudin viverra arcu justo diam proin vel ligula, vestibulum enim ad parturient urna aliquam, penatibus habitasse ullamcorper turpis ut montes.",
+                "comment_thumbnail": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "position": "left",
+                "theme": "light",
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "name": "Name Surname",
+                "time": "3 hours ago",
+                "comment_thumbnail": "http://jcp.local/images/headshot.jpg"
+            }
+        ],
+        "user_checkboxes": [
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            }
+        ],
+        "user_cards": [
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            },
+            {
+                "name": "Name Surname",
+                "avatar": "http://jcp.local/images/headshot.jpg"
+            }
+        ],
+        "image_thumbnails": [
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg",
+            "http://jcp.local/images/headshot.jpg"
         ]
     }
 }

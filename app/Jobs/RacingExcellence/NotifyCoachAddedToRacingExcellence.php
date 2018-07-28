@@ -32,7 +32,7 @@ class NotifyCoachAddedToRacingExcellence implements ShouldQueue
      */
     public function handle()
     {
-        $body = "You have been assigned to a Racing Excellence event on {$this->racingExcellence->start->format('l jS \\of F Y h:i A')}";
+        $body = "You have been assigned to the Racing Excellence event on {$this->racingExcellence->start->format('l jS \\of F Y h:i A')}. Please add the race results.";
 
         $this->racingExcellence->notifications()->create([
             'user_id' => $this->racingExcellence->coach_id,

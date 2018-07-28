@@ -7,6 +7,10 @@ use Illuminate\Support\Collection;
 
 class RacingExcellenceDivision extends Model
 {
+    protected $fillable = ['division_number', 'posted_to_api'];
+
+    protected $dates = ['posted_to_api'];
+
     public function participants()
     {
     	return $this->hasMany(RacingExcellenceParticipant::class, 'division_id');

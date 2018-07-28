@@ -35,10 +35,21 @@ class User extends Authenticatable
         'email',
         'password',
         'approved',
-        'avatar_path',
+        'avatar_filename',
         'vat_number',
         'last_login',
-        'access_token'
+        'access_token',
+        'api_id',
+        'licence_type',
+        'licence_date',
+        'wins',
+        'rides',
+        'lowest_riding_weight',
+        'trainer_name',
+        'prize_money',
+        'associated_content',
+        'status',
+        'bio',
     ];
 
     /**
@@ -54,7 +65,7 @@ class User extends Authenticatable
         'approved' => 'boolean' // returns 0 or 1 from db, so casts to boolean so we can assertTrue or assertFalse
     ];
 
-    protected $dates = ['created_at', 'updated_at', 'date_of_birth', 'last_login'];
+    protected $dates = ['created_at', 'updated_at', 'date_of_birth', 'last_login', 'licence_date'];
 
     protected $appends = ['full_name', 'role_name'];
     /*
@@ -215,6 +226,15 @@ class User extends Authenticatable
         ]);
     }
 
+    public function canBeNotified()
+    {
+        return $this->status !== 'gone away' || $this->status !== 'deleted';
+    }
+
+
+    /*
+        Attributes
+    */
     public function getFormattedLastLoginAttribute()
     {
         if(!$this->last_login) {
@@ -227,5 +247,28 @@ class User extends Authenticatable
     public function getFormattedJoinedAttribute()
     {
         return $this->created_at->format('l jS F');
+    }
+
+    public function getFormattedGenderAttribute()
+    {
+        return ucfirst($this->gender);
+    }
+
+    public function getAgeAttribute()
+    {
+        if(!$this->date_of_birth) {
+            return '-';
+        }
+        return $this->date_of_birth->diffInYears(now());
+    }
+
+    public function getFormattedCountryAttribute()
+    {
+        return ucfirst($this->country->name);
+    }
+
+    public function getFormattedCountyAttribute()
+    {
+        return $this->county->name;
     }
 }

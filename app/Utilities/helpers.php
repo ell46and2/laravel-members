@@ -44,6 +44,15 @@ if (! function_exists('currentInvoicingMonth')) {
     }
 }
 
+if (! function_exists('nextInvoicingPeriod')) {
+    function nextInvoicingPeriod()
+    {
+        $numberFormatter = new NumberFormatter('en_US', NumberFormatter::ORDINAL);
+
+        return $numberFormatter->format(config('jcp.invoice.start_period')) . ' and ' . $numberFormatter->format(config('jcp.invoice.end_period')) . ' of ' . now()->addMonth()->format('F');
+    }
+}
+
 if (! function_exists('asBoolean')) {
 	function asBoolean($value) {
 	   if ($value && strtolower($value) !== "false") {
@@ -90,6 +99,13 @@ if (! function_exists('toTwoDecimals')) {
     }
 }
 
+if (! function_exists('toOneDecimal')) {
+    function toOneDecimal($value)
+    {
+        return number_format($value, 1, '.', '');
+    }
+}
+
 if (! function_exists('invoiceNumberFormat')) {
     function invoiceNumberFormat($value)
     {
@@ -97,3 +113,19 @@ if (! function_exists('invoiceNumberFormat')) {
     }
 }
 
+if (! function_exists('pointsForPlace')) {
+    function pointsForPlace($place)
+    {
+        if($place > 4) {
+            return 0;
+        }
+        return config('jcp.re_scoring.default.'.$place);
+    }
+}
+
+if (! function_exists('getPercentagee')) {
+    function getPercentage($num, $total)
+    {
+        return toTwoDecimals(($num / $total) * 100);
+    }
+}

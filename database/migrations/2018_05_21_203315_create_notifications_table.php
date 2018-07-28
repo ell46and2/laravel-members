@@ -26,7 +26,7 @@ class CreateNotificationsTable extends Migration
             // So we can link from notification to the activity, message, comment, document etc
             // Can be nullable as for example Activity deleted can't be linked to
 
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

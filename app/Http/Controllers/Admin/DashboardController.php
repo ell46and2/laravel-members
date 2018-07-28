@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-    	$admin = Admin::findOrFail(auth()->user()->id);
+    	$admin = Admin::findOrFail($this->currentUser->id);
 
     	$jockeysAwaitingApproval = Jockey::awaitingApproval()->get();
 

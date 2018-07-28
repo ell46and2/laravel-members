@@ -19,7 +19,7 @@ class CreateCountiesTable extends Migration
             $table->string('name');
             // $table->timestamps();
 
-            $table->foreign('country_id')->references('id')->on('countries');
+            // $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

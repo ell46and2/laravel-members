@@ -5,73 +5,85 @@
                 <img class="site-nav__brand-logo" src="http://jcp.local/images/jcp-logo.svg" alt="">
             </a>
         </div>
-        <ul class="site-nav__nav-items">
-            <li class="site-nav__nav-item is-active">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-dashboard.svg" %}
+
+        <div class="site-nav__main">
+            <ul class="site-nav__nav-items">
+                <li class="site-nav__nav-item is-active">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-dashboard.svg" %}
+                        </span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-messages.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">Messages</span>
+                        <span class="[ site-nav__badge ] [ badge badge-pill badge-light ]">7 new</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-activity-log.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">Activity log</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-my-coaches.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">My Coaches</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-jets-pdp.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">JETS - PDP</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-racing-excellence.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">Racing Excellence</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-skills-profile.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">Skills Profile</span>
+                    </a>
+                </li>
+                <li class="site-nav__nav-item">
+                    <a class="site-nav__nav-link" href="">
+                        <span class="site-nav__nav-icon">
+                            {% include "svg/nav-documents.svg" %}
+                        </span>
+                        <span class="site-nav__nav-item-text">Documents</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="mt-2 mr-3 ml-3">
+                <a class="button button--white" href="">
+                    <span class="button__icon">
+                         {% include "svg/plus.svg" %}
                     </span>
-                    Dashboard
+                    Add activity
                 </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-messages.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">Messages</span>
-                    <span class="[ site-nav__badge ] [ badge badge-pill badge-light ]">7 new</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-activity-log.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">Activity log</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-my-coaches.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">My Coaches</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-jets-pdp.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">JETS - PDP</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-racing-excellence.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">Racing Excellence</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-skills-profile.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">Skills Profile</span>
-                </a>
-            </li>
-            <li class="site-nav__nav-item">
-                <a class="site-nav__nav-link" href="">
-                    <span class="site-nav__nav-icon">
-                        {% include "svg/nav-documents.svg" %}
-                    </span>
-                    <span class="site-nav__nav-item-text">Documents</span>
-                </a>
-            </li>
-        </ul>
+            </div>
+        </div>
+
         <div class="site-nav__footer">
             <div class="site-nav__bha-logo">
                 {% include "svg/bha-logo-white.svg" %}

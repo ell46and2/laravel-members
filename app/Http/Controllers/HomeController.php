@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if($user = auth()->user()) {
+        if($this->currentUser) {
             // if($user->is_admin) {
             //     return redirect()->route('admin.meets.index');
             // }

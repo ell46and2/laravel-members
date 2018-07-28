@@ -8,9 +8,11 @@ class RacingExcellenceParticipant extends Model
 {
 	protected $fillable = [
 		'jockey_id',
+		'api_id',
+		'api_animal_id',
+		'animal_name',
 		'name', 
 		'racing_excellence_id',
-		'completed_race',
 		'place',
         'completed_race',
         'presentation_points',
@@ -49,12 +51,14 @@ class RacingExcellenceParticipant extends Model
 	public function placePoints($series = null)
 	{
 		if(!$series) {
-			$series = $this->racingExcellence->series;
+			$series = $this->racingExcellence->series_name;
 		}
 
-		// if completed race - calculate points for place
 		if($this->completed_race && $this->place) {
-			return $series->pointsForPlace($this->place);
+			if($series === 'Salisbury Apprentice Series') {
+				return pointsForPlaceSalisbury($this->place);
+			}
+			return pointsForPlace($this->place);
 		}
 
 		return 0;
@@ -62,11 +66,11 @@ class RacingExcellenceParticipant extends Model
 
 	public function calculateTotalPoints()
 	{	
-		$series = $this->racingExcellence->series;
+		$series = $this->racingExcellence->series_name;
 
 		$total = $this->placePoints($series);
 
-		if($series->total_just_from_place) {
+		if($series === 'Salisbury Apprentice Series') {
 			return $total;
 		} 		
 		

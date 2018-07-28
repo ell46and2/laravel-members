@@ -26,7 +26,7 @@ class CreateActivitiesTable extends Migration
             $table->string('group_feedback')->nullable();
             $table->timestamps();
 
-            $table->foreign('coach_id')->references('id')->on('users');
+            // $table->foreign('coach_id')->references('id')->on('users');
         });
     }
 

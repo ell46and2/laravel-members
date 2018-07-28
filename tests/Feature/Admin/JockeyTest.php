@@ -28,7 +28,7 @@ class JockeyTest extends TestCase
         $response = $this->actingAs($admin)->post("/admin/jockeys/$unapprovedJockey->id/approve");
 
         // do we redirect back to /admin/jockeys/pending
-        $response->assertRedirect("/admin/jockeys/pending");
+        $response->assertRedirect("/jockey/{$unapprovedJockey->id}");
         
         $this->assertEquals(1, $unapprovedJockey->fresh()->approved);
 

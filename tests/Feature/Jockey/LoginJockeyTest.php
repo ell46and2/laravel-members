@@ -30,7 +30,7 @@ class LoginJockeyTest extends TestCase
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors('email');
         $errors = session('errors');
-        $this->assertEquals($errors->get('email')[0],'No account found, or your account is awaiting approval.');
+        $this->assertEquals($errors->get('email')[0],'You do not have access, or your account is awaiting approval.');
 
         $this->assertFalse(Auth::check()); 
     }

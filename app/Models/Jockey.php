@@ -54,10 +54,17 @@ class Jockey extends User
             'jockey_id',
             'id',
             'id',
-            'id'
-        );
+            'racing_excellence_id'
+        )->distinct();
     }
 
+    /*
+        Scopes
+    */
+    public function scopeActive($query)
+    {
+       return $query->where('approved', true)->where('status', '!=', 'deleted'); 
+    }
 
     /*
     	Utilities
@@ -151,12 +158,37 @@ class Jockey extends User
 
     public function recentActivities()
     {
-        return $this->activities()->with('type', 'coach', 'location')->where('end', '<', now())->orderBy('end', 'desc');
+        return $this->activities()->with('type', 'coach', 'location')->where('start', '<', now())->orderBy('start', 'desc');
     }
 
     public function dashboardRecentActivities()
     {
         return $this->recentActivities()->take(10);
+    }
+
+    public function lastFiveActivities()
+    {
+        return $this->recentActivities()->take(5);
+    }
+
+    public function lastFiveRacingExcellence()
+    {
+        return $this->racingExcellences()->with('coach')->orderBy('start', 'desc')->take(5);
+    }
+
+    public function trainingAllowanceThisMonth()
+    {
+        $licenceDate = $this->licence_date;
+
+        if(!$licenceDate) return 4;
+
+        if($licenceDate->day < 15) {
+            $cutOff = $licenceDate->addMonths(2)->endOfMonth();
+        } else {
+            $cutOff = $licenceDate->addMonths(3)->endOfMonth();
+        }
+
+        return $cutOff > now() ? 6 : 4;
     }
 
     /*
@@ -217,5 +249,65 @@ class Jockey extends User
     public static function getExternalJockeyAvatar()
     {
         return config('jcp.buckets.avatars') . 'default_avatar.png';
+    }
+
+    public function isAssignedToCoach($coachId)
+    {
+        return $this->coaches->pluck('id')->contains($coachId);
+    }
+
+    /*
+        Attributes
+     */
+    public function getFormattedPrizeMoneyAttribute()
+    {
+        if($this->prize_money === null) {
+            return '-';
+        }
+        return '£' . invoiceNumberFormat($this->prize_money);
+    }
+
+    public function getFormattedAssociatedContentAttribute()
+    {
+        if($this->associated_content === null) {
+            return '-';
+        }
+        return "<a href='{$this->associated_content}' target='_blank'>Stewards enquiries/reports</a>";
+    }
+
+    public function getFormattedWinsToRidesAttribute()
+    {
+        if($this->rides === null) {
+            return '-';
+        }
+        return toOneDecimal(($this->wins / $this->rides) * 100) . '%'; 
+    }
+
+    public function getFormattedLicenceType()
+    {
+        if(!$this->licence_type) return '-';
+
+        return $this->licence_type;
+    }
+
+    public function getFormattedRides()
+    {
+        if(!$this->rides) return '-';
+
+        return $this->rides;
+    }
+
+    public function getFormattedWins()
+    {
+        if(!$this->rides) return '-';
+
+        return $this->rides;
+    }
+
+    public function getFormattedTrainer()
+    {
+        if(!$this->trainer_name) return '-';
+
+        return $this->trainer_name;
     }
 }

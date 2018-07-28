@@ -16,6 +16,13 @@ class ApprovedJockeyController extends Controller
 
     	Mail::to($jockey)->queue(new JockeyApprovedEmail($jockey));
 
-    	return redirect()->route('admin.jockeys.pending'); // Maybe add flash message to say jockey approved OR return json if using vue.
+    	return redirect()->route('jockey.show', $jockey); // Maybe add flash message to say jockey approved OR return json if using vue.
+    }
+
+    public function destroy(Jockey $jockey)
+    {
+    	$jockey->delete();
+
+    	return redirect()->route('admin.jockeys.pending');
     }
 }

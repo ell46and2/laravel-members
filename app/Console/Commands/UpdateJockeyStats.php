@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Api\ApiGateway;
+use App\Models\Jockey;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
@@ -21,6 +23,8 @@ class UpdateJockeyStats extends Command
      */
     protected $description = 'Update the stats of each jockey who has an api id.';
 
+    private $apiGateway; 
+
     /**
      * Create a new command instance.
      *
@@ -38,42 +42,49 @@ class UpdateJockeyStats extends Command
      */
     public function handle()
     {
-        $client = new Client();
+        $this->apiGateway = new ApiGateway;
 
-        $response = $client->request('POST', 'https://api01.britishhorseracing.com/sportsoffice/v1/authentication', [
-            'form_params' => config('jcp.sports_office_api.auth_params')
-        ]);
-
-        $response = $response->getBody()->getContents();
-        $accessToken = json_decode($response)->access_token;
-
-        $jockeyId = '993419'; // would come from loop through all jockeys then $jockey->api_id
-
-        $response= $client->request('GET', "https://api01.britishhorseracing.com/sportsoffice/v2/jockeys/{$jockeyId}", [
-            'headers' => [
-                'Authorization' => $accessToken
-            ]
-        ]);
-
-        $response = $response->getBody()->getContents();
-
-        dd(json_decode($response)->data[0]);
-
-        // echo '<pre>';
-        // print_r($response);
-        exit();
-
-
-        /* Example API Test Currently
-            Need to create loop through all Jockeys with an api id,
-            then do a get request to britishhorseracing and update their stats.
-            Maybe run a queued job?
-
-        */
-        // $response= $client->request('GET', 'https://reqres.in/api/users');
-        // $response = $response->getBody()->getContents();
-        // echo '<pre>';
-        // print_r($response);
-        // exit();
+        $this->updateJockeys();
     }
+
+    private function updateJockeys()
+    {
+        $jockeys = $this->getJockeysWithApiIds();
+
+        if(!$jockeys) {
+            exit();
+        }
+
+        foreach ($jockeys->chunk(40) as $chunk) {
+            $chunk->each(function($jockey) {
+                $this->updateJockey($jockey);
+            });
+        }       
+    }
+
+    private function updateJockey(Jockey $jockey)
+    {     
+        $statsFromAPI = $this->apiGateway->getJockeyStats($jockey->api_id);
+
+        if(!$statsFromAPI) {
+            return;
+        }
+
+        $jockey->update([
+            'wins' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfWins : null,
+            'rides' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfRides : null,
+            'lowest_riding_weight' => isset($statsFromAPI->lowestRidingWeight) ? $statsFromAPI->lowestRidingWeight : null,
+            'licence_type' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->licenceType : null,
+            // 'licence_date'
+            'prize_money' => $statsFromAPI->seasonDetails ? $this->apiGateway->calcPrizeMoney($statsFromAPI->seasonDetails) : null,
+            'associated_content' => 'https://www.britishhorseracing.com/racing/stewards-reports/#!?q=' . $statsFromAPI->name,
+            'trainer_name' => $statsFromAPI->trainerName,
+        ]);
+    }
+
+    private function getJockeysWithApiIds()
+    {
+        return Jockey::whereNotNull('api_id')->get();
+    }
+
 }

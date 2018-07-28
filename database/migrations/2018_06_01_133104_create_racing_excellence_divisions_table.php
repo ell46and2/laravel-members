@@ -15,11 +15,12 @@ class CreateRacingExcellenceDivisionsTable extends Migration
     {
         Schema::create('racing_excellence_divisions', function (Blueprint $table) {
             $table->increments('id');
-            // $table->integer('division_number')->unsigned(); // 1 for div1, 2 for div2 (So easier to order divisions)
+            $table->integer('division_number')->unsigned(); // 1 for div1, 2 for div2
             $table->integer('racing_excellence_id')->unsigned()->index();
+            $table->dateTime('posted_to_api')->nullable();
             $table->timestamps();
 
-            $table->foreign('racing_excellence_id')->references('id')->on('racing_excellences');
+            // $table->foreign('racing_excellence_id')->references('id')->on('racing_excellences');
         });
     }
 

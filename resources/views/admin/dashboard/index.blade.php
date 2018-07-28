@@ -1,13 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 
-<div class="nummessages">
-	{{-- pass auth()->user()->unreadMessagesCount() into layout partial via view composer --}}
-	You have {{ auth()->user()->unreadMessagesCount() }} unread {{ str_plural('message', auth()->user()->unreadMessagesCount()) }}
-</div>
 
-<div class="container">
+<div class="pt-1 pb-3 flow-vertical--1">
+	@include('layouts.partials._user-bar')
+	
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

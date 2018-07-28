@@ -14,7 +14,7 @@ class JockeyController extends Controller
     		'jockeys',
     		'jockeys.coaches',
     	])
-    	->findOrFail(auth()->user()->id);
+    	->findOrFail($this->currentUser->id);
 
     	return view('coach.jockey.index', compact('coach'));
     }

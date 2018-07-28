@@ -19,7 +19,7 @@ class CreateSeriesScoringsTable extends Migration
             $table->integer('place')->unsigned();
             $table->integer('points')->unsigned();
 
-            $table->foreign('series_type_id')->references('id')->on('series_types');
+            // $table->foreign('series_type_id')->references('id')->on('series_types');
         });
     }
 

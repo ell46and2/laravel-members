@@ -132,7 +132,8 @@
 	</div>
 </div>
 
-<div class="container">
+{{--
+	<div class="container">
     <div class="row justify-content-center">
 
   
@@ -166,7 +167,6 @@
 					<br>
 					<div>
 						<h3>Upcoming Activities</h3>
-						{{-- Split out into a partial --}}
 						@foreach($coach->dashboardUpcomingActivities as $activity)
 							{{ $activity->id }}<br>
 							{{ $activity->formattedType }}<br>
@@ -180,7 +180,6 @@
 					<br>
 					<div>
 						<h3>Recent Activities</h3>
-						{{-- Split out into a partial --}}
 						@foreach($coach->dashboardRecentActivities as $activity)
 							{{ $activity->id }}<br>
 							{{ $activity->formattedType }}<br>
@@ -211,6 +210,7 @@
         </div>
     </div>
 </div>
+--}}
 
 {{-- <notifications
 	resource="{{ json_encode($notificationsResource) }}"

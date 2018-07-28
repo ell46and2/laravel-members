@@ -1,0 +1,78 @@
+.image-thumbnail {
+    $self: &;
+
+    @extend %transition;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: $radius;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 9px 0 rgba($black, 0.1);
+
+    // Overlay
+    &:before {
+        @extend %transition;
+
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba($black, 0.15);
+        opacity: 0;
+    }
+
+    // Make it a square!
+    &:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    // Hover / focus
+    @include hover() {
+        box-shadow: 0 0 12px 0 rgba($black, 0.15);
+    }
+
+    // Active
+    &:active {
+        box-shadow: 0 0 2px 0 rgba($black, 0.1);
+        transform: scale(0.98);
+    }
+
+    // Hover / focus / active
+    @include hover(true) {
+
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    // Magnify icon
+    &__magnify-icon {
+        @extend %transition;
+
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+
+        #{ $self }:active &,
+        #{ $self }:hover &, {
+            opacity: 1;
+        }
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $white;
+            filter: drop-shadow(0 2px 4px rgba($black, 0.5) );
+        }
+    }
+}
