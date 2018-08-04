@@ -26,33 +26,43 @@
     font-weight: bold;
     z-index: 999;
 
+    @include media-breakpoint-up(xs) {
+        background: #FF851B;
+        color: $white;
+    }
+
     @include media-breakpoint-up(sm) {
         background: #01FF70;
         color: $white;
-        content: "SM";
     }
 
     @include media-breakpoint-up(md) {
         background: #B10DC9;
         color: $white;
-        content: "MD";
     }
 
     @include media-breakpoint-up(lg) {
         background: #0074D9;
         color: $white;
-        content: "LG";
     }
 
     @include media-breakpoint-up(xl) {
+        background: #39CCCC;
+        color: $white;
+    }
+
+    @include media-breakpoint-up(xxl) {
         background: #FF4136;
         color: $white;
-        content: "XL";
     }
 
     &:after{
         display: block;
-        content: "XS";
+        content: "XXS";
+
+        @include media-breakpoint-up(xs) {
+            content: "XS";
+        }
 
         @include media-breakpoint-up(sm) {
             content: "SM";
@@ -68,6 +78,10 @@
 
         @include media-breakpoint-up(xl) {
             content: "XL";
+        }
+
+        @include media-breakpoint-up(xxl) {
+            content: "XXL";
         }
     }
 }

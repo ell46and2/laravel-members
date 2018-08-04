@@ -50,6 +50,7 @@ class ActivityController extends Controller
             	'location_name' => $request->location_name,
                 'location_id' => $request->location_id,
                 'group' => count(request()->jockeys) > 1,
+                'information' => $request->information,
         	]);
 
         	$activity->addJockeysById(array_keys(request()->jockeys));
@@ -67,7 +68,7 @@ class ActivityController extends Controller
             // return back with error message
         }
     	
-    	return redirect()->route('coach.activity.show', $activity);
+    	return redirect()->route('activity.show', $activity);
     }
 
     /*
@@ -87,14 +88,14 @@ class ActivityController extends Controller
         });
     }
 
-    public function show(Activity $activity)
-    {   
-        // $video = $activity->attachments->first(); // NOTE: Remove, for testing purposes
+    // public function show(Activity $activity)
+    // {   
+    //     // $video = $activity->attachments->first(); // NOTE: Remove, for testing purposes
 
-        $attachmentsResource = AttachmentResource::collection($activity->attachments);
+    //     $attachmentsResource = AttachmentResource::collection($activity->attachments);
 
-        return view('coach.activity.show', compact('activity', 'attachmentsResource'));
-    }
+    //     return view('coach.activity.show', compact('activity', 'attachmentsResource'));
+    // }
 
     private function create($group = false) // maybe move to OneToOneActivityController and have one for group too.
     {
@@ -102,7 +103,7 @@ class ActivityController extends Controller
         
         $coach = Coach::find($this->currentUser->id);
 
-        $jockeysResource = UserSelectResource::collection($coach->jockeys);
+        $jockeysResource = UserSelectResource::collection($coach->jockeys()->with('role')->get());
 
         $activityTypes = ActivityType::all();
 
@@ -135,7 +136,7 @@ class ActivityController extends Controller
 
         $locations = ActivityLocation::all();
 
-        $jockeysResource = UserSelectResource::collection($activity->coach->jockeys);
+        $jockeysResource = UserSelectResource::collection($activity->coach->jockeys()->with('role')->get());
 
         return view('coach.activity.edit', compact('activity', 'jockeysResource', 'activityTypes', 'locations'));
     }
@@ -151,7 +152,8 @@ class ActivityController extends Controller
             'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
             'duration' => $request->duration ? $request->duration : null,
             'location_id' => $request->location_id,
-            'location_name' => $request->location_name
+            'location_name' => $request->location_name,
+            'information' => $request->information,
         ]);
 
         if($activity->start > Carbon::now() && $this->typeOrStartOrLocationChanged($previous, $activity)) {
@@ -159,7 +161,7 @@ class ActivityController extends Controller
         }
         
 
-        return redirect()->route('coach.activity.show', $activity);
+        return redirect()->route('activity.show', $activity);
     }
 
     public function groupUpdate(Request $request, Activity $activity) // Add form request
@@ -173,7 +175,8 @@ class ActivityController extends Controller
             'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
             'duration' => $request->duration ? $request->duration : null,
             'location_id' => $request->location_id,
-            'location_name' => $request->location_name
+            'location_name' => $request->location_name,
+            'information' => $request->information,
         ]);
 
         $this->updateActivitysJockeys($activity);
@@ -182,7 +185,7 @@ class ActivityController extends Controller
             $this->dispatch(new NotifyJockeyAmendedActivity($activity));
         } 
 
-        return redirect()->route('coach.activity.show', $activity);
+        return redirect()->route('activity.show', $activity);
     }
 
     // Move to trait

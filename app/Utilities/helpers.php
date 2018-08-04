@@ -123,9 +123,52 @@ if (! function_exists('pointsForPlace')) {
     }
 }
 
-if (! function_exists('getPercentagee')) {
+if (! function_exists('getPercentage')) {
     function getPercentage($num, $total)
     {
         return toTwoDecimals(($num / $total) * 100);
     }
 }
+
+if (! function_exists('pdpFieldToLink')) {
+    function pdpFieldToLink($field)
+    {
+        return 'pdp.' . str_replace('_', '-', $field);
+    }
+}
+
+if (! function_exists('pdpNextPrevLinks')) {
+    function pdpNextPrevLinks($currentUrl)
+    {
+        $currentField = str_replace('-', '_', explode('/', $currentUrl)[2]);
+
+        $fields = collect(config('jcp.pdp_fields'))->pluck('field')->toArray();
+
+        $positionCurrentField = array_search($currentField, $fields);
+
+        $links = new \stdClass();
+
+        if($positionCurrentField >= (count($fields) - 1)) {
+            $links->next = null;
+        } else {
+            $links->next =  pdpFieldToLink($fields[$positionCurrentField + 1]);
+        }
+
+        if($positionCurrentField == 0) {
+            $links->previous = null;
+        } else {
+           $links->previous = pdpFieldToLink($fields[$positionCurrentField - 1]);
+        }
+
+        return $links;
+    }
+}
+
+if (! function_exists('isCurrentPdpPage')) {
+    function isCurrentPdpPage($field)
+    {
+        $currentField = str_replace('-', '_', explode('/', request()->path())[2]);
+        return $field === $currentField;
+    }
+}
+

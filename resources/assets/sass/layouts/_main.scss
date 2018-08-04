@@ -1,9 +1,16 @@
 .main {
-    padding: 0 50px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 $spacer;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
         flex: 1;
         margin-right: $notification-panel-toggle-width;
         margin-left: 300px;
+        padding: 0 50px;
+    }
+
+    &__inner {
+        flex: 1;
     }
 }

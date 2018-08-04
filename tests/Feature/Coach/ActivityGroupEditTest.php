@@ -57,7 +57,7 @@ class ActivityGroupEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey1, $jockey2, $jockey3, $jockey4) {
         	$response->assertStatus(302);
-     		$response->assertRedirect("/coach/activity/{$activity->id}");
+     		$response->assertRedirect("/activity/{$activity->id}");
 
      		$this->assertEquals($activity->activity_type_id, 2);
   			$this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2028 13:00'));

@@ -33,7 +33,7 @@
         #{ $self }__component--half & {
             max-width: 100%;
 
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(sm) {
                 max-width: 50%;
             }
         }

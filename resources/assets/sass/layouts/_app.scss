@@ -1,7 +1,7 @@
 .app {
     @extend %transition--slide;
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
         display: flex;
         min-height: 100vh;
     }
@@ -9,11 +9,11 @@
     &.is-active--left {
         transform: translate3d(calc(100% - #{ $sidebar-gutter-mobile }), 0, 0);
 
-        @include media-breakpoint-up(sm) {
+        @include media-breakpoint-up(xs) {
             transform: translate3d(#{ $nav-width-tablet }, 0, 0);
         }
 
-        @include media-breakpoint-up(lg) {
+        @include media-breakpoint-up(md) {
             transform: none;
         }
     }
@@ -21,11 +21,11 @@
     &.is-active--right {
         transform: translate3d(calc(-100% + #{ $sidebar-gutter-mobile }), 0, 0);
 
-        @include media-breakpoint-up(sm) {
+        @include media-breakpoint-up(xs) {
             transform: translate3d(-#{ $nav-width-tablet }, 0, 0);
         }
 
-        @include media-breakpoint-up(lg) {
+        @include media-breakpoint-up(md) {
             transform: none;
         }
     }

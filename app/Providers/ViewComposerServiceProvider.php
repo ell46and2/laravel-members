@@ -16,25 +16,9 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.base', function($view) {
-            // $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
             $view->with('notificationsResource', new NotificationsResource(null));
             $view->with('notificationCount', auth()->user()->unreadNotifications()->count());
         });
-
-        // View::share('numUnreadMessages', function() {
-        //     return auth()->user()->unreadMessagesCount();
-        // });
-
-        // view()->composer('coach.dashboard.index', function($view) {
-        //     $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
-        // });
-        // view()->composer('jockey.dashboard.index', function($view) {
-        //     $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
-        // });
-        // view()->composer('jet.dashboard.index', function($view) {
-        //     $view->with('numUnreadMessages', auth()->user()->unreadMessagesCount());
-        // });
-
     }
 
     /**

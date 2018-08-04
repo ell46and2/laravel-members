@@ -18,7 +18,9 @@ class Controller extends BaseController
     {
     	$this->middleware(function ($request, $next) {
             if($this->currentUser = auth()->user()) {
+                $this->currentRole = $this->currentUser->role_name;
             	view()->share('currentUser', $this->currentUser);
+                view()->share('currentRole', $this->currentRole);
             	view()->share('numUnreadMessages', $this->currentUser->unreadMessagesCount());
             }
 

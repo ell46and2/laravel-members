@@ -1,0 +1,120 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Add activities to invoice</h1>
+                    You can view your submitted invoices below, if you wish to create a new invoice
+                </div>
+                <div class="panel__alert panel__alert--has-icon">
+                    <div>
+                        {% include "svg/info-circle.svg" %}
+                        Can't see an activity? Contact the Jockey Coaching Programme admin.
+                    </div>
+                    <div>
+                        <a class="button button--white" href="">Contact admin</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - List of activities
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        List of activities in the past 60 days
+                    </h2>
+                    <div class="panel__header-meta">
+                        <button class="[ button button--primary ] [ mr-1 ]" type="button">Select all</button>
+                        <button class="button button--primary" type="button">Deselect all</button>
+                    </div>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Activity</th>
+                                <th>Location</th>
+                                <th>Jockey</th>
+                                <th>Date</th>
+                                <th>Duration</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in content.invoice_activities %}
+                                <tr>
+                                    <td class="table__checkbox-column">
+                                        <div class="[ custom-control custom-checkbox ] [ table__checkbox ]">
+                                            <input type="checkbox" class="custom-control-input" id="checkbox-{{ loop.index }}">
+                                            <label class="custom-control-label" for="checkbox-{{ loop.index }}"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="table__link" href="">{{ item.activity }}</a>
+                                    </td>
+                                    <td>{{ item.location }}</td>
+                                    <td>
+                                        {% if item.jockey == "Group" %}
+                                            <div class="d-flex align-items-center">
+                                                <div class="table__icon">
+                                                    {% include "svg/group.svg" %}
+                                                </div>
+                                                <div>
+                                                    {{ item.jockey }}
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            {{ item.jockey }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.duration }} min</td>
+                                    <td class="table__icon-column">
+                                        <a class="table__icon-button" href="">
+                                            {% include "svg/edit.svg" %}
+                                        </a>
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="button button--primary" href="">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Submit button
+        #####################################}
+        <button class="button button--success button--block" type="submit">Add selected activities to invoice</button>
+
+    </div>
+{% endblock %}

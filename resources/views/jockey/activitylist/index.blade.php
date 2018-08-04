@@ -40,7 +40,7 @@
                                     value="ca"
                                     {{ request()->type == 'ca' ? ' selected="selected"' : '' }}
                                 >
-                                    Competency Assessment
+                                    Skills Profile
                                 </option>
                             </select>
                         </div>

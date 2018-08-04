@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="pt-1 pb-3 flow-vertical--1">
-	@include('layouts.partials._user-bar')
+	
 
 	<div class="flow-vertical--2">
 		<div class="panel">
@@ -51,15 +51,9 @@
 		        </div>
 		    </div>
 		</div>
-
-		<div class="alert alert--error">
-		    <div>
-		        You have <span class="badge badge-light">{{ $numUnreadMessages }} new</span> unread {{ str_plural('message', $numUnreadMessages) }}
-		    </div>
-		    <div>
-		        <a class="button button--white" href="{{ route('messages.index') }}">View messages</a>
-		    </div>
-		</div>
+			
+		@include('layouts.partials._messages-alert')
+		
 
 		<div class="row">
 		    <div class="[ col-md-12 col-xl-8 mb-2 mb-xl-0 ] [ flow-vertical--2 ]">
@@ -105,7 +99,7 @@
 		                                    <td>{{ $activity->formattedStartTime }}</td>
 		                                    <td>{{ $activity->formattedLocation }}</td>
 		                                    <td class="text-right">
-		                                        <a class="button button--primary" href="{{ route('jockey.activity.show', $activity) }}">View</a>
+		                                        <a class="button button--primary" href="{{ route('activity.show', $activity) }}">View</a>
 		                                    </td>
 		                                </tr>
 		                            @endforeach
@@ -121,12 +115,12 @@
 		        </div>
 
 		        
-		        {{-- Panel - Competency assessment --}}
+		        {{-- Panel - Skills Profile --}}
 		        <div class="panel">
 		            <div class="panel__inner">
 		                <div class="panel__header">
 		                    <h2 class="panel__heading">
-		                        Competency assessment
+		                        Skills Profile
 		                    </h2>
 		                    <div class="panel__header-meta">
 		                        Last updated on 23/05/2018
@@ -164,7 +158,7 @@
 		                    </div>
 		                </div>
 
-		                <a class="panel__call-to-action" href="">View all competency assessments</a>
+		                <a class="panel__call-to-action" href="">View all Skills Profiles</a>
 		            </div>
 		        </div>
 		    </div>
@@ -283,7 +277,7 @@
 							{{ $activity->start->format('d/m/Y') }}<br>
 							{{ $activity->start->format('H:i') }}<br>
 							{{ $activity->formattedLocation }}<br>
-							<a href="{{ route('jockey.activity.show', $activity) }}">View</a>
+							<a href="{{ route('activity.show', $activity) }}">View</a>
 							<br><br>
 						@endforeach
 					</div>
@@ -297,7 +291,7 @@
 							{{ $activity->start->format('d/m/Y') }}<br>
 							{{ $activity->start->format('H:i') }}<br>
 							{{ $activity->formattedLocation }}<br>
-							<a href="{{ route('jockey.activity.show', $activity) }}">View</a>
+							<a href="{{ route('activity.show', $activity) }}">View</a>
 							<br><br>
 						@endforeach
 					</div>

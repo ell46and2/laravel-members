@@ -3,7 +3,7 @@
 use App\Models\Activity;
 use App\Models\Admin;
 use App\Models\Coach;
-use App\Models\CompetencyAssessment;
+use App\Models\SkillProfile;
 use App\Models\Jet;
 use App\Models\Jockey;
 use App\Models\Notification;
@@ -319,7 +319,7 @@ class UserTableSeeder extends Seeder
         }
 
         for ($i=0; $i <50 ; $i++) { 
-            $competencyAssessment = factory(CompetencyAssessment::class)->create([
+            $skillProfile = factory(SkillProfile::class)->create([
                 'start' => Carbon::now()->addDays($i),
                 'jockey_id' => $jockey->id,
                 'coach_id' => $coach->id

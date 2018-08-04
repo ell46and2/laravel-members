@@ -12,9 +12,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
-    <link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#cc88cc">
+    <link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#1e70b7">
     <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#cc88cc">
+    <meta name="msapplication-TileColor" content="#1e70b7">
     <meta name="msapplication-config" content="/assets/images/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
@@ -30,8 +30,12 @@
         {% include "partials/site-nav.html" %}
 
         <main class="main">
-            {% block content %}
-            {% endblock %}
+            {% include "partials/user-bar.html" %}
+
+            <div class="main__inner">
+                {% block content %}
+                {% endblock %}
+            </div>
 
             {% include "partials/site-foot.html" %}
         </main>
@@ -81,6 +85,23 @@
                 notificationPanel.classList.toggle('is-active');
                 headerNotificationPanelToggle.classList.toggle('is-active');
                 body.classList.toggle('is-no-scroll');
+            });
+        });
+
+        /*****************************************
+            Input dropdown
+        ******************************************/
+        var dropdowns = document.querySelectorAll('.js-input-dropdown');
+
+        dropdowns.forEach(function() {
+            var input = this.querySelector('.js-input-dropdown__input');
+
+            input.addEventListener('focus', function() {
+                console.log('focussed');
+            });
+
+            input.addEventListener('blur', function() {
+                console.log('blurred');
             });
         });
     </script>

@@ -1,5 +1,5 @@
 <template>
-	<div class="media mt-4 mb-4" :id="user.id" @click.prevent="handleSelect">
+	<!-- <div class="media mt-4 mb-4" :id="user.id" @click.prevent="handleSelect">
 		<input type="checkbox" :name="`jockeys[${user.id}]`" :id="`jockeys[${user.id}]`" v-model="user.selected">
 		<label 
 			:for="`jockeys[${user.id}]`"
@@ -9,10 +9,27 @@
 			{{ user.selected ? 'selected' : 'not selected' }}
 			<img class="mr-3" :src="user.avatar" :alt="user.name">
 			<p>{{ user.name }}</p>
-		</label>
+		</label> -->
 <!-- 		<div>
 			<a href="#" v-if="canRemove && selected">remove</a>
 		</div> -->
+	<!-- </div> -->
+	<div class="col-md-3">
+		<div class="[ user-checkbox ]" :id="user.id" @click.prevent="handleSelect">
+	        <input 
+	        class="[ user-checkbox__input ] [ sr-only ]" 
+	        type="checkbox" 
+	        :name="`jockeys[${user.id}]`" 
+	        :id="`jockeys[${user.id}]`" 
+	        v-model="user.selected"
+	        />
+	        <label class="user-checkbox__label" :for="`jockeys[${user.id}]`">
+	            <div class="[ user-checkbox__avatar ] [ avatar ]">
+	                <div class="avatar__image" :style="`background-image:url('${user.avatar}');`" :alt="user.name"></div>
+	            </div>
+	            <span class="user-checkbox__name">{{ user.name }}</span>
+	        </label>
+	    </div>
 	</div>
 </template>
 

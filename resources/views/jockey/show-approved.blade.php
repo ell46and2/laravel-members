@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-    $isAdmin = auth()->user()->isAdmin();
+    $isAdmin = $currentUser->isAdmin();
 @endphp
 
 @if (session()->has('error'))
@@ -83,7 +83,7 @@
 
 <br><br><br>
 
-@if($isAdmin || $jockey->isAssignedToCoach(auth()->user()->id))
+@if($isAdmin || $jockey->isAssignedToCoach($currentUser->id))
 	<div>
 		<h3>Recent Activities (last 5)</h3>
 		<div class="panel__main">

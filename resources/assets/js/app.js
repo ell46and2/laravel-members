@@ -62,6 +62,11 @@ Vue.component('jockey-assign', require('./components/Assign/JockeyAssign.vue'));
 Vue.component('racing-excellence-results', require('./components/RacingExcellence/RacingExcellenceResults.vue'));
 Vue.component('assign-coach-to-race', require('./components/RacingExcellence/AssignCoachToRace.vue')); 
 
+/*
+    Flash Message
+ */
+Vue.component('flash-message', require('./components/FlashMessage/FlashMessage.vue'));
+
 const app = new Vue({
     el: '#app',
     mounted() {

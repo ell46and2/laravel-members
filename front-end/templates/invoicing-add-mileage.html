@@ -1,0 +1,67 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Add mileage to invoice</h1>
+                    You can view your submitted invoices below, if you wish to create a new invoice
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - List of activities
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Enter mileage item
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form__label" for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter description">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form__label" for="date">Date</label>
+                            <input type="text" class="form-control" id="date" placeholder="Enter date">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form__label" for="mileage">Mileage</label>
+                            <input type="text" class="form-control" id="mileage" placeholder="Enter mileage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Submit button
+        #####################################}
+        <button class="button button--success button--block" type="submit">Add to invoice</button>
+
+    </div>
+{% endblock %}

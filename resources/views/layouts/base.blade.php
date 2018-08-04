@@ -26,7 +26,12 @@
         @include('layouts.partials._site-nav')
 
         <main class="main">
-            @yield('content')
+            @include('layouts.partials._user-bar')
+
+            <div class="flow-vertical--3">
+                
+                @yield('content')
+            </div>
 
             @include('layouts.partials._site-foot')
         </main>
@@ -34,6 +39,10 @@
         @include('layouts.partials._notification-panel')
 
         <confirmation></confirmation>
+        <flash-message
+            :success="{{ json_encode(Session::get('success')) }}"
+            :error="{{ json_encode(Session::get('error')) }}"
+        ></flash-message>
     </div>          
         
 </body>

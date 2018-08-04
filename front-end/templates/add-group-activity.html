@@ -1,0 +1,180 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="flow-vertical--3">
+
+    {####################################
+     Unread Messages Notification
+    #####################################}
+            <div class="alert alert--error">
+                <div class="alert__text alert__text--has-icon">
+                    {% include "svg/info-circle.svg" %}
+                    <span class="alert__text-inner">
+                        You have a <span class="badge badge-pill badge-light">7 unread</span> message
+                    </span>
+                </div>
+                <div class="alert__buttons">
+                    <a class="button button--white" href="">View Messages</a>
+                </div>
+            </div>
+
+
+    {####################################
+     Add Group Activity head
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__main">
+                        <h1 class="[ heading--1 ] [ mb-1 ]">Add Group Activity</h1>
+                        Your Activity Log shows your recent and upcoming activities
+                    </div>
+                </div>
+            </div>
+
+    {####################################
+     Activity Type checkbox
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Choose Activity Type
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Select which group activity you would like to create</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row row--grid">
+                    {% for item in content.activity_type_checkboxes %}
+                        <div class="col-md-4">
+                            <div class="icon-checkbox">
+                                <input class="[ icon-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="{{ loop.index }}">
+                                <label class="icon-checkbox__label" for="{{ loop.index }}">
+                                    <div class="icon-checkbox__icon">
+                                        {% include "svg/" ~ item.icon ~ ".svg" %}
+                                    </div>
+                                    <span class="icon-checkbox__name">{{ item.name }}</span>
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {####################################
+    Date Time and Duration
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Choose Date, Time & Duration
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Description</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row row--grid">
+                    <div class="col">Select Date - Placeholder</div>
+                    <div class="col">Select Start Time - Placeholder</div>
+                    <div class="col">Select Duration - Placeholder</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {####################################
+    Choose a Jockey
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Choose a Jockey
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Select which jockeys you want to create group activity for</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row row--grid">
+                    {% for item in content.jockey_checkboxes %}
+                        <div class="col-md-3">
+                            <div class="user-checkbox">
+                                <input class="[ user-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="{{ loop.index }}">
+                                <label class="user-checkbox__label" for="{{ loop.index }}">
+                                    <div class="[ user-checkbox__avatar ] [ avatar avatar--{{ item.avatar_color }} ]">
+                                        <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                    </div>
+                                    <span class="user-checkbox__name">{{ item.name }}</span>
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {####################################
+    Choose a Location
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Choose Location
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Description</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row">
+                    <div class="col-3">
+                        <select class="form-control custom-select">
+                            <option selected>Select Location</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {####################################
+    Group Activity Information
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Group Activity Information
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Description</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Text Details"></textarea>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4 mt-3">
+                <button class="button button--primary button--success button--squared button--block" type="button">Create Activity</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

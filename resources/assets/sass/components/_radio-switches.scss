@@ -11,12 +11,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 6px 10px;
+        padding: 8px 10px 6px;
         border-top: 2px solid $blue;
         border-bottom: 2px solid $blue;
         text-align: center;
         color: $blue--lighter;
         cursor: pointer;
+        line-height: 1;
 
         @include hover(true) {
             background: darken($white, 3%);

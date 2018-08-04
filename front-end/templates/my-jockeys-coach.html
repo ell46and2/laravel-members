@@ -1,0 +1,114 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="flow-vertical--3">
+
+    {####################################
+     Unread Messages Notification
+    #####################################}
+            <div class="alert alert--error">
+                <div class="alert__text alert__text--has-icon">
+                    {% include "svg/info-circle.svg" %}
+                    <span class="alert__text-inner">
+                        You have a <span class="badge badge-pill badge-light">7 unread</span> message
+                    </span>
+                </div>
+                <div class="alert__buttons">
+                    <a class="button button--white" href="">View Messages</a>
+                </div>
+            </div>
+
+
+    {####################################
+     My Jockeys head
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__main">
+                        <h1 class="[ heading--1 ] [ mb-1 ]">My Jockeys</h1>
+                        A list of jockeys you currently coach
+                    </div>
+                </div>
+            </div>
+
+    {####################################
+     Your Jockeys List
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Your Jockeys
+                        </h2>
+                    </div>
+
+                    <div class="panel__main">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Jockey</th>
+                                    <th>Email Address</th>
+                                    <th>Phone Number</th>
+                                    <th>Hours Coaching in last 30 days</th>
+                                    <th>Last Login</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in content.my_jockeys_coach %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="[ table__avatar ] [ avatar avatar--{{ item.avatar_color }} ]">
+                                                    <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                                </div>
+                                                {{ item.jockey }}
+                                                <a class="table__link" href="">{{ item.my_jockeys_coach }}</a>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.email_address }}</td>
+                                        <td>{{ item.phone_number }}</td>
+                                        <td>
+                                            <div class="progress-bar">
+                                                <span class="sr-only">Progress: {{ item.hours_coaching }}%</span>
+                                                <div class="progress-bar__bar" aria-hidden="true" role="presentation">
+                                                    <div class="progress-bar__primary" style="width: {{ item.hours_coaching }}%;"></div>
+                                                </div>
+                                                <div class="progress-bar__labels">
+                                                    <div>0 hours</div>
+                                                    <div>6 hours</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.last_login }}</td>
+                                        <td class="text-right">
+                                            <a class="button button--primary" href="">View</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <nav aria-label="Table Pagination" class="mt-2">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class="panel__split-call-to-action">
+                        <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
+                        <a class="panel__call-to-action" href="">Next</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+{% endblock %}

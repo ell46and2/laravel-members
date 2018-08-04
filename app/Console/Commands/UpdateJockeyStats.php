@@ -75,7 +75,7 @@ class UpdateJockeyStats extends Command
             'rides' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfRides : null,
             'lowest_riding_weight' => isset($statsFromAPI->lowestRidingWeight) ? $statsFromAPI->lowestRidingWeight : null,
             'licence_type' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->licenceType : null,
-            // 'licence_date'
+            // 'licence_date' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->issueDate : null,
             'prize_money' => $statsFromAPI->seasonDetails ? $this->apiGateway->calcPrizeMoney($statsFromAPI->seasonDetails) : null,
             'associated_content' => 'https://www.britishhorseracing.com/racing/stewards-reports/#!?q=' . $statsFromAPI->name,
             'trainer_name' => $statsFromAPI->trainerName,

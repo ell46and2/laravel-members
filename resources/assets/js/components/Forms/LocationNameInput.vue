@@ -1,8 +1,12 @@
 <template>
-	<div v-if="show">
-		<label for="location_name">Location Name</label>
-		<input type="text" name="location_name" v-model="value">
-	</div>	
+	<input
+		v-if="show"
+		class="form-control"
+		type="text" 
+		name="location_name" 
+		v-model="value" 
+		placeholder="Enter Location Name..."
+	>
 </template>
 
 <script>

@@ -5,6 +5,11 @@
         &:before {
             background: $white;
             box-shadow: inset 0 0 6px 0 rgba(0,0,0,0.10);
+            top: 0;
+        }
+
+        &:after {
+            top: 0;
         }
     }
 }

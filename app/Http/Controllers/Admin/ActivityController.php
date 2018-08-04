@@ -50,14 +50,14 @@ class ActivityController extends Controller
         return view('admin.activity.one-to-one.create', compact('coachesResource', 'activityTypes', 'locations'));
     }
 
-    public function show(Activity $activity)
-    {   
-        // $video = $activity->attachments->first(); // NOTE: Remove, for testing purposes
+    // public function show(Activity $activity)
+    // {   
+    //     // $video = $activity->attachments->first(); // NOTE: Remove, for testing purposes
 
-        $attachmentsResource = AttachmentResource::collection($activity->attachments);
+    //     $attachmentsResource = AttachmentResource::collection($activity->attachments);
 
-        return view('admin.activity.show', compact('activity', 'attachmentsResource'));
-    }
+    //     return view('admin.activity.show', compact('activity', 'attachmentsResource'));
+    // }
 
     public function store(StorePostFormRequest $request) // StorePostFormRequest
     {     
@@ -92,7 +92,7 @@ class ActivityController extends Controller
             // return back with error message
         }
     	
-    	return redirect()->route('admin.activity.show', $activity);
+    	return redirect()->route('activity.show', $activity);
     }
 
     public function edit(Activity $activity)
@@ -129,7 +129,7 @@ class ActivityController extends Controller
         
         $this->dispatch(new NotifyCoachAmendedActivity($activity));
 
-        return redirect()->route('admin.activity.show', $activity);
+        return redirect()->route('activity.show', $activity);
     }
 
     public function groupUpdate(Request $request, Activity $activity) // Add form request
@@ -155,7 +155,7 @@ class ActivityController extends Controller
 
         $this->dispatch(new NotifyCoachAmendedActivity($activity));
 
-        return redirect()->route('admin.activity.show', $activity);
+        return redirect()->route('activity.show', $activity);
     }
 
     public function getCoachesJockeys(Coach $coach)

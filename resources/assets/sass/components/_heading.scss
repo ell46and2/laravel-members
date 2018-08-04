@@ -1,0 +1,21 @@
+.heading {
+
+    &--1 {
+        @extend %heading--1;
+    }
+
+    &--2 {
+        @extend %heading--2;
+    }
+
+    &--has-button {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    &__button {
+        margin-left: 10px;
+        padding-top: 2px;
+        padding-bottom: 0;
+    }
+}

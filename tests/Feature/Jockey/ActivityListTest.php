@@ -7,6 +7,7 @@ use App\Models\Activity;
 use App\Models\Jockey;
 use App\Models\RacingExcellence;
 use App\Models\RacingExcellenceDivision;
+use App\Models\RacingExcellenceParticipant;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -102,7 +103,13 @@ class ActivityListTest extends TestCase
         $upcomingRacingExcellenceDivision2 = factory(RacingExcellenceDivision::class)->create([
             'racing_excellence_id' => $upcomingRacingExcellence->id
         ]);
-        $upcomingRacingExcellenceDivision1->addJockeysById(collect($jockey->id));
+        // $upcomingRacingExcellenceDivision1->addJockeysById(collect($jockey->id));
+
+        factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $upcomingRacingExcellence->id,
+            'division_id' => $upcomingRacingExcellenceDivision1->id,
+            'jockey_id' => $jockey->id,
+        ]);
 
         $pastRacingExcellence = factory(RacingExcellence::class)->create([
             'start' => Carbon::now()->subDays(1)
@@ -111,7 +118,12 @@ class ActivityListTest extends TestCase
             'racing_excellence_id' => $pastRacingExcellence->id
         ]);
 
-        $pastRacingExcellenceDivision->addJockeysById(collect($jockey->id));
+        // $pastRacingExcellenceDivision->addJockeysById(collect($jockey->id));
+        factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $pastRacingExcellence->id,
+            'division_id' => $pastRacingExcellenceDivision->id,
+            'jockey_id' => $jockey->id,
+        ]);
 
         $upcomingRacingExcellenceB = factory(RacingExcellence::class)->create([
             'start' => Carbon::now()->addDays(3)
@@ -122,7 +134,12 @@ class ActivityListTest extends TestCase
         $upcomingRacingExcellenceBDivision2 = factory(RacingExcellenceDivision::class)->create([
             'racing_excellence_id' => $upcomingRacingExcellenceB->id
         ]);
-        $upcomingRacingExcellenceBDivision2->addJockeysById(collect($jockey->id));
+        // $upcomingRacingExcellenceBDivision2->addJockeysById(collect($jockey->id));
+        factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $upcomingRacingExcellenceB->id,
+            'division_id' => $upcomingRacingExcellenceBDivision2->id,
+            'jockey_id' => $jockey->id,
+        ]);
 
         $upcomingRacingExcellenceC = factory(RacingExcellence::class)->create([
             'start' => Carbon::now()->addDays(6)
@@ -131,7 +148,12 @@ class ActivityListTest extends TestCase
             'racing_excellence_id' => $upcomingRacingExcellenceC->id
         ]);
 
-        $upcomingRacingExcellenceCDivision1->addJockeysById(collect($jockey->id));
+        // $upcomingRacingExcellenceCDivision1->addJockeysById(collect($jockey->id));
+        factory(RacingExcellenceParticipant::class)->create([
+            'racing_excellence_id' => $upcomingRacingExcellenceC->id,
+            'division_id' => $upcomingRacingExcellenceCDivision1->id,
+            'jockey_id' => $jockey->id,
+        ]);
 
         $events = $jockey->upcomingEvents()->take(10);
 

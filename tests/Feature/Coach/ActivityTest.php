@@ -46,12 +46,13 @@ class ActivityTest extends TestCase
             'start_time' => '13:00',
             'duration' => 30,
             'location_name' => 'Cheltenham racecourse',
+            'information' => 'Information',
             'jockeys' => [$jockey->id => "on"] // array of selected jockeys from checkboxes
         ]);
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
         	$response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
 
         	$this->assertTrue($activity->coach->is($coach));
         	$this->assertEquals($activity->jockeys->count(), 1);
@@ -61,6 +62,7 @@ class ActivityTest extends TestCase
         	$this->assertEquals(30, $activity->duration);
         	$this->assertEquals(Carbon::createFromFormat('d/m/Y H:i','26/11/2018 13:00')->addMinutes(30), $activity->end);
         	$this->assertEquals('Cheltenham racecourse', $activity->location_name);
+            $this->assertEquals('Information', $activity->information);
             // $this->assertEquals('Cheltenham racecourse', $activity->location);
             $this->assertNull($activity->location_id);
             $this->assertFalse($activity->group);
@@ -203,7 +205,7 @@ class ActivityTest extends TestCase
 
         tap(Activity::first(), function($activity) use ($response) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
             $this->assertEquals(null, $activity->duration);
             $this->assertEquals(null, $activity->end);
         });
@@ -320,7 +322,7 @@ class ActivityTest extends TestCase
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
 
             $this->assertTrue($activity->jockeys->first()->is($jockey));
 
@@ -356,7 +358,7 @@ class ActivityTest extends TestCase
 
         tap(Activity::first(), function($activity) use ($response, $coach, $jockey1, $jockey2, $jockey3) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
 
             $this->assertTrue($activity->coach->is($coach));
             $this->assertEquals($activity->jockeys->count(), 3);

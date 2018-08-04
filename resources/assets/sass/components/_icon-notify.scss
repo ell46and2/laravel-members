@@ -1,0 +1,26 @@
+.icon-notify {
+    position: relative;
+    height: 30px;
+
+    .icon {
+        position: absolute;
+        top: 7px;
+        left: 0;
+        width: 22px;
+        height: 22px;
+        fill: $blue;
+    }
+
+    &__badges {
+        position: relative;
+        display: flex;
+        padding-left: 12px;
+    }
+
+    &__badge {
+
+        & + & {
+            margin-left: 2px;
+        }
+    }
+}

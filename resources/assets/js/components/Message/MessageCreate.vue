@@ -16,6 +16,7 @@
 		<button 
 			@click.prevent="sendToAllCoaches"
 			class="btn btn-primary"
+			v-if="coachResource"
 		>
 			Send To All Coaches
 		</button>

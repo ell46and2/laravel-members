@@ -1,0 +1,287 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="pb-3 flow-vertical--3">
+        <div class="flow-vertical--3">
+            {####################################
+             Panel - Top
+            #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__main panel__main--3-columns">
+                        <div class="profile-summary">
+                            <div class="[ profile-summary__avatar ] [ avatar ]">
+                                <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                            </div>
+                            <div class="profile-summary__main">
+                                <h2 class="profile-summary__greeting-primary">Hi Jockey,</h2>
+                                <div class="profile-summary__greeting-secondary">Welcome back to your Jockey dashboard</div>
+                                <div>
+                                    <button class="button button--primary" type="button">View profile</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <dl class="definition-list">
+                                <dt>Licence type</dt>
+                                <dd>Apprentice</dd>
+
+                                <dt>Season rides</dt>
+                                <dd>51</dd>
+
+                                <dt>Season wins</dt>
+                                <dd>376</dd>
+
+                                <dt>Prize money</dt>
+                                <dd>&pound;306,146.25</dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <dl class="definition-list">
+                                <dt>Current trainer</dt>
+                                <dd>Name Surname</dd>
+
+                                <dt>Riding weight</dt>
+                                <dd>8st 5lbs</dd>
+
+                                <dt>Associated content</dt>
+                                <dd><a class="link--underlined" href="">Stewards enquiries/reports</a></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {####################################
+             Alert - error
+            #####################################}
+            <div class="alert alert--error">
+                <div>
+                    You have <span class="badge badge-light">7 new</span> unread messages
+                </div>
+                <div>
+                    <a class="button button--white" href="">View messages</a>
+                </div>
+            </div>
+
+            <div class="row row--wide-gutter">
+                <div class="[ col-md-12 col-xl-8 mb-2 mb-xl-0 ] [ flow-vertical--3 ]">
+                    {####################################
+                     Panel - Recent Activities
+                    #####################################}
+                    <div class="panel panel--is-stack">
+                        <div class="panel__inner">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    Recent Activities
+                                </h2>
+                                <div class="panel__nav-buttons">
+                                    <button class="panel__nav-button" type="button" disabled>
+                                        <span class="sr-only">Previous</span>
+                                        {% include "svg/angle-left.svg" %}
+                                    </button>
+                                    <button class="panel__nav-button" type="button">
+                                        <span class="sr-only">Next</span>
+                                        {% include "svg/angle-right.svg" %}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="panel__main">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Activity type</th>
+                                            <th>Coach</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Location</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in content.recent_activities %}
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="table__icon">
+                                                            {% include "svg/simulator.svg" %}
+                                                        </span>
+                                                        <a class="table__link" href="">{{ item.activity_type }}</a>
+                                                    </div>
+
+                                                </td>
+                                                <td>{{ item.coach }}</td>
+                                                <td>{{ item.date }}</td>
+                                                <td>{{ item.time }}</td>
+                                                <td>{{ item.location }}</td>
+                                                <td class="text-right">
+                                                    <a class="button button--primary" href="">View</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <a class="panel__call-to-action" href="">View all activities</a>
+                        </div>
+                        <button class="panel__stack" type="button">
+                            <span class="sr-only">Go to next page</span>
+                        </button>
+                    </div>
+
+                    {####################################
+                     Panel - Competency assessment
+                    #####################################}
+                    <div class="panel">
+                        <div class="panel__inner">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    Competency assessment
+                                </h2>
+                                <div class="panel__header-meta">
+                                    Last updated on 23/05/2018
+                                </div>
+                            </div>
+
+                            <div class="panel__main flow-vertical--3">
+                                <div class="bar-chart">
+
+                                    {% for item in content.competency_assessment.items %}
+                                        <div class="bar-chart__row">
+                                            <div class="bar-chart__label">
+                                                {{ item.label }}
+                                                <span class="sr-only">: 4</span>
+                                            </div>
+                                            <div class="[ bar-chart__bar ] [ progress-bar progress-bar--trans ]" aria-hidden="true" role="presentation">
+                                                <div class="progress-bar__bar">
+                                                    <div class="progress-bar__primary" style="width: {{ (item.value/content.competency_assessment.max_value) * 100 }}%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="bar-chart__x-axis" aria-hidden="true" role="presentation">
+                                        <div class="bar-chart__x-axis-blank"></div>
+                                        <div class="bar-chart__x-axis-labels">
+                                            <div class="bar-chart__x-axis-labels-inner">
+                                                {% for i in range(0, content.competency_assessment.max_value + 1) %}
+                                                    <span>{{ i }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        In <span class="heading--1">48</span> days you will need to complete a Skills Profile
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <button class="button button--primary" type="button">Complete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="panel__call-to-action" href="">View All Skills Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="[ col-md-12 col-xl-4 ] [ flow-vertical--3 ]">
+                    {####################################
+                     Panel - My Coaches
+                    #####################################}
+                    <div class="panel panel--is-stack">
+                        <div class="panel__inner">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    My Coaches
+                                </h2>
+                            </div>
+
+                            <div class="panel__main">
+                                <div class="users-list">
+
+                                    {% for item in content.coaches %}
+                                        <div class="users-list__item">
+                                            <div class="users-list__main">
+                                                <div class="[ users-list__avatar ] [ avatar ]">
+                                                    <div class="avatar__image" style="background-image:url('{{ item.image  }}');"></div>
+                                                </div>
+                                                <div class="users-list__details">
+                                                    <div class="users-list__name">
+                                                        {{ item.name }}
+                                                    </div>
+                                                    <div class="users-list__info">{{ item.coaching_hours }} hours coaching this month</div>
+                                                </div>
+                                                <a class="button button--primary" href="">View</a>
+                                            </div>
+                                            <div class="users-list__stats">
+                                                <div class="users-list__stats-item">
+                                                    <div class="users-list__stats-icon">
+                                                        {% include "svg/user-activity.svg" %}
+                                                    </div>
+                                                    <div class="users-list__stats-label">
+                                                        9 Activities
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="[ users-list__progress-bar ] [ progress-bar ]">
+                                                <span class="sr-only">Progress: 70%</span>
+                                                <div class="progress-bar__bar" aria-hidden="true" role="presentation">
+                                                    <div class="progress-bar__primary" style="width: 60%;"></div>
+                                                </div>
+                                                <div class="progress-bar__labels">
+                                                    <div>0 hours</div>
+                                                    <div>6 hours</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <a class="panel__call-to-action" href="">View my coaches</a>
+                        </div>
+                    </div>
+
+                    {####################################
+                     Panel - My Coaches
+                    #####################################}
+                    <div class="panel panel--is-stack">
+                        <div class="panel__inner">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    PDP
+                                </h2>
+                                <div class="panel__header-meta">
+                                    Last updated on 23/05/2018
+                                </div>
+                            </div>
+
+                            <div class="panel__main flow-vertical--3">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <img src="http://jcp.local/images/jets-img.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        In <span class="heading--1">243</span> days you will need to complete a PDP assesment.
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button class="button button--primary" type="button">Complete PDP</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="panel__call-to-action" href="">View Your PDP</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

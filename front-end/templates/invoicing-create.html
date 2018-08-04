@@ -1,0 +1,287 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Create invoice</h1>
+                    You can view your submitted invoices below, if you wish to create a new invoice
+                </div>
+                <div class="panel__alert panel__alert--has-icon">
+                    <div>
+                        {% include "svg/info-circle.svg" %}
+                        24 days left to submit invoice for June's invoicing period
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Buttons
+        #####################################}
+        <div class="row">
+            <div class="col-sm-4">
+                <a class="button button--primary button--block" href="">Add Activities &amp; Racing Excellence</a>
+            </div>
+            <div class="col-sm-4">
+                <a class="button button--primary button--block" href="">Add Mileage</a>
+            </div>
+            <div class="col-sm-4">
+                <a class="button button--primary button--block" href="">Add Miscellaneous</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel - Invoice details
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main panel__main--3-columns">
+                    <div>
+                        <dl class="definition-list">
+                            <dt>Invoice date</dt>
+                            <dd>Monday 16th June</dd>
+
+                            <dt>Invoice number</dt>
+                            <dd>JCP00001</dd>
+
+                            <dt>Status</dt>
+                            <dd>Open</dd>
+
+                            <dt>VAT number</dt>
+                            <dd>GB1234567890</dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <dl class="definition-list">
+                            <dt>To</dt>
+                            <dd>
+                                Junnie Durrans<br>
+                                The British Racing School<br>
+                                Snailwell Road<br>
+                                Newmarket<br>
+                                Suffolk<br>
+                                CB8 7NU
+                            </dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <dl class="definition-list">
+                            <dt>To</dt>
+                            <dd>
+                                John Bramhill<br>
+                                29 Acord Way<br>
+                                Kings Way<br>
+                                Suffolk<br>
+                                IP28 8FY
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Group activities
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Jockey 1:1 &amp; Group Activities
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Date</th>
+                                <th>Duration</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="5">
+                                    No items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">Add activities to invoice</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Racing Excellence
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Racing Excellence
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Race name</th>
+                                <th>Date</th>
+                                <th>Number of division</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="5">
+                                    No items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">Add Racing Excellence to invoice</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Mileage
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Mileage
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Date</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="6">
+                                    No items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">Add mileage to invoice</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Miscellaneous
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Miscellaneous
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Race name</th>
+                                <th>Jockeys</th>
+                                <th>Date</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="7">
+                                    No items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">Add Miscellaneous to invoice</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel - invoice totals
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <div class="row justify-content-end">
+                        <div class="col-md-4">
+                            <dl class="definition-list definition-list--space-between">
+                                <dt>Net</dt>
+                                <dd>&pound;0.00</dd>
+
+                                <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                                <dt>VAT</dt>
+                                <dd>&pound;0.00</dd>
+
+                                <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                                <dt>Total</dt>
+                                <dd>
+                                    <span class="heading--1">&pound;0.00</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel__alert panel__alert--has-icon">
+                    <div>
+                        {% include "svg/info-circle.svg" %}
+                        You can only submit this invoice between the 1st and 10th of July
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

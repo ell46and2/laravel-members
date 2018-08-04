@@ -1,0 +1,108 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="flow-vertical--3">
+
+    {####################################
+     Unread Messages Notification
+    #####################################}
+    <div class="alert alert--error">
+        <div class="alert__text alert__text--has-icon">
+            {% include "svg/info-circle.svg" %}
+            <span class="alert__text-inner">
+                You have a <span class="badge badge-pill badge-light">7 unread</span> message
+            </span>
+        </div>
+        <div class="alert__buttons">
+            <a class="button button--white" href="">View Messages</a>
+        </div>
+    </div>
+
+    {####################################
+     JETS - PDP head
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__main">
+                <h1 class="[ heading--1 ] [ mb-1 ]">JETS - PDP</h1>
+                JETS Personal Development Plan
+            </div>
+
+            <div class="panel__alert panel__alert--has-icon">
+                <div>
+                    {% include "svg/info-circle.svg" %}
+                    Name, in 40 days you have performance goals to review
+                </div>
+                <div class="alert__buttons">
+                    <a class="button button--white" href="">View My Recent Goals</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Create a Continuation PDP
+    #####################################}
+    <button class="button button--primary button--block" type="button">Create a Continuation PDP</button>
+
+    {####################################
+     JETS - PDP Archive
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    JETS - PDP Archive
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>PDP Name</th>
+                            <th>Status</th>
+                            <th>Completed Date</th>
+                            <th>Last Modified</th>
+                            <th>Goals Achived</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in content.pdp_archive %}
+                            <tr>
+                                <td><a class="table__link" href="">{{ item.pdp_name }}</a></td>
+                                <td>{{ item.status }}</td>
+                                <td>{{ item.completed_date }}</td>
+                                <td>{{ item.last_modified }}</td>
+                                <td>{{ item.goals_achived }}</td>
+                                <td class="text-right">
+                                    <a class="button button--primary" href="">View</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Table Pagination" class="mt-2">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="panel__split-call-to-action">
+                <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
+                <a class="panel__call-to-action" href="">Next</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

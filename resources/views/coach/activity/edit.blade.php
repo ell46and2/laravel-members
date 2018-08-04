@@ -71,7 +71,7 @@
 
 		<br><br>
 
-		<div class="form-group">
+		{{-- <div class="form-group">
             <label class="col-form-label text-md-right" for="location_id">Choose a Location</label>
             
             <div class="">
@@ -92,7 +92,7 @@
                     </span>
                 @endif
             </div>
-        </div>
+        </div> --}}
 
         <div class="form-group">
             <label class="col-form-label text-md-right" for="location_id">Choose a Location</label>
@@ -115,6 +115,24 @@
                     </span>
                 @endif
             </div>
+        </div>
+
+        <br><br>
+
+        <div class="form-group">
+            <label class="col-form-label text-md-right" for="location_id">Activity Information</label>
+
+            <div class="form-control">
+            	<textarea name="information" cols="30" rows="10">
+            		{{ old('information', $activity->information) }}
+            	</textarea>
+            </div>
+
+            @if ($errors->has('information'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('information') }}</strong>
+                </span>
+            @endif
         </div>
 
         <br><br>

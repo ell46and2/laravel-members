@@ -1,0 +1,245 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+<div class="flow-vertical--3">
+
+    {####################################
+     Unread Messages Notification
+    #####################################}
+            <div class="alert alert--error">
+                <div class="alert__text alert__text--has-icon">
+                    {% include "svg/info-circle.svg" %}
+                    <span class="alert__text-inner">
+                        You have a <span class="badge badge-pill badge-light">7 unread</span> message
+                    </span>
+                </div>
+                <div class="alert__buttons">
+                    <a class="button button--white" href="">View Messages</a>
+                </div>
+            </div>
+
+
+    {####################################
+     Add Group Activity head
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__main">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1 class="[ heading--1 heading--has-button ] [ mb-1 ]">Group Simulator Session
+                                    <a class="[ button button--primary ] [ heading__button ]" href="">Edit</a>
+                                </h1>
+                                Your Activity Log shows your recent and upcoming activities
+                            </div>
+                            <div class="col-6">
+                                <div class="text-right text--color-blue-dark">
+                                    I.D 12345
+                                </div>
+                                <div class="text-right text--color-blue-lighter text--size-sm">
+                                    Last Updated on Monday 16th June 2018
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {####################################
+     Panel (with pre-header)
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__pre-header">
+                        <div class="panel__pre-header-primary">
+                            <ul class="panel__pre-header-definition-list">
+                                {###############################################################################
+                                    This isn't how the dl/dt/dd elements should be used, but until definition
+                                    lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
+                                ################################################################################}
+                                <li>
+                                    <dl>
+                                        <dt>Date</dt>
+                                        <dd>Monday 27th June 2018</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Start time</dt>
+                                        <dd>13:30pm</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Duration</dt>
+                                        <dd>20 minutes</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>Location</dt>
+                                        <dd>Cheltenham</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Jockeys
+                        </h2>
+                    </div>
+
+                    <div class="panel__main">
+                        <div class="row row--grid">
+                            {% for item in content.jockey_cards %}
+                                <div class="col-md-3">
+                                    {# START #}
+                                    <div class="user-card">
+                                        <div class="[ user-card__avatar ] [ avatar avatar--{{ item.avatar_color }} ]">
+                                            <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                        </div>
+                                        <div class="user-card__main">
+                                            <div class="user-card__name">{{ item.name }}</div>
+                                        </div>
+                                    </div>
+                                    {# END #}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    {####################################
+    Group Activity Information
+    #####################################}
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Group Activity Information
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+
+        </div>
+    </div>
+
+    {####################################
+     Attach Videos of Photos
+    #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Attach Videos or Photos
+                            <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">You can upload a maximun of 5 videaos or 10 images</span>
+                        </h2>
+                    </div>
+
+                    <div class="panel__main">
+                        <div class="row row--grid">
+                            {% for item in content.media_image_thumbnails %}
+                                <div class="col-lg-1">
+                                    <a class="image-thumbnail" style="background-image:url('{{ item }}');" href="#">
+                                        <span class="image-thumbnail__magnify-icon">
+                                            {% include "svg/magnify.svg" %}
+                                        </span>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <a class="panel__call-to-action" href="">Attach a Photo or Video</a>
+                </div>
+            </div>
+
+    {####################################
+     Activity Feedback
+    #####################################}
+            <div class="panel flow-vertical--3">
+                <div class="panel__inner">
+                    <ul class="panel__tabs">
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button is-active" type="button">Name Surname</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Name Surname</button>
+                        </li>
+                        <li class="panel__tabs-item">
+                            <button class="panel__tabs-button" type="button">Name Surname</button>
+                        </li>
+                    </ul>
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Activity Feedback for Name Surname
+                        </h2>
+                    </div>
+
+                    <div class="panel__main flow-vertical--3">
+
+                        <div class="row flow-vertical--3">
+                            <div class="col-12">
+                                <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Type here..."></textarea>
+                            </div>
+                            <div class="col-4">
+                                <button class="button button--success button--block" type="button">Save</button>
+                            </div>
+                            <div class="col-12 flow-vertical--3">
+                                <h2 class="heading--2">Activity Comments</h2>
+                                <div class="comments">
+                                    {% for item in content.comments %}
+                                        <div class="comments__row comments__row--{{ item.position }} comments__row--{{ item.theme }}">
+                                            <div class="comments__comment">
+                                                <div class="[ comments__avatar ] [ avatar ]">
+                                                    <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                                </div>
+                                                <div class="[ comments__inner ] [ flow-vertical--1 ]">
+                                                    {% if item.comment %}
+                                                        <p>{{ item.comment }}</p>
+                                                    {% endif %}
+
+                                                    {% if item.comment_thumbnail %}
+                                                        <div class="comments__comment-thumbnail" style="background-image:url('{{ item.comment_thumbnail }}');"></div>
+                                                    {% endif %}
+
+                                                    <div class="comments__comment-meta">
+                                                        <span class="comments__comment-author">Name Surname</span>
+                                                        <span class="comments__comment-time">3 hours ago</span>
+                                                    </div>
+
+                                                    <ul class="comments__comment-options">
+                                                        <li class="comments__comment-options-item">
+                                                            <a class="comments__comment-options-link" href="">Edit</a>
+                                                        </li>
+                                                        <li class="comments__comment-options-item">
+                                                            <a class="comments__comment-options-link" href="">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <h2 class="heading--2">Activity Comments</h2>
+                                <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Type here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="panel__call-to-action" href="#">Add Activity Comments</a>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <button class="button button--success button--block" type="button">Add Comment</button>
+                    </div>
+                </div>
+            </div>
+
+
+{% endblock %}

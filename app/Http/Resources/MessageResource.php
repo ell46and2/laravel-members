@@ -18,7 +18,7 @@ class MessageResource extends JsonResource
         if($role === 'coach') {
             $coach = Coach::find($user->id);
             return [
-                'jockeys' => UserSelectResource::collection($coach->jockeys->with('role')->sortBy('full_name'))
+                'jockeys' => UserSelectResource::collection($coach->jockeys()->with('role')->get()->sortBy('full_name'))
             ];
         }
 

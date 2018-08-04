@@ -7,14 +7,18 @@ use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Invoice;
 use App\Models\Notification;
+use App\Models\Pdp;
 use App\Models\RacingExcellence;
+use App\Models\SkillProfile;
 use App\Models\User;
 use App\Policies\ActivityPolicy;
 use App\Policies\AttachmentPolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\InvoicePolicy;
 use App\Policies\NotificationPolicy;
+use App\Policies\PdpPolicy;
 use App\Policies\RacingExcellencePolicy;
+use App\Policies\SkillProfilePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -34,6 +38,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Attachment::class => AttachmentPolicy::class,
         Invoice::class => InvoicePolicy::class,
+        SkillProfile::class => SkillProfilePolicy::class,
+        Pdp::class => PdpPolicy::class,
     ];
 
     /**

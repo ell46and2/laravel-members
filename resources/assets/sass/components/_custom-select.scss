@@ -1,0 +1,10 @@
+.custom-select {
+    border-width: 0;
+    padding: $input-padding-y calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding }) $input-padding-y $input-padding-x;
+
+    &:focus {
+        border-width: 2px;
+        padding: calc(#{ $input-padding-y } - 2px) calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding }) calc(#{ $input-padding-y } - 2px) calc(#{ $input-padding-x } - 2px);
+        background-position: right calc(#{ $custom-select-padding-x } - 2px) center;
+    }
+}

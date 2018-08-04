@@ -1,16 +1,26 @@
 <template>
 	<!-- <div class="row justify-content-center"> -->
         <!-- <div class="col-md-8"> -->
-            <div class="card">
+           <!--  <div class="card">
 				<user-select 
 					v-for="user in users" 
 					:user="user" 
 					:key="user.id"
 					v-on:userSelected="handleSelected"
 				></user-select>
-            </div>
+            </div> -->
         <!-- </div> -->
     <!-- </div> -->
+    <div class="panel__main">
+		<div class="row row--grid">
+			<user-select 
+				v-for="user in users" 
+				:user="user" 
+				:key="user.id"
+				v-on:userSelected="handleSelected"
+			></user-select>
+	    </div>
+	</div>
 </template>
 
 <script>

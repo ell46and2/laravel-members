@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name', 'group', 'coach_id'];
+	protected $fillable = ['activity_type_id', 'start', 'duration', 'end', 'location_id', 'location_name', 'group', 'coach_id', 'information'];
 
 	protected $dates = ['created_at', 'updated_at', 'start', 'end'];
 
@@ -154,6 +154,11 @@ class Activity extends Model
         return ucfirst($this->type->name);
     }
 
+    public function getIconAttribute()
+    {
+        return $this->type->icon;
+    }
+
     public function getFormattedStartAttribute()
     {
         return $this->start->format('l jS F Y');
@@ -216,9 +221,13 @@ class Activity extends Model
     {
         // NOTE: need to have different urls depending on the users role.
         return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
-    }  
+    } 
 
     public function getEditRouteAttribute() {
+        return route(auth()->user()->roleName . '.activity.edit', $this);
+    }
+
+    public function getUpdateRouteAttribute() {
         if($this->isGroup()) {
             return route(auth()->user()->roleName . '.group-activity.update', $this);
         }

@@ -1,0 +1,145 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Compose new message</h1>
+                    A list of jockeys you current coach
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Message subject
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Message Subject
+                        <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Give your message a title</div>
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <label class="form__label" for="subject">Subject</label>
+                    <input type="text" class="form-control" id="subject" placeholder="Enter subject">
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Recipients
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Select recipients
+                        <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Add users you wish to send this message to</div>
+                    </h2>
+                    <div class="panel__heading-meta">
+                        <button class="[ button button--primary ] [ mr-1 ]" type="button">Select all jockeys</button>
+                        <button class="button button--primary" type="button">Deselect all</button>
+                    </div>
+                </div>
+
+                <div class="[ panel__main ] [ flow-vertical--3 ]">
+                    <div class="form-group">
+                        <label class="form__label" for="recipients">Search for jockey/coach</label>
+                        <div class="input-dropdown js-input-dropdown">
+                            <div class="form-group form-group--has-icon">
+                                <input class="[ form-control form-control--has-icon ] [ input-dropdown__input ] [ js-input-dropdown__input ]" type="text" id="recipients" value="" placeholder="Search for Jockey/Coach...">
+                                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                    {% include "svg/binoculars.svg" %}
+                                </span>
+                            </div>
+                            <ul class="input-dropdown__dropdown" tabindex="-1">
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                                <li class="input-dropdown__item" tabindex="0">
+                                    Testing
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="five-col-grid">
+                        {% for item in content.message_compose_recipients %}
+                            <div class="five-col-grid__col">
+                                <div class="user-card user-card--has-meta">
+                                    <div class="[ user-card__avatar ] [ avatar ]">
+                                        <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                    </div>
+                                    <div class="user-card__main">
+                                        <div class="user-card__name">{{ item.name }}</div>
+                                        <div class="user-card__meta">
+                                            {{ item.type }} <button class="[ button button--text ] [ user-card__button ]" type="button">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Message
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Message
+                        <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Type your message in the input field below</div>
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <label class="form__label" for="message">Add your message</label>
+                    <textarea class="form-control" id="message" placeholder="Enter message" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

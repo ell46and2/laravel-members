@@ -7,6 +7,7 @@
 				:exclude-ids="excludeIds"
 				v-on:searched="addUser"
 				placeholder="Search for Jockey..."
+				btn-name="Add"
 			></autocomplete>
 		</template>
 
@@ -17,6 +18,7 @@
 				:exclude-ids="excludeIds"
 				v-on:searched="addUser"
 				placeholder="Search for Coach..."
+				btn-name="Add"
 			></autocomplete>
 		</template>
 
@@ -27,6 +29,7 @@
 				:exclude-ids="excludeIds"
 				v-on:searched="addUser"
 				placeholder="Search for JETS..."
+				btn-name="Add"
 			></autocomplete>
 		</template>
 

@@ -15,7 +15,7 @@
         .site-nav.is-active & {
             z-index: 10;
 
-            @include media-breakpoint-up(lg) {
+            @include media-breakpoint-up(md) {
                 z-index: -1;
             }
         }
@@ -31,7 +31,7 @@
         .notification-panel.is-active & {
             z-index: 10;
 
-            @include media-breakpoint-up(lg) {
+            @include media-breakpoint-up(md) {
                 z-index: -1;
             }
         }
@@ -104,5 +104,23 @@
 
     &__avatar {
         z-index: 2;
+    }
+}
+
+.icon-notify {
+
+    &__icon {
+        z-index: 1;
+    }
+
+    &__badges {
+        z-index: 2;
+    }
+}
+
+.input-dropdown {
+
+    &__dropdown {
+        z-index: 10;
     }
 }

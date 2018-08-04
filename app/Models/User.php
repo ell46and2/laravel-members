@@ -164,6 +164,11 @@ class User extends Authenticatable
     {
         return ucfirst($this->role_name);
     }
+
+    public function isJet()
+    {
+        return $this->role->name === 'jets';
+    }
  
     public function isAdmin()
     {
@@ -262,6 +267,14 @@ class User extends Authenticatable
         return $this->date_of_birth->diffInYears(now());
     }
 
+    public function getFormattedDateOfBirthAttribute()
+    {
+        if(!$this->date_of_birth) {
+            return '-';
+        }
+        return $this->date_of_birth->format('d/m/Y');
+    }
+
     public function getFormattedCountryAttribute()
     {
         return ucfirst($this->country->name);
@@ -270,5 +283,21 @@ class User extends Authenticatable
     public function getFormattedCountyAttribute()
     {
         return $this->county->name;
+    }
+
+    public function getFullAddressAttribute()
+    {
+        $address = $this->address_1;
+        if($this->address_2) {
+            $address = $address . '<br>' . $this->address_2;
+        }
+        return $address . '<br>' . $this->formattedCounty . '<br>' . $this->postcode;        
+    }
+
+    public function getFormattedTwitterHandleAttribute()
+    {
+        if(!$this->twitter_handle) return '-';
+
+        return $this->twitter_handle;
     }
 }

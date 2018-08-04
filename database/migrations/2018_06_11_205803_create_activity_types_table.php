@@ -16,6 +16,7 @@ class CreateActivityTypesTable extends Migration
         Schema::create('activity_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('icon');
             // $table->timestamps();
             
             // Possibly add an icon field with the filename to svg?

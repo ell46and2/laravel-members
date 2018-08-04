@@ -2,10 +2,6 @@
 
 @section('content')
 
-<div class="pt-1 pb-3 flow-vertical--1">
-	@include('layouts.partials._user-bar')
-
-
 	<div class="flow-vertical--2">
 		<div class="panel">
 	        <div class="panel__inner">
@@ -53,14 +49,7 @@
 	        </div>
 	    </div>
 
-	    <div class="alert alert--error">
-	        <div>
-	            You have <span class="badge badge-light">{{ $numUnreadMessages }} new</span> unread {{ str_plural('message', $numUnreadMessages) }}
-	        </div>
-	        <div>
-	            <a class="button button--white" href="{{ route('messages.index') }}">View messages</a>
-	        </div>
-	    </div>
+	    @include('layouts.partials._messages-alert')
 	</div>
-</div>
+
 @endsection

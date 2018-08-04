@@ -1,0 +1,10 @@
+.form {
+
+
+    &__label {
+        margin-bottom: 6px;
+        color: $blue;
+
+        @include font-size(12px, true);
+    }
+}

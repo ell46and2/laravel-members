@@ -54,7 +54,7 @@ class ActivityOneToOneEditTest extends TestCase
 
   		tap($activity->fresh(), function($activity) use ($response, $jockey) {
   			$response->assertStatus(302);
-     		$response->assertRedirect("/coach/activity/{$activity->id}");
+     		$response->assertRedirect("/activity/{$activity->id}");
   			
   			$this->assertEquals($activity->activity_type_id, 2);
   			$this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2028 13:00'));
@@ -105,7 +105,7 @@ class ActivityOneToOneEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
             
             $this->assertEquals($activity->activity_type_id, 2);
             $this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2000 13:00'));
@@ -148,7 +148,7 @@ class ActivityOneToOneEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
             
             $this->assertEquals($activity->activity_type_id, 1);
             $this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2020 13:00'));
@@ -414,7 +414,7 @@ class ActivityOneToOneEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey) {
   			$response->assertStatus(302);
-     		$response->assertRedirect("/coach/activity/{$activity->id}");
+     		$response->assertRedirect("/activity/{$activity->id}");
   			
   			$this->assertEquals($activity->activity_type_id, 2);
   			$this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2018 13:00'));
@@ -460,7 +460,7 @@ class ActivityOneToOneEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey) {
   			$response->assertStatus(302);
-     		$response->assertRedirect("/coach/activity/{$activity->id}");
+     		$response->assertRedirect("/activity/{$activity->id}");
   			
   			$this->assertEquals($activity->activity_type_id, 2);
   			$this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2018 13:00'));
@@ -542,7 +542,7 @@ class ActivityOneToOneEditTest extends TestCase
 
         tap($activity->fresh(), function($activity) use ($response, $jockey) {
             $response->assertStatus(302);
-            $response->assertRedirect("/coach/activity/{$activity->id}");
+            $response->assertRedirect("/activity/{$activity->id}");
             
             $this->assertEquals($activity->activity_type_id, 2);
             $this->assertEquals($activity->start, Carbon::createFromFormat('d/m/Y H:i','26/11/2028 13:00'));

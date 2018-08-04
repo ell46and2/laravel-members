@@ -95,6 +95,22 @@ return [
             5 => 2,
             6 => 1,
         ]
+    ],
+
+    'pdp_fields' => [
+        ['field' => 'personal_details', 'label' => 'Personal Details'],
+        ['field' => 'career', 'label' => 'Career'],
+        ['field' => 'nutrition', 'label' => 'Nutrition'],
+        ['field' => 'physical', 'label' => 'Physical'],
+        ['field' => 'communication_media', 'label' => 'Communication & Media'],
+        ['field' => 'personal_well_being', 'label' => 'Personal Well-being'],
+        ['field' => 'managing_finance', 'label' => 'Managing Finances'],
+        ['field' => 'sports_psychology', 'label' => 'Sports Psychology'],
+        ['field' => 'mental_well_being', 'label' => 'Mental Well-being'],
+        ['field' => 'interests_hobbies', 'label' => 'Interests & Hobbies'],
+        ['field' => 'performance_goals', 'label' => 'Performance Goals'],
+        ['field' => 'actions', 'label' => 'Actions'],
+        ['field' => 'support_team', 'label' => 'Present Support Team']
     ]
 
     // VAT

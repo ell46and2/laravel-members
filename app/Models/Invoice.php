@@ -52,6 +52,7 @@ class Invoice extends Model
     public function submitForReview()
     {
         $this->update([
+            'submitted' => now(),
             'status' => 'pending review',
             'label' => Carbon::now()->subMonths(1)->format('F Y'),
             'total' => $this->calculateOverallValue()
@@ -131,6 +132,16 @@ class Invoice extends Model
     public function getSubmittedDateAttribute()
     {
         return $this->submitted->format('l jS F');
+    }
+
+    public function getSubmittedDateShortAttribute()
+    {
+        return $this->submitted->format('d/m/Y');
+    }
+
+    public function getInvoicePeriodMonthSubmittedAttribute()
+    {
+        return $this->submitted->subMonth()->format('F');
     }
 
     public function isEditable()

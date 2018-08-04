@@ -1,0 +1,110 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Messages</h1>
+                    View your inbox or sent messages
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Compose new message button
+        #####################################}
+        <a class="button button--primary button--block" href="">Compose new message</a>
+
+        {####################################
+         Messages panel/table
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Inbox
+                    </h2>
+                    <div class="panel__heading-meta">
+                        <button class="button button--text" type="button">View Sent</button>
+                    </div>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>From</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in content.messages %}
+                                <tr>
+                                    <td>
+                                        {% if item.new %}
+                                            <span class="[ badge badge-pill badge-dark ] [ mr-1 ]">NEW</span>
+                                        {% endif %}
+                                        <a class="table__link" href="">{{ item.subject }}</a>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="[ avatar avatar--blue ] [ table__avatar ]">
+                                                <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                                            </div>
+                                            <a class="table__link" href="">{{ item.from }}</a>
+                                        </div>
+                                    </td>
+                                    <td>{{ item.message }}</td>
+                                    <td>{{ item.date }}</td>
+                                    <td class="text-right">
+                                        <a class="button button--primary" href="">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Table Pagination" class="mt-2">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="panel__split-call-to-action">
+                    <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
+                    <a class="panel__call-to-action" href="">Next</a>
+                </div>
+            </div>
+            <button class="panel__stack" type="button">
+                <span class="sr-only">View sent</span>
+            </button>
+        </div>
+
+    </div>
+{% endblock %}

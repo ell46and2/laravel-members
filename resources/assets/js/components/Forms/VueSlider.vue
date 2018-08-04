@@ -1,7 +1,7 @@
 <template>
   <div
     ref="wrap"
-    :class="`vue-slide-bar-component vue-slide-bar-horizontal${isDisabled ? ' disabled' : ''}`"
+    :class="`vue-slide-bar-component vue-slide-bar-horizontal${isFaded ? ' disabled' : ''}`"
     :style="calculateMinHeight"
     @click="wrapClick">
     <div ref="elem" class="vue-slide-bar" :style="{height: `${lineHeight}px`}">
@@ -92,7 +92,9 @@ export default {
       default: true
     },
     isDisabled: {
-      type: Boolean,
+      default: false
+    },
+    isFaded: {
       default: false
     },
     tooltipStyles: Object,
@@ -282,7 +284,7 @@ export default {
     },
     setCurrentValue (val, bool) {
       if (val < this.minimum || val > this.maximum) return false
-        console.log('this.isDiff(this.currentValue, val)', this.isDiff(this.currentValue, val));
+        // console.log('this.isDiff(this.currentValue, val)', this.isDiff(this.currentValue, val));
       if (this.isDiff(this.currentValue, val)) {
         this.currentValue = val
         if (!this.lazy || !this.flag) {
@@ -397,11 +399,11 @@ export default {
   position: relative;
   box-sizing: border-box;
   user-select: none;
-  padding-top: 40px !important;
-  margin-bottom: 60px;
+  padding-top: 20px !important;
+  margin-bottom: 40px;
 }
 .disabled {
-  opacity: 0.3;
+  opacity: 0.8;
 }
 .vue-slide-bar {
   position: relative;
@@ -450,15 +452,17 @@ export default {
 }
 .vue-slide-bar-tooltip-top {
   top: -15px;
-  left: -50%;
-  transform: translate(-50%, -100%);
+  left: -9%;
+  transform: translate(-80%, -100%)
+  /*left: -50%;
+  transform: translate(-50%, -100%);*/
 }
 .vue-slide-bar-tooltip {
   position: relative;
   font-size: 14px;
   white-space: nowrap;
   padding: 5px 20px;
-  width: 64px;
+  width: 54px;
   height: 28px;
   text-align: center;
   color: #fff;
@@ -504,14 +508,14 @@ export default {
 
 span.label-max {
     position: absolute;
-    right: 0px;
+    right: -5px;
     bottom: -35px;
     color: #1E70B7;
 }
 
 span.label-min {
     position: absolute;
-    left: 0px;
+    left: -5px;
     bottom: -35px;
     color: #1E70B7;
 }

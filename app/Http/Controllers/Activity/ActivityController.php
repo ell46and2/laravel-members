@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Activity;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AttachmentResource;
 use App\Jobs\Activity\NotifyCoachDeletedActivity;
 use App\Jobs\Activity\NotifyJockeysDeletedActivity;
 use App\Models\Activity;
@@ -34,5 +35,24 @@ class ActivityController extends Controller
     	$activity->delete();
 
     	return redirect()->route($usersRole . '.dashboard.index');
+    }
+
+    public function show(Activity $activity)
+    {
+        $this->authorize('show', $activity);
+
+        $isAdmin = $this->currentUser->isAdmin();
+        $isCoach = $this->currentUser->isCoach();
+        $isAssignedCoach = $this->currentUser->id === $activity->coach_id;
+
+        $attachmentsResource = AttachmentResource::collection($activity->attachments);
+
+        return view('activity.show', compact(
+            'activity', 
+            'attachmentsResource',
+            'isAdmin',
+            'isCoach',
+            'isAssignedCoach'
+        ));
     }
 }

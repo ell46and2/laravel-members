@@ -22,6 +22,35 @@
 
     }
 
+    &--space-between {
+        display: table;
+        width: 100%;
+
+        dt,
+        dd {
+            width: auto;
+            overflow: visible;
+        }
+
+        dt {
+            display: table-cell;
+            white-space: nowrap;
+        }
+
+        dd {
+            display: table-cell;
+            text-align: right;
+
+            &:after {
+                display: none;
+            }
+
+            &.definition-list__line-break {
+                display: table-row;
+            }
+        }
+    }
+
     &--inline {
 
         dd {
@@ -56,5 +85,32 @@
             }
         }
 
+    }
+
+    &--stacked {
+
+        dt {
+            display: block;
+            margin: 0;
+            color: $blue;
+
+            @include font-size(12px, true);
+        }
+
+        dd {
+            display: block;
+            margin: 0;
+            color: $blue--dark;
+
+            @include font-size(16px, true);
+
+            &:after {
+                display: none;
+            }
+
+            & ~ dt {
+                margin-top: #{ $spacer / 2 };
+            }
+        }
     }
 }

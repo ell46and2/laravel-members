@@ -117,6 +117,24 @@
 
         <br><br>
 
+        <div class="form-group">
+            <label class="col-form-label text-md-right" for="location_id">Activity Information</label>
+
+            <div class="form-control">
+            	<textarea name="information" cols="30" rows="10">
+            		{{ old('information', $activity->information) }}
+            	</textarea>
+            </div>
+
+            @if ($errors->has('information'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('information') }}</strong>
+                </span>
+            @endif
+        </div>
+
+        <br><br>
+
 		<div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary">

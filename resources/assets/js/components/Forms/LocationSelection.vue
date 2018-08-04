@@ -1,7 +1,7 @@
 <template>   
     <select 
         v-model="selected"
-        class="form-control" 
+        class="form-control custom-select" 
         name="location_id" 
         id="location_id"
     >     

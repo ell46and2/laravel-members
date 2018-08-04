@@ -8,13 +8,10 @@
     <div class="site-head__brand">
         <a class="site-head__brand-link" href="">
             @svg('jcp-logo-small', 'icon')
-            {{-- {% include "svg/jcp-logo-small.svg" %} --}}
         </a>
     </div>
     <button class="[ site-head__notifications-toggle ] [ js-notification-panel-toggle js-notification-panel-toggle--site-head ]" type="button">
         @svg('bell', 'icon')
-        {{-- {% include "svg/bell.svg" %} --}}
-        {{-- <span class="site-head__notifications-count">3</span> --}}
         <notification-badge
             class-prop="site-head__notifications-count"
             count="{{ $notificationCount }}"

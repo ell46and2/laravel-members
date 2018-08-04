@@ -41,4 +41,14 @@ class ActivityPolicy
 
         return $user->role->name === 'admin';
     }
+
+    public function show(User $user, Activity $activity)
+    {
+        // only allow jockeys that are assigned to the activity
+        if($user->isJockey()) {
+            return $activity->jockeys->pluck('id')->contains($user->id);
+        } else {
+            return true;
+        }
+    }
 }

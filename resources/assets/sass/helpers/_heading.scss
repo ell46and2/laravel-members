@@ -1,0 +1,16 @@
+%heading-base {
+    color: $blue--dark;
+    font-weight: $font-weight-bold;
+}
+
+%heading--1 {
+    @extend %heading-base;
+
+    @include font-size(30px, true, $line-height-sm);
+}
+
+%heading--2 {
+    @extend %heading-base;
+
+    @include font-size(20px, true, $line-height-sm);
+}

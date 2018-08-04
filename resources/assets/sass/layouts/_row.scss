@@ -1,6 +1,24 @@
 .row {
 
+    &--wide-gutter {
+        margin-left: -25px;
+        margin-right: -25px;
+
+        & > .col,
+        & > [class^="col-"],
+        & > [class*=" col-"] {
+            padding-right: 25px;
+            padding-left: 25px;
+        }
+    }
+
     &--grid {
         margin-bottom: -#{ $spacer };
+
+        & > .col,
+        & > [class^="col-"],
+        & > [class*=" col-"] {
+            margin-bottom: $spacer;
+        }
     }
 }

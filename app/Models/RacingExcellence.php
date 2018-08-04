@@ -150,6 +150,11 @@ class RacingExcellence extends Model
         return 'Racing Excellence';
     }
 
+    public function getIconAttribute()
+    {
+        return 'nav-racing-excellence';
+    }
+
     public function getFormattedStartAttribute()
     {
         return $this->start->format('l jS F Y');

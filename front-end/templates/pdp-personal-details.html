@@ -1,0 +1,177 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Unread Messages Notification
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text alert__text--has-icon">
+                {% include "svg/info-circle.svg" %}
+                <span class="alert__text-inner">
+                    You have a <span class="badge badge-pill badge-light">7 unread</span> message
+                </span>
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View Messages</a>
+            </div>
+        </div>
+
+        {####################################
+         JETS - PDP head
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Complete PDP</h1>
+                    Complete your Personal Development Plan
+                </div>
+
+                <div class="panel__alert panel__alert--has-icon">
+                    <div>
+                        {% include "svg/info-circle.svg" %}
+                        George, you have completed 5% of this PDP
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row row--wide-gutter">
+            <div class="[ col-md-12 col-xl-8 mb-2 mb-xl-0 ]">
+                {####################################
+                 Personal Details
+                #####################################}
+
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                Personal Details
+                                <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Enter your personal information</div>
+                            </h2>
+                        </div>
+
+                        <div class="panel__main">
+                            <dl class="definition-list definition-list--stacked">
+                                <dt>Name</dt>
+                                <dd>Name Surname</dd>
+
+                                <dt>D.O.B.</dt>
+                                <dd>DD/MM/YYYY</dd>
+
+                                <dt>Phone number</dt>
+                                <dd>0123456789</dd>
+
+                                <dt>Mobile number</dt>
+                                <dd>0123456789</dd>
+
+                                <dt>Address</dt>
+                                <dd>
+                                    Junnie Durrans<br>
+                                    The British Racing School<br>
+                                    Snailwell Road<br>
+                                    Newmarket<br>
+                                    Suffolk<br>
+                                    CB8 7NU
+                                </dd>
+
+                                <dt>Email address</dt>
+                                <dd>name@jcp.co.uk</dd>
+
+                                <dt>Twitter handle</dt>
+                                <dd>@TwitterName</dd>
+
+                                <dt>
+                                    <label class="text--color-blue">Currently Studying</label>
+                                </dt>
+                                <dd>
+                                    <input class="form-control mt-1" type="text" name="" value="" placeholder="Enter Subject...">
+                                </dd>
+
+                                <dt>
+                                    <label class="text--color-blue">Education</label>
+                                </dt>
+                                <dd>
+                                    <input class="form-control form-control--display-as-text mt-1" type="text" name="" value="" placeholder="Enter Education..." disabled>
+                                </dd>
+
+                                <dt>
+                                    <label class="text--color-blue">Path into Racing</label>
+                                </dt>
+                                <dd>
+                                    <input class="form-control mt-1" type="text" name="" value="" placeholder="Enter Path...">
+                                </dd>
+
+                                <dt>
+                                    <label class="text--color-blue">Length Of Time in Racing</label>
+                                </dt>
+                                <dd>
+                                    <input class="form-control mt-1" type="text" name="" value="" placeholder="Enter Time...">
+                                </dd>
+                            </dl>
+                        </div>
+                        <button type="submit" class="panel__call-to-action">Save &amp; Next</button>
+                    </div>
+                </div>
+            </div>
+            <div class="[ col-md-12 col-xl-4 ]">
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                PDP Status
+                            </h2>
+                        </div>
+
+                        <div class="panel__main">
+                            <ul class="icon-list">
+                                <li class="icon-list__item icon-list__item--has-emphasis">
+                                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                                        {% include "svg/tick-circle.svg" %}
+                                    </div>
+                                    <div class="icon-list__inner">
+                                        Some text for my list item
+                                    </div>
+                                </li>
+                                <li class="icon-list__item">
+                                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                                        {% include "svg/circle.svg" %}
+                                    </div>
+                                    <div class="icon-list__inner">
+                                        Some text for my list item
+                                    </div>
+                                </li>
+                                <li class="icon-list__item icon-list__item--has-emphasis">
+                                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                                        {% include "svg/tick-circle.svg" %}
+                                    </div>
+                                    <div class="icon-list__inner">
+                                        <a class="icon-list__link" href="">This one is a link</a>
+                                    </div>
+                                </li>
+                                <li class="icon-list__item">
+                                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                                        {% include "svg/circle.svg" %}
+                                    </div>
+                                    <div class="icon-list__inner">
+                                        <a class="icon-list__link" href="">As is this one</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="panel__split-call-to-action">
+                            <a class="panel__call-to-action" href="" disabled></a>
+                            <a class="panel__call-to-action" href="">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@ class CreateRacingExcellenceParticipantsTable extends Migration
             $table->integer('division_id')->unsigned()->index();
             $table->integer('jockey_id')->unsigned()->nullable()->index();
             $table->integer('api_id')->unsigned()->nullalble();
-            $table->integer('api_animal_id')->unsigned()->nullalble();
+            $table->integer('api_animal_id')->unsigned()->nullable();
             $table->string('animal_name')->nullable();
             $table->string('name')->nullable(); // For jockeys not on the system.
             $table->integer('place')->nullable(); // What position they came in the race.

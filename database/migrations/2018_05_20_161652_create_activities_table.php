@@ -23,7 +23,7 @@ class CreateActivitiesTable extends Migration
             $table->integer('location_id')->unsigned()->nullable(); // location either dropdown id or free test.
             $table->string('location_name')->nullable();
             $table->boolean('group')->default(false);
-            $table->string('group_feedback')->nullable();
+            $table->text('information')->nullable();
             $table->timestamps();
 
             // $table->foreign('coach_id')->references('id')->on('users');

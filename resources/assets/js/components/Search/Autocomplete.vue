@@ -28,8 +28,10 @@
       			class="autocomplete__result"
       			@click="setResult(result)"
       			:class="{ 'is-active': i === arrowCounter }"
+      			style="display:flex; justify-content: space-between;"
       		>
       			{{ result.name }}
+      			<button class="button button--primary" type="button">{{ btnName }}</button>
       		</li>
     	</ul>
   	</div>
@@ -50,6 +52,10 @@
 			},
 			placeholder: {
 				required: false
+			},
+			btnName: {
+				required: false,
+				default: 'Select'
 			}
 		},
 		data() {

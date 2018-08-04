@@ -25,14 +25,14 @@ class ActivityController extends Controller
 		return view('jockey.activitylist.index', compact('events', 'coaches', 'activityTypes'));
 	}
 
-    public function show(Activity $activity)
-    {
-    	// NOTE: mark activity comments for current user as read using vue/javascript,
-    	// so we can highlight new comments to the user, and also set them as read for the next time
-    	// they view the 'show' page.
+    // public function show(Activity $activity)
+    // {
+    // 	// NOTE: mark activity comments for current user as read using vue/javascript,
+    // 	// so we can highlight new comments to the user, and also set them as read for the next time
+    // 	// they view the 'show' page.
 
-    	return view('jockey.activity.show', compact('activity'));
-    }
+    // 	return view('jockey.activity.show', compact('activity'));
+    // }
 
     private function getAllCoachesWorkedWithJockey(Jockey $jockey)
     {

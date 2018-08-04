@@ -1,0 +1,86 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Read message</h1>
+                    You have received a new message
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Message panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Message Subject
+                    </h2>
+                    <div class="panel__heading-meta">
+                        <button class="[ button button--primary ] [ mr-1 ]" type="button">Mark as unread</button>
+                        <button class="button button--primary" type="button">Delete</button>
+                    </div>
+                </div>
+
+                <div class="[ panel__main ] [ flow-vertical--3 ]">
+                    {# From #}
+                    <div class="flow-vertical--1">
+                        <div class="text--size-sm text--color-blue">From</div>
+                        <div class="[ user-card user-card--has-meta ] [ mb-3 ]">
+                            <div class="[ user-card__avatar ] [ avatar ]">
+                                <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                            </div>
+                            <div class="user-card__main">
+                                <div class="user-card__name">Name Surname</div>
+                                <div class="user-card__meta">
+                                    Admin
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Date #}
+                    <div class="flow-vertical--1">
+                        <div class="text--size-sm text--color-blue">Date</div>
+                        <div>
+                            Today at 09:26
+                        </div>
+                    </div>
+
+                    {# Message #}
+                    <div class="flow-vertical--1">
+                        <div class="text--size-sm text--color-blue">Message</div>
+                        <div class="flow-vertical--2">
+                            <p>Lorem ipsum dolor sit amet, est falli minim simul ea, movet iisque vivendo mea et. Antiopam cotidieque eos at, at primis comprehensam has. Debet sonet ea his, sint vitae maiestatis ex pro, his nibh dicat alienum at. Sanctus epicurei quaerendum ius ei, ei illum voluptua iracundia eum, cum ei integre delenit consulatu. Mazim nominavi vix ex. Probo aliquid qui ex. Mei nobis tritani et, et nec illud pertinacia.</p>
+                            <p>Diam novum in pri. Dicat virtute tractatos ad pro. Eam libris ocurreret te, has sint abhorreant no. Ut vim detracto platonem, dicam definitiones sea ea. Te probatus pericula per. Ut posse laboramus vim.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="panel__call-to-action" href="">Back to inbox</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

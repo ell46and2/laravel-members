@@ -46,6 +46,43 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	Route::delete('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@destroy')->name('invoice.mileage.delete');
 });
 
+
+
+// Pdp
+Route::group(['middleware' => ['auth','role:jockey,jets,admin']], function() {
+	Route::get('/pdp/{jockey}/list', 'Pdp\PdpController@index')->name('pdp.list');
+	Route::post('/pdp/{jockey}/create', 'Pdp\PdpController@store')->name('pdp.create');
+	Route::get('pdp/{pdp}/personal-details', 'Pdp\PdpController@personalDetails')->name('pdp.personal-details');
+	Route::post('pdp/{pdp}/personal-details', 'Pdp\PdpController@personalDetailsStore')->name('pdp.personal-details.store');
+	Route::get('pdp/{pdp}/career', 'Pdp\PdpController@career')->name('pdp.career');
+	Route::post('pdp/{pdp}/career', 'Pdp\PdpController@careerStore')->name('pdp.career.store');
+	Route::get('pdp/{pdp}/nutrition', 'Pdp\PdpController@nutrition')->name('pdp.nutrition');
+	Route::post('pdp/{pdp}/nutrition', 'Pdp\PdpController@nutritionStore')->name('pdp.nutrition.store');
+	Route::get('pdp/{pdp}/physical', 'Pdp\PdpController@physical')->name('pdp.physical');
+	Route::post('pdp/{pdp}/physical', 'Pdp\PdpController@physicalStore')->name('pdp.physical.store');
+	Route::get('pdp/{pdp}/communication-media', 'Pdp\PdpController@communicationMedia')->name('pdp.communication-media');
+	Route::post('pdp/{pdp}/communication-media', 'Pdp\PdpController@communicationMediaStore')->name('pdp.communication-media.store');
+	Route::get('pdp/{pdp}/personal-well-being', 'Pdp\PdpController@personalWellBeing')->name('pdp.personal-well-being');
+	Route::post('pdp/{pdp}/personal-well-being', 'Pdp\PdpController@personalWellBeingStore')->name('pdp.personal-well-being.store');
+	Route::get('pdp/{pdp}/managing-finance', 'Pdp\PdpController@managingFinance')->name('pdp.managing-finance');
+	Route::post('pdp/{pdp}/managing-finance', 'Pdp\PdpController@managingFinanceStore')->name('pdp.managing-finance.store');
+	Route::get('pdp/{pdp}/sports-psychology', 'Pdp\PdpController@sportsPsychology')->name('pdp.sports-psychology');
+	Route::post('pdp/{pdp}/sports-psychology', 'Pdp\PdpController@sportsPsychologyStore')->name('pdp.sports-psychology.store');
+	Route::get('pdp/{pdp}/mental-well-being', 'Pdp\PdpController@mentalWellBeing')->name('pdp.mental-well-being');
+	Route::post('pdp/{pdp}/mental-well-being', 'Pdp\PdpController@mentalWellBeingStore')->name('pdp.mental-well-being.store');
+	Route::get('pdp/{pdp}/interests-hobbies', 'Pdp\PdpController@interestsHobbies')->name('pdp.interests-hobbies');
+	Route::post('pdp/{pdp}/interests-hobbies', 'Pdp\PdpController@interestsHobbiesStore')->name('pdp.interests-hobbies.store');
+	Route::get('pdp/{pdp}/performance-goals', 'Pdp\PdpController@performanceGoals')->name('pdp.performance-goals');
+	Route::post('pdp/{pdp}/performance-goals', 'Pdp\PdpController@performanceGoalsStore')->name('pdp.performance-goals.store');
+	Route::get('pdp/{pdp}/actions', 'Pdp\PdpController@actions')->name('pdp.actions');
+	Route::post('pdp/{pdp}/actions', 'Pdp\PdpController@actionsStore')->name('pdp.actions.store');
+	Route::get('pdp/{pdp}/support-team', 'Pdp\PdpController@supportTeam')->name('pdp.support-team');
+	Route::post('pdp/{pdp}/support-team', 'Pdp\PdpController@supportTeamStore')->name('pdp.support-team.store');
+	Route::get('pdp/{pdp}/submit', 'Pdp\PdpController@submit')->name('pdp.submit');
+	Route::post('pdp/{pdp}/submit', 'Pdp\PdpController@submitStore')->name('pdp.submit.store');
+	Route::post('pdp/{pdp}/complete', 'Pdp\PdpController@complete')->name('pdp.complete');
+});
+
 Route::get('/coach/dashboard', 'Coach\DashboardController@index')->name('coach.dashboard.index');
 
 Route::get('/coach/auth', 'Coach\TokenAccessController@index')->name('coach.token-access');
@@ -63,7 +100,7 @@ Route::get('/coach/{coach}', 'Coach\CoachController@show')->name('coach.show');
 Route::put('/coach/{coach}/edit', 'Coach\CoachController@updateProfile')->name('coach.update');
 Route::put('/coach/{coach}/status', 'Coach\CoachController@updateStatus')->name('coach.status.update');
 
-
+Route::get('/jets/dashboard', 'Jet\DashboardController@index')->name('jet.dashboard.index');
 Route::get('/jets/{jet}', 'Jet\JetController@show')->name('jet.show');
 Route::put('/jets/{jet}/edit', 'Jet\JetController@updateProfile')->name('jet.update');
 Route::put('/jets/{jet}/status', 'Jet\JetController@updateStatus')->name('jet.status.update');
@@ -76,7 +113,7 @@ Route::put('/profile/edit', 'Jockey\ProfileController@update')->name('jockey.pro
 
 Route::get('/activity/log', 'Jockey\ActivityController@index')->name('jockey.activity-log');
 
-Route::get('/activity/{activity}', 'Jockey\ActivityController@show')->name('jockey.activity.show');
+Route::get('/activity/{activity}', 'Activity\ActivityController@show')->name('activity.show');
 
 //Coach Assign/unassign jockeys - (Admin only)
 Route::post('/coach/{coach}/assign-jockey', 'Coach\AssignJockeyController@create');
@@ -111,7 +148,7 @@ Route::put('/coach/activity/{activity}/single', 'Coach\ActivityController@single
 Route::put('/coach/activity/{activity}/group', 'Coach\ActivityController@groupUpdate')->name('coach.group-activity.update');
 Route::get('/coach/activity/group-create', 'Coach\ActivityController@groupCreate')->name('coach.group-activity.create');
 Route::post('/activity/{activity}/feedback/{jockey}', 'Coach\ActivityJockeyFeedbackController@create');
-Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
+// Route::get('/coach/activity/{activity}', 'Coach\ActivityController@show')->name('coach.activity.show');
 
 
 Route::get('/coach/jockeys', 'Coach\JockeyController@index')->name('coach.jockeys.index');
@@ -134,7 +171,7 @@ Route::get('/admin/activity/{activity}/edit', 'Admin\ActivityController@edit')->
 Route::put('/admin/activity/{activity}/single', 'Admin\ActivityController@singleUpdate')->name('admin.1:1-activity.update');
 Route::put('/admin/activity/{activity}/group', 'Admin\ActivityController@groupUpdate')->name('admin.group-activity.update');
 Route::get('admin/jockey-resource/{coach}', 'Admin\ActivityController@getCoachesJockeys');
-Route::get('/admin/activity/{activity}', 'Admin\ActivityController@show')->name('admin.activity.show');
+// Route::get('/admin/activity/{activity}', 'Admin\ActivityController@show')->name('admin.activity.show');
 
 Route::post('/admin/jockeys/{jockey}/approve', 'Admin\ApprovedJockeyController@create')->name('admin.jockey.approve');
 Route::delete('/admin/jockeys/{jockey}/decline', 'Admin\ApprovedJockeyController@destroy')->name('admin.jockey.decline');
@@ -144,7 +181,7 @@ Route::get('/admin/jockeys/pending', 'Admin\JockeyController@pending')->name('ad
 
 
 // Jets
-Route::get('/jets/dashboard', 'Jet\DashboardController@index')->name('jet.dashboard.index');
+
 Route::get('/jet/auth', 'Jet\TokenAccessController@index')->name('jet.token-access');
 Route::post('/jet/auth', 'Jet\TokenAccessController@update')->name('jet.token-access.update');
 
@@ -192,12 +229,19 @@ Route::group(['middleware' => ['auth', 'role:admin,coach']], function() {
 
 
 
-// Competency Assessment - Coach
-Route::get('/competency-assessment/create', 'CompetencyAssessment\CompetencyAssessmentController@create')->name('competency-assessment.create');
-Route::get('/competency-assessment/{competencyAssessment}', 'CompetencyAssessment\CompetencyAssessmentController@show')->name('competency-assessment.show');
-Route::post('/coach/competency-assessment', 'CompetencyAssessment\CompetencyAssessmentController@store')->name('competency-assessment.store');
-Route::get('/competency-assessment/{competencyAssessment}/edit', 'CompetencyAssessment\CompetencyAssessmentController@edit')->name('competency-assessment.edit');
-Route::put('/competency-assessment/{competencyAssessment}/update', 'CompetencyAssessment\CompetencyAssessmentController@update')->name('competency-assessment.update');
+// Skills Profile - Coach
+Route::group(['middleware' => ['auth', 'role:admin,coach']], function() {
+	Route::get('/skills-profile/create', 'SkillProfile\SkillProfileController@create')->name('skill-profile.create');
+	Route::post('/coach/skills-profile', 'SkillProfile\SkillProfileController@store')->name('skill-profile.store');
+});
+
+Route::group(['middleware' => ['auth', 'role:admin,coach,jockey']], function() {
+	Route::get('/skills-profile/{skillProfile}', 'SkillProfile\SkillProfileController@show')->name('skill-profile.show');
+	Route::get('/skills-profile/{skillProfile}/edit', 'SkillProfile\SkillProfileController@edit')->name('skill-profile.edit');
+	Route::put('/skills-profile/{skillProfile}/update', 'SkillProfile\SkillProfileController@update')->name('skill-profile.update');
+});
+
+
 
 // Documents
 Route::get('/admin/documents/create', 'Admin\DocumentController@create')->name('admin.document.create');

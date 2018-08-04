@@ -1,6 +1,172 @@
 @extends('layouts.base')
 
 @section('content')
+
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Activity log</h1>
+            Your Activity Log shows your recent and upcoming activities
+        </div>
+    </div>
+</div>
+
+<form method="GET" action="">
+    
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right" for="type">Activity Type</label>
+        
+        <div class="col-md-6">
+            <select class="form-control" name="type" id="type">
+                <option 
+                    value=""
+                    {{ request()->type ? ' selected="selected"' : '' }}
+                >
+                    Select Activity
+                </option>
+
+                @foreach($activityTypes as $type)
+                    <option 
+                        value="{{ $type->id }}"
+                        {{ request()->type == $type->id ? ' selected="selected"' : '' }}
+                    >
+                        {{ ucwords($type->name) }}
+                    </option>
+                @endforeach
+                
+                <option 
+                    value="re"
+                    {{ request()->type == 're' ? ' selected="selected"' : '' }}
+                >
+                    Racing Excellence
+                </option>
+                <option 
+                    value="ca"
+                    {{ request()->type == 'ca' ? ' selected="selected"' : '' }}
+                >
+                    Skills Profile
+                </option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right" for="jockey">Jockey</label>
+        
+        <div class="col-md-6">
+            <select class="form-control" name="jockey" id="jockey">
+                 <option 
+                    value=""
+                    {{ request()->jockey ? ' selected="selected"' : '' }}
+                >
+                    Select Jockey
+                </option>
+               @foreach($jockeys as $jockey)
+                    <option 
+                        value="{{ $jockey->id }}"
+                        {{ request()->jockey == $jockey->id ? ' selected="selected"' : '' }}
+                    >
+                        {{ $jockey->full_name }}
+                    </option>
+               @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right" for="from">From</label>
+        <datepicker-component 
+            name="from" 
+            placeholder="Select Date"
+            format="dd-MM-yyyy"
+            old="{{ request()->from ?? request()->from }}"
+        ></datepicker-component>
+        {{-- <input type="date" name="from" value="{{ request()->from ?? request()->from }}"> --}}
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right" for="to">To</label>
+        <datepicker-component 
+            name="to" 
+            placeholder="Select Date"
+            format="dd-MM-yyyy"
+            old="{{ request()->to ?? request()->to }}"
+        ></datepicker-component>
+        {{-- <input type="date" name="to" value="{{ request()->to ?? request()->to }}"> --}}
+    </div>
+
+    <div class="form-group row mb-0">
+        <div class="col-md-6 offset-md-4">
+            <button type="submit" class="btn btn-primary">
+                Filter
+            </button>
+            <a href="{{ route('coach.activity-log') }}" class="btn btn-outline">Reset</a>
+        </div>
+    </div>
+</form>
+
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__header">
+            <h2 class="panel__heading">
+                Recent Activities
+            </h2>
+        </div>
+
+        <div class="panel__main">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Activity Type</th>
+                        <th>Jockey</th>
+                        <th>Date
+                            <a 
+                                href="{{ route('coach.activity-log', array_merge(request()->query(), [
+                                    'order' => request()->order == 'desc' ? 'asc' : 'desc', 
+                                    'page' => 1
+                                ])) }}" 
+                                class="btn btn-primary"
+                            >Order</a>
+                        </th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Comments</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($events as $event)
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="table__icon">
+                                        @svg( $event->icon, 'icon')
+                                    </span>
+                                    <a class="table__link" href="">{{ $event->formattedType }}</a>
+                                </div>
+                                
+                            </td>
+                            <td>{{ $event->formattedJockeyOrGroup }}</td>
+                            <td>{{ $event->formattedStart }}</td>
+                            <td>{{ $event->formattedStartTime }}</td>
+                            <td>{{ $event->formattedLocation }}</td>
+                            <td>
+                            {{-- Number of comments for or from current user--}}
+                            {{ $event->comments ? $event->comments->count() : '' }}
+                            {{-- any unread for current user --}}
+                            {{ $event->unreadCommentsOnActivityForCurentUser ? $event->unreadCommentsOnActivityForCurentUser->count() > 0 ? '*new' : '' : '' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            
+        {{ $events->appends(request()->query())->links() }} 
+</div>
+
+@endsection
+
+{{-- @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -40,7 +206,7 @@
                                     value="ca"
                                     {{ request()->type == 'ca' ? ' selected="selected"' : '' }}
                                 >
-                                    Competency Assessment
+                                    Skills Profile
                                 </option>
                             </select>
                         </div>
@@ -77,7 +243,6 @@
                             format="dd-MM-yyyy"
                             old="{{ request()->from ?? request()->from }}"
                         ></datepicker-component>
-                        {{-- <input type="date" name="from" value="{{ request()->from ?? request()->from }}"> --}}
                     </div>
 
                     <div class="form-group row">
@@ -88,7 +253,6 @@
                             format="dd-MM-yyyy"
                             old="{{ request()->to ?? request()->to }}"
                         ></datepicker-component>
-                        {{-- <input type="date" name="to" value="{{ request()->to ?? request()->to }}"> --}}
                     </div>
 
                     <div class="form-group row mb-0">
@@ -133,9 +297,7 @@
                                     <td>{{ $event->formattedStartTime }}</td>
                                     <td>{{ $event->formattedLocation }}</td>
                                     <td>
-                                    {{-- Number of comments for or from current user--}}
                                     {{ $event->comments ? $event->comments->count() : '' }}
-                                    {{-- any unread for current user --}}
                                     {{ $event->unreadCommentsOnActivityForCurentUser ? $event->unreadCommentsOnActivityForCurentUser->count() > 0 ? '*new' : '' : '' }}
                                     </td>
                                 </tr>
@@ -149,4 +311,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}

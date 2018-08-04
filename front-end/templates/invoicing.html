@@ -1,0 +1,100 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Invoicing</h1>
+                    You can view your submitted invoices below
+                </div>
+                <div class="panel__alert panel__alert--has-icon">
+                    <div>
+                        {% include "svg/info-circle.svg" %}
+                        24 days left to submit invoice for June's invoicing period
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Create invoice button
+        #####################################}
+        <button class="button button--primary button--block" type="button">Create invoice</button>
+
+        {####################################
+         Invoice archive panel/table
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Invoice archive
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Invoice number</th>
+                                <th>Invoice name</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in content.invoice_archive %}
+                                <tr>
+                                    <td><a class="table__link" href="">{{ item.invoice_number }}</a></td>
+                                    <td><a class="table__link" href="">{{ item.invoice_name }}</a></td>
+                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.amount }}</td>
+                                    <td class="text-right">
+                                        <a class="button button--primary" href="">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Table pagination" class="mt-2">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="panel__split-call-to-action">
+                    <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
+                    <a class="panel__call-to-action" href="">Next</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

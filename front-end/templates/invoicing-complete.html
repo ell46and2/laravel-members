@@ -1,0 +1,265 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Invoicing</h1>
+                    You can view your submitted invoices below, if you wish to create a new invoice
+                </div>
+            </div>
+        </div>
+
+        <div class="[ text-right ] [ pr-3 ]">
+            <a class="button button--primary" href="">Print</a>
+        </div>
+
+        {####################################
+         Panel - Invoice details
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main panel__main--3-columns">
+                    <div>
+                        <dl class="definition-list">
+                            <dt>Invoice date</dt>
+                            <dd>Monday 16th June</dd>
+
+                            <dt>Invoice number</dt>
+                            <dd>JCP00001</dd>
+
+                            <dt>Status</dt>
+                            <dd>Open</dd>
+
+                            <dt>VAT number</dt>
+                            <dd>GB1234567890</dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <dl class="definition-list">
+                            <dt>To</dt>
+                            <dd>
+                                Junnie Durrans<br>
+                                The British Racing School<br>
+                                Snailwell Road<br>
+                                Newmarket<br>
+                                Suffolk<br>
+                                CB8 7NU
+                            </dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <dl class="definition-list">
+                            <dt>To</dt>
+                            <dd>
+                                John Bramhill<br>
+                                29 Acord Way<br>
+                                Kings Way<br>
+                                Suffolk<br>
+                                IP28 8FY
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Group activities
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Jockey 1:1 &amp; Group Activities
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table table--grouped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Activity type</th>
+                                <th>Date</th>
+                                <th>Duration</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        {% for group in content.invoice.group_activities %}
+                            <tbody>
+                                <tr>
+                                    <th colspan="6">
+                                        <div class="table__group-head">
+                                            <div class="[ table__group-head-avatar ] [ avatar ]">
+                                                <div class="avatar__image" style="background-image:url('{{ group.jockey_avatar }}');"></div>
+                                            </div>
+                                            <div class="table__group-head-text">
+                                                <div>
+                                                    Name Surname
+                                                </div>
+                                                <div class="table__group-header-total-time{% if group.total_hours > 4 %} text-danger{% endif %}">
+                                                    {{ group.total_hours }} hours coaching this month
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                                {% for item in group.items %}
+                                    <tr>
+                                        <td class="table__group-item-decor"></td>
+                                        <td>
+                                            <a class="table__link" href="">{{ item.activity }}</a>
+                                        </td>
+                                        <td>{{ item.date }}</td>
+                                        <td>{{ item.duration }}</td>
+                                        <td>{{ item.amount }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Racing Excellence
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Racing Excellence
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Race name</th>
+                                <th>Date</th>
+                                <th>Number of division</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <a class="table__link" href="">Racing Excellence - Series Name</a>
+                                    </div>
+                                    <div>
+                                        RES Course Walk - Nottingham
+                                    </div>
+                                </td>
+                                <td>Monday 16th June</td>
+                                <td>1</td>
+                                <td>&pound;0.00</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <a class="table__link" href="">Racing Excellence - Series Name</a>
+                                    </div>
+                                    <div>
+                                        RES Course Walk - Haydock
+                                    </div>
+                                </td>
+                                <td>Monday 16th June</td>
+                                <td>2</td>
+                                <td>&pound;0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel/table - Miscellaneous
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Miscellaneous
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel - invoice totals
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <div class="row justify-content-end">
+                        <div class="col-md-4">
+                            <dl class="definition-list definition-list--space-between">
+                                <dt>Net</dt>
+                                <dd>&pound;0.00</dd>
+
+                                <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                                <dt>VAT</dt>
+                                <dd>&pound;0.00</dd>
+
+                                <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                                <dt>Total</dt>
+                                <dd>
+                                    <span class="heading--1">&pound;0.00</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {####################################
+         Panel - invoice totals
+        #####################################}
+        <a class="button button--primary button--block" href="">Back to invoice archive</a>
+
+    </div>
+{% endblock %}

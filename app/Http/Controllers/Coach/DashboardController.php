@@ -14,9 +14,17 @@ class DashboardController extends Controller
     	$coach = Coach::with([
     		'jockeys',
     		'jockeys.coaches',
+            'invoices',
     	])
     	->findOrFail($this->currentUser->id);
 
-    	return view('coach.dashboard.index', compact('coach'));
+        // take 5 order by most active
+        // QUESTION: Whats doe most active mean?
+        $jockeys = $coach->jockeys; 
+
+    	$latestOpenInvoice = $coach->latestOpenInvoice;
+    	$lastInvoice = $coach->lastSubmittedInvoice(); 
+
+    	return view('coach.dashboard.index', compact('coach', 'lastInvoice', 'latestOpenInvoice'));
     }
 }

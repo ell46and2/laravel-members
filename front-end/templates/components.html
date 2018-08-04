@@ -28,7 +28,7 @@
             {# START #}
             <div class="alert alert--error">
                 <div class="alert__text">
-                    You have <span class="badge badge-light">7 unread</span> messages
+                    You have <span class="badge badge-pill badge-light">7 unread</span> messages
                 </div>
                 <div class="alert__buttons">
                     <a class="button button--white" href="">View messages</a>
@@ -49,12 +49,27 @@
                 <div class="alert__text alert__text--has-icon">
                     {% include "svg/info-circle.svg" %}
                     <span class="alert__text-inner">
-                        You have <span class="badge badge-light">7 unread</span> messages
+                        You have <span class="badge badge-pill badge-light">7 unread</span> messages
                     </span>
                 </div>
                 <div class="alert__buttons">
                     <a class="button button--white" href="">View messages</a>
                 </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Alert (pinned. to be position at the very top of the page)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Alert (pinned)</h2>
+        <p>To be positioned at the very top of the page</p>
+        <div class="components__component-main">
+            {# START #}
+            <div class="alert alert--error alert--centered alert--pinned">
+                Whoops, there was an error!
             </div>
             {# END #}
         </div>
@@ -136,7 +151,19 @@
         <h2 class="components__component-heading">Badge (light)</h2>
         <div class="components__component-main">
             {# START #}
-            <span class="badge badge-light">A badge</span>
+            <span class="badge badge-pill badge-light">A badge</span>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Badge (dark)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Badge (dark)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <span class="badge badge-pill badge-dark">A badge</span>
             {# END #}
         </div>
     </div>
@@ -146,6 +173,7 @@
     #####################################}
     <div class="components__component components__component--trans-bg">
         <h2 class="components__component-heading">Bar chart</h2>
+        <p>Inside a panel as an example</p>
         <div class="components__component-main">
             {# START #}
             <div class="panel">
@@ -198,7 +226,7 @@
     </div>
 
     <div class="row row--grid">
-        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+        <div class="col-lg-12 col-xl-3">
 
             {####################################
              Button (primary)
@@ -294,6 +322,22 @@
             </div>
 
         </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (text)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (text)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--text" type="button">A text button</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
     </div>
 
     {####################################
@@ -317,6 +361,25 @@
             {# START #}
             <textarea class="form-control form-control--has-sticky-button" name="name" rows="8" placeholder="Text Details"></textarea>
             <button class="button button--primary button--block [ form-sticky-button ]" type="button">Attach a photo or video</button>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Checkbox
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Checkbox</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox1">
+                <label class="custom-control-label" for="checkbox1">Check out this checkbox</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox2">
+                <label class="custom-control-label" for="checkbox2">Check out this checkbox</label>
+            </div>
             {# END #}
         </div>
     </div>
@@ -348,6 +411,15 @@
                                     <span class="comments__comment-author">Name Surname</span>
                                     <span class="comments__comment-time">3 hours ago</span>
                                 </div>
+
+                                <ul class="comments__comment-options">
+                                    <li class="comments__comment-options-item">
+                                        <a class="comments__comment-options-link" href="">Edit</a>
+                                    </li>
+                                    <li class="comments__comment-options-item">
+                                        <a class="comments__comment-options-link" href="">Delete</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -378,6 +450,40 @@
                 <dd>&pound;306,146.25</dd>
             </dl>
             {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Definition list (space between)
+    #####################################}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="components__component">
+                <h2 class="components__component-heading">Definition list (space between)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <dl class="definition-list definition-list--space-between">
+                        <dt>Licence type</dt>
+                        <dd>Apprentice</dd>
+
+                        <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                        <dt>Season rides</dt>
+                        <dd>51</dd>
+
+                        <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                        <dt>Season wins</dt>
+                        <dd>376</dd>
+
+                        <dd class="definition-list__line-break" aria-hidden="true" role="presentation"></dd>
+
+                        <dt>Prize money</dt>
+                        <dd>&pound;306,146.25</dd>
+                    </dl>
+                    {# END #}
+                </div>
+            </div>
         </div>
     </div>
 
@@ -430,6 +536,318 @@
     </div>
 
     {####################################
+     Definition list (stacked)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Definition list (stacked)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <dl class="definition-list definition-list--stacked">
+                <dt>Name</dt>
+                <dd>Name Surname</dd>
+
+                <dt>D.O.B.</dt>
+                <dd>DD/MM/YYYY</dd>
+
+                <dt>Phone number</dt>
+                <dd>0123456789</dd>
+
+                <dt>Mobile number</dt>
+                <dd>0123456789</dd>
+
+                <dt>Address</dt>
+                <dd>
+                    Junnie Durrans<br>
+                    The British Racing School<br>
+                    Snailwell Road<br>
+                    Newmarket<br>
+                    Suffolk<br>
+                    CB8 7NU
+                </dd>
+
+                <dt>Email address</dt>
+                <dd>name@jcp.co.uk</dd>
+
+                <dt>Twitter handle</dt>
+                <dd>@TwitterName</dd>
+            </dl>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Heading 1
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Heading 1</h2>
+        <div class="components__component-main">
+            {# START #}
+            <h1 class="heading--1">This is a top-level heading</h1>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Heading 1 with button
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Heading 1 with button</h2>
+        <div class="components__component-main">
+            {# START #}
+            <h1 class="heading--1 heading--has-button">
+                This is a top-level heading
+                <a class="[ button button--primary ] [ heading__button ]" href="">Edit</a>
+            </h1>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Heading 2
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Heading 2</h2>
+        <div class="components__component-main">
+            {# START #}
+            <h2 class="heading--2">This ia a second-level heading</h2>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Icons
+    #####################################}
+    <div class="components__component components__component--blue-bg">
+        <h2 class="components__component-heading">Icons</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="row">
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-1">angle-left</div>
+                    <div style="fill: white;">
+                        {% include "svg/angle-left.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-1">angle-right</div>
+                    <div style="fill: white;">
+                        {% include "svg/angle-right.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-1">bell</div>
+                    <div style="fill: white;">
+                        {% include "svg/bell.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-1">binoculars</div>
+                    <div style="fill: white;">
+                        {% include "svg/binoculars.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">circle</div>
+                    <div style="fill: white;">
+                        {% include "svg/circle.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">conversation</div>
+                    <div style="fill: white;">
+                        {% include "svg/conversation.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">edit</div>
+                    <div style="fill: white;">
+                        {% include "svg/edit.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">fitness</div>
+                    <div style="fill: white;">
+                        {% include "svg/fitness.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">group</div>
+                    <div style="fill: white;">
+                        {% include "svg/group.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">info-circle</div>
+                    <div style="fill: white;">
+                        {% include "svg/info-circle.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">magnify</div>
+                    <div style="fill: white;">
+                        {% include "svg/magnify.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">meeting</div>
+                    <div style="fill: white;">
+                        {% include "svg/meeting.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-activity-log</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-activity-log.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-dashboard</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-dashboard.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-documents</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-documents.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-invoice</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-invoice.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-jets-pdp</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-jets-pdp.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-messages</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-messages.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-my-coaches</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-my-coaches.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-racing-excellence</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-racing-excellence.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">nav-skills-profile</div>
+                    <div style="fill: white;">
+                        {% include "svg/nav-skills-profile.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">phonecall</div>
+                    <div style="fill: white;">
+                        {% include "svg/phonecall.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">plus</div>
+                    <div style="fill: white;">
+                        {% include "svg/plus.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">riding</div>
+                    <div style="fill: white;">
+                        {% include "svg/riding.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">simulator</div>
+                    <div style="fill: white;">
+                        {% include "svg/simulator.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">tick-circle</div>
+                    <div style="fill: white;">
+                        {% include "svg/tick-circle.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">times</div>
+                    <div style="fill: white;">
+                        {% include "svg/times.svg" %}
+                    </div>
+                </div>
+                <div class="[ col-md-3 ] [ mb-3 ]">
+                    <div class="text-light mb-2">user-activity</div>
+                    <div style="fill: white;">
+                        {% include "svg/user-activity.svg" %}
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Icon checkbox
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Icon checkbox</h2>
+        <div class="components__component-main">
+            <div class="row row--grid">
+                {% for item in content.icon_checkboxes %}
+                    <div class="col-md-3">
+                        {# START #}
+                        <div class="icon-checkbox">
+                            <input class="[ icon-checkbox__input ] [ sr-only ]" type="checkbox" name="icon-checkboxes" id="icon-checkbox-{{ loop.index }}">
+                            <label class="icon-checkbox__label" for="icon-checkbox-{{ loop.index }}">
+                                <div class="icon-checkbox__icon">
+                                    {% include "svg/" ~ item.icon ~ ".svg" %}
+                                </div>
+                                <span class="icon-checkbox__name">{{ item.name }}</span>
+                            </label>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Icon radio
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Icon radio</h2>
+        <div class="components__component-main">
+            <div class="row row--grid">
+                {% for item in content.icon_checkboxes %}
+                    <div class="col-md-3">
+                        {# START #}
+                        <div class="icon-radio">
+                            <input class="[ icon-radio__input ] [ sr-only ]" type="radio" name="icon-radios" id="icon-radio-{{ loop.index }}">
+                            <label class="icon-radio__label" for="icon-radio-{{ loop.index }}">
+                                <div class="icon-radio__icon">
+                                    {% include "svg/" ~ item.icon ~ ".svg" %}
+                                </div>
+                                <span class="icon-radio__name">{{ item.name }}</span>
+                            </label>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
      Icon list
     #####################################}
     <div class="components__component">
@@ -475,6 +893,41 @@
     </div>
 
     {####################################
+     Icon notify
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Icon notify</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="icon-notify">
+                {% include "svg/conversation.svg" %}
+                <div class="icon-notify__badges">
+                    <span class="[ icon-notify__badge ] [ badge badge-pill badge-dark ]">3</span>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Icon notify (multiple)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Icon notify (multiple)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="icon-notify">
+                {% include "svg/conversation.svg" %}
+                <div class="icon-notify__badges">
+                    <span class="[ icon-notify__badge ] [ badge badge-pill badge-dark ]">3</span>
+                    <span class="[ icon-notify__badge ] [ badge badge-pill badge-dark ]">NEW</span>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Image thumbnail
     #####################################}
     <div class="components__component">
@@ -483,7 +936,7 @@
             {# START #}
             <div class="row row--grid">
                 {% for item in content.image_thumbnails %}
-                    <div class="[ col-lg-1 ] [ mb-3 ]">
+                    <div class="col-lg-1">
                         <a class="image-thumbnail" style="background-image:url('{{ item }}');" href="#">
                             <span class="image-thumbnail__magnify-icon">
                                 {% include "svg/magnify.svg" %}
@@ -492,6 +945,66 @@
                     </div>
                 {% endfor %}
             </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Pagination
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Pagination</h2>
+        <div class="components__component-main">
+            {# START #}
+            <nav aria-label="Pagination example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                </ul>
+            </nav>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Pagination (with lots of pages)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Pagination (with lots of pages)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <nav aria-label="Pagination example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="pagination__ellipsis">
+                        ...
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">11</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">12</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">13</a>
+                    </li>
+                    <li class="pagination__ellipsis">
+                        ...
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">24</a>
+                    </li>
+                </ul>
+            </nav>
             {# END #}
         </div>
     </div>
@@ -544,6 +1057,44 @@
     </div>
 
     {####################################
+     Panel (with legend)
+    #####################################}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="components__component components__component--trans-bg">
+                <h2 class="components__component-heading">Panel (with legend)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <div class="panel">
+                        <div class="panel__inner">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    Most active jockeys
+                                </h2>
+                                <div class="panel__header-legend">
+                                    <div class="panel__header-legend-item panel__header-legend-item--primary">
+                                        Your coaching
+                                    </div>
+                                    <div class="panel__header-legend-item panel__header-legend-item--secondary">
+                                        Others
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel__main">
+                                Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                            </div>
+
+                            <a class="panel__call-to-action" href="">View my jockeys</a>
+                        </div>
+                    </div>
+                    {# END #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {####################################
      Panel (split call-to-action)
     #####################################}
     <div class="components__component components__component--trans-bg">
@@ -576,6 +1127,38 @@
     </div>
 
     {####################################
+     Panel (disabled call-to-action)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (disabled call-to-action)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Recent Activities
+                        </h2>
+                        <div class="panel__header-meta">
+                            Last updated on 23/05/2018
+                        </div>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+
+                    <div class="panel__split-call-to-action">
+                        <a class="panel__call-to-action" href="" tabindex="-1" disabled>Previous</a>
+                        <a class="panel__call-to-action" href="">Next</a>
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Panel (with alert)
     #####################################}
     <div class="components__component components__component--trans-bg">
@@ -598,8 +1181,47 @@
                     </div>
 
                     <div class="panel__alert panel__alert--has-icon">
-                        {% include "svg/info-circle.svg" %}
-                        George, you have completed 5% of this PDP
+                        <div>
+                            {% include "svg/info-circle.svg" %}
+                            George, you have completed 5% of this PDP
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Panel (with alert, including button)
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Panel (with alert, including button)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Recent Activities
+                        </h2>
+                        <div class="panel__header-meta">
+                            Last updated on 23/05/2018
+                        </div>
+                    </div>
+
+                    <div class="panel__main">
+                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                    </div>
+
+                    <div class="panel__alert panel__alert--has-icon">
+                        <div>
+                            {% include "svg/info-circle.svg" %}
+                            George, you have completed 5% of this PDP
+                        </div>
+                        <div>
+                            <a class="button button--white" href="">View messages</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -619,10 +1241,6 @@
                     <div class="panel__pre-header">
                         <div class="panel__pre-header-primary">
                             <ul class="panel__pre-header-definition-list">
-                                {###############################################################################
-                                    This isn't how the dl/dt/dd elements should be used, but until definition
-                                    lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
-                                ################################################################################}
                                 <li>
                                     <dl>
                                         <dt>Coach</dt>
@@ -737,10 +1355,6 @@
                     <div class="panel__pre-header">
                         <div class="panel__pre-header-primary">
                             <ul class="panel__pre-header-definition-list">
-                                {###############################################################################
-                                    This isn't how the dl/dt/dd elements should be used, but until definition
-                                    lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
-                                ################################################################################}
                                 <li>
                                     <dl>
                                         <dt>Coach</dt>
@@ -833,6 +1447,47 @@
     </div>
 
     {####################################
+     Progress bar
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Progress bar</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="progress-bar">
+                <span class="sr-only">Progress: 70%</span>
+                <div class="progress-bar__bar" aria-hidden="true" role="presentation">
+                    <div class="progress-bar__primary" style="width: 60%;"></div>
+                    <div class="progress-bar__secondary" style="width: 80%;"></div>
+                </div>
+                <div class="progress-bar__labels">
+                    <div>0 hours</div>
+                    <div>6 hours</div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Radio button
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Radio button</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio1" name="radio" class="custom-control-input">
+                <label class="custom-control-label" for="radio1">Toggle this custom radio</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio2" name="radio" class="custom-control-input">
+                <label class="custom-control-label" for="radio2">Or toggle this other custom radio</label>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Radio switches
     #####################################}
     <div class="row">
@@ -881,7 +1536,7 @@
         <h2 class="components__component-heading">Table</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -905,6 +1560,56 @@
                             </td>
                             <td>
                                 <a class="table__link" href="">{{ item.activity_type }}</a>
+                            </td>
+                            <td>{{ item.coach }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.time }}</td>
+                            <td>{{ item.location }}</td>
+                            <td class="table__icon-column">
+                                <a class="table__icon-button" href="">
+                                    {% include "svg/edit.svg" %}
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <a class="button button--primary" href="">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Table (with avatar)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Table (with avatar)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Activity type</th>
+                        <th>Coach</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in content.recent_activities %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="[ table__avatar ] [ avatar avatar--blue ]">
+                                        <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                                    </div>
+                                    <a class="table__link" href="">{{ item.activity_type }}</a>
+                                </div>
                             </td>
                             <td>{{ item.coach }}</td>
                             <td>{{ item.date }}</td>
@@ -1014,15 +1719,58 @@
     </div>
 
     {####################################
+     Text color utilities
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Text color utilities</h2>
+        <div class="components__component-main">
+            {# START #}
+                <div class="text--color-base">Standard text</div>
+                <div class="text--color-blue">Blue text</div>
+                <div class="text--color-blue-dark">Dark blue text</div>
+                <div class="text--color-blue-light">Light blue text</div>
+                <div class="text--color-blue-lighter">Lighter blue text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Text size utilities
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Text size utilities</h2>
+        <div class="components__component-main">
+            {# START #}
+                <div class="text--size-base">Standard text</div>
+                <div class="text--size-sm">Small text</div>
+                <div class="text--size-lg">Large text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Textarea
     #####################################}
     <div class="components__component">
         <h2 class="components__component-heading">Textarea</h2>
         <div class="components__component-main">
             {# START #}
+                <textarea class="form-control" name="name" rows="8" placeholder="Text Details"></textarea>
+            {# END #}
+        </div>
+    </div>
 
-                <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Text Details"></textarea>
-
+    {####################################
+     Textarea (display as text)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Textarea (display as text)</h2>
+        <div>Use in conjuction with the <code>disabled</code> attribute</div>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <textarea class="form-control form-control--display-as-text" name="name" rows="8" disabled>Junnie Durrans&#13;The British Racing School&#13;Snailwell Road&#13;Newmarket&#13;Suffolk&#13;CB8 7NU</textarea>
+            </div>
             {# END #}
         </div>
     </div>
@@ -1034,7 +1782,41 @@
         <h2 class="components__component-heading">Text input</h2>
         <div class="components__component-main">
             {# START #}
-                <input class="form-control" type="text" name="" value="" placeholder="Search for Jockey/Coach…">
+            <div class="form-group">
+                <input class="form-control" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Text input (with icon)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Text input (with icon)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group form-group--has-icon">
+                <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                    {% include "svg/circle.svg" %}
+                </span>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Text input (display as text)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Text input (display as text)</h2>
+        <div>Use in conjuction with the <code>disabled</code> attribute</div>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <input class="form-control form-control--display-as-text" type="text" name="" value="Name Surname" disabled>
+            </div>
             {# END #}
         </div>
     </div>
@@ -1049,7 +1831,7 @@
                 {% for item in content.user_cards %}
                     <div class="col-md-3">
                         {# START #}
-                        <div class="[ user-card ] [ mb-3 ]">
+                        <div class="user-card">
                             <div class="[ user-card__avatar ] [ avatar ]">
                                 <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
                             </div>
@@ -1074,7 +1856,7 @@
                 {% for item in content.user_cards %}
                     <div class="col-md-3">
                         {# START #}
-                        <div class="[ user-card user-card--has-meta ] [ mb-3 ]">
+                        <div class="user-card user-card--has-meta">
                             <div class="[ user-card__avatar ] [ avatar ]">
                                 <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
                             </div>
@@ -1102,9 +1884,9 @@
                 {% for item in content.user_checkboxes %}
                     <div class="col-md-3">
                         {# START #}
-                        <div class="[ user-checkbox ] [ mb-3 ]">
-                            <input class="[ user-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="{{ loop.index }}">
-                            <label class="user-checkbox__label" for="{{ loop.index }}">
+                        <div class="user-checkbox">
+                            <input class="[ user-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="users-{{ loop.index }}">
+                            <label class="user-checkbox__label" for="users-{{ loop.index }}">
                                 <div class="[ user-checkbox__avatar ] [ avatar ]">
                                     <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
                                 </div>
@@ -1122,7 +1904,8 @@
      Users list
     #####################################}
     <div class="components__component components__component--trans-bg components__component--half">
-        <h2 class="components__component-heading">Users list (inside a panel component)</h2>
+        <h2 class="components__component-heading">Users list</h2>
+        <p>Inside a panel component</p>
         <div class="components__component-main">
             <div class="panel">
                 <div class="panel__inner">
