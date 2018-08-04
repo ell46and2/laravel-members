@@ -49423,7 +49423,9 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bus__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__IconMagnify__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__IconMagnify___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__IconMagnify__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bus__ = __webpack_require__(1);
 //
 //
 //
@@ -49433,6 +49435,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -49443,10 +49456,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			type: Object
 		}
 	},
+	components: {
+		IconMagnify: __WEBPACK_IMPORTED_MODULE_0__IconMagnify___default.a
+	},
 	methods: {
 		modalOpen: function modalOpen() {
 			if (this.attachment.processed) {
-				__WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('modal:open', this.attachment.uid);
+				__WEBPACK_IMPORTED_MODULE_1__bus__["a" /* default */].$emit('modal:open', this.attachment.uid);
 			}
 		}
 	}
@@ -49460,11 +49476,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("img", {
-    staticClass: "attachment-upload__attachment__image",
-    attrs: { src: _vm.attachment.thumbnail, alt: "attachment thumbnail" },
-    on: { click: _vm.modalOpen }
-  })
+  return _c(
+    "a",
+    {
+      staticClass: "image-thumbnail",
+      style: "background-image:url('" + _vm.attachment.thumbnail + "');",
+      attrs: { href: "#" },
+      on: {
+        click: function($event) {
+          $event.preventDefault()
+          return _vm.modalOpen($event)
+        }
+      }
+    },
+    [
+      _c(
+        "span",
+        { staticClass: "image-thumbnail__magnify-icon" },
+        [_c("icon-magnify")],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52336,7 +52369,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			axios.put('/notification/' + this.notification.id + '/dismiss').then(function () {
-				window.location.href = _this2.notification.linkUrl;
+				window.location.href = '/' + _this2.notification.linkUrl;
 			}, function () {
 				// handle failer.
 			});
@@ -52810,6 +52843,61 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52963,114 +53051,119 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+  return _c("div", { staticClass: "panel" }, [
+    _c(
+      "div",
+      { staticClass: "panel__inner" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card" },
+          { staticClass: "panel__main" },
           [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Attach Videos or Photos")
-            ]),
-            _vm._v(" "),
             _vm.attachments
               ? _c(
                   "div",
-                  { staticClass: "card-body" },
-                  [
-                    _c(
+                  { staticClass: "row row--grid" },
+                  _vm._l(_vm.attachments, function(attachment) {
+                    return _c(
                       "div",
-                      { staticClass: "attachment-upload__attachments" },
-                      _vm._l(_vm.attachments, function(attachment) {
-                        return _vm.attachments.length
+                      { staticClass: "col-lg-1" },
+                      [
+                        _c("attachment", { attrs: { attachment: attachment } }),
+                        _vm._v(" "),
+                        _vm.canEditAttachment
                           ? _c(
-                              "div",
-                              { staticClass: "attachment-upload__attachment" },
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.remove(attachment.uid)
+                                  }
+                                }
+                              },
                               [
-                                _c("attachment", {
-                                  attrs: { attachment: attachment }
-                                }),
-                                _vm._v(" "),
-                                _vm.canEditAttachment
-                                  ? _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "#" },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            _vm.remove(attachment.uid)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                        Remove\n                      "
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ],
-                              1
+                                _vm._v(
+                                  "\n                    Remove\n                  "
+                                )
+                              ]
                             )
                           : _vm._e()
-                      })
-                    ),
-                    _vm._v(" "),
-                    !_vm.attachments.length
-                      ? [_c("p", [_vm._v("No media currently added")])]
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.canEditAttachment
-                      ? [
-                          !_vm.uploading
-                            ? _c("input", {
-                                staticClass: "attachment-upload__input",
-                                attrs: {
-                                  type: "file",
-                                  name: "attachment",
-                                  id: "attachment"
-                                },
-                                on: { change: _vm.fileInputChange }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { for: "attachment" }
-                            },
-                            [_vm._v("Attach a Photo or Video")]
-                          )
-                        ]
-                      : _vm._e()
-                  ],
-                  2
+                      ],
+                      1
+                    )
+                  })
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.uploading && !_vm.failed
-              ? [
-                  !_vm.uploadingComplete
-                    ? _c("div", { staticClass: "progress" }, [
-                        _c("div", {
-                          staticClass: "progress-bar",
-                          style: { width: _vm.fileProgress + "%" }
-                        })
-                      ])
-                    : _vm._e()
-                ]
-              : _vm._e()
+              : [_vm._v("\n            No media currently added\n          ")]
           ],
           2
+        ),
+        _vm._v(" "),
+        _vm.uploading && !_vm.failed
+          ? [
+              !_vm.uploadingComplete
+                ? _c("div", { staticClass: "attachment-progress" }, [
+                    _c("div", {
+                      staticClass: "attachment-progress__bar",
+                      style: { width: _vm.fileProgress + "%" }
+                    })
+                  ])
+                : _vm._e()
+            ]
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.canEditAttachment
+          ? [
+              !_vm.uploading
+                ? _c("input", {
+                    staticClass: "attachment-upload__input",
+                    attrs: {
+                      type: "file",
+                      name: "attachment",
+                      id: "attachment"
+                    },
+                    on: { change: _vm.fileInputChange }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "panel__call-to-action",
+                  attrs: { for: "attachment" }
+                },
+                [_vm._v("Attach a Photo or Video")]
+              )
+            ]
+          : _vm._e()
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel__header" }, [
+      _c("h2", { staticClass: "panel__heading" }, [
+        _vm._v("\n            Attach Videos of Photos\n            "),
+        _c(
+          "span",
+          {
+            staticClass:
+              "[ text--size-sm text--color-base font-weight-normal ] [ ml-1 ]"
+          },
+          [_vm._v("You can upload a maximun of 5 videaos or 10 images")]
         )
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -101293,19 +101386,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 			var _this2 = this;
 
 			var old = JSON.parse(this.old);
-			console.log('old user select', old);
+			// console.log('old user select', old);
 			if (old) {
 				Object.keys(old).forEach(function (id) {
 					id = Number(id);
 					_this2.selectedIds.push(id);
 					var user = _.find(_this2.users, { id: id });
-					console.log('user', user);
+					// console.log('user', user);
 					user.selected = true;
 				});
 			}
 		},
 		handleSelected: function handleSelected(id) {
-			console.log('selected', id);
+			// console.log('selected', id);
 			var user = _.find(this.users, { id: id });
 			if (this.group) {
 				this.handleSelectedGroup(id, user);
@@ -101355,17 +101448,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 					while (1) {
 						switch (_context.prev = _context.next) {
 							case 0:
-								console.log('getCoachesJockeys');
-								_context.next = 3;
+								_context.next = 2;
 								return axios.get('/admin/jockey-resource/' + coachId);
 
-							case 3:
+							case 2:
 								jockeys = _context.sent;
 
 
 								this.users = jockeys.data.data;
 
-							case 5:
+							case 4:
 							case 'end':
 								return _context.stop();
 						}
@@ -108108,6 +108200,93 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(211)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Attachments/IconMagnify.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3fa8dafc", Component.options)
+  } else {
+    hotAPI.reload("data-v-3fa8dafc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 211 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "svg",
+    {
+      staticClass: "icon",
+      attrs: { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 56.97 56.97" }
+    },
+    [
+      _c("path", {
+        attrs: {
+          d:
+            "M1.9 56.13a3 3 0 0 0 4.24-.08l13.67-14.21A22.76 22.76 0 0 0 33 46a23 23 0 1 0-17.6-8.21L1.82 51.89a3 3 0 0 0 .08 4.24zM50 23A17 17 0 1 1 33 6a17 17 0 0 1 17 17z"
+        }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3fa8dafc", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

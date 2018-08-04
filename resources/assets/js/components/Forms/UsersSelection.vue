@@ -81,19 +81,19 @@
 		methods: {
 			populateOldData() {
 				let old = JSON.parse(this.old);
-				console.log('old user select', old);
+				// console.log('old user select', old);
 				if(old) {
 					Object.keys(old).forEach((id) => {
 						id = Number(id);
 						this.selectedIds.push(id);
 						let user = _.find(this.users, { id: id });
-						console.log('user', user);
+						// console.log('user', user);
 						user.selected = true;
 					});
 				}
 			},
 			handleSelected(id) {
-				console.log('selected', id);
+				// console.log('selected', id);
 				let user = _.find(this.users, { id: id });
 				if(this.group) {
 					this.handleSelectedGroup(id, user);
@@ -135,7 +135,7 @@
 				});
 			},
 			async getCoachesJockeys(coachId) {
-				console.log('getCoachesJockeys');
+				// console.log('getCoachesJockeys');
 				let jockeys = await axios.get(`/admin/jockey-resource/${coachId}`);
 
 				this.users = jockeys.data.data;

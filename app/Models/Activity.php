@@ -212,6 +212,13 @@ class Activity extends Model
         }
     }
 
+    public function getFormattedDurationAttribute()
+    {
+        if(!$this->duration) return '-';
+
+        return "{$this->duration} minutes";
+    }
+
     public function getInvoiceableGroupAttribute()
     {
         return 'activities';
@@ -220,7 +227,8 @@ class Activity extends Model
     public function getNotificationLinkAttribute()
     {
         // NOTE: need to have different urls depending on the users role.
-        return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
+        // return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
+        return "activity/{$this->id}";
     } 
 
     public function getEditRouteAttribute() {

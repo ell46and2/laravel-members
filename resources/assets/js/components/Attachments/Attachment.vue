@@ -1,13 +1,24 @@
 <template>
-	<img                        
+	<!-- <img                        
         :src="attachment.thumbnail" 
         alt="attachment thumbnail"
         class="attachment-upload__attachment__image"  
-        @click="modalOpen"                       
+        @click.prevent="modalOpen"                       
+    > -->
+    <a 
+    	class="image-thumbnail" 
+    	:style="`background-image:url('${attachment.thumbnail}');`" 
+    	href="#"
+    	@click.prevent="modalOpen"
     >
+        <span class="image-thumbnail__magnify-icon">
+            <icon-magnify></icon-magnify>
+        </span>
+    </a>
 </template>
 
 <script>
+	import IconMagnify from './IconMagnify';
 	import bus from '../../bus';
 
 	export default {
@@ -16,6 +27,9 @@
 				required: true,
 				type: Object
 			}
+		},
+		components: {
+			IconMagnify
 		},
 		methods: {
 			modalOpen() {

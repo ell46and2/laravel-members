@@ -156,6 +156,8 @@ class ActivityController extends Controller
             'information' => $request->information,
         ]);
 
+        // NOTE: Check if Jockey changed here - NEED TO ADD
+
         if($activity->start > Carbon::now() && $this->typeOrStartOrLocationChanged($previous, $activity)) {
             $this->dispatch(new NotifyJockeyAmendedActivity($activity));
         }

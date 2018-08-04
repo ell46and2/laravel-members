@@ -12998,6 +12998,36 @@ video::-webkit-media-text-track-display {
   background-color: #fff;
 }
 
+.attachment-progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: .75rem;
+  background-color: #fff;
+  border-radius: .25rem;
+}
+
+.attachment-progress__bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  background-color: green;
+  -webkit-transition: width .6s ease;
+  transition: width .6s ease;
+}
+
 .attachment-upload__input {
   width: 0.1px;
   height: 0.1px;

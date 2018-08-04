@@ -1,32 +1,88 @@
 <template>
-    <div class="container">
+    <!-- <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Attach Videos or Photos</div>
 
                     <div class="card-body" v-if="attachments">
-                      <div class="attachment-upload__attachments">
+                      <div class="attachment-upload__attachments"> -->
 
-                        <div 
-                          v-if="attachments.length"
-                          v-for="attachment in attachments"
-                          class="attachment-upload__attachment"
-                        >
-                          <attachment :attachment="attachment"></attachment>
-                          <a 
-                            href="#"
-                            v-if="canEditAttachment"
-                            @click.prevent="remove(attachment.uid)"
-                          >
-                            Remove
-                          </a>
+  <div class="panel">
+    <div class="panel__inner">
+      <div class="panel__header">
+        <h2 class="panel__heading">
+            Attach Videos of Photos
+            <span class="[ text--size-sm text--color-base font-weight-normal ] [ ml-1 ]">You can upload a maximun of 5 videaos or 10 images</span>
+        </h2>
+      </div>
+
+      <div class="panel__main">
+          <div class="row row--grid" v-if="attachments">            
+              <div class="col-lg-1" v-for="attachment in attachments">
+                  <attachment :attachment="attachment"></attachment>
+                  <a 
+                    href="#"
+                    v-if="canEditAttachment"
+                    @click.prevent="remove(attachment.uid)"
+                  >
+                    Remove
+                  </a>
+              </div>
+          </div>
+          <template v-else>
+            No media currently added
+          </template>       
+      </div>
+
+      <template v-if="uploading && !failed">
+          <div class="attachment-progress" v-if="!uploadingComplete">
+              <div class="attachment-progress__bar" v-bind:style="{width: fileProgress + '%' }"></div> 
+          </div>
+      </template>
+ 
+      <template v-if="canEditAttachment">
+        <input 
+            type="file"
+            class="attachment-upload__input" 
+            name="attachment" 
+            id="attachment"
+            @change="fileInputChange"
+            v-if="!uploading"
+        >
+        <label class="panel__call-to-action" for="attachment">Attach a Photo or Video</label>
+        <!-- <button class="btn btn-primary" @click="submit">Attach a Photo or Video</button> -->
+      </template>
+      
+
+      
+
+    </div>
+  </div>
+
+
+
+
+
+<!--     <div 
+      v-if="attachments"
+      v-for="attachment in attachments"
+      class="attachment-upload__attachment"
+    >
+      <attachment :attachment="attachment"></attachment>
+      <a 
+        href="#"
+        v-if="canEditAttachment"
+        @click.prevent="remove(attachment.uid)"
+      >
+        Remove
+      </a>
 
                         </div>    
                       </div>
 
                       <template v-if="!attachments.length">
-                        <p>No media currently added</p>
+                        No media currently added
                       </template>
 
                       <template v-if="canEditAttachment">
@@ -39,7 +95,6 @@
                             v-if="!uploading"
                         >
                         <label class="btn btn-primary" for="attachment">Attach a Photo or Video</label>
-                        <!-- <button class="btn btn-primary" @click="submit">Attach a Photo or Video</button> -->
                       </template>
                     </div>
 
@@ -51,7 +106,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 <script>

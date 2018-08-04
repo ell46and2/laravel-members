@@ -1,0 +1,22 @@
+
+.attachment-progress {
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #fff;
+    border-radius: .25rem;
+
+    &__bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        background-color: green;
+        transition: width .6s ease;
+    }
+}
+
+

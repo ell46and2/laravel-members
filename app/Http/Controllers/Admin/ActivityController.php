@@ -97,6 +97,8 @@ class ActivityController extends Controller
 
     public function edit(Activity $activity)
     {
+        $this->authorize('edit', $activity);
+        
         request()->request->add(['selectedIds' => $activity->jockeys->pluck('id')]); // append to the request so we can access in the Resource.
 
         $activityTypes = ActivityType::all();
