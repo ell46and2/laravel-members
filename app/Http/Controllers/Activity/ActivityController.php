@@ -44,6 +44,7 @@ class ActivityController extends Controller
         $isAdmin = $this->currentUser->isAdmin();
         $isCoach = $this->currentUser->isCoach();
         $isAssignedCoach = $this->currentUser->id === $activity->coach_id;
+        $isAssignedJockey = $activity->isAssignedToJockey($this->currentUser);
 
         $attachmentsResource = AttachmentResource::collection($activity->attachments);
 
@@ -52,7 +53,8 @@ class ActivityController extends Controller
             'attachmentsResource',
             'isAdmin',
             'isCoach',
-            'isAssignedCoach'
+            'isAssignedCoach',
+            'isAssignedJockey'
         ));
     }
 }

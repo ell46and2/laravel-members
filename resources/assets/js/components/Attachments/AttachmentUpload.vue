@@ -13,7 +13,7 @@
       <div class="panel__header">
         <h2 class="panel__heading">
             Attach Videos of Photos
-            <span class="[ text--size-sm text--color-base font-weight-normal ] [ ml-1 ]">You can upload a maximun of 5 videaos or 10 images</span>
+            <span class="[ text--size-sm text--color-base font-weight-normal ] [ ml-1 ]">You can upload a maximun of 5 videos and 10 images</span>
         </h2>
       </div>
 

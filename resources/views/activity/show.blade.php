@@ -121,6 +121,73 @@
     can-edit="{{ $isAdmin || $isAssignedCoach }}"
 ></attachment-upload>
 
+<div class="panel flow-vertical--3">
+    <div class="panel__inner">
+        <ul class="panel__tabs">
+            @foreach($activity->jockeys as $jockey)
+                {{-- For Jockey user --}}
+                @if($jockey->id === $currentUser->id)
+                    <li class="panel__tabs-item">
+                        <button class="panel__tabs-button is-active" type="button">{{ $jockey->full_name }}</button>
+                    </li>
+                @endif
+            @endforeach
+           {{--  <li class="panel__tabs-item">
+                <button class="panel__tabs-button is-active" type="button">Name Surname</button>
+            </li>
+            <li class="panel__tabs-item">
+                <button class="panel__tabs-button" type="button">Name Surname</button>
+            </li>
+            <li class="panel__tabs-item">
+                <button class="panel__tabs-button" type="button">Name Surname</button>
+            </li> --}}
+        </ul>
+        @foreach($activity->jockeys as $jockey)
+            {{-- For Jockey user --}}
+            @if($jockey->id === $currentUser->id)
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Activity Feedback for Name Surname
+                    </h2>
+                </div>
+
+                <div class="panel__main flow-vertical--3">
+
+                    <div class="row flow-vertical--3">
+                        <div class="col-12">
+                            <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Type here..."></textarea>
+                        </div>
+                        <div class="col-4">
+                            <button class="button button--success button--block" type="button">Save</button>
+                        </div>
+                        <div class="col-12 flow-vertical--3">
+                            <h2 class="heading--2">Activity Comments</h2>
+                            <div class="comments">
+                                <comments
+                                    endpoint="{{ route('activity.comment.index', $activity) }}"
+                                    recipient-id="{{ $jockey->id }}"
+                                    jockey-id="{{ $jockey->id }}"
+                                    is-current-user-jockey="{{ $currentUser->isJockey() }}"
+                                    can-user-add-comments="{{ $activity->isAssignedToUser($currentUser) }}"
+                                ></comments>
+                            </div>
+                            <h2 class="heading--2">Activity Comments</h2>
+                            <textarea class="form-control" name="name" rows="8" cols="80"  placeholder="Type here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <a class="panel__call-to-action" href="#">Add Activity Comments</a>
+            @endif
+        @endforeach
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <button class="button button--success button--block" type="button">Add Comment</button>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -220,6 +287,20 @@
 				></comments>
 			@endif			
 		@endforeach
+    @elseif($isAssignedJockey)
+        <add-feedback 
+            activity-id="{{ $activity->id }}" 
+            jockey-id="{{ $jockey->id }}"
+            current-feedback="{{ $jockey->pivot->feedback }}"
+        ></add-feedback>
+
+        <comments
+            endpoint="{{ route('activity.comment.index', $activity) }}"
+            recipient-id="{{ $jockey->id }}"
+            jockey-id="{{ $jockey->id }}"
+            is-current-user-jockey="{{ $currentUser->isJockey() }}"
+            can-user-add-comments="{{ $activity->isAssignedToUser($currentUser) }}"
+        ></comments>
 	@endif
          
 @endsection

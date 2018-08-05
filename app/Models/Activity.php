@@ -129,6 +129,13 @@ class Activity extends Model
         return false;
     }
 
+    public function isAssignedToJockey(User $user)
+    {
+        if($this->jockeys->pluck('id')->contains($user->id)) return true;
+
+        return false;
+    }
+
     public function isGroup()
     {
         return $this->group;

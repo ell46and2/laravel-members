@@ -1,6 +1,6 @@
 <template>
 	<form @submit.prevent="submit">
-		<div class="form-group">
+		<div class="form-control">
 			<textarea
 				id="body"
 				rows="4"
@@ -17,17 +17,30 @@
 		  	</label>
 		</div>
 
-		<div class="form-group" v-if="!comment.attachment || form.attachmentRemoved">
+		<template v-if="uploading && !failed">
+            <div class="attachment-progress" v-if="!uploadingComplete">
+                <div class="attachment-progress__bar" v-bind:style="{width: fileProgress + '%' }"></div> 
+            </div>
+        </template>
+
+        <template v-if="file">
+        	<p>File Selected: {{ file.name }}</p>
+        	<a href="#" @click.prevent="removeFile" class="btn btn-link">Remove</a>
+        </template>	
+
+		<template v-if="(!comment.attachment && file === null) || form.attachmentRemoved">
 			<input 
+				class="attachment-upload__input"
                 type="file" 
                 name="attachment" 
                 :id="fileInputId"
                 @change="fileInputChange"
                 v-if="!uploading"
             >
-        </div>
+            <label class="panel__call-to-action" :for="fileInputId">Attach a Photo or Video</label>
+        </template>
 
-		<template v-else>
+		<template v-if="comment.attachment && !form.attachmentRemoved">
 			<img 
 				class="mr-3 mb-3 mt-2" 
 				:src="comment.attachment.thumbnail" 
@@ -43,10 +56,8 @@
         </template>	        
 
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary">
-				Save				
-			</button>
-			<a href="#" @click.prevent="cancel" class="btn btn-link">Cancel</a>
+			<button class="button button--success button--block" type="submit">Save</button>
+			<a href="#" @click.prevent="cancel" class="button button--primary button--block">Cancel</a>
 		</div>
 	</form>
 </template>
@@ -135,10 +146,14 @@
 			},
 			fileInputChange() {
                 this.file = document.getElementById(`attachment_${this.recipientId}_edit`).files[0];
+                console.log(this.file);
             },
             uploadProgress(percent) {
                 console.log('percent', percent);
                 this.fileProgress = percent;
+            },
+            removeFile() {
+            	this.file = null;
             }
 		},
 		computed: {

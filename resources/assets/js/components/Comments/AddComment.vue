@@ -1,17 +1,20 @@
 <template>
-	<div class="mb-5">
-		<a 
-			href="#"
-			class="btn btn-primary btn-block"
-			@click.prevent="active = true"
-			v-if="!active"
-		>
-			Add comment
-		</a>
+	<div class="mb-5 pt-3">
+		<div class="col-4">
+			<a 
+				href="#"
+				class="button button--success button--block"
+				@click.prevent="active = true"
+				v-if="!active"
+			>
+				Add comment
+			</a>
+		</div>
+		
 
 		<template v-if="active">
 			<form @submit.prevent="submit">
-				<div class="form-group">
+				<div class="form-control">
 					<textarea 
 						id="body" 
 						rows="10"
@@ -28,27 +31,36 @@
 				  	</label>
 				</div>
 
-				<div class="form-group">
+	            <template v-if="uploading && !failed">
+                    <div class="attachment-progress" v-if="!uploadingComplete">
+                        <div class="attachment-progress__bar" v-bind:style="{width: fileProgress + '%' }"></div> 
+                    </div>
+                </template>
+
+                <template v-if="file">
+		        	<p>File Selected: {{ file.name }}</p>
+		        	<a href="#" @click.prevent="removeFile" class="btn btn-link">Remove</a>
+		        </template>
+
+				<template v-if="file === null">
 					<input 
+						class="attachment-upload__input"
 	                    type="file" 
 	                    name="attachment" 
 	                    :id="fileInputId"
 	                    @change="fileInputChange"
 	                    v-if="!uploading"
 	                >
-	            </div>
+	                <label class="panel__call-to-action" :for="fileInputId">Attach a Photo or Video</label>
+	            </template>
 
-	            <template v-if="uploading && !failed">
-                    <div class="progress" v-if="!uploadingComplete">
-                        <div class="progress-bar" v-bind:style="{width: fileProgress + '%' }"></div> 
-                    </div>
-                </template>
+	            
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="submit" class="button button--success button--block">Save</button>
 					<a 
 						href="#" 
-						class="btn btn-link" 
+						class="button button--primary button--block"
 						@click.prevent="cancel"
 					>Cancel</a>
 				</div>
