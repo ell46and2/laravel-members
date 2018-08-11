@@ -82,7 +82,9 @@ class MessageController extends Controller
     {
         $messageResource = new MessageResource(request());
 
-        return view('message.create', compact('messageResource'));
+        $preselectRecipientId = request()->id ?? null;
+
+        return view('message.create', compact('messageResource', 'preselectRecipientId'));
     }
 
     public function getUser(User $user)

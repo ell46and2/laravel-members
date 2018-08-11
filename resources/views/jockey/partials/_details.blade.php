@@ -1,0 +1,49 @@
+<div class="panel__header">
+    <h2 class="panel__heading">
+        Details
+    </h2>
+</div>
+
+<div class="panel__main flow-vertical--2">
+
+    @include('user.partials._detail', [
+        'label' => 'First name',
+        'value' => $jockey->first_name
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Last name',
+        'value' => $jockey->last_name
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Middle name',
+        'value' => $jockey->middle_name
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Alias',
+        'value' => $jockey->alias
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Address',
+        'value' => $jockey->fullAddress
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Telephone',
+        'value' => $jockey->telephone
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Twitter handle',
+        'value' => $jockey->twitter_handle
+    ])
+
+    @include('user.partials._detail', [
+        'label' => 'Email Address',
+        'value' => $jockey->email
+    ])
+   
+</div>

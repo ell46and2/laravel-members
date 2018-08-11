@@ -41,6 +41,11 @@ class Jockey extends User
         return $this->hasMany(SkillProfile::class, 'jockey_id')->orderBy('start', 'desc');
     }
 
+    public function lastSkillProfile()
+    {
+        return $this->hasOne(SkillProfile::class, 'jockey_id')->orderBy('start', 'desc');
+    }
+
     public function pdps()
     {
         return $this->hasMany(Pdp::class, 'jockey_id');
@@ -71,6 +76,11 @@ class Jockey extends User
             'id',
             'racing_excellence_id'
         )->distinct();
+    }
+
+    public function crmRecords()
+    {
+        return $this->morphMany(CrmRecord::class, 'managable');
     }
 
     /*
@@ -206,6 +216,44 @@ class Jockey extends User
         return $cutOff > now() ? 6 : 4;
     }
 
+    public function trainingTimeAllowanceForInvoiceMonth(Invoice $invoice)
+    {
+        $licenceDate = $this->licence_date;
+
+        if(!$licenceDate) return 4;
+
+        $end = $invoice->submitted->subMonth()->endOfMonth();
+
+        if($licenceDate->day < 15) {
+            $cutOff = $licenceDate->addMonths(2)->endOfMonth();
+        } else {
+            $cutOff = $licenceDate->addMonths(3)->endOfMonth();
+        }
+
+        return $cutOff > $end ? 6 : 4;
+
+    }
+
+    public function trainingTimeForInvoiceMonth(Invoice $invoice)
+    {
+        if(!$invoice->submitted) return $this->trainingTimeThisMonth(true);
+
+        // get previous month from month invoice was submitted       
+        $start = $invoice->submitted->subMonth()->startOfMonth();
+        $end = $invoice->submitted->subMonth()->endOfMonth();
+
+        $activities = $this->activities()
+            ->withCount('jockeys')
+            ->whereBetween('end', [$start, $end])
+            ->get();
+
+        $duration = $activities->sum(function($activity){
+            return floor($activity->duration / $activity->jockeys->count());
+        });
+
+        return round($duration / 60, 2);
+    }
+
     /*
         Get activities for this month that have the jockey in and get the duration.
         If activity is a group activity divide duration by number of jockeys and 
@@ -287,7 +335,7 @@ class Jockey extends User
         if($this->associated_content === null) {
             return '-';
         }
-        return "<a href='{$this->associated_content}' target='_blank'>Stewards enquiries/reports</a>";
+        return "<a class='link--underlined text--size-sm' href='{$this->associated_content}' target='_blank'>Stewards enquiries/reports</a>";
     }
 
     public function getFormattedWinsToRidesAttribute()

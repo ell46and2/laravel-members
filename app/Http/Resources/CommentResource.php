@@ -25,7 +25,7 @@ class CommentResource extends JsonResource
             'private' => $this->private,
             'read' => $this->read || $this->author_id === $userId,
             'attachment' => new AttachmentResource($this->attachment),
-            'isCoach' => $request->user()->isCoach(),
+            'isCoach' => $this->author->isCoach(),
         ];
     }
 }

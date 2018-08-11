@@ -89,19 +89,121 @@
         });
 
         /*****************************************
+            Tabs
+        ******************************************/
+        var tabsComponent = document.querySelector('.js-tabs');
+
+        if(tabsComponent) {
+            var tabs = tabsComponent.querySelectorAll('.tabs__button');
+
+            tabs.forEach(elem => {
+                let tabPaneId = elem.getAttribute('data-toggle');
+
+                elem.addEventListener('click', evt => {
+                    // Hide all tabs
+                    hideAllTabs();
+
+                    // Active the tab nav button
+                    elem.classList.add('is-active');
+
+                    // Show the tab pane
+                    document.getElementById(tabPaneId).classList.add('is-active');
+                });
+
+            });
+        }
+
+        function hideAllTabs() {
+            // For each tab...
+            tabs.forEach(elem => {
+                // Deactive the tab nav button
+                elem.classList.remove('is-active');
+
+                // Get ID of related tab pane
+                let tabPaneId = elem.getAttribute('data-toggle');
+
+                // Hide the tab pane
+                document.getElementById(tabPaneId).classList.remove('is-active');
+            });
+        }
+
+        /*****************************************
             Input dropdown
         ******************************************/
-        var dropdowns = document.querySelectorAll('.js-input-dropdown');
+        let inputDropdowns = [...document.querySelectorAll('[data-module="input-dropdown"]')];
 
-        dropdowns.forEach(function() {
-            var input = this.querySelector('.js-input-dropdown__input');
+        inputDropdowns.map((component) => {
+            // The text input field with which the dropdown is associated
+            let input = component.querySelector('.js-input-dropdown__input');
+            // The hidden input field where we will store the selected item's value
+            let valueField = component.querySelector('.js-input-dropdown__value');
+            // The overlay that can be clicked to hide the dropdown
+            let overlay = component.querySelector('.js-input-dropdown__overlay');
+            // The dropdown itself
+            let dropdown = component.querySelector('.js-input-dropdown__dropdown');
+            // The items contained in the dropdown
+            let dropdownItems = [...dropdown.querySelectorAll('.js-input-dropdown__button')];
 
+            // On focus of the input, show the dropdown
             input.addEventListener('focus', function() {
-                console.log('focussed');
+                dropdown.classList.add('is-active');
+                overlay.classList.add('is-active');
             });
 
-            input.addEventListener('blur', function() {
-                console.log('blurred');
+            // On click of the overlay, hide the dropdown
+            overlay.addEventListener('click', function() {
+                dropdown.classList.remove('is-active');
+                overlay.classList.remove('is-active');
+            });
+
+            // For each of the dropdown items...
+            dropdownItems.map((item) => {
+                // When the item is clicked...
+                item.addEventListener('click', function() {
+                    // Get the item value from the data.value attribute
+                    let itemValue = item.getAttribute('data-value');
+                    let itemName = item.textContent;
+
+                    // Set the input value equal to the dropdown item name
+                    input.value = itemName;
+
+                    // Set the hidden input value equal to the item value
+                    valueField.value = itemValue;
+
+                    // Hide dropdown
+                    dropdown.classList.remove('is-active');
+                    overlay.classList.remove('is-active');
+                });
+            });
+        });
+
+        /*****************************************
+            Button dropdown
+        ******************************************/
+        let buttonDropdowns = [...document.querySelectorAll('[data-module="button-dropdown"]')];
+
+        buttonDropdowns.map((component) => {
+            // The trigger button with which the dropdown is associated
+            let trigger = component.querySelector('.js-button-dropdown__trigger');
+            // The overlay that can be clicked to hide the dropdown
+            let overlay = component.querySelector('.js-button-dropdown__overlay');
+            // The dropdown itself
+            let dropdown = component.querySelector('.js-button-dropdown__dropdown');
+            // The items contained in the dropdown
+            let dropdownItems = [...dropdown.querySelectorAll('.js-button-dropdown__button')];
+
+            // On focus of the input, show the dropdown
+            trigger.addEventListener('click', function() {
+                trigger.classList.add('is-active');
+                dropdown.classList.add('is-active');
+                overlay.classList.add('is-active');
+            });
+
+            // On click of the overlay, hide the dropdown
+            overlay.addEventListener('click', function() {
+                trigger.classList.remove('is-active');
+                dropdown.classList.remove('is-active');
+                overlay.classList.remove('is-active');
             });
         });
     </script>

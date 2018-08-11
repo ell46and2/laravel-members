@@ -6,6 +6,8 @@ use App\Models\Activity;
 use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Invoice;
+use App\Models\InvoiceLine;
+use App\Models\Jockey;
 use App\Models\Notification;
 use App\Models\Pdp;
 use App\Models\RacingExcellence;
@@ -14,7 +16,9 @@ use App\Models\User;
 use App\Policies\ActivityPolicy;
 use App\Policies\AttachmentPolicy;
 use App\Policies\CommentPolicy;
+use App\Policies\InvoiceLinePolicy;
 use App\Policies\InvoicePolicy;
+use App\Policies\JockeyPolicy;
 use App\Policies\NotificationPolicy;
 use App\Policies\PdpPolicy;
 use App\Policies\RacingExcellencePolicy;
@@ -40,6 +44,8 @@ class AuthServiceProvider extends ServiceProvider
         Invoice::class => InvoicePolicy::class,
         SkillProfile::class => SkillProfilePolicy::class,
         Pdp::class => PdpPolicy::class,
+        Jockey::class => JockeyPolicy::class,
+        InvoiceLine::class => InvoiceLinePolicy::class,
     ];
 
     /**

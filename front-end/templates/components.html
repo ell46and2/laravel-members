@@ -326,6 +326,43 @@
         <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
 
             {####################################
+             Button (with right-aligned icon)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (with right-aligned icon)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--primary" type="button">
+                        An error button
+                        <span class="button__icon button__icon--right">
+                            {% include "svg/plus.svg" %}
+                        </span>
+                    </button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (disabled)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (disabled)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button" type="button" disabled>A disabled button</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
              Button (text)
             #####################################}
             <div class="components__component">
@@ -333,6 +370,54 @@
                 <div class="components__component-main">
                     {# START #}
                     <button class="button button--text" type="button">A text button</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (transparent - dark)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (transparent - dark)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--trans-dark" type="button">A transparent button with dark text</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (transparent - light)
+            #####################################}
+            <div class="components__component components__component--blue-bg">
+                <h2 class="components__component-heading">Button (transparent - light)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--trans-light" type="button">A transparent button with light text</button>
+                    {# END #}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="[ col-lg-12 col-xl-3 ] [ mb-3 ]">
+
+            {####################################
+             Button (squared)
+            #####################################}
+            <div class="components__component">
+                <h2 class="components__component-heading">Button (squared)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <button class="button button--primary button--squared" type="button">A squared button</button>
                     {# END #}
                 </div>
             </div>
@@ -353,6 +438,68 @@
     </div>
 
     {####################################
+     Button with dropdown
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Button with dropdown</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="button-dropdown" data-module="button-dropdown">
+                <button class="[ button button--primary ] [ button-dropdown__trigger ] [ js-button-dropdown__trigger ]" type="button">
+                    A dropdown button
+                    <span class="button__icon button__icon--right" aria-hidden="true" role="presentation">
+                        {% include "svg/angle-down.svg" %}
+                    </span>
+                </button>
+
+                <div class="button-dropdown__overlay js-button-dropdown__overlay"></div>
+                <div class="button-dropdown__dropdown js-button-dropdown__dropdown">
+                    <ul class="button-dropdown__list" tabindex="-1">
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Cras Fusce Magna</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                        </li>
+                        <li class="button-dropdown__item" tabindex="-1">
+                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                        </li>
+                        <li class="button-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                    </ul>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Form sticky button
     #####################################}
     <div class="components__component">
@@ -361,25 +508,6 @@
             {# START #}
             <textarea class="form-control form-control--has-sticky-button" name="name" rows="8" placeholder="Text Details"></textarea>
             <button class="button button--primary button--block [ form-sticky-button ]" type="button">Attach a photo or video</button>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Checkbox
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Checkbox</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox1">
-                <label class="custom-control-label" for="checkbox1">Check out this checkbox</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox2">
-                <label class="custom-control-label" for="checkbox2">Check out this checkbox</label>
-            </div>
             {# END #}
         </div>
     </div>
@@ -571,6 +699,437 @@
                 <dt>Twitter handle</dt>
                 <dd>@TwitterName</dd>
             </dl>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Document card
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Document card</h2>
+        <div class="components__component-main">
+            <div class="five-col-grid">
+                {% for item in content.documents %}
+                    <div class="five-col-grid__col">
+                        {# START #}
+                        <div class="document-card">
+                            <div class="document-card__icon">
+                                {% include "svg/document.svg" %}
+                                <div class="document-card__extension">{{ item.extension }}</div>
+                            </div>
+                            <div class="document-card__main">
+                                <div class="document-card__filename">{{ item.filename }}</div>
+                                <div class="document-card__description">
+                                    Nulla vitae elit libero, a pharetra augue.
+                                </div>
+                                <a class="button button--primary" href="">Download</a>
+                                <div class="document-card__options">
+                                    <a class="link--underlined" href="">Edit</a>
+                                    <a class="link--underlined" href="">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        {# END #}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Form: Checkbox
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Checkbox</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox1">
+                <label class="custom-control-label" for="checkbox1">Check out this checkbox</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="checkbox2">
+                <label class="custom-control-label" for="checkbox2">Check out this checkbox</label>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Checkbox (invalid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Checkbox (invalid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input is-invalid" id="checkbox3">
+                <label class="custom-control-label" for="checkbox3">Check out this checkbox</label>
+                <div class="invalid-feedback">Example invalid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Checkbox (valid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Checkbox (valid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input is-valid" id="checkbox4">
+                <label class="custom-control-label" for="checkbox4">Check out this checkbox</label>
+                <div class="valid-feedback">Example valid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Radio button
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Radio button</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio1" name="radio" class="custom-control-input">
+                <label class="custom-control-label" for="radio1">Toggle this custom radio</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio2" name="radio" class="custom-control-input">
+                <label class="custom-control-label" for="radio2">Or toggle this other custom radio</label>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Radio button (invalid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Radio button (invalid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio3" name="radio" class="custom-control-input is-invalid">
+                <label class="custom-control-label" for="radio3">Toggle this custom radio</label>
+                <div class="invalid-feedback">Example invalid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Radio button (valid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Radio button (valid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="radio4" name="radio" class="custom-control-input is-valid">
+                <label class="custom-control-label" for="radio4">Toggle this custom radio</label>
+                <div class="valid-feedback">Example valid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Radio switches
+    #####################################}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="components__component">
+                <h2 class="components__component-heading">Form: Radio switches</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <div class="radio-switches">
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="zero">
+                        <label class="radio-switches__label" for="zero">Zero</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="one">
+                        <label class="radio-switches__label" for="one">One</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="two">
+                        <label class="radio-switches__label" for="two">Two</label>
+                    </div>
+                    {# END #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Form: Radio switches (invalid)
+    #####################################}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="components__component">
+                <h2 class="components__component-heading">Form: Radio switches (invalid)</h2>
+                <div class="components__component-main">
+                    {# START #}
+                    <div class="radio-switches is-invalid">
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="three">
+                        <label class="radio-switches__label" for="three">Zero</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="four">
+                        <label class="radio-switches__label" for="four">One</label>
+
+                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="five">
+                        <label class="radio-switches__label" for="five">Two</label>
+                    </div>
+                    <div class="radio-switches__invalid-feedback">Example invalid feedback text</div>
+                    {# END #}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {####################################
+     Form: Select
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Select</h2>
+        <div class="components__component-main">
+            {# START #}
+            <select class="form-control custom-select">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Select (invalid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Select (invalid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <select class="form-control custom-select is-invalid">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <div class="invalid-feedback">Example invalid feedback text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Select (valid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Select (valid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <select class="form-control custom-select is-valid">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            <div class="valid-feedback">Example valid feedback text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Textarea
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Textarea</h2>
+        <div class="components__component-main">
+            {# START #}
+                <textarea class="form-control" name="name" rows="8" placeholder="Text Details"></textarea>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Textarea (invalid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Textarea (invalid)</h2>
+        <div class="components__component-main">
+            {# START #}
+                <textarea class="form-control is-invalid" name="name" rows="8" placeholder="Text Details"></textarea>
+                <div class="invalid-feedback">Example invalid feedback text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Textarea (valid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Textarea (valid)</h2>
+        <div class="components__component-main">
+            {# START #}
+                <textarea class="form-control is-valid" name="name" rows="8" placeholder="Text Details"></textarea>
+                <div class="valid-feedback">Example valid feedback text</div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Textarea (display as text)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Textarea (display as text)</h2>
+        <div>Use in conjuction with the <code>disabled</code> attribute</div>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <textarea class="form-control form-control--display-as-text" name="name" rows="8" disabled>Junnie Durrans&#13;The British Racing School&#13;Snailwell Road&#13;Newmarket&#13;Suffolk&#13;CB8 7NU</textarea>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <input class="form-control" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input (invalid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input (invalid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <input class="form-control is-invalid" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                <div class="invalid-feedback">Example invalid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input (valid)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input (valid)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <input class="form-control is-valid" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                <div class="valid-feedback">Example valid feedback text</div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input (with icon)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input (with icon)</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group form-group--has-icon">
+                <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                    {% include "svg/circle.svg" %}
+                </span>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input (display as text)
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input (display as text)</h2>
+        <div>Use in conjuction with the <code>disabled</code> attribute</div>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group">
+                <input class="form-control form-control--display-as-text" type="text" name="" value="Name Surname" disabled>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
+     Form: Text input with dropdown
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Form: Text input with dropdown</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                <input class="js-input-dropdown__value" type="hidden" name="">
+
+                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                    {% include "svg/circle.svg" %}
+                </span>
+
+                <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                <div class="input-dropdown js-input-dropdown__dropdown">
+                    <ul class="input-dropdown__list" tabindex="-1">
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="[ input-dropdown__button js-input-dropdown__button ] [ is-active ]" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                        </li>
+                        <li class="input-dropdown__item" tabindex="-1">
+                            <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                        </li>
+                        <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                    </ul>
+                </div>
+            </div>
             {# END #}
         </div>
     </div>
@@ -855,11 +1414,19 @@
         <div class="components__component-main">
             {# START #}
             <ul class="icon-list">
-                <li class="icon-list__item icon-list__item--has-emphasis">
-                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                <li class="icon-list__item">
+                    <div class="icon-list__icon icon-list__icon--has-emphasis" aria-hidden="true" role="presentation">
                         {% include "svg/tick-circle.svg" %}
                     </div>
                     <div class="icon-list__inner">
+                        Some text for my list item
+                    </div>
+                </li>
+                <li class="icon-list__item">
+                    <div class="icon-list__icon icon-list__icon--has-emphasis" aria-hidden="true" role="presentation">
+                        {% include "svg/tick-circle.svg" %}
+                    </div>
+                    <div class="icon-list__inner icon-list__inner--has-emphasis">
                         Some text for my list item
                     </div>
                 </li>
@@ -871,11 +1438,19 @@
                         Some text for my list item
                     </div>
                 </li>
-                <li class="icon-list__item icon-list__item--has-emphasis">
-                    <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                <li class="icon-list__item">
+                    <div class="icon-list__icon icon-list__icon--has-emphasis" aria-hidden="true" role="presentation">
                         {% include "svg/tick-circle.svg" %}
                     </div>
                     <div class="icon-list__inner">
+                        <a class="icon-list__link" href="">This one is a link</a>
+                    </div>
+                </li>
+                <li class="icon-list__item icon-list__item--has-emphasis">
+                    <div class="icon-list__icon icon-list__icon--has-emphasis" aria-hidden="true" role="presentation">
+                        {% include "svg/tick-circle.svg" %}
+                    </div>
+                    <div class="icon-list__inner icon-list__inner--has-emphasis">
                         <a class="icon-list__link" href="">This one is a link</a>
                     </div>
                 </li>
@@ -1297,117 +1872,6 @@
     </div>
 
     {####################################
-     Panel (with tabs)
-    #####################################}
-    <div class="components__component components__component--trans-bg">
-        <h2 class="components__component-heading">Panel (with tabs)</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="panel">
-                <div class="panel__inner">
-                    <ul class="panel__tabs">
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button is-active" type="button">Name Surname</button>
-                        </li>
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button" type="button">Name Surname</button>
-                        </li>
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button" type="button">Name Surname</button>
-                        </li>
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button" type="button">Name Surname</button>
-                        </li>
-                    </ul>
-                    <div class="panel__header">
-                        <h2 class="panel__heading">
-                            Division one results for Name Surname
-                        </h2>
-                    </div>
-
-                    <div class="panel__main">
-                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                    </div>
-                </div>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Panel (with tabs and pre-header)
-    #####################################}
-    <div class="components__component components__component--trans-bg">
-        <h2 class="components__component-heading">Panel (with tabs <em>and</em> pre-header)</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="panel">
-                <div class="panel__inner">
-                    <ul class="panel__tabs">
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button is-active" type="button">Division One</button>
-                        </li>
-                        <li class="panel__tabs-item">
-                            <button class="panel__tabs-button" type="button">Division Two</button>
-                        </li>
-                    </ul>
-
-                    <div class="panel__pre-header">
-                        <div class="panel__pre-header-primary">
-                            <ul class="panel__pre-header-definition-list">
-                                <li>
-                                    <dl>
-                                        <dt>Coach</dt>
-                                        <dd>Name Surname</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt>Date</dt>
-                                        <dd>Monday 27th June 2018</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt>Start time</dt>
-                                        <dd>13:30pm</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt>Series</dt>
-                                        <dd>Apprentice</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl>
-                                        <dt>Location</dt>
-                                        <dd>Cheltenham</dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="panel__pre-header-secondary">
-                            <span class="text-nowrap">I.D 12345</span>
-                        </div>
-                    </div>
-
-                    <div class="panel__header">
-                        <h2 class="panel__heading">
-                            Division one results for Name Surname
-                        </h2>
-                    </div>
-
-                    <div class="panel__main">
-                        Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                    </div>
-                </div>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
      "Stacked" panels
     #####################################}
     <div class="components__component components__component--trans-bg">
@@ -1464,67 +1928,6 @@
                     <div>6 hours</div>
                 </div>
             </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Radio button
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Radio button</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="custom-control custom-radio">
-                <input type="radio" id="radio1" name="radio" class="custom-control-input">
-                <label class="custom-control-label" for="radio1">Toggle this custom radio</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="radio2" name="radio" class="custom-control-input">
-                <label class="custom-control-label" for="radio2">Or toggle this other custom radio</label>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Radio switches
-    #####################################}
-    <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
-            <div class="components__component">
-                <h2 class="components__component-heading">Radio switches</h2>
-                <div class="components__component-main">
-                    {# START #}
-                    <div class="radio-switches">
-                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="zero">
-                        <label class="radio-switches__label" for="zero">Zero</label>
-
-                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="one">
-                        <label class="radio-switches__label" for="one">One</label>
-
-                        <input class="[ radio-switches__input ] [ sr-only ]" type="radio" name="options" id="two">
-                        <label class="radio-switches__label" for="two">Two</label>
-                    </div>
-                    {# END #}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {####################################
-     Select
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Select</h2>
-        <div class="components__component-main">
-            {# START #}
-            <select class="form-control custom-select">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
             {# END #}
         </div>
     </div>
@@ -1632,6 +2035,75 @@
     </div>
 
     {####################################
+     Results table
+    #####################################}
+    <div class="components__component">
+        <h2 class="components__component-heading">Results table</h2>
+        <div class="components__component-main">
+            {# START #}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Jockey</th>
+                        <th>Place points</th>
+                        <th>Presentation points</th>
+                        <th>Professionalism points</th>
+                        <th>Coursewalk points</th>
+                        <th>Riding points</th>
+                        <th>Total points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in content.racing_results %}
+                        <tr>
+                            <td class="table__result-column">
+                                <div class="table__result-column-inner">
+                                    <span class="table__result-position">
+                                        {{- item.position -}}
+                                        <span class="table__result-position-suffix">
+                                            {%- if item.position|last == "1" -%}
+                                                st
+                                            {%- elif item.position|last == "2" -%}
+                                                nd
+                                            {%- elif item.position|last == "3" -%}
+                                                rd
+                                            {%- else -%}
+                                                th
+                                            {%- endif -%}
+                                        </span>
+                                    </span>
+                                    {% if item.position in ["1", "2", "3", "4"] %}
+                                        <span class="table__icon
+                                            {% if item.position|last == "1" %}
+                                                table__icon--gold
+                                            {% elif item.position|last == "2" %}
+                                                table__icon--silver
+                                            {% elif item.position|last == "3" %}
+                                                table__icon--bronze
+                                            {% endif %}
+                                        ">
+                                            {% include "svg/rosette.svg" %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td><a class="table__link" href="">{{ item.jockey }}</a></td>
+                            <td>{% if item.place_points == undefined %}-{% else %}{{ item.place_points }}pts{% endif %}</td>
+                            <td>{% if item.presentation_points == undefined %}-{% else %}{{ item.presentation_points }}pts{% endif %}</td>
+                            <td>{% if item.professionalism_points == undefined %}-{% else %}{{ item.professionalism_points }}pts{% endif %}</td>
+                            <td>{% if item.coursewalk_points == undefined %}-{% else %}{{ item.coursewalk_points }}pts{% endif %}</td>
+                            <td>{% if item.riding_points == undefined %}-{% else %}{{ item.riding_points }}pts{% endif %}</td>
+                            <td>{{ item.total_points }}pts</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Grouped invoice table
     #####################################}
     <div class="components__component">
@@ -1719,6 +2191,120 @@
     </div>
 
     {####################################
+     Tabs
+    #####################################}
+    <div class="components__component components__component--trans-bg">
+        <h2 class="components__component-heading">Tabs</h2>
+        <div class="components__component-main">
+            {# START #}
+            <div class="[ tabs ] [ js-tabs ]">
+                <ul class="tabs__nav">
+                    <li class="tabs__item">
+                        <button class="tabs__button is-active" type="button" data-toggle="tab-1">Name Surname</button>
+                    </li>
+                    <li class="tabs__item">
+                        <button class="tabs__button" type="button" data-toggle="tab-2">Name Surname</button>
+                    </li>
+                    <li class="tabs__item">
+                        <button class="tabs__button" type="button" data-toggle="tab-3">Name Surname</button>
+                    </li>
+                    <li class="tabs__item">
+                        <button class="tabs__button" type="button" data-toggle="tab-4">Name Surname</button>
+                    </li>
+                </ul>
+                <div class="tabs__content">
+                    {# Tab 1 #}
+                    <div id="tab-1" class="tabs__tab-pane is-active">
+                        <div class="panel">
+                            <div class="panel__inner">
+                                <div class="panel__header">
+                                    <h2 class="panel__heading">
+                                        Recent Activities
+                                    </h2>
+                                    <div class="panel__header-meta">
+                                        Last updated on 23/05/2018
+                                    </div>
+                                </div>
+
+                                <div class="panel__main">
+                                    Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                                </div>
+
+                                <a class="panel__call-to-action" href="">View all activities</a>
+                            </div>
+                        </div>
+                    </div>
+                    {# Tab 2 #}
+                    <div id="tab-2" class="tabs__tab-pane">
+                        <div class="panel">
+                            <div class="panel__inner">
+                                <div class="panel__pre-header">
+                                    <div class="panel__pre-header-primary">
+                                        <ul class="panel__pre-header-definition-list">
+                                            <li>
+                                                <dl>
+                                                    <dt>Coach</dt>
+                                                    <dd>Name Surname</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>Date</dt>
+                                                    <dd>Monday 27th June 2018</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>Start time</dt>
+                                                    <dd>13:30pm</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>Series</dt>
+                                                    <dd>Apprentice</dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>Location</dt>
+                                                    <dd>Cheltenham</dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel__pre-header-secondary">
+                                        <span class="text-nowrap">I.D 12345</span>
+                                    </div>
+                                </div>
+
+                                <div class="panel__header">
+                                    <h2 class="panel__heading">
+                                        Division one results for Name Surname
+                                    </h2>
+                                </div>
+
+                                <div class="panel__main">
+                                    Nullam id dolor id nibh ultricies vehicula ut id elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# Tab 3 #}
+                    <div id="tab-3" class="tabs__tab-pane">
+                        <div class="bg-white p-3 rounded">Tab three</div>
+                    </div>
+                    {# Tab 4 #}
+                    <div id="tab-4" class="tabs__tab-pane">
+                        <div class="bg-white p-3 rounded">Tab four</div>
+                    </div>
+                </div>
+            </div>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Text color utilities
     #####################################}
     <div class="components__component">
@@ -1730,6 +2316,8 @@
                 <div class="text--color-blue-dark">Dark blue text</div>
                 <div class="text--color-blue-light">Light blue text</div>
                 <div class="text--color-blue-lighter">Lighter blue text</div>
+                <div class="text--color-valid">Valid text</div>
+                <div class="text--color-invalid">Invalid text</div>
             {# END #}
         </div>
     </div>
@@ -1744,79 +2332,6 @@
                 <div class="text--size-base">Standard text</div>
                 <div class="text--size-sm">Small text</div>
                 <div class="text--size-lg">Large text</div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Textarea
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Textarea</h2>
-        <div class="components__component-main">
-            {# START #}
-                <textarea class="form-control" name="name" rows="8" placeholder="Text Details"></textarea>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Textarea (display as text)
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Textarea (display as text)</h2>
-        <div>Use in conjuction with the <code>disabled</code> attribute</div>
-        <div class="components__component-main">
-            {# START #}
-            <div class="form-group">
-                <textarea class="form-control form-control--display-as-text" name="name" rows="8" disabled>Junnie Durrans&#13;The British Racing School&#13;Snailwell Road&#13;Newmarket&#13;Suffolk&#13;CB8 7NU</textarea>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Text input
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Text input</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="form-group">
-                <input class="form-control" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Text input (with icon)
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Text input (with icon)</h2>
-        <div class="components__component-main">
-            {# START #}
-            <div class="form-group form-group--has-icon">
-                <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
-                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
-                    {% include "svg/circle.svg" %}
-                </span>
-            </div>
-            {# END #}
-        </div>
-    </div>
-
-    {####################################
-     Text input (display as text)
-    #####################################}
-    <div class="components__component">
-        <h2 class="components__component-heading">Text input (display as text)</h2>
-        <div>Use in conjuction with the <code>disabled</code> attribute</div>
-        <div class="components__component-main">
-            {# START #}
-            <div class="form-group">
-                <input class="form-control form-control--display-as-text" type="text" name="" value="Name Surname" disabled>
-            </div>
             {# END #}
         </div>
     </div>
@@ -1837,6 +2352,9 @@
                             </div>
                             <div class="user-card__main">
                                 <div class="user-card__name">{{ item.name }}</div>
+                                {% if item.gone_away %}
+                                    <div class="text--size-sm text--color-invalid">(Gone away)</div>
+                                {% endif %}
                             </div>
                         </div>
                         {# END #}
@@ -1862,6 +2380,9 @@
                             </div>
                             <div class="user-card__main">
                                 <div class="user-card__name">{{ item.name }}</div>
+                                {% if item.gone_away %}
+                                    <div class="text--size-sm text--color-invalid">(Gone away)</div>
+                                {% endif %}
                                 <div class="user-card__meta">
                                     Jockey <button class="[ button button--text ] [ user-card__button ]" type="button">Remove</button>
                                 </div>

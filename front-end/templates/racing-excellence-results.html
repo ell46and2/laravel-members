@@ -1,0 +1,125 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+{####################################
+ Panel - Recent Activities
+#####################################}
+<div class="panel panel--is-stack">
+    <div class="panel__inner">
+        <div class="panel__pre-header">
+            <div class="panel__pre-header-primary">
+                <ul class="panel__pre-header-definition-list">
+                    {###############################################################################
+                        This isn't how the dl/dt/dd elements should be used, but until definition
+                        lists in HTML stop being rubbish, it'll have to do ¯\_(ツ)_/¯
+                    ################################################################################}
+                    <li>
+                        <dl>
+                            <dt>Coach</dt>
+                            <dd>Name Surname</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Date</dt>
+                            <dd>Monday 27th June 2018</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Start time</dt>
+                            <dd>13:30pm</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Series</dt>
+                            <dd>Apprentice</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>Location</dt>
+                            <dd>Cheltenham</dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel__pre-header-secondary">
+                <span class="text-nowrap">I.D 12345</span>
+            </div>
+        </div>
+        <div class="panel__header">
+            <h2 class="panel__heading">
+                Racing Results
+                <span class="[ text--size-sm text--color-base font-weight-normal ] [ ml-1 ]">Choose when you want the race to start</span>
+            </h2>
+        </div>
+
+        <div class="panel__main">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Jockey</th>
+                        <th>Place points</th>
+                        <th>Presentation points</th>
+                        <th>Professionalism points</th>
+                        <th>Coursewalk points</th>
+                        <th>Riding points</th>
+                        <th>Total points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in content.racing_results %}
+                        <tr>
+                            <td class="table__result-column">
+                                <div class="table__result-column-inner">
+                                    <span class="table__result-position">
+                                        {{- item.position -}}
+                                        <span class="table__result-position-suffix">
+                                            {%- if item.position|last == "1" -%}
+                                                st
+                                            {%- elif item.position|last == "2" -%}
+                                                nd
+                                            {%- elif item.position|last == "3" -%}
+                                                rd
+                                            {%- else -%}
+                                                th
+                                            {%- endif -%}
+                                        </span>
+                                    </span>
+                                    {% if item.position in ["1", "2", "3", "4"] %}
+                                        <span class="table__icon
+                                            {% if item.position|last == "1" %}
+                                                table__icon--gold
+                                            {% elif item.position|last == "2" %}
+                                                table__icon--silver
+                                            {% elif item.position|last == "3" %}
+                                                table__icon--bronze
+                                            {% endif %}
+                                        ">
+                                            {% include "svg/rosette.svg" %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td><a class="table__link" href="">{{ item.jockey }}</a></td>
+                            <td>{% if item.place_points == undefined %}-{% else %}{{ item.place_points }}pts{% endif %}</td>
+                            <td>{% if item.presentation_points == undefined %}-{% else %}{{ item.presentation_points }}pts{% endif %}</td>
+                            <td>{% if item.professionalism_points == undefined %}-{% else %}{{ item.professionalism_points }}pts{% endif %}</td>
+                            <td>{% if item.coursewalk_points == undefined %}-{% else %}{{ item.coursewalk_points }}pts{% endif %}</td>
+                            <td>{% if item.riding_points == undefined %}-{% else %}{{ item.riding_points }}pts{% endif %}</td>
+                            <td>{{ item.total_points }}pts</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a class="panel__call-to-action" href="">View all activities</a>
+    </div>
+</div>
+
+{% endblock %}

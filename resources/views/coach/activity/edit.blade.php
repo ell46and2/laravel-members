@@ -72,6 +72,7 @@
             <div class="panel__main">
                 <div class="row row--grid">
                     <div class="col">
+                        <span class="text--color-blue">Select Date</span>
                     	<datepicker-component 
                     		name="start_date" 
                     		placeholder="Select Date" 
@@ -85,6 +86,7 @@
 				        @endif
                     </div>
                     <div class="col">
+                        <span class="text--color-blue">Select Start Time</span>
             			<timepicker-component old="{{ old('start_time', $activity->formattedStartTime) }}">	
             			</timepicker-component>		
             			
@@ -94,7 +96,15 @@
             	            </span>
             	        @endif
                     </div>
-                    <div class="col">Select Duration - Placeholder</div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Duration</span>
+                        <div class="form-group form-group--has-icon mt-1">
+                            <input class="form-control form-control--has-icon" type="text" name="duration" value="{{ old('duration, $activity->duration') }}" placeholder="Select Duration">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                @svg( 'duration', 'icon')
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

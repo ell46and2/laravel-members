@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	Route::get('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@edit')->name('invoice.mileage.edit');
 	Route::put('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@update')->name('invoice.mileage.update');
 	Route::delete('/invoices/invoice/{invoice}/mileage/{mileage}', 'Invoice\MileageController@destroy')->name('invoice.mileage.delete');
+
+	Route::get('/invoices/invoice/{invoice}/line/{invoiceLine}', 'Invoice\InvoiceController@editLine')->name('invoice-line.edit');
+	Route::put('/invoices/invoice/{invoice}/line/{invoiceLine}', 'Invoice\InvoiceController@updateLine')->name('invoice-line.update');
 });
 
 
@@ -244,11 +247,18 @@ Route::group(['middleware' => ['auth', 'role:admin,coach,jockey']], function() {
 
 
 // Documents
-Route::get('/admin/documents/create', 'Admin\DocumentController@create')->name('admin.document.create');
-Route::post('/admin/documents', 'Admin\DocumentController@store')->name('admin.document.store');
-Route::put('/admin/documents/{document}', 'Admin\DocumentController@update')->name('admin.document.update');
-Route::delete('/admin/documents/{document}', 'Admin\DocumentController@destroy')->name('admin.document.delete');
-Route::get('/documents', 'Document\DocumentController@index')->name('documents.index'); // admin made need own index where they can click to edit the documents.
+Route::group(['middleware' => ['auth', 'role:admin,coach']], function() {
+	Route::get('/admin/documents/create', 'Admin\DocumentController@create')->name('admin.document.create');
+	Route::post('/admin/documents', 'Admin\DocumentController@store')->name('admin.document.store');
+	Route::put('/admin/documents/{document}', 'Admin\DocumentController@update')->name('admin.document.update');
+	Route::delete('/admin/documents/{document}', 'Admin\DocumentController@destroy')->name('admin.document.delete');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+	Route::get('/documents', 'Document\DocumentController@index')->name('documents.index');
+});
+
+
 
 // Messages
 // admin, coach, jets only

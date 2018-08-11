@@ -1,9 +1,9 @@
 <template>
-	<div class="mb-5 pt-3">
-		<div class="col-4">
+	<div class="pt-3">
+		<div class="">
 			<a 
 				href="#"
-				class="button button--success button--block"
+				class="panel__call-to-action"
 				@click.prevent="active = true"
 				v-if="!active"
 			>
@@ -14,15 +14,13 @@
 
 		<template v-if="active">
 			<form @submit.prevent="submit">
-				<div class="form-control">
-					<textarea 
-						id="body" 
-						rows="10"
-						class="form-control"
-						autofocus="autofocus"
-						v-model="form.body"
-					></textarea>
-				</div>
+				<textarea 
+					id="body" 
+					rows="10"
+					class="form-control"
+					autofocus="autofocus"
+					v-model="form.body"
+				></textarea>
 
 				<div class="form-check" v-if="!isCurrentUserJockey">
 				  	<input class="form-check-input" type="checkbox" v-model="form.private">

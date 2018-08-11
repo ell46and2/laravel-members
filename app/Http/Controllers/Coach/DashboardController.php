@@ -20,7 +20,7 @@ class DashboardController extends Controller
 
         // take 5 order by most active
         // QUESTION: Whats doe most active mean?
-        $jockeys = $coach->jockeys; 
+        $jockeys = $coach->jockeys->take(5); 
 
     	$latestOpenInvoice = $coach->latestOpenInvoice;
     	$lastInvoice = $coach->lastSubmittedInvoice(); 

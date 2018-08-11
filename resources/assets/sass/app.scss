@@ -48,11 +48,13 @@
 @import "components/bar-chart";
 @import "components/breakpoint-helper";
 @import "components/button";
+@import "components/button-dropdown";
 @import "components/comments";
 @import "components/container-fluid";
 @import "components/custom-control";
 @import "components/custom-select";
 @import "components/definition-list";
+@import "components/document-card";
 @import "components/flow";
 @import "components/form";
 @import "components/form-control";
@@ -74,6 +76,7 @@
 @import "components/progress-bar";
 @import "components/radio-switches";
 @import "components/table";
+@import "components/tabs";
 @import "components/text";
 @import "components/timepicker";
 @import "components/user-card";
@@ -85,6 +88,7 @@
 \*----------------------------------------------*/
 @import "layouts/app";
 @import "layouts/components";
+@import "layouts/filter-bar";
 @import "layouts/five-col-grid";
 @import "layouts/invoices-summary";
 @import "layouts/main";

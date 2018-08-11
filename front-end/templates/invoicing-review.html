@@ -119,12 +119,13 @@
                                 <th>Duration</th>
                                 <th>Amount</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         {% for group in content.invoice.group_activities %}
                             <tbody>
                                 <tr>
-                                    <th colspan="6">
+                                    <th colspan="7">
                                         <div class="table__group-head">
                                             <div class="[ table__group-head-avatar ] [ avatar ]">
                                                 <div class="avatar__image" style="background-image:url('{{ group.jockey_avatar }}');"></div>
@@ -149,9 +150,16 @@
                                         <td>{{ item.date }}</td>
                                         <td>{{ item.duration }}</td>
                                         <td>{{ item.amount }}</td>
-                                        <td class="text-right">
-                                            <a class="button button--primary" href="">Remove</a>
+                                        <td class="table__icon-column">
+                                            <a class="table__icon-button mr-2" href="">
+                                                {% include "svg/edit.svg" %}
+                                            </a>
                                         </td>
+                                            <td class="table__icon-column">
+                                                <form action="" class="text-right">
+                                                    <a class="button button--primary" href="">Remove</a>
+                                                </form>
+                                            </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

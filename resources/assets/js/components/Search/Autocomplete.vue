@@ -1,15 +1,21 @@
 <template>
 	<div class="autocomplete">
-    	<input
-    		class="autocomplete__input"
-    		type="text"
-			v-model="search"
-			@input="onChange"
-			@keyup.down="onArrowDown"
-    		@keyup.up="onArrowUp"
-    		@keydown.enter.prevent="onEnter"
-    		:placeholder="placeholder"
-    	/>
+		<div class="form-group form-group--has-icon">
+	    	<input
+	    		class="autocomplete__input [ form-control form-control--has-icon ]"
+	    		type="text"
+				v-model="search"
+				@input="onChange"
+				@keyup.down="onArrowDown"
+	    		@keyup.up="onArrowUp"
+	    		@keydown.enter.prevent="onEnter"
+	    		:placeholder="placeholder"
+	    	/>
+	    	<span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                <icon-binoculars></icon-binoculars>
+            </span>
+		</div>
+
 
     	<!-- disable until resultId  - onclick emit to parent the id -->
     	<!-- <button 
@@ -38,6 +44,7 @@
 </template>
 
 <script>
+	import IconBinoculars from './IconBinoculars';
 	
 	export default {
 		props: {
@@ -67,6 +74,9 @@
 				data: [],
 				arrowCounter: -1,
 			}
+		},
+		components: {
+			IconBinoculars
 		},
 		mounted() {
 			if(typeof this.resource === 'string') {

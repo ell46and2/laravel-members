@@ -1,69 +1,73 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 @php
-    $isAdmin = auth()->user()->isAdmin();
+    $isAdmin = $currentRole === 'admin';
+    $isCurrentUser = $currentUser->id === $coach->id;
 @endphp
 
-@include('user.partials._profile-picture-edit', [ 'user' => $coach])
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Profile</h1>       
+            @if($isCurrentUser)
+            	This is your Jockey Coaching Programme profile, here you can see your information and make changes to certain fields.
+            @else
+            	{{ $coach->full_name }} Coach profile.
+            @endif         
+        </div>
+    </div>
+</div>
 
-<br><br><br>
-@if($isAdmin)
-	<div>
-		<h3>Status</h3>
-		<form 
-			method="POST" 
-			action="{{ route('coach.status.update', $coach) }}"
-			class="[ js-confirmation ]"
-		    data-confirm="Are you sure you want to change the status?"
-		>
-			{{ csrf_field() }}
-			@method('put')
+<div class="row row--wide-gutter">
+    <div class="col-md-12 col-xl-4 flow-vertical--3">
 
-			<div class="form-group row">
-			    
-			    <div class="col-md-6">
-			        <select class="form-control" name="status" id="status" required>
-			           @foreach(['active', 'suspended', 'deleted'] as $status)
-			                <option value="{{ $status }}" {{ old('status', $coach->status) === $status ? 'selected' : '' }}>
-			                    {{ ucfirst($status) }}
-			                </option>
-			           @endforeach
-			        </select>
+		@include('user.partials._profile-picture-edit', [ 'user' => $coach])
+		@include('coach.partials._coach-status-edit', [ 'coach' => $coach])
+		@include('user.partials._password-change', [ 'user' => $coach])
 
-			        @if ($errors->has('status'))
-			            <span class="invalid-feedback">
-			                <strong>{{ $errors->first('status') }}</strong>
-			            </span>
-			        @endif
-			    </div>
-			</div>
-			<button class="btn btn-danger" type="submit">Update</button>
-		</form>
 	</div>
-@endif
 
-<br><br><br>
-@if($isAdmin)
-	@include('coach.partials._edit-form')
-@else
-	@include('coach.partials._details')
-@endif
+	<div class="col-md-12 col-xl-8 mb-2 mb-xl-0 flow-vertical--3">
+        <div class="panel">
+            <div class="panel__inner">
+				@if($isAdmin || $isCurrentUser)
+					@include('coach.partials._edit-form')
+				@else
+					@include('coach.partials._details')
+				@endif
+            </div>
+        </div>
+    </div>
 
-@if($isAdmin && $coach->status !== 'deleted')
-	<jockey-assign
-		:coach-id="{{ $coach->id }}"
-		resource="{{ json_encode($jockeysResource) }}"
-		:current="{{ $coach->jockeys->pluck('id') }}"
-	>
-	</jockey-assign>
-@else
-	<h3>Jockeys</h3>
-	@foreach($coach->jockeys as $jockey)
-		<div>
-			<p>{{ $jockey->full_name }}</p>
-		</div>
-	@endforeach
-@endif
+</div>
+
+@php
+	$canAssignJockeys = $isAdmin && $coach->status !== 'deleted';
+@endphp
+
+<div class="panel" style="z-index: 3;">
+    <div class="panel__inner">
+        <div class="panel__header">
+            <h2 class="panel__heading">
+            	@if($canAssignJockeys)
+            		Assign Jockeys
+                	<div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Select Jockey from the dropdown list</div>
+                @else
+                	Assigned Jockeys
+            	@endif
+                
+            </h2>
+        </div>
+
+        <jockey-assign
+			:can-assign-jockeys="{{ json_encode($canAssignJockeys) }}"
+			:coach-id="{{ $coach->id }}"
+			resource="{{ json_encode($jockeysResource) }}"
+			:current="{{ $coach->jockeys->pluck('id') }}"
+		>
+		</jockey-assign>
+    </div>
+</div>
 
 @endsection

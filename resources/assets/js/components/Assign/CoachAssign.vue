@@ -1,24 +1,20 @@
 <template>
-	<div>
-	
-		<div>
-			<h3>Assign to Coach</h3>
-			<autocomplete
-				:resource="resource"
-				:exclude-ids="excludeIdsFromSearch"
-				v-on:searched="assignCoach"
-				placeholder="Search for Coach"
-			></autocomplete>
-		</div>
-		<br>
-
-		<div>
-			<h3>Current Coaches</h3>
+	<div class="[ panel__main ] [ flow-vertical--3 ]">
+		<autocomplete
+			:resource="resource"
+			:exclude-ids="excludeIdsFromSearch"
+			v-on:searched="assignCoach"
+			placeholder="Search for Coach"
+			v-if="canAssignCoaches"
+		></autocomplete>
+		
+		<div class="five-col-grid">
 			<user
 				v-for="user in coaches"
 				:user="user"
 				:key="user.id"
 				v-on:remove="unassignCoach"
+				:can-remove-user="canAssignCoaches"
 			></user>
 		</div>
 	</div>
@@ -46,6 +42,9 @@
 				type: String
 			},
 			current: {
+				required: true
+			},
+			canAssignCoaches: {
 				required: true
 			}
 		},

@@ -80,7 +80,7 @@
     }
 
     &__pre-header {
-        z-index: 4;
+        z-index: 10;
     }
 
     &__alert {
@@ -94,6 +94,10 @@
     &__tabs {
         z-index: 4;
     }
+}
+
+.tabs {
+    z-index: 5;
 }
 
 .comments {
@@ -119,8 +123,20 @@
 }
 
 .input-dropdown {
+    z-index: 40;
+
+    &__overlay {
+        z-index: 30;
+    }
+}
+
+.button-dropdown {
 
     &__dropdown {
-        z-index: 10;
+        z-index: 40;
+    }
+
+    &__overlay {
+        z-index: 30;
     }
 }

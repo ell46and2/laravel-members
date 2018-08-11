@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Attachment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AttachmentResource;
+use App\Jobs\UploadImage;
 use App\Jobs\UploadVideo;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class AttachmentController extends Controller
     		$this->dispatch(new UploadVideo($attachment->filename));
     	} else {
     		// dispatch uploadimage job
+            $this->dispatch(new UploadImage($attachment)); 
     		// Create thumbnail too.
     	}
         

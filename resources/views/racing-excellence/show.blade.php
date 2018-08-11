@@ -1,6 +1,115 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
+
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Racing Excellence</h1>
+            Copy Needed
+        </div>
+    </div>
+</div>
+
+
+{{-- Need add tabs if more than one division --}}
+@foreach($racingExcellence->divisionResults() as $division)
+	<div class="panel panel--is-stack">
+	    <div class="panel__inner">
+	        <div class="panel__pre-header">
+	            <div class="panel__pre-header-primary">
+	                <ul class="panel__pre-header-definition-list">
+	                    <li>
+	                        <dl>
+	                            <dt>Coach</dt>
+	                            <dd>{{ $racingExcellence->coach ? $racingExcellence->coach->full_name : '' }}</dd>
+	                        </dl>
+	                    </li>
+	                    <li>
+	                        <dl>
+	                            <dt>Date</dt>
+	                            <dd>{{ $racingExcellence->formattedStart }}</dd>
+	                        </dl>
+	                    </li>
+	                    <li>
+	                        <dl>
+	                            <dt>Start time</dt>
+	                            <dd>{{ $racingExcellence->formattedStartTimeFull }}</dd>
+	                        </dl>
+	                    </li>
+	                    <li>
+	                        <dl>
+	                            <dt>Series</dt>
+	                            <dd>{{ $racingExcellence->formattedSeriesName }}</dd>
+	                        </dl>
+	                    </li>
+	                    <li>
+	                        <dl>
+	                            <dt>Location</dt>
+	                            <dd>{{ $racingExcellence->formattedLocation }}</dd>
+	                        </dl>
+	                    </li>
+	                </ul>
+	            </div>
+	            <div class="panel__pre-header-secondary">
+	                <span class="text-nowrap">I.D {{ $racingExcellence->raceId }}</span>
+	            </div>
+	        </div>
+	        <div class="panel__header">
+	            <h2 class="panel__heading">
+	                Racing Results
+	            </h2>
+	        </div>
+
+	        <div class="panel__main">
+	            <table class="table table-hover">
+	                <thead>
+	                    <tr>
+	                        <th></th>
+	                        <th>Jockey</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    @foreach($division->participants as $participant)
+	                        <tr>
+	                            <td class="table__result-column">
+	                                <div class="table__result-column-inner">
+	                                    <span class="table__result-position">
+	                                        {{ $participant->formattedPlace }}
+	                                        @if($participant->formattedPlace !== 'dnf')
+	                                        	<span class="table__result-position-suffix" style="margin-left: -4px;">
+		                                            {{ numberOrdinalSuffix($participant->place) }}
+		                                        </span>
+	                                        @endif
+	                                        
+	                                    </span>
+	                                    @if(in_array($participant->place, [1,2,3,4]))
+	                                    	<span class="table__icon
+	                                    		@if($participant->place == 1)
+	                                    			table__icon--gold
+	                                    		@elseif($participant->place == 2)
+													table__icon--silver
+	                                    		@elseif($participant->place == 3)
+													table__icon--bronze
+	                                    		@endif
+	                                        ">
+	                                        @svg('rosette', 'icon')
+	                                        </span>
+	                                    @endif
+	                                </div>
+	                            </td>
+	                            <td>{{ $participant->formattedName }}</td>
+	                        </tr>
+	                    @endforeach
+	                </tbody>
+	            </table>
+	        </div>
+	    </div>
+	</div>
+@endforeach
+
+{{-- show feedback and points if currentuser is jockey OR coach is assigned to the jockey --}}
+
 
 <div>
 	<p>Coach: {{ $racingExcellence->formattedCoach }}</p>

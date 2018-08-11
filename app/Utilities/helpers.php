@@ -53,6 +53,17 @@ if (! function_exists('nextInvoicingPeriod')) {
     }
 }
 
+if (! function_exists('numberOrdinalSuffix')) {
+    function numberOrdinalSuffix($number)
+    {
+        if($number === 1) return 'st';
+        if($number === 2) return 'nd';
+        if($number === 3) return 'rd';
+
+        return 'th';
+    }
+}
+
 if (! function_exists('asBoolean')) {
 	function asBoolean($value) {
 	   if ($value && strtolower($value) !== "false") {
@@ -120,6 +131,16 @@ if (! function_exists('pointsForPlace')) {
             return 0;
         }
         return config('jcp.re_scoring.default.'.$place);
+    }
+}
+
+if(! function_exists('pointsForPlaceSalisbury')) {
+    function pointsForPlaceSalisbury($place)
+    {
+        if($place > 6) {
+            return 0;
+        }
+        return config('jcp.re_scoring.salisbury.'.$place);
     }
 }
 

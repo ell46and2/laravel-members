@@ -23,6 +23,7 @@ Vue.component('add-feedback', require('./components/Activity/AddFeedback.vue'));
 
 Vue.component('message-create', require('./components/Message/MessageCreate.vue'));
 
+Vue.component('upload-document', require('./components/Documents/UploadDocument.vue'));
 
 /*
     Notifications
@@ -125,5 +126,79 @@ const app = new Vue({
                 body.classList.toggle('is-no-scroll');
             });
         });
+
+
+
+        /*
+        Tabs
+         */
+        const tabsComponent = document.querySelector('.js-tabs');
+
+        if(tabsComponent) {
+            let tabs = tabsComponent.querySelectorAll('.tabs__button');
+
+            tabs.forEach(elem => {
+                let tabPaneId = elem.getAttribute('data-toggle');
+
+                elem.addEventListener('click', evt => {
+                    // Hide all tabs
+                    hideAllTabs();
+
+                    // Active the tab nav button
+                    elem.classList.add('is-active');
+
+                    // Show the tab pane
+                    document.getElementById(tabPaneId).classList.add('is-active');
+                });
+
+            });
+
+            function hideAllTabs() {
+                // For each tab...
+                tabs.forEach(elem => {
+                    // Deactive the tab nav button
+                    elem.classList.remove('is-active');
+
+                    // Get ID of related tab pane
+                    let tabPaneId = elem.getAttribute('data-toggle');
+
+                    // Hide the tab pane
+                    document.getElementById(tabPaneId).classList.remove('is-active');
+                });
+            }
+        }
+        
+        /*****************************************
+            Button dropdown
+        ******************************************/
+        let buttonDropdowns = [...document.querySelectorAll('[data-module="button-dropdown"]')];
+
+        if(buttonDropdowns) {
+            buttonDropdowns.map((component) => {
+                // The trigger button with which the dropdown is associated
+                let trigger = component.querySelector('.js-button-dropdown__trigger');
+                // The overlay that can be clicked to hide the dropdown
+                let overlay = component.querySelector('.js-button-dropdown__overlay');
+                // The dropdown itself
+                let dropdown = component.querySelector('.js-button-dropdown__dropdown');
+                // The items contained in the dropdown
+                let dropdownItems = [...dropdown.querySelectorAll('.js-button-dropdown__button')];
+
+                // On focus of the input, show the dropdown
+                trigger.addEventListener('click', function() {
+                    trigger.classList.add('is-active');
+                    dropdown.classList.add('is-active');
+                    overlay.classList.add('is-active');
+                });
+
+                // On click of the overlay, hide the dropdown
+                overlay.addEventListener('click', function() {
+                    trigger.classList.remove('is-active');
+                    dropdown.classList.remove('is-active');
+                    overlay.classList.remove('is-active');
+                });
+            });
+        }
+        
     }
 });

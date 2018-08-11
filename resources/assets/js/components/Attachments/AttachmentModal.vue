@@ -15,7 +15,10 @@
 							:video-url="attachment.video_url"
 							:thumbnail-url="attachment.thumbnail"
 						></video-player>
-		      		</template>	         	
+		      		</template>	
+		      		<template v-if="attachment.filetype === 'image'">
+		      			<img :src="attachment.image_url">
+		      		</template>         	
 		      	</div>
     		</div>
   		</div>

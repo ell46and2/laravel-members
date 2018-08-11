@@ -20,8 +20,7 @@ class JockeyController extends Controller
 {
     public function show(Jockey $jockey)
     {
-    	// if jockey unapproved, only allow Admin access
-    	// else allow Admin, Jets and Coach access
+        $this->authorize('profile', $jockey); 
     	 
     	if(!$jockey->approved) {
     		return $this->showUnapproved($jockey);
@@ -31,17 +30,19 @@ class JockeyController extends Controller
     		'coaches'
     	]);
 
-    	if($this->currentUser->isAdmin()) {
+        $coachesResource = UserSelectResource::collection(Coach::with('role')->get());
+
+    	if($this->currentRole === 'admin' || $this->currentUser->id === $jockey->id) {
     		$countries = Country::all();
         	$counties = County::all();
         	$nationalities = Nationality::all();
 
-            $coachesResource = UserSelectResource::collection(Coach::with('role')->get());
+            
 
     	   return view('jockey.show-approved', compact('jockey', 'countries', 'counties', 'nationalities', 'coachesResource'));
     	}
 
-        return view('jockey.show-approved', compact('jockey'));
+        return view('jockey.show-approved', compact('jockey', 'coachesResource'));
     }
 
     public function showUnapproved(Jockey $jockey)
@@ -67,15 +68,16 @@ class JockeyController extends Controller
             'rides' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfRides : null,
             'lowest_riding_weight' => isset($statsFromAPI->lowestRidingWeight) ? $statsFromAPI->lowestRidingWeight : null,
             'licence_type' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->licenceType : null,
-            // 'licence_date'
+            'licence_date' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->issueDate : null,
             'prize_money' => isset($statsFromAPI->seasonDetails) ? $this->apiGateway->calcPrizeMoney($statsFromAPI->seasonDetails) : null,
             'associated_content' => 'https://www.britishhorseracing.com/racing/stewards-reports/#!?q=' . $statsFromAPI->name,
             'trainer_name' => $statsFromAPI->trainerName,
     	]); 
 
-        // NOTE: need to check if an racing excellence participants with that api_id
-        // if so add jockey_id and remove name from participant.  
+
         $this->dispatch(new CheckIfJockeyFormerExternalReParticipant($jockey));
+
+        // NOTE: will need to check if they match an external JETS CRM jockey also.
 
     	return back();
     }

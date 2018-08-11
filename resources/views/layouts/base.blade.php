@@ -38,6 +38,7 @@
        
         @include('layouts.partials._notification-panel')
 
+        <attachment-modal></attachment-modal>
         <confirmation></confirmation>
         <flash-message
             :success="{{ json_encode(Session::get('success')) }}"

@@ -72,4 +72,9 @@ class SkillProfile extends Model
     {
         return $this->jockey->full_name;      
     }
+
+    public function getUpdatedAtshortDateAttribute()
+    {
+        return $this->updated_at->format('d/m/Y');
+    }
 }

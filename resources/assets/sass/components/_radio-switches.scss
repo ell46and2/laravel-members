@@ -24,28 +24,61 @@
             color: darken($blue--lighter, 15%);
         }
 
+        #{ $self }.is-invalid & {
+            border-top: 2px solid $danger;
+            border-bottom: 2px solid $danger;
+        }
+
         &:first-of-type {
             border-left: 2px solid $blue;
             border-radius: $radius 0 0 $radius;
+
+            #{ $self }.is-invalid & {
+                border-color: $danger;
+            }
         }
 
         &:last-of-type {
             border-right: 2px solid $blue;
             border-radius: 0 $radius $radius 0;
+
+            #{ $self }.is-invalid & {
+                border-color: $danger;
+            }
         }
 
         &:not(:first-of-type) {
             border-left: 2px solid $blue;
+
+            #{ $self }.is-invalid & {
+                border-color: $danger;
+            }
         }
+
+
 
         // A label associated with a checked radio input
         #{ $self }__input:checked + & {
             background: $blue;
             color: $white;
 
+            #{ $self }.is-invalid & {
+                background: #ee8b96;
+            }
+
             @include hover(true) {
                 background: darken($blue, 5%);
+
+                #{ $self }.is-invalid & {
+                    background: darken(#ee8b96, 5%);
+                }
             }
         }
+    }
+
+    &__invalid-feedback {
+        margin-top: 0.25rem;
+        color: $danger;
+        font-size: 80%;
     }
 }

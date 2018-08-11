@@ -1,14 +1,14 @@
 <template>
 	<form @submit.prevent="submit">
-		<div class="form-control">
-			<textarea
-				id="body"
-				rows="4"
-				class="form-control"
-				autofocus="autofocus"
-				v-model="form.body"
-			></textarea>
-		</div>
+
+		<textarea
+			id="body"
+			rows="4"
+			class="form-control"
+			autofocus="autofocus"
+			v-model="form.body"
+		></textarea>
+
 
 		<div class="form-check" v-if="!isCurrentUserJockey">
 		  	<input class="form-check-input" type="checkbox" v-model="form.private">

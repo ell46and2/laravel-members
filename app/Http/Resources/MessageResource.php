@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Coach;
+use App\Models\Jet;
 use App\Models\Jockey;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,7 +33,7 @@ class MessageResource extends JsonResource
         return [
             'jockeys' => UserSelectResource::collection(Jockey::with('role')->get()->sortBy('full_name')),
             'coaches' => UserSelectResource::collection(Coach::with('role')->get()->sortBy('full_name')),
-            // 'jets' => UserSelectResource::collection(Jet::all()),
+            'jets' => UserSelectResource::collection(Jet::with('role')->get()->sortBy('full_name')),
         ];
     }
 }

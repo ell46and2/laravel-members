@@ -27,7 +27,11 @@
 	            <div class="[ user-checkbox__avatar ] [ avatar ]">
 	                <div class="avatar__image" :style="`background-image:url('${user.avatar}');`" :alt="user.name"></div>
 	            </div>
-	            <span class="user-checkbox__name">{{ user.name }}</span>
+	            <span class="user-checkbox__name">{{ user.name }}
+					<div class="user-card__meta text--color-invalid" v-if="status">
+					    ({{ status }})
+					</div>
+	            </span>
 	        </label>
 	    </div>
 	</div>
@@ -48,6 +52,15 @@
 		},
 		mounted() {
 			// this.selected = this.user.selected;
+		},
+		computed: {
+			status() {
+				if(this.user.status === 'gone away' || this.user.status === 'suspended') {
+					return this.user.status;
+				}
+
+				return null;
+			}
 		},
 		methods: {
 			handleSelect() {

@@ -1,9 +1,229 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Skills Profile</h1>
+            Copy Needed
+        </div>
+    </div>
+</div>
 
-<div class="container">
+<form method="POST" action="{{ route('skill-profile.store') }}">
+	{{ csrf_field() }}
+
+    <div class="panel pt-3" style="z-index: 3;">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Choose Date, Time & Duration
+                    <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Description</span>
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row row--grid">
+                    <div class="col">
+                        <span class="text--color-blue">Select Date</span>
+                    	<datepicker-component name="start_date" placeholder="Select Date" old="{{ old('start_date') }}"></datepicker-component>
+
+                    	@if ($errors->has('start_date'))
+				            <span class="invalid-feedback">
+				                <strong>{{ $errors->first('start_date') }}</strong>
+				            </span>
+				        @endif
+                    </div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Start Time</span>
+            			<timepicker-component old="{{ old('start_time') }}"></timepicker-component>		
+            			
+            			@if ($errors->has('start_time'))
+            	            <span class="invalid-feedback">
+            	                <strong>{{ $errors->first('start_time') }}</strong>
+            	            </span>
+            	        @endif
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel pt-3">
+         <div class="panel__inner">
+             <div class="panel__header">
+                 <h2 class="panel__heading">
+                     Select a Jockey
+                     <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Copy needed</span>
+                 </h2>
+             </div>
+
+             <users-selection 
+ 				resource="{{ json_encode($jockeysResource) }}"
+ 				:group="false"
+ 				old="{{ json_encode(old('jockeys')) }}"
+ 			></users-selection>
+
+         </div>
+    </div>
+
+    <div class="panel pt-3">
+		<div class="panel__inner">
+		    <div class="panel__header">
+		        <h2 class="panel__heading">
+		            Ratings
+		            <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Copy needed</span>
+		        </h2>
+		    </div>
+		
+
+			<div class="panel__main">
+			  	<dl class="definition-list definition-list--stacked">
+			    
+				    <range-slider-skills
+				      label="Riding"
+				      name="riding_rating"
+				      :old-value="{{ old('riding_rating') ?? 0 }}"
+				    ></range-slider-skills>
+			    
+				    @include('form.partials._textarea', [
+				        'field' => 'riding_observation',
+				        'errors' => $errors,
+				        'value' => old('riding_observation'),
+				        'placeholder' => 'Add Comment',
+				    ])
+
+				    <range-slider-skills
+				      label="Simulator"
+				      name="simulator_rating"
+				      :old-value="{{ old('simulator_rating') ?? 0 }}"
+				    ></range-slider-skills>
+			    
+				    @include('form.partials._textarea', [
+				        'field' => 'simulator_observation',
+				        'errors' => $errors,
+				        'value' => old('simulator_observation'),
+				        'placeholder' => 'Add Comment',
+				    ])
+					
+					<range-slider-skills
+					  label="Race Riding Skills"
+					  name="race_riding_skills_rating"
+					  :old-value="{{ old('race_riding_skills_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'race_riding_skills_observation',
+					    'errors' => $errors,
+					    'value' => old('race_riding_skills_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+
+					<range-slider-skills
+					  label="Use of the Whip"
+					  name="whip_rating"
+					  :old-value="{{ old('whip_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'whip_observation',
+					    'errors' => $errors,
+					    'value' => old('whip_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+
+					<range-slider-skills
+					  label="Fitness"
+					  name="fitness_rating"
+					  :old-value="{{ old('fitness_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'fitness_observation',
+					    'errors' => $errors,
+					    'value' => old('fitness_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+	
+					<range-slider-skills
+					  label="Weight and Nutrition"
+					  name="weight_rating"
+					  :old-value="{{ old('weight_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'weight_observation',
+					    'errors' => $errors,
+					    'value' => old('weight_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+
+					<range-slider-skills
+					  label="Communication"
+					  name="communication_rating"
+					  :old-value="{{ old('communication_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'communication_observation',
+					    'errors' => $errors,
+					    'value' => old('communication_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+
+					<range-slider-skills
+					  label="Professionalism"
+					  name="professionalism_rating"
+					  :old-value="{{ old('professionalism_rating') ?? 0 }}"
+					></range-slider-skills>
+					
+					@include('form.partials._textarea', [
+					    'field' => 'professionalism_observation',
+					    'errors' => $errors,
+					    'value' => old('professionalism_observation'),
+					    'placeholder' => 'Add Comment',
+					])
+				  
+				</dl>
+			</div>
+		</div>
+    </div>
+
+    <div class="panel pt-3">
+		<div class="panel__inner">
+		    <div class="panel__header">
+		        <h2 class="panel__heading">
+		           	Skills Feedback
+		            <span class="[ text--size-sm text--color-base ] [ font-weight-normal ] [ ml-1 ]">Copy needed</span>
+		        </h2>
+		    </div>
+		
+
+			<div class="panel__main">
+				<textarea class="form-control" name="summary" rows="8" cols="80"  placeholder="Enter feedback...">{{ old('summary') }}</textarea>
+
+				@if ($errors->has('summary'))
+				    <span class="invalid-feedback">
+				        <strong>{{ $errors->first('summary') }}</strong>
+				    </span>
+				@endif
+			</div>
+		</div>
+
+		<div class="row">
+		    <div class="col-12 mt-3">
+		        <button class="button button--primary button--success button--squared button--block" type="submit">Save</button>
+		    </div>
+		</div>
+	</div>
+
+</form>
+
+@endsection
+
+{{-- <div class="container">
 	<div>
 		<h2>Skills Profile</h2>
 	</div>
@@ -131,6 +351,4 @@
         </div>
 
 	</form>
-</div>
-
-@endsection
+</div> --}}

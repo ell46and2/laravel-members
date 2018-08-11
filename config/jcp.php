@@ -111,6 +111,17 @@ return [
         ['field' => 'performance_goals', 'label' => 'Performance Goals'],
         ['field' => 'actions', 'label' => 'Actions'],
         ['field' => 'support_team', 'label' => 'Present Support Team']
+    ],
+
+    'skills_profile_fields' => [
+        [ 'field' => 'riding_rating' ,'label' => 'Riding'],
+        [ 'field' => 'simulator_rating' ,'label' => 'Simulator'],
+        [ 'field' => 'race_riding_skills_rating' ,'label' => 'Race Riding Skills'],
+        [ 'field' => 'whip_rating' ,'label' => 'Use of the Whip'],
+        [ 'field' => 'fitness_rating' ,'label' => 'Fitness'],
+        [ 'field' => 'weight_rating' ,'label' => 'Weight and Nutrition'],
+        [ 'field' => 'communication_rating' ,'label' => 'Communication'],
+        [ 'field' => 'professionalism_rating' ,'label' => 'Professionalism'],
     ]
 
     // VAT

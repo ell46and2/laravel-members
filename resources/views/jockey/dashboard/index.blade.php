@@ -122,43 +122,56 @@
 		                    <h2 class="panel__heading">
 		                        Skills Profile
 		                    </h2>
-		                    <div class="panel__header-meta">
-		                        Last updated on 23/05/2018
-		                    </div>
+		                    @if($jockey->lastSkillProfile)
+		                    	<div class="panel__header-meta">
+			                        Last updated on {{ $jockey->lastSkillProfile->updatedAtshortDate }}
+			                    </div>
+		                    @endif               
 		                </div>
 
-		                <div class="panel__main">
-		                    <div class="bar-chart">
+		                <div class="panel__main flow-vertical--3">
+		                	@if($jockey->lastSkillProfile)
+			                    <div class="bar-chart">
 
-		                        {{-- {% for item in content.competency_assessment.items %}
-		                            <div class="bar-chart__row">
-		                                <div class="bar-chart__label">
-		                                    {{ item.label }}
-		                                    <span class="sr-only">: 4</span>
-		                                </div>
-		                                <div class="[ bar-chart__bar ] [ progress-bar progress-bar--trans ]" aria-hidden="true" role="presentation">
-		                                    <div class="progress-bar__bar">
-		                                        <div class="progress-bar__primary" style="width: {{ (item.value/content.competency_assessment.max_value) * 100 }}%;"></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        {% endfor %} --}}
+			                        @foreach(config('jcp.skills_profile_fields') as $field)
+			                            <div class="bar-chart__row">
+			                                <div class="bar-chart__label">
+			                                    {{ $field['label'] }}
+			                                    <span class="sr-only">: 4</span>
+			                                </div>
+			                                <div class="[ bar-chart__bar ] [ progress-bar progress-bar--trans ]" aria-hidden="true" role="presentation">
+			                                    <div class="progress-bar__bar">
+			                                        <div class="progress-bar__primary" style="width: {{ ($jockey->lastSkillProfile->{$field['field']}/5) * 100 }}%;"></div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        @endforeach
 
-		                        <div class="bar-chart__x-axis" aria-hidden="true" role="presentation">
-		                            <div class="bar-chart__x-axis-blank"></div>
-		                            <div class="bar-chart__x-axis-labels">
-		                                <div class="bar-chart__x-axis-labels-inner">
-		                                    {{-- {% for i in range(0, content.competency_assessment.max_value + 1) %}
-		                                        <span>{{ i }}</span>
-		                                    {% endfor %} --}}
-		                                </div>
-		                            </div>
+			                        <div class="bar-chart__x-axis" aria-hidden="true" role="presentation">
+			                            <div class="bar-chart__x-axis-blank"></div>
+			                            <div class="bar-chart__x-axis-labels">
+			                                <div class="bar-chart__x-axis-labels-inner">
+			                                    @for ($i = 0; $i <= 5; $i++)
+			                                        <span>{{ $i }}</span>
+			                                    @endfor
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+			                @else
+			                	<p>No Skills Profile</p>
+		                    @endif
+		                    <div class="row">
+		                        <div class="col-8">
+		                            In <span class="heading--1">48</span> days you will need to complete a Skills Profile
 		                        </div>
-
+		                        <div class="col-4 text-right">
+		                            <button class="button button--primary" type="button">Complete</button>
+		                        </div>
 		                    </div>
 		                </div>
 
-		                <a class="panel__call-to-action" href="">View all Skills Profiles</a>
+		                <a class="panel__call-to-action" href="">View All Skills Profile</a>
 		            </div>
 		        </div>
 		    </div>
@@ -236,69 +249,5 @@
 
 </div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-
-					<img src="{{ $jockey->getAvatar() }}" alt="{{ $jockey->full_name }}">
-					Hi {{ $jockey->full_name }}, this is your Jockey Dashboard
-
-					<div>
-						number of wins
-					</div>
-					<div>
-						number of races
-					</div>
-					<div>
-						{{ $jockey->trainingTimeThisMonth() }} Hours of coaching with all my coaches this month
-					</div>
-					<br><br>
-					<div>
-						<h3>Coaches</h3>
-
-						@foreach($jockey->coaches as $coach)
-							<div>
-								{{ $coach->full_name }} <br>
-								{{ $coach->trainingTimeWithJockeyThisMonth($jockey->id)->duration }} hours coaching this month
-							</div><br><br>
-						@endforeach
-					</div>
-					<br>
-					<div>
-						<h3>Upcoming Activities</h3>
-						{{-- Split out into a partial --}}
-						@foreach($jockey->dashboardUpcomingActivities as $activity)
-							{{ $activity->id }}<br>
-							{{ $activity->formattedType }}<br>
-							{{ $activity->start->format('d/m/Y') }}<br>
-							{{ $activity->start->format('H:i') }}<br>
-							{{ $activity->formattedLocation }}<br>
-							<a href="{{ route('activity.show', $activity) }}">View</a>
-							<br><br>
-						@endforeach
-					</div>
-					<br>
-					<div>
-						<h3>Recent Activities</h3>
-						{{-- Split out into a partial --}}
-						@foreach($jockey->dashboardRecentActivities as $activity)
-							{{ $activity->id }}<br>
-							{{ $activity->formattedType }}<br>
-							{{ $activity->start->format('d/m/Y') }}<br>
-							{{ $activity->start->format('H:i') }}<br>
-							{{ $activity->formattedLocation }}<br>
-							<a href="{{ route('activity.show', $activity) }}">View</a>
-							<br><br>
-						@endforeach
-					</div>
-				</div>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection

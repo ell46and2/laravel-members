@@ -1,0 +1,456 @@
+{% extends "layout/base.html" %}
+
+{% block content %}
+
+    <div class="flow-vertical--3">
+
+        {####################################
+         Alert
+        #####################################}
+        <div class="alert alert--error">
+            <div class="alert__text">
+                You have <span class="badge badge-pill badge-light">7 unread</span> messages
+            </div>
+            <div class="alert__buttons">
+                <a class="button button--white" href="">View messages</a>
+            </div>
+        </div>
+
+        {####################################
+         Heading panel
+        #####################################}
+        <div class="panel">
+            <div class="panel__inner">
+                <div class="panel__main">
+                    <h1 class="[ heading--1 ] [ mb-1 ]">Profile</h1>
+                    Name, this is your Jockey Coaching Programme profile, here you can see your information and make changes to certain fileds.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row--wide-gutter">
+            <div class="col-md-12 col-xl-4 flow-vertical--3">
+                {####################################
+                 Pofile Picture
+                #####################################}
+
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                Profile Picture
+                                <div class="text--color-base text--size-base font-weight-normal mt-1">
+                                    Upload a profile picture of yourself in the following file formats, JPG or PNG.
+                                </div>
+                            </h2>
+                        </div>
+
+                        <div class="panel__main">
+                            <div class="w-25 text-center">
+                                <div class="[ avatar avatar--green ]">
+                                    <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                                </div>
+                                <a class="link--underlined" href="">Remove</a>
+                            </div>
+                        </div>
+
+                        <a class="panel__call-to-action" href="">Upload</a>
+                    </div>
+                </div>
+
+
+                {####################################
+                 BHA Racing Stats
+                #####################################}
+
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                BHA Racing Stats
+                                <div class="text--color-base text--size-base font-weight-normal mt-1">
+                                    Control your login, password and notification settings.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="panel__main flow-vertical--2">
+                            <div class="form-group flow-vertical--1">
+                                <label for="" class="text--color-blue text--size-sm">Racing Post URL</label>
+                                <input class="form-control" type="text" name="" value="" placeholder="Enter Racing Post URL…">
+                            </div>
+
+                            <dl class="definition-list">
+                                <dt>Licence/Permit Type</dt>
+                                <dd>Apprentice</dd>
+
+                                <dt>Wins</dt>
+                                <dd>51</dd>
+
+                                <dt>Rides</dt>
+                                <dd>376</dd>
+
+                                <dt>Lowest Riding Weight</dt>
+                                <dd>8st 5lbs</dd>
+
+                                <dt>Price Money</dt>
+                                <dd>&pound; 306,146.25</dd>
+
+                                <dt>Associated Content</dt>
+                                <dd><a class="link--underlined text--size-sm" href="#">Stewards enquiries/reports</a></dd>
+
+                                <dt>Sex</dt>
+                                <dd>Male</dd>
+
+                                <dt>Age</dt>
+                                <dd>17</dd>
+
+                                <dt>Win to Rides</dt>
+                                <dd>13.56%</dd>
+                            </dl>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                {####################################
+                 Settings
+                #####################################}
+
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                Settings
+                                <div class="text--color-base text--size-base font-weight-normal mt-1">
+                                    Control your login, password and notification settings.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="panel__main flow-vertical--3">
+                            <div class="form-group flow-vertical--2">
+
+                                <label for="" class="text--color-blue text--size-sm">Current Status</label>
+                                <select class="form-control custom-select">
+                                    <option selected>Active</option>
+                                    <option value="1">Not Active</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                                <button class="button button--primary button--block">Update</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {####################################
+                 Password
+                #####################################}
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                Password
+                                <div class="text--color-base text--size-base font-weight-normal mt-1">
+                                    Control your login, password and notification settings.
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="panel__main flow-vertical--3">
+                            <div class="form-group flow-vertical--2">
+
+                                <label for="" class="text--color-blue text--size-sm">Change Password</label>
+                                <input class="form-control" type="text" name="" value="" placeholder="Enter Racing Post URL…">
+
+                                <label for="" class="text--color-blue text--size-sm">New Password</label>
+                                <input class="form-control" type="text" name="" value="" placeholder="Enter Racing Post URL…">
+
+                                <label for="" class="text--color-blue text--size-sm">Confirm New Password</label>
+                                <input class="form-control" type="text" name="" value="" placeholder="Enter Racing Post URL…">
+
+                                <button class="button button--primary button--block">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-12 col-xl-8 mb-2 mb-xl-0 flow-vertical--3">
+                {####################################
+                 BIO
+                #####################################}
+
+                <div class="panel">
+                    <div class="panel__inner">
+                        <form action="">
+                            <div class="panel__header">
+                                <h2 class="panel__heading">
+                                    Bio
+                                    <div class="text--color-base text--size-base font-weight-normal mt-1">
+                                        Enter your personal details.
+                                    </div>
+                                </h2>
+                            </div>
+                            <div class="panel__main flow-vertical--2">
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Name</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Name…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Middle Name</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Middle Name…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Last Name</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Last Name…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">D.O.B.</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter D.O.B.…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Phone Number</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Phone Number…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Mobile Number (Optional)</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Mobile Number…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Address Line 1</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Address Line 1…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Address Line 2</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Address Line 2…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">City/Town</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter City/Town…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">County</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter County…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Postcode</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Postcode…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Country</label>
+                                    <input class="form-control" type="text" name="" value="" placeholder="Enter Country…">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text--color-blue text--size-sm">Description</label>
+                                    <textarea rows="8" class="form-control" type="text" name="" value="" placeholder="Enter Description…"></textarea>
+                                </div>
+
+                            </div>
+                            <button class="button button--primary button--block [ form-sticky-button ]" type="button">Save</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        {####################################
+         Panel - Recent Activities
+        #####################################}
+        <div class="panel panel--is-stack">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Recent Activities
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Activity type</th>
+                                <th>Jockey</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in content.recent_activities %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="table__icon">
+                                                {% include "svg/simulator.svg" %}
+                                            </span>
+                                            <a class="table__link" href="">{{ item.activity_type }}</a>
+                                        </div>
+
+                                    </td>
+                                    <td>{{ item.coach }}</td>
+                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.time }}</td>
+                                    <td>{{ item.location }}</td>
+                                    <td class="table__icon-column">
+                                        <a class="table__icon-button" href="">
+                                            {% include "svg/edit.svg" %}
+                                        </a>
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="button button--primary" href="">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">View all activities</a>
+            </div>
+        </div>
+
+        {####################################
+         Panel - Recent Excellence
+        #####################################}
+        <div class="panel panel--is-stack">
+            <div class="panel__inner">
+                <div class="panel__header">
+                    <h2 class="panel__heading">
+                        Recent Excellence
+                    </h2>
+                </div>
+
+                <div class="panel__main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Series</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in content.recent_activities %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="table__icon">
+                                                {% include "svg/simulator.svg" %}
+                                            </span>
+                                            <a class="table__link" href="">{{ item.activity_type }}</a>
+                                        </div>
+
+                                    </td>
+                                    <td>{{ item.date }}</td>
+                                    <td>{{ item.location }}</td>
+                                    <td class="text-right">
+                                        <a class="button button--primary" href="">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <a class="panel__call-to-action" href="">View all activities</a>
+            </div>
+        </div>
+
+
+
+            {####################################
+             Select Coach
+            #####################################}
+            <div class="panel">
+                <div class="panel__inner">
+                    <div class="panel__header">
+                        <h2 class="panel__heading">
+                            Select Coach
+                            <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Select Coach from the dropdown list</div>
+                        </h2>
+                    </div>
+
+                    <div class="[ panel__main ] [ flow-vertical--3 ]">
+                        <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                            <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                {% include "svg/binoculars.svg" %}
+                            </span>
+
+                            <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                            <div class="input-dropdown js-input-dropdown__dropdown">
+                                <ul class="input-dropdown__list" tabindex="-1">
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                    </li>
+                                    <li class="input-dropdown__item" tabindex="-1">
+                                        <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                    </li>
+                                    <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="five-col-grid">
+                            {% for item in content.message_compose_recipients %}
+                                <div class="five-col-grid__col">
+                                    <div class="user-card user-card--has-meta">
+                                        <div class="[ user-card__avatar ] [ avatar ]">
+                                            <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                        </div>
+                                        <div class="user-card__main">
+                                            <div class="user-card__name">{{ item.name }}</div>
+                                            <div class="user-card__meta">
+                                                {{ item.type }} <button class="[ button button--text ] [ user-card__button ]" type="button">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}

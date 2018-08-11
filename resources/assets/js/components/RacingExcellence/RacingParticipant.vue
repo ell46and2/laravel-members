@@ -3,38 +3,40 @@
 		<p>{{ participant.name }}</p>
 
 		<form @submit.prevent="submit">
-			<points-radios 
-				:currentValue="form.presentation_points"
-				field="presentation_points"
-				label="Presentation"
-				v-on:valueChange="setPoints"
-				:participant-id="participant.id"
-			></points-radios>
+			<div class="row">
+				<points-radios 
+					:currentValue="form.presentation_points"
+					field="presentation_points"
+					label="Presentation"
+					v-on:valueChange="setPoints"
+					:participant-id="participant.id"
+				></points-radios>
 
-			<points-radios 
-				:currentValue="form.professionalism_points"
-				field="professionalism_points"
-				label="Professionalism"
-				v-on:valueChange="setPoints"
-				:participant-id="participant.id"
-			></points-radios>
+				<points-radios 
+					:currentValue="form.professionalism_points"
+					field="professionalism_points"
+					label="Professionalism"
+					v-on:valueChange="setPoints"
+					:participant-id="participant.id"
+				></points-radios>
 
-			<points-radios 
-				:currentValue="form.coursewalk_points"
-				field="coursewalk_points"
-				label="Course Walk"
-				v-on:valueChange="setPoints"
-				:participant-id="participant.id"
-			></points-radios>
+				<points-radios 
+					:currentValue="form.coursewalk_points"
+					field="coursewalk_points"
+					label="Course Walk"
+					v-on:valueChange="setPoints"
+					:participant-id="participant.id"
+				></points-radios>
 
-			<points-radios 
-				:currentValue="form.riding_points"
-				field="riding_points"
-				label="Riding"
-				v-on:valueChange="setPoints"
-				:participant-id="participant.id"
-			></points-radios>
-
+				<points-radios 
+					:currentValue="form.riding_points"
+					field="riding_points"
+					label="Riding"
+					v-on:valueChange="setPoints"
+					:participant-id="participant.id"
+				></points-radios>
+			</div>
+			
 			<div class="form-group">
 				<textarea 
 					id="body" 

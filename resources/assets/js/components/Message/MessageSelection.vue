@@ -1,5 +1,53 @@
 <template>
-	<div>
+
+    
+        <div class="row">
+            <div :class="jockeyColClass">
+                <div class="form-group">
+                    <label class="form__label" for="recipients">Search for Jockey</label>             
+                   	<autocomplete
+						:resource="jockeyResource"
+						:exclude-ids="excludeIds"
+						v-on:searched="addUser"
+						placeholder="Search for Jockey..."
+						btn-name="Add"
+					></autocomplete>
+                </div>
+            </div>
+            <template v-if="isAdmin">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="form__label" for="recipients">Search for Coach</label>
+                     	<autocomplete
+                     		:resource="coachResource"
+                     		:exclude-ids="excludeIds"
+                     		v-on:searched="addUser"
+                     		placeholder="Search for Coach..."
+                     		btn-name="Add"
+                     	></autocomplete>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label class="form__label" for="recipients">Search for JETS</label>                   
+                        <autocomplete
+							:resource="jetsResource"
+							:exclude-ids="excludeIds"
+							v-on:searched="addUser"
+							placeholder="Search for JETS..."
+							btn-name="Add"
+						></autocomplete>  
+                    </div>
+                </div>
+            </template>
+        </div>
+   
+
+
+
+
+	<!-- <div>
+	
 		<template v-if="jockeyResource">
 			<p>Search For Jockey</p>
 			<autocomplete
@@ -32,28 +80,9 @@
 				btn-name="Add"
 			></autocomplete>
 		</template>
-
-		<!-- 	<button
-				@click.prevent="handleSendToAll"
-				class="btn btn-primary"
-			>
-				{{ sendToAllBtn }}
-			</button> -->
-
-			<!-- <message-recipient
-				v-for="user in users"
-				:key="user.id"
-				:recipient="user"
-				v-on:remove="removeUser"
-			></message-recipient> -->
-		
-
-		<!-- <template v-else>
-			<p>{{ sendToAllCopy }}</p>
-			<button class="btn btn-danger" @click.prevent="cancelSendAll">Cancel</button>
-		</template> -->
-	</div>
+	</div> -->
 	
+
 </template>
 
 <script>
@@ -79,6 +108,10 @@
 			},
 			excludeIds: {
 				required: false
+			},
+			currentRole: {
+				required: true,
+				type: String
 			}
 		},
 		components: {
@@ -95,6 +128,14 @@
 			// 	// NOTE: add pluralize so we get coaches, instead of coachs
 			// 	return `Sending to ${this.resource.length} ${pluralize(this.role, this.resource.length)}`;
 			// }
+			isAdmin() {
+				return this.currentRole === 'admin';
+			},
+			jockeyColClass() {
+				if(this.isAdmin) return 'col-4';
+
+				return 'col-12';
+			}
 		},
 		methods: {
 			pluralize, // adds the pluralize filter method from the import.

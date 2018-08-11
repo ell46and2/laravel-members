@@ -1,33 +1,54 @@
-<div class="card">
-    <div class="card-header">Profile</div>
+<div class="panel__header">
+    <h2 class="panel__heading">
+        Details
+    </h2>
+</div>
 
-    <div class="card-body">
-        
-        <p>First Name: {{ $coach->first_name }}</p>
+<div class="panel__main flow-vertical--2">
 
-        <p>Middle Name: {{ $coach->middle_name }}</p>
+    @include('user.partials._detail', [
+        'label' => 'First name',
+        'value' => $coach->first_name
+    ])
 
-        <p>Last Name: {{ $coach->last_name }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Last name',
+        'value' => $coach->last_name
+    ])
 
-        <p>Alias: {{ $coach->alias }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Middle name',
+        'value' => $coach->middle_name
+    ])
 
-        <p>Address Line 1: {{ $coach->address_1 }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Alias',
+        'value' => $coach->alias
+    ])
 
-        <p>Address Line 2: {{ $coach->address_2 }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Address',
+        'value' => $coach->fullAddress
+    ])
 
-        <p>Country: {{ $coach->formattedCountry }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Telephone',
+        'value' => $coach->telephone
+    ])
 
-        <p>County: {{ $coach->formattedCounty }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Twitter handle',
+        'value' => $coach->twitter_handle
+    ])
 
-        <p>Post Code: {{ $coach->postcode }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Email Address',
+        'value' => $coach->email
+    ])
 
-        <p>Telephone: {{ $coach->telephone }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Bio',
+        'value' => $coach->bio
+    ])
 
-        <p>Twitter Handle: {{ $coach->twitter_handle }}</p>
-
-        <p>Email: {{ $coach->email }}</p>
-
-        <p>Bio: {{ $coach->bio }}</p>
-        
-    </div>
 </div>

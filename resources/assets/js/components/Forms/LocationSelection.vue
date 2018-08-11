@@ -1,4 +1,4 @@
-<template>   
+<template>
     <select 
         v-model="selected"
         class="form-control custom-select" 

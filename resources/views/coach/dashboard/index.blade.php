@@ -191,8 +191,7 @@
 	                                            		<a class="button button--primary" href="{{ route('invoice.index', $coach) }}">Create invoice</a>
 	                                            	@elseif($latestOpenInvoice)
 														<a class="button button--primary" href="{{ route('invoice.show', $latestOpenInvoice) }}">View</a>
-	                                            	@endif
-	                                                
+	                                            	@endif                                                
 	                                            </div>
 	                                        </div>
 	                                    </div>
@@ -266,12 +265,13 @@
 									</div><br><br>
 								@endforeach --}}
 
-			                    @foreach($coach->jockeys as $jockey)
+			                    @foreach($coach->jockeys->take(5) as $jockey)
 			                    	@php
 			                    		$trainingAllowance = $jockey->trainingAllowanceThisMonth();
 			                        	$trainingWithCoach = $coach->trainingTimeWithJockeyThisMonth($jockey->id);
 			                        	$trainingPercentage = getPercentage($trainingWithCoach->duration, $trainingAllowance);
 			                        	$overallTrainingPercentage = getPercentage($jockey->trainingTimeThisMonth(), $trainingAllowance);
+			                        	$numCoaches = $jockey->coaches->count();
 			                    	@endphp
 			                        <div class="users-list__item">
 			                            <div class="users-list__main">
@@ -284,7 +284,7 @@
 			                                    </div>
 			                                    <div class="users-list__info">{{ $trainingWithCoach->duration }} hours coaching this month</div>
 			                                </div>
-			                                <a class="button button--primary" href="">Message</a>
+			                                <a class="button button--primary" href="{{ route('message.create', ['id' => $jockey->id]) }}">Message</a>
 			                            </div>
 			                            <div class="users-list__stats">
 			                                <div class="users-list__stats-item">
@@ -295,6 +295,16 @@
 			                                        {{ $trainingWithCoach->numActivities }} Activities
 			                                    </div>
 			                                </div>
+			                                @if($jockey->coaches->count() > 1)
+				                                <div class="users-list__stats-item">
+	                                                <div class="users-list__stats-icon">
+	                                                    @svg( 'nav-my-coaches', 'icon')
+	                                                </div>
+	                                                <div class="users-list__stats-label">
+	                                                    {{ $numCoaches }} coaches assigned
+	                                                </div>
+	                                            </div>
+	                                        @endif
 			                            </div>
 			                            <div class="[ users-list__progress-bar ] [ progress-bar ]">
 			                                <span class="sr-only">Progress: {{ $trainingPercentage }}%</span>

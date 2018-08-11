@@ -50,6 +50,43 @@ class ApiGateway
         }       
     }
 
+    public function getAllJockeyStats()
+    {
+        try {
+            $response = $this->client->request('GET', "https://api06.britishhorseracing.com/coaching/v1/jockeys", [
+                'headers' => [
+                    'Authorization' => $this->accessToken
+                ]
+            ]);
+
+            $response = json_decode($response->getBody()->getContents());
+
+            $jockeysDataArray = collect($response->data);
+
+            if($response->next_page_url) {
+                for ($i=2; $i <= $response->last_page ; $i++) { 
+                    $response = $this->client->request('GET', "https://api06.britishhorseracing.com/coaching/v1/jockeys?page={$i}", [
+                        'headers' => [
+                            'Authorization' => $this->accessToken
+                        ]
+                    ]);
+
+                    $response = json_decode($response->getBody()->getContents());
+
+                    $jockeysDataArray = $jockeysDataArray->concat(collect($response->data));
+                }
+            }
+
+            return $jockeysDataArray;
+
+        } catch (Exception $e) {
+            // log error and resume.
+            report($e);
+            
+            return null;
+        }       
+    }
+
     public function getRacesForYear($year)
     {
 

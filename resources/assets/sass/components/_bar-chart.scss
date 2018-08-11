@@ -1,9 +1,22 @@
 .bar-chart {
+    $self: &;
+
     display: table;
     width: 100%;
 
     &__row {
-        display: table-row;
+
+        @include media-breakpoint-up(xs) {
+            display: table-row;
+        }
+
+        & + & {
+            margin-top: 10px;
+
+            @include media-breakpoint-up(xs) {
+                margin-top: 0;
+            }
+        }
     }
 
     &__label {
@@ -17,19 +30,36 @@
     }
 
     &__bar {
-        display: table-cell;
+
+        @include media-breakpoint-up(xs) {
+            display: table-cell;
+        }
     }
 
     &__x-axis {
-        display: table-row;
+        display: block;
+
+        @include media-breakpoint-up(xs) {
+            display: table-row;
+        }
     }
 
     &__x-axis-blank {
-        display: table-cell;
+        display: block;
+
+        @include media-breakpoint-up(xs) {
+            display: table-cell;
+        }
     }
 
     &__x-axis-labels {
-        display: table-cell;
+        display: block;
+        margin-top: #{ $spacer / 2 };
+
+        @include media-breakpoint-up(xs) {
+            display: table-cell;
+            margin-top: 0;
+        }
     }
 
     &__x-axis-labels-inner {

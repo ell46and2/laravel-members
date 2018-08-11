@@ -484,67 +484,60 @@
         ],
         "activity_log": [
             {
-                "name": "PDP January 2018",
-                "status": "In Progress",
-                "completed_date": "-",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Group",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Group Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             },
             {
-                "name": "PDP January 2018",
-                "status": "Complete",
-                "completed_date": "Monday 16th June",
-                "last_modified": "Monday 16th June",
-                "goals_achived": "Monday 16th June",
-                "goals_achived": "1"
+                "activity_type": "Simulator Training",
+                "jockey_name": "Name Surname",
+                "date": "Monday 16th June",
+                "time": "14:30",
+                "location": "Bristol"
             }
         ],
         "invoice": {
@@ -717,27 +710,33 @@
         "user_cards": [
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": false
             },
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": true
             },
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": false
             },
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": false
             },
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": false
             },
             {
                 "name": "Name Surname",
-                "avatar": "http://jcp.local/images/headshot.jpg"
+                "avatar": "http://jcp.local/images/headshot.jpg",
+                "gone_away": false
             }
         ],
         "jockey_cards": [
@@ -1136,6 +1135,88 @@
                 "name": "Name Surname",
                 "type": "Jockey",
                 "avatar": "http://jcp.local/images/headshot.jpg"
+            }
+        ],
+        "documents": [
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            },
+            {
+                "extension": ".doc",
+                "filename": "File Name"
+            }
+        ],
+        "racing_results": [
+            {
+                "position": "1",
+                "jockey": "Name Surname",
+                "place_points": 5,
+                "presentation_points": 0,
+                "professionalism_points": 0,
+                "coursewalk_points": 0,
+                "riding_points": 0,
+                "total_points": 0
+            },
+            {
+                "position": "2",
+                "jockey": "Name Surname",
+                "place_points": 3,
+                "total_points": 0
+            },
+            {
+                "position": "3",
+                "jockey": "Name Surname",
+                "place_points": 4,
+                "presentation_points": 0,
+                "professionalism_points": 0,
+                "coursewalk_points": 0,
+                "riding_points": 0,
+                "total_points": 0
+            },
+            {
+                "position": "4",
+                "jockey": "Name Surname",
+                "place_points": 2,
+                "presentation_points": 0,
+                "professionalism_points": 0,
+                "coursewalk_points": 0,
+                "riding_points": 0,
+                "total_points": 0
+            },
+            {
+                "position": "5",
+                "jockey": "Name Surname",
+                "place_points": 5,
+                "presentation_points": 0,
+                "professionalism_points": 0,
+                "coursewalk_points": 0,
+                "riding_points": 0,
+                "total_points": 0
             }
         ]
     }

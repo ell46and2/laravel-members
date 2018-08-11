@@ -21,7 +21,7 @@ class AttachmentResource extends JsonResource
             'processed' => $this->processed,
             'thumbnail' => $this->getThumb(),
             'video_url' => $this->getStreamUrl(),
-            // 'image_url' => $this->getImageUrl()
+            'image_url' => $this->getImageUrl()
         ];
     }
 }

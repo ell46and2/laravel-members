@@ -25,4 +25,13 @@ class Document extends Model
     {  
         return config('jcp.buckets.documents') . $this->document_filename;
     }
+
+    /*
+        Attributes
+    */
+    public function getExtensionAttribute()
+    {
+        $pos = strpos($this->document_filename, '.');
+        return substr($this->document_filename, $pos+1);
+    }
 }

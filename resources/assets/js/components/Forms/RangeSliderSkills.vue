@@ -1,16 +1,21 @@
 <template>
-	<div>
-		<vue-slide-bar
-			v-model="value"
-			:min="0"
-			:max="5"
-			:data="slider.data"
-			:processStyle="processStyle"
-			:lineHeight="6"
-			:is-disabled="isDisabled"
-		>
-		</vue-slide-bar>
-		<input type="hidden" :name="name" :value="getValue">
+	<div style="margin-top: 20px">
+		<dt>
+			<label v-if="label" :for="name" class="text--color-blue">{{ label }}</label>
+		</dt>
+		<dd style="margin: 0 10px;">
+			<vue-slide-bar
+				v-model="value"
+				:min="0"
+				:max="5"
+				:data="slider.data"
+				:processStyle="processStyle"
+				:lineHeight="6"
+				:is-disabled="isDisabled"
+			>
+			</vue-slide-bar>
+			<input type="hidden" :name="name" :value="getValue">
+		</dd>
 	</div>
 </template>
 
@@ -47,6 +52,9 @@
 				required: true
 			},
 			oldValue: {
+				required: false
+			},
+			label: {
 				required: false
 			}
 		},

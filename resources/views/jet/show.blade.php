@@ -1,59 +1,41 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 @php
-    $isAdmin = auth()->user()->isAdmin();
+    $isAdmin = $currentRole === 'admin';
+    $isCurrentUser = $currentUser->id === $jet->id;
 @endphp
 
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Profile</h1>       
+            @if($isCurrentUser)
+            	This is your Jockey Coaching Programme profile, here you can see your information and make changes to certain fields.
+            @else
+            	{{ $jet->full_name }} JETS profile.
+            @endif         
+        </div>
+    </div>
+</div>
 
-@include('user.partials._profile-picture-edit', [ 'user' => $jet])
-
-
-<br><br><br>
-@if($isAdmin)
-	@include('jet.partials._edit-form')
-@else
-	@include('jet.partials._details')
-@endif
-
-@if($isAdmin)
-	<div>
-		<h3>Status</h3>
-		<form 
-			method="POST" 
-			action="{{ route('jet.status.update', $jet) }}"
-			class="[ js-confirmation ]"
-		    data-confirm="Are you sure you want to change the status?"
-		>
-			{{ csrf_field() }}
-			@method('put')
-
-			<div class="form-group row">
-			    
-			    <div class="col-md-6">
-			        <select class="form-control" name="status" id="status" required>
-			           @foreach(['active', 'suspended', 'gone away', 'deleted'] as $status)
-			                <option value="{{ $status }}" {{ old('status', $jet->status) === $status ? 'selected' : '' }}>
-			                    {{ ucfirst($status) }}
-			                </option>
-			           @endforeach
-			        </select>
-
-			        @if ($errors->has('status'))
-			            <span class="invalid-feedback">
-			                <strong>{{ $errors->first('status') }}</strong>
-			            </span>
-			        @endif
-			    </div>
-			</div>
-			<button class="btn btn-danger" type="submit">Update</button>
-		</form>
+<div class="row row--wide-gutter">
+    <div class="col-md-12 col-xl-4 flow-vertical--3">
+		@include('user.partials._profile-picture-edit', [ 'user' => $jet])
+		@include('jet.partials._jet-status-edit', [ 'jet' => $jet])
+		@include('user.partials._password-change', [ 'user' => $jet])
 	</div>
-@endif
-
-<br><br><br>
-
-
+	<div class="col-md-12 col-xl-8 mb-2 mb-xl-0 flow-vertical--3">
+        <div class="panel">
+            <div class="panel__inner">
+				@if($isAdmin || $isCurrentUser)
+					@include('jet.partials._edit-form')
+				@else
+					@include('jet.partials._details')
+				@endif
+			</div>
+		</div>
+	</div>
+</div>
 
 @endsection
-

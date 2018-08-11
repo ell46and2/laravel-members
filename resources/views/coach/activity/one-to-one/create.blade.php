@@ -30,7 +30,7 @@
 	                        <div class="[ icon-checkbox ]">
 	                            <input 
 	                            	class="[ icon-checkbox__input ] [ sr-only ]" 
-	                            	type="checkbox" 
+	                            	type="radio" 
 	                            	name="activity_type_id" 
 	                            	id="activity_type-{{ $activityType->id }}" 
 									value="{{ $activityType->id }}"
@@ -56,7 +56,7 @@
 	    </div>
 	</div>
 
-	<div class="panel pt-3">
+	<div class="panel pt-3" style="z-index: 3;">
         <div class="panel__inner">
             <div class="panel__header">
                 <h2 class="panel__heading">
@@ -68,6 +68,7 @@
             <div class="panel__main">
                 <div class="row row--grid">
                     <div class="col">
+                        <span class="text--color-blue">Select Date</span>
                     	<datepicker-component name="start_date" placeholder="Select Date" old="{{ old('start_date') }}"></datepicker-component>
 
                     	@if ($errors->has('start_date'))
@@ -77,6 +78,7 @@
 				        @endif
                     </div>
                     <div class="col">
+                        <span class="text--color-blue">Select Start Time</span>
             			<timepicker-component old="{{ old('start_time') }}"></timepicker-component>		
             			
             			@if ($errors->has('start_time'))
@@ -85,7 +87,15 @@
             	            </span>
             	        @endif
                     </div>
-                    <div class="col">Select Duration - Placeholder</div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Duration</span>
+                        <div class="form-group form-group--has-icon mt-1">
+                            <input class="form-control form-control--has-icon" type="text" name="duration" value="{{ old('duration') }}" placeholder="Select Duration">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                @svg( 'duration', 'icon')
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

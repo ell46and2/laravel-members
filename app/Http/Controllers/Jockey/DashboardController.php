@@ -21,9 +21,9 @@ class DashboardController extends Controller
     		'dashboardRecentActivities.location',
             'dashboardRecentActivities.type',
     		'racingExcellences',
+            'lastSkillProfile'
     	])
     	->findOrFail($this->currentUser->id);
-
 
     	return view('jockey.dashboard.index', compact('jockey'));
     }

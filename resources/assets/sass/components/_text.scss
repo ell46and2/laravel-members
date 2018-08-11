@@ -35,4 +35,12 @@
     &--color-blue-lighter {
         color: $blue--lighter;
     }
+
+    &--color-valid {
+        color: $success;
+    }
+
+    &--color-invalid {
+        color: $danger;
+    }
 }

@@ -1,6 +1,6 @@
 <template>
-	<div 
-		style="display: none;"
+	<div v-if="show"
+		:style="alertStyle"
 		:class="classes">
         {{ message }}
     </div>
@@ -13,6 +13,7 @@
 			return {
 				message: null,
 				show: false,
+				alertStyle: null
 			}
 		},
 		props: {
@@ -36,10 +37,14 @@
 
 			if(this.message) {
 				this.show = true;
+				
+				setTimeout(() => {
+					this.alertStyle = 'top: -100px';
+				}, 4000)
 
 				setTimeout(() => {
 					this.show = false;
-				}, 3000)
+				}, 5000)
 			}
 		},
 		computed: {

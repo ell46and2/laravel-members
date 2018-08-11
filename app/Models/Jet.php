@@ -18,6 +18,11 @@ class Jet extends User
         });
     }
 
+    public function crmRecords()
+    {
+        return $this->hasMany(CrmRecord::class, 'jet_id');
+    }
+
     public static function createNew($requestData)
     {
         $data = array_merge($requestData, [ 

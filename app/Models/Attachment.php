@@ -38,11 +38,20 @@ class Attachment extends Model
         	return config('jcp.buckets.video_thumbnails') . $this->uid . '_thumb_00001.jpg';
         }
 
+        if($this->filetype === 'image') {
+        	return config('jcp.buckets.images') . 'thumb_' . $this->filename;
+        }
+
         // return the actual thumbnail here.
     }
 
     public function getStreamUrl()
     {
     	return config('jcp.buckets.videos_out') . $this->uid . '.mp4';
+    }
+
+    public function getImageUrl()
+    {
+    	return config('jcp.buckets.images') . $this->filename;
     }
 }

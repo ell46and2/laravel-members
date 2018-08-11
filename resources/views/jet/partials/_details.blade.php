@@ -1,17 +1,34 @@
-<div class="card">
-    <div class="card-header">Profile</div>
+<div class="panel__header">
+    <h2 class="panel__heading">
+        Details
+    </h2>
+</div>
 
-    <div class="card-body">
-        
-        <p>First Name: {{ $jet->first_name }}</p>
+<div class="panel__main flow-vertical--2">
+    
+    @include('user.partials._detail', [
+        'label' => 'First name',
+        'value' => $jet->first_name
+    ])
 
-        <p>Last Name: {{ $jet->last_name }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Last name',
+        'value' => $jet->last_name
+    ])
 
-        <p>Telephone: {{ $jet->telephone }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Telephone',
+        'value' => $jet->telephone
+    ])
 
-        <p>Twitter Handle: {{ $jet->twitter_handle }}</p>
+    @include('user.partials._detail', [
+        'label' => 'Twitter handle',
+        'value' => $jet->twitter_handle
+    ])
 
-        <p>Email: {{ $jet->email }}</p>
-        
-    </div>
+    @include('user.partials._detail', [
+        'label' => 'Email Address',
+        'value' => $jet->email
+    ])
+
 </div>

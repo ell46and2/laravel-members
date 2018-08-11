@@ -1,6 +1,76 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
+
+<div class="panel">
+    <div class="panel__inner">
+        <div class="panel__main">
+            <h1 class="[ heading--1 ] [ mb-1 ]">Add Mileage to Invoice</h1>
+            You can view your submitted invoices below, if you wish to create a new invoice
+        </div>
+    </div>
+</div>
+
+<form method="POST" action="{{ route('invoice.mileage.store', $invoice) }}">
+    {{ csrf_field() }}
+
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Enter mileage item
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <div class="row">
+                    <div class="col-md-4">
+                        @include('form.partials._input', [
+                            'placeholder' => 'Enter Description...',
+                            'label' => 'Description',
+                            'field' => 'description',
+                            'type' => 'text',
+                            'attributes' => 'required',
+                            'errors' => $errors
+                        ])
+                    </div>
+
+                    <div class="col-md-4">
+                        <dt>
+                            <label class="text--color-blue" for="date">Date</label>
+                        </dt>
+                        <dd>
+                           <datepicker-component name="mileage_date" placeholder="Select Date" old="{{ old('mileage_date') }}"></datepicker-component> 
+                        </dd>
+                        
+
+                        @if ($errors->has('mileage_date'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('mileage_date') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="col-md-4">
+                        @include('form.partials._input', [
+                            'placeholder' => 'Enter Mileage...',
+                            'label' => 'Miles',
+                            'field' => 'miles',
+                            'type' => 'number',
+                            'attributes' => 'required',
+                            'errors' => $errors
+                        ])
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="button button--success button--block" type="submit">Add to invoice</button>
+</form>
+
+@endsection
+{{-- 
 <div class="container">
         
    
@@ -44,21 +114,9 @@
                 </div>
             </div>
 
-                    {{-- <td>
-                        <datepicker-component name="misc_date" placeholder="Select Date" old="{{ old('misc_date') }}"></datepicker-component>
-                    </td>
-                    <td>
-                        <input type="number" name="value">
-                    </td> --}}
-                  {{--   <td>
-                        <button class="btn btn-primary" type="submit">Add</button>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table> --}}
     </form>
     
     
 </div>
 @endsection
+ --}}

@@ -19,7 +19,7 @@ $flow__property: "margin";
             &:not([class*="--1"]):not([class*="--2"]):not([class*="--3"]):not([class*="--4"]):not([class*="--5"]) {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer;
+                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer !important;
                 }
             }
 
@@ -27,7 +27,7 @@ $flow__property: "margin";
             &--1 {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .25 };
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .25 } !important;
                 }
             }
 
@@ -35,7 +35,7 @@ $flow__property: "margin";
             &--2 {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .5 };
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * .5 } !important;
                 }
             }
 
@@ -43,7 +43,7 @@ $flow__property: "margin";
             &--3 {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer;
+                    #{ $flow__property }-#{ nth($direction, 2) }: $spacer !important;
                 }
             }
 
@@ -51,7 +51,7 @@ $flow__property: "margin";
             &--4 {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 1.5 };
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 1.5 } !important;
                 }
             }
 
@@ -59,7 +59,7 @@ $flow__property: "margin";
             &--5 {
 
                 > * + * {
-                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 3 };
+                    #{ $flow__property }-#{ nth($direction, 2) }: #{ $spacer * 3 } !important;
                 }
             }
         }

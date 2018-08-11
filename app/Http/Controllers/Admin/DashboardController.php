@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Coach;
 use App\Models\Invoice;
 use App\Models\Jockey;
+use App\Models\RacingExcellence;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -21,11 +22,14 @@ class DashboardController extends Controller
 
     	$invoicesAwaitingReview = Invoice::with('coach')->where('status', 'pending review')->get();
 
+        $racesAwaitingCoachAssignment = RacingExcellence::withCount('participants')->whereNull('coach_id')->get();
+
 		return view('admin.dashboard.index', compact(
 			'admin', 
 			'jockeysAwaitingApproval', 
 			'mostActiveCoaches', 
-			'invoicesAwaitingReview'
+			'invoicesAwaitingReview',
+            'racesAwaitingCoachAssignment'
 		));
     }
 }

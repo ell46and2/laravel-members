@@ -254,6 +254,11 @@ class User extends Authenticatable
         return $this->created_at->format('l jS F');
     }
 
+    public function getFormattedLastModifiedAttribute()
+    {
+        return $this->updated_at->format('l jS F');
+    }
+
     public function getFormattedGenderAttribute()
     {
         return ucfirst($this->gender);

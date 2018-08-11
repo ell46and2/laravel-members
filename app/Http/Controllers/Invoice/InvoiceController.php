@@ -15,7 +15,10 @@ class InvoiceController extends Controller
 {
     public function index(Coach $coach)
     {
-        $invoices = $coach->invoices->sortBy('submitted'); // paginate?
+        $invoices = $coach->invoices()
+            ->orderByRaw('submitted IS NULL DESC')
+            ->orderBy('submitted', 'desc')
+            ->paginate(config('jcp.site.pagination'));
 
         return view('invoice.index', compact('invoices', 'coach'));
     }
@@ -121,6 +124,26 @@ class InvoiceController extends Controller
         if($invoice->isEditableAndPendingReview()) {
             $invoice->recalculateAndSetTotal();
         }
+
+        return redirect()->route('invoice.show', $invoice);
+    }
+
+    public function editLine(Invoice $invoice, InvoiceLine $invoiceLine)
+    {
+        // check line is an activity and user is admin and invoice is not approved
+        
+        $invoiceLine->load('activity', 'activity.type', 'activity.jockeys');
+
+        return view('invoice.lines.edit', compact('invoice', 'invoiceLine'));
+    }
+
+    public function updateLine(Invoice $invoice, InvoiceLine $invoiceLine)
+    {
+        $this->authorize('edit', $invoiceLine);
+        
+        $invoiceLine->update(request()->only('value'));
+
+        $invoice->recalculateAndSetTotal();
 
         return redirect()->route('invoice.show', $invoice);
     }

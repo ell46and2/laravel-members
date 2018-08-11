@@ -1,0 +1,62 @@
+.document-card {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &__icon {
+        width: 40px;
+        height: 40px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue;
+        }
+    }
+
+    &__extension {
+        color: $blue;
+        text-align: center;
+        margin-top: 3px;
+
+        @include font-size(12px, true);
+    }
+
+    &__main {
+        padding-left: 10px;
+
+        > * + * {
+            margin-top: 8px;
+        }
+    }
+
+    &__filename {
+        color: $blue--dark;
+
+        @include font-size(16px, true);
+    }
+
+    &__description {
+
+        @include font-size(14px, true, $line-height-sm);
+    }
+
+    &__button {
+
+        @include font-size(12px, true);
+    }
+
+    &__options {
+
+        @include font-size(12px, true);
+
+        > * {
+            display: inline-block;
+        }
+
+        > * + * {
+            margin-left: 3px;
+        }
+    }
+}

@@ -43,9 +43,9 @@ class Coach extends User
             ->count();
     }
 
-    public function competencyAssessments()
+    public function skillProfiles()
     {
-        return $this->hasMany(CompetencyAssessment::class);
+        return $this->hasMany(SkillProfile::class);
     }
 
     public function racingExcellences()
@@ -147,10 +147,10 @@ class Coach extends User
 
         $racingExcellences = collect($this->getEventRacingExcellence($request));
 
-        $competencyAssessments = collect($this->getEventCompetencyAssessments($request));
+        $skillProfiles = collect($this->getEventSkillProfiles($request));
 
         $events = ($activities->merge($racingExcellences))
-            ->merge($competencyAssessments);
+            ->merge($skillProfiles);
 
         if($request->order === 'desc') {
             return $events->sortByDesc('start');
@@ -193,10 +193,10 @@ class Coach extends User
         return [];
     }
 
-    public function getEventCompetencyAssessments($request)
+    public function getEventSkillProfiles($request)
     {
         if($request->type === 'ca' || !$request->type) {
-            return $this->competencyAssessments()
+            return $this->skillProfiles()
                 ->with(['jockey'])->filter($request)->get();
         }
 
@@ -342,6 +342,7 @@ class Coach extends User
     public function invoiceableActivities($subMonths)
     {
         return $this->activities()
+            ->with('jockeys')
             ->whereBetween('start', [now()->subMonths($subMonths), now()])
             ->whereNotNull('duration')
             ->doesntHave('invoiceLine')

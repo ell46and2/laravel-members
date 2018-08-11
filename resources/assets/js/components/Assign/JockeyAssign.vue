@@ -1,24 +1,19 @@
 <template>
-	<div>
-	
-		<div>
-			<h3>Assign Jockey</h3>
-			<autocomplete
-				:resource="resource"
-				:exclude-ids="excludeIdsFromSearch"
-				v-on:searched="assignJockey"
-				placeholder="Search for Jockey"
-			></autocomplete>
-		</div>
-		<br>
-
-		<div>
-			<h3>Current Jockeys</h3>
+	<div class="[ panel__main ] [ flow-vertical--3 ]">
+		<autocomplete
+			:resource="resource"
+			:exclude-ids="excludeIdsFromSearch"
+			v-on:searched="assignJockey"
+			placeholder="Search for Jockey"
+		></autocomplete>
+		
+		<div class="five-col-grid">
 			<user
 				v-for="user in jockeys"
 				:user="user"
 				:key="user.id"
 				v-on:remove="unassignJockey"
+				:can-remove-user="canAssignJockeys"
 			></user>
 		</div>
 	</div>
@@ -46,6 +41,9 @@
 				type: String
 			},
 			current: {
+				required: true
+			},
+			canAssignJockeys: {
 				required: true
 			}
 		},

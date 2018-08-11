@@ -21,8 +21,11 @@
             width: 100%;
             height: 100%;
             fill: $blue-grey;
+        }
 
-            #{ $self }__item--has-emphasis & {
+        &--has-emphasis {
+
+            .icon {
                 fill: $blue;
             }
         }
@@ -35,7 +38,7 @@
 
         @include font-size(16px, true);
 
-        #{ $self }__item--has-emphasis & {
+        &--has-emphasis {
             color: $blue;
             font-weight: $font-weight-bold;
         }
@@ -44,7 +47,7 @@
     &__link {
         color: $blue--dark;
 
-        #{ $self }__item--has-emphasis & {
+        #{ $self }__inner--has-emphasis & {
             color: $blue;
             font-weight: $font-weight-bold;
         }

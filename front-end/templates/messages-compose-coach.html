@@ -64,40 +64,52 @@
                 </div>
 
                 <div class="[ panel__main ] [ flow-vertical--3 ]">
-                    <div class="form-group">
-                        <label class="form__label" for="recipients">Search for jockey/coach</label>
-                        <div class="input-dropdown js-input-dropdown">
-                            <div class="form-group form-group--has-icon">
-                                <input class="[ form-control form-control--has-icon ] [ input-dropdown__input ] [ js-input-dropdown__input ]" type="text" id="recipients" value="" placeholder="Search for Jockey/Coach...">
-                                <span class="form-group__input-icon" aria-hidden="true" role="presentation">
-                                    {% include "svg/binoculars.svg" %}
-                                </span>
-                            </div>
-                            <ul class="input-dropdown__dropdown" tabindex="-1">
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                    <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                        <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                        <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                            {% include "svg/binoculars.svg" %}
+                        </span>
+
+                        <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                        <div class="input-dropdown js-input-dropdown__dropdown">
+                            <ul class="input-dropdown__list" tabindex="-1">
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
                                 </li>
-                                <li class="input-dropdown__item" tabindex="0">
-                                    Testing
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
                                 </li>
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                </li>
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                </li>
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                </li>
+                                <li class="input-dropdown__item" tabindex="-1">
+                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                </li>
+                                <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
                             </ul>
                         </div>
                     </div>
@@ -121,6 +133,215 @@
                 </div>
             </div>
         </div>
+
+
+                {####################################
+                 Recipients
+                #####################################}
+                <div class="panel">
+                    <div class="panel__inner">
+                        <div class="panel__header">
+                            <h2 class="panel__heading">
+                                Select recipients
+                                <div class="[ text--color-base text--size-base ] [ font-weight-normal ] [ mt-1 ]">Add users you wish to send this message to</div>
+                            </h2>
+                            <div class="panel__heading-meta">
+                                <button class="button button--primary" type="button">Select All Coaches</button>
+                                <button class="[ button button--primary ] [ mr-1 ]" type="button">Select all jockeys</button>
+                                <button class="button button--primary" type="button">Deselect all</button>
+                            </div>
+                        </div>
+
+                        <div class="panel__main flow-vertical--3">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                                        <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                                        <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                            {% include "svg/binoculars.svg" %}
+                                        </span>
+
+                                        <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                                        <div class="input-dropdown js-input-dropdown__dropdown">
+                                            <ul class="input-dropdown__list" tabindex="-1">
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                                        <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                                        <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                            {% include "svg/binoculars.svg" %}
+                                        </span>
+
+                                        <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                                        <div class="input-dropdown js-input-dropdown__dropdown">
+                                            <ul class="input-dropdown__list" tabindex="-1">
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group form-group--has-icon" data-module="input-dropdown">
+                                        <input class="[ form-control form-control--has-icon form-control--has-dropdown ] [ js-input-dropdown__input ]" type="text" name="" value="" placeholder="Search for Jockey/Coach...">
+                                        <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                            {% include "svg/binoculars.svg" %}
+                                        </span>
+
+                                        <div class="input-dropdown__overlay js-input-dropdown__overlay"></div>
+                                        <div class="input-dropdown js-input-dropdown__dropdown">
+                                            <ul class="input-dropdown__list" tabindex="-1">
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="1" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="2" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="3" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="4" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="5" tabindex="0" type="button">Cras Fusce Magna</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="6" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="7" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="8" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="9" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="10" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="11" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__item" tabindex="-1">
+                                                    <button class="input-dropdown__button js-input-dropdown__button" data-value="12" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                                </li>
+                                                <li class="input-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="five-col-grid">
+                                {% for item in content.message_compose_recipients %}
+                                    <div class="five-col-grid__col">
+                                        <div class="user-card user-card--has-meta">
+                                            <div class="[ user-card__avatar ] [ avatar ]">
+                                                <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
+                                            </div>
+                                            <div class="user-card__main">
+                                                <div class="user-card__name">{{ item.name }}</div>
+                                                <div class="user-card__meta">
+                                                    {{ item.type }} <button class="[ button button--text ] [ user-card__button ]" type="button">Remove</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    <div class="five-col-grid__col d-flex">
+                                        {% include "svg/nav-my-coaches.svg" %}
+                                        <div class="user-card__main">
+                                            <div class="user-card__name">All 272 Jockeys</div>
+                                            <div class="user-card__meta">
+                                                <button class="[ button button--text ] [ user-card__button ] pl-0" type="button">Remove</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
 
         {####################################
          Message

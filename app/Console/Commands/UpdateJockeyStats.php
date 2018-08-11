@@ -55,27 +55,32 @@ class UpdateJockeyStats extends Command
             exit();
         }
 
+        $jockeyApiIds = $jockeys->pluck('api_id');
+
+        $allJockeysData = $this->apiGateway->getAllJockeyStats()
+            ->keyBy('jockeyId')
+            ->filter(function($value, $key) use ($jockeyApiIds) {
+                return $jockeyApiIds->contains($key);
+            });
+
         foreach ($jockeys->chunk(40) as $chunk) {
-            $chunk->each(function($jockey) {
-                $this->updateJockey($jockey);
+            $chunk->each(function($jockey) use ($allJockeysData) {
+                $statsFromAPI = $allJockeysData->get($jockey->api_id);
+                if($statsFromAPI) {
+                  $this->updateJockey($jockey, $statsFromAPI);  
+                }            
             });
         }       
     }
 
-    private function updateJockey(Jockey $jockey)
+    private function updateJockey(Jockey $jockey, $statsFromAPI)
     {     
-        $statsFromAPI = $this->apiGateway->getJockeyStats($jockey->api_id);
-
-        if(!$statsFromAPI) {
-            return;
-        }
-
         $jockey->update([
             'wins' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfWins : null,
             'rides' => isset($statsFromAPI->careerSummary[0]) ? $statsFromAPI->careerSummary[0]->numberOfRides : null,
             'lowest_riding_weight' => isset($statsFromAPI->lowestRidingWeight) ? $statsFromAPI->lowestRidingWeight : null,
             'licence_type' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->licenceType : null,
-            // 'licence_date' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->issueDate : null,
+            'licence_date' => isset($statsFromAPI->licences[0]) ? $statsFromAPI->licences[0]->issueDate : null,
             'prize_money' => $statsFromAPI->seasonDetails ? $this->apiGateway->calcPrizeMoney($statsFromAPI->seasonDetails) : null,
             'associated_content' => 'https://www.britishhorseracing.com/racing/stewards-reports/#!?q=' . $statsFromAPI->name,
             'trainer_name' => $statsFromAPI->trainerName,

@@ -16,17 +16,17 @@ class CoachController extends Controller
 {
     public function show(Coach $coach)
     {
-    	if($this->currentUser->isAdmin()) {
+        $jockeysResource = UserSelectResource::collection(Jockey::active()->with('role')->get());
+
+    	if($this->currentRole === 'admin' || $this->currentUser->id === $coach->id) {
     		$countries = Country::all();
         	$counties = County::all();
         	$nationalities = Nationality::all();
 
-            $jockeysResource = UserSelectResource::collection(Jockey::active()->with('role')->get());
-
     	   return view('coach.show', compact('coach', 'countries', 'counties', 'nationalities', 'jockeysResource'));
     	}
 
-    	return view('coach.show', compact('coach'));
+    	return view('coach.show', compact('coach', 'jockeysResource'));
     }
 
     public function updateProfile(UpdateCoachFormRequest $request, Coach $coach)
@@ -64,6 +64,8 @@ class CoachController extends Controller
         $coach->update([
             'status' => $request->status
         ]);
+
+        session()->flash('success', "Coach status updated to {$request->status}.");
 
         if($request->status === 'deleted') {
             return redirect('admin.dashboard.index');

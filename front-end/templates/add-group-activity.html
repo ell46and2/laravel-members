@@ -49,7 +49,7 @@
                     {% for item in content.activity_type_checkboxes %}
                         <div class="col-md-4">
                             <div class="icon-checkbox">
-                                <input class="[ icon-checkbox__input ] [ sr-only ]" type="checkbox" name="users" id="{{ loop.index }}">
+                                <input class="[ icon-checkbox__input ] [ sr-only ]" type="radio" name="users" id="{{ loop.index }}">
                                 <label class="icon-checkbox__label" for="{{ loop.index }}">
                                     <div class="icon-checkbox__icon">
                                         {% include "svg/" ~ item.icon ~ ".svg" %}
@@ -79,9 +79,33 @@
 
             <div class="panel__main">
                 <div class="row row--grid">
-                    <div class="col">Select Date - Placeholder</div>
-                    <div class="col">Select Start Time - Placeholder</div>
-                    <div class="col">Select Duration - Placeholder</div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Date</span>
+                        <div class="form-group form-group--has-icon">
+                            <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Select Date">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                {% include "svg/calendar.svg" %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Start Time</span>
+                        <div class="form-group form-group--has-icon">
+                            <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Select Start Date">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                {% include "svg/time.svg" %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <span class="text--color-blue">Select Duration</span>
+                        <div class="form-group form-group--has-icon">
+                            <input class="form-control form-control--has-icon" type="text" name="" value="" placeholder="Select Duration">
+                            <span class="form-group__input-icon" aria-hidden="true" role="presentation">
+                                {% include "svg/duration.svg" %}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -110,7 +134,11 @@
                                     <div class="[ user-checkbox__avatar ] [ avatar avatar--{{ item.avatar_color }} ]">
                                         <div class="avatar__image" style="background-image:url('{{ item.avatar }}');"></div>
                                     </div>
-                                    <span class="user-checkbox__name">{{ item.name }}</span>
+                                    <span class="user-checkbox__name">{{ item.name }}
+                                        <div class="user-card__meta text--color-invalid">
+                                            (out)
+                                        </div>
+                                    </span>
                                 </label>
                             </div>
                         </div>

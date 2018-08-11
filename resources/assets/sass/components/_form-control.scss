@@ -2,7 +2,9 @@
     position: relative;
     box-shadow: inset 0 0 6px 0 rgba($black, 0.10) !important;
 
-    &:focus {
+    &:focus,
+    &.is-valid,
+    &.is-invalid {
         border-width: 2px;
         padding: calc(#{ $input-padding-y } - 2px) calc(#{ $input-padding-x } - 2px);
     }
@@ -12,6 +14,15 @@
 
         &:focus {
             padding-right: 62px;
+        }
+    }
+
+    &--has-dropdown {
+        &:focus,
+        &.is-valid,
+        &.is-invalid {
+            border-width: 0;
+            padding: $input-padding-y $input-padding-x;
         }
     }
 

@@ -1,17 +1,16 @@
 <template>
-	<form @submit.prevent="submit">
-		<div class="form-group">
-			<textarea 
-				id="body" 
-				rows="10"
-				class="form-control"
-				v-model="form.feedback"
-			></textarea>
-		</div>
+	<form @submit.prevent="submit" class="flow-vertical--3">
+		    <textarea 
+		    	class="form-control" 
+		    	name="name" 
+		    	rows="8" 
+		    	cols="80"  
+		    	id="body"
+		    	v-model="form.feedback"
+		    >	
+		    </textarea>
 
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary">{{ submitName }}</button>
-		</div>
+		    <button class="button button--success button--block" type="submit">Save</button>
 	</form>
 </template>
 

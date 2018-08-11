@@ -7,17 +7,17 @@
     {####################################
      Unread Messages Notification
     #####################################}
-            <div class="alert alert--error">
-                <div class="alert__text alert__text--has-icon">
-                    {% include "svg/info-circle.svg" %}
-                    <span class="alert__text-inner">
-                        You have a <span class="badge badge-pill badge-light">7 unread</span> message
-                    </span>
-                </div>
-                <div class="alert__buttons">
-                    <a class="button button--white" href="">View Messages</a>
-                </div>
-            </div>
+    <div class="alert alert--error">
+        <div class="alert__text alert__text--has-icon">
+            {% include "svg/info-circle.svg" %}
+            <span class="alert__text-inner">
+                You have a <span class="badge badge-pill badge-light">7 unread</span> message
+            </span>
+        </div>
+        <div class="alert__buttons">
+            <a class="button button--white" href="">View Messages</a>
+        </div>
+    </div>
 
     {####################################
      JETS - PDP head
@@ -34,73 +34,204 @@
     {####################################
      JETS - PDP Archive
     #####################################}
-            <div class="panel">
-                <div class="panel__inner">
-                    <div class="panel__header">
-                        <h2 class="panel__heading">
-                            Recent Activities
-                        </h2>
-                    </div>
+    <div class="panel">
+        <div class="panel__inner">
+            <div class="panel__pre-header">
+                <div class="panel__pre-header-primary">
+                    <form class="filter-bar" action="" method="">
+                        <div class="filter-bar__label">
+                            Filter by
+                        </div>
 
-                    <div class="panel__main">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Activity Type</th>
-                                    <th>Jockey</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Location</th>
-                                    <th>Comments</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in content.activity_log %}
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="[ table__avatar ] [ avatar avatar--blue ]">
-                                                    <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
-                                                </div>
-                                                <a class="table__link" href="">{{ item.name }}</a>
-                                            </div>
-                                        </td>
-                                        <td>{{ item.status }}</td>
-                                        <td>{{ item.completed_date }}</td>
-                                        <td>{{ item.last_modified }}</td>
-                                        <td>{{ item.goals_achived }}</td>
-                                        <td>{{ item.goals_achived }}</td>
-                                        <td class="table__icon-column">
-                                            <a class="table__icon-button" href="">
-                                                {% include "svg/edit.svg" %}
-                                            </a>
-                                        </td>
-                                        <td class="text-right">
-                                            <a class="button button--primary" href="">View</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                        <nav aria-label="Table Pagination" class="mt-2">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                        <div class="filter-bar__filters">
+                            {# Filter 1 #}
+                            <div class="button-dropdown" data-module="button-dropdown">
+                                <button class="[ button button--trans-light ] [ button-dropdown__trigger ] [ filter-bar__trigger-button ] [ js-button-dropdown__trigger ]" type="button">
+                                    Select activity
+                                    <span class="button__icon button__icon--right" aria-hidden="true" role="presentation">
+                                        {% include "svg/angle-down.svg" %}
+                                    </span>
+                                </button>
 
-                    <div class="panel__split-call-to-action">
-                        <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
-                        <a class="panel__call-to-action" href="">Next</a>
-                    </div>
+                                <div class="button-dropdown__overlay js-button-dropdown__overlay"></div>
+                                <div class="button-dropdown__dropdown js-button-dropdown__dropdown">
+                                    <ul class="button-dropdown__list" tabindex="-1">
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Cras Fusce Magna</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                        </li>
+                                        <li class="button-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="">
+                            </div>
+
+                            {# Filter 2 #}
+                            <div class="button-dropdown" data-module="button-dropdown">
+                                <button class="[ button button--trans-light ] [ button-dropdown__trigger ] [ filter-bar__trigger-button ] [ js-button-dropdown__trigger ]" type="button">
+                                    Select jockey
+                                    <span class="button__icon button__icon--right" aria-hidden="true" role="presentation">
+                                        {% include "svg/angle-down.svg" %}
+                                    </span>
+                                </button>
+
+                                <div class="button-dropdown__overlay js-button-dropdown__overlay"></div>
+                                <div class="button-dropdown__dropdown js-button-dropdown__dropdown">
+                                    <ul class="button-dropdown__list" tabindex="-1">
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ornare Condimentum Mollis</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Cras Fusce Magna</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Amet Dapibus</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Inceptos Nullam Parturient</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Venenatis Porta Condimentum</button>
+                                        </li>
+                                        <li class="button-dropdown__item" tabindex="-1">
+                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
+                                        </li>
+                                        <li class="button-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="">
+                            </div>
+                        </div>
+
+                        <button class="[ filter-bar__filter-button ] [ button button--primary button--white ]" type="submit">
+                            Filter
+                        </button>
+                    </form>
                 </div>
             </div>
+            <div class="panel__header">
+                <h2 class="panel__heading">
+                    Recent Activities
+                </h2>
+            </div>
+
+            <div class="panel__main">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Activity Type</th>
+                            <th>Jockey</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <th>Comments</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in content.activity_log %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="[ table__avatar ] [ avatar avatar--blue ]">
+                                            <div class="avatar__image" style="background-image:url('http://jcp.local/images/headshot.jpg');"></div>
+                                        </div>
+                                        <a class="table__link" href="">{{ item.activity_type }}</a>
+                                    </div>
+                                </td>
+                                <td>{{ item.jockey_name }}</td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.time }}</td>
+                                <td>{{ item.location }}</td>
+                                <td>
+                                    <div class="icon-notify">
+                                        {% include "svg/conversation.svg" %}
+                                        <div class="icon-notify__badges">
+                                            <span class="[ icon-notify__badge ] [ badge badge-pill badge-dark ]">3</span>
+                                            <span class="[ icon-notify__badge ] [ badge badge-pill badge-dark ]">NEW</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="table__icon-column">
+                                    <a class="table__icon-button" href="">
+                                        {% include "svg/edit.svg" %}
+                                    </a>
+                                </td>
+                                <td class="text-right">
+                                    <a class="button button--primary" href="">View</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Table Pagination" class="mt-2">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="panel__split-call-to-action">
+                <a class="panel__call-to-action" tabindex="-1" disabled href=""></a>
+                <a class="panel__call-to-action" href="">Next</a>
+            </div>
+        </div>
+    </div>
 
 
 

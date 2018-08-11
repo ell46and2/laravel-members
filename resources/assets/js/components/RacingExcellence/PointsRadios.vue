@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="col-3">
 		<p>{{ label }}</p>
 
 		<div class="radio-switches">
@@ -12,28 +12,6 @@
 
 			<input class="[ radio-switches__input ] [ sr-only ]" :checked="value === 2" type="radio" :name="name" id="one">
 			<label class="radio-switches__label" @click="onClick(2)">Two</label>
-
-	  <!-- 		<label class="btn btn-secondary" :class="value === 0 ? 'active' : ''" @click="onClick(0)">
-	    		<input
-	    			:name="name" 
-	    			type="radio" 
-	    			autocomplete="off" 
-	    			> 0
-	  		</label> -->
-	  		<!-- <label class="btn btn-secondary" :class="value === 1 ? 'active' : ''" @click="onClick(1)">
-	    		<input 
-	    			:name="name" 
-	    			type="radio" 
-	    			autocomplete="off" 
-	    		> 1
-	  		</label>
-	  		<label class="btn btn-secondary" :class="value === 2 ? 'active' : ''" @click="onClick(2)">
-	    		<input 
-	    			:name="name" 
-	    			type="radio" 
-	    			autocomplete="off"
-	    		> 2
-	  		</label> -->
 		</div>
 	</div>
 </template>

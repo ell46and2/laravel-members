@@ -8,6 +8,7 @@
     padding: 2px 15px 0;
     line-height: 26px;
     border-radius: 14px;
+    text-align: center;
 
     @include font-size(14px);
 
@@ -70,6 +71,26 @@
         }
     }
 
+    &--trans-light {
+        background: transparent;
+        color: $white;
+        opacity: 1;
+
+        @include hover() {
+            opacity: 0.75;
+        }
+    }
+
+    &--trans-dark {
+        background: transparent;
+        color: $blue--dark;
+        opacity: 1;
+
+        @include hover() {
+            opacity: 0.75;
+        }
+    }
+
     &--text {
         color: $blue;
         text-decoration: underline;
@@ -98,6 +119,13 @@
         height: 14px;
         margin-right: 6px;
 
+        &--right {
+            margin-right: 0;
+            margin-left: 6px;
+            left: auto;
+            right: -3px;
+        }
+
         .icon {
             width: 100%;
             height: 100%;
@@ -111,6 +139,23 @@
 
     &--squared {
         border-radius: $radius;
+    }
+
+    &.disabled,
+    &:disabled {
+        pointer-events: none;
+        background: $blue-grey;
+        box-shadow: none;
+        color: $gray-500;
+        text-decoration: none;
+
+        &:active {
+            transform: scale(1);
+        }
+
+        &#{ $self }--text {
+            background: transparent;
+        }
     }
 
 }
