@@ -25,6 +25,8 @@ Vue.component('message-create', require('./components/Message/MessageCreate.vue'
 
 Vue.component('upload-document', require('./components/Documents/UploadDocument.vue'));
 
+Vue.component('avatar-upload', require('./components/Avatar/AvatarUpload.vue'));
+
 /*
     Notifications
 */

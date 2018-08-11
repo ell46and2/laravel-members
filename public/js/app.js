@@ -14783,6 +14783,8 @@ Vue.component('message-create', __webpack_require__(77));
 
 Vue.component('upload-document', __webpack_require__(89));
 
+Vue.component('avatar-upload', __webpack_require__(229));
+
 /*
     Notifications
 */
@@ -110045,6 +110047,344 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(230)
+/* template */
+var __vue_template__ = __webpack_require__(231)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Avatar/AvatarUpload.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0412e72e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0412e72e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			hasAvatar: false,
+			avatarPath: this.avatarImage,
+			uploading: false,
+			file: null,
+			uploadingComplete: false,
+			failed: false,
+			fileProgress: 0
+		};
+	},
+
+	props: {
+		canEdit: {
+			required: true
+		},
+		userId: {
+			required: true
+		},
+		avatarImage: {
+			required: true
+		},
+		avatarFilename: {
+			required: true
+		}
+	},
+	mounted: function mounted() {
+		if (this.avatarFilename) {
+			this.hasAvatar = true;
+		}
+	},
+
+	methods: {
+		fileInputChange: function fileInputChange() {
+			var _this = this;
+
+			this.file = document.getElementById('avatar-input').files[0];
+
+			if (this.file !== null) {
+				this.uploading = true;
+				this.failed = false;
+
+				var form = new FormData();
+
+				form.append('avatar', this.file);
+				// form.append('modelType', this.modelType);
+				// form.append('modelId', this.modelId);
+				form.append('fileExtension', this.file.name.split('.').pop());
+
+				var uploadProgress = this.uploadProgress;
+
+				var config = {
+					onUploadProgress: function onUploadProgress(progressEvent) {
+						var percentCompleted = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+
+						uploadProgress(percentCompleted);
+
+						return percentCompleted;
+					}
+				};
+
+				axios.post('/avatar/' + this.userId, form, config).then(function (result) {
+					_this.uploadingComplete = true;
+					_this.avatarPath = result.data;
+					_this.hasAvatar = true;
+
+					console.log(result.data);
+				}, function () {
+					_this.failed = true;
+				});
+			}
+		},
+		uploadProgress: function uploadProgress(percent) {
+			this.fileProgress = percent;
+		},
+		remove: function () {
+			var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+				var result;
+				return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+					while (1) {
+						switch (_context.prev = _context.next) {
+							case 0:
+								_context.next = 2;
+								return axios.delete('/avatar/' + this.userId);
+
+							case 2:
+								result = _context.sent;
+
+
+								this.avatarPath = result.data;
+								this.hasAvatar = false;
+
+							case 5:
+							case 'end':
+								return _context.stop();
+						}
+					}
+				}, _callee, this);
+			}));
+
+			function remove() {
+				return _ref.apply(this, arguments);
+			}
+
+			return remove;
+		}()
+	}
+});
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "panel" }, [
+    _c(
+      "div",
+      { staticClass: "panel__inner" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel__main" }, [
+          _c("div", { staticClass: "w-25 text-center" }, [
+            _c("div", { staticClass: "[ avatar avatar--green ]" }, [
+              _c("div", {
+                staticClass: "avatar__image",
+                style: "background-image:url('" + _vm.avatarPath + "');"
+              })
+            ]),
+            _vm._v(" "),
+            _vm.hasAvatar && _vm.canEdit
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "link--underlined",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.remove($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Remove")]
+                )
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.uploading && !_vm.failed
+          ? [
+              !_vm.uploadingComplete
+                ? _c("div", { staticClass: "attachment-progress" }, [
+                    _c("div", {
+                      staticClass: "attachment-progress__bar",
+                      style: { width: _vm.fileProgress + "%" }
+                    })
+                  ])
+                : _vm._e()
+            ]
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.hasAvatar && _vm.canEdit
+          ? [
+              !_vm.uploading
+                ? _c("input", {
+                    staticClass: "attachment-upload__input",
+                    attrs: {
+                      type: "file",
+                      name: "avatar-input",
+                      id: "avatar-input"
+                    },
+                    on: { change: _vm.fileInputChange }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "panel__call-to-action",
+                  attrs: { for: "avatar-input" }
+                },
+                [_vm._v("Upload")]
+              )
+            ]
+          : _vm._e()
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel__header" }, [
+      _c("h2", { staticClass: "panel__heading" }, [
+        _vm._v("\n                Profile Picture\n                "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "text--color-base text--size-base font-weight-normal mt-1"
+          },
+          [
+            _vm._v(
+              "\n                    Upload a profile picture of yourself in the following file formats, JPG or PNG.\n                "
+            )
+          ]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0412e72e", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -278,6 +278,10 @@ Route::get('/attachment/{attachment}', 'Attachment\AttachmentController@show');
 Route::post('/attachment', 'Attachment\AttachmentController@store');
 Route::delete('/attachment/{attachment}', 'Attachment\AttachmentController@destroy');
 
+// avatar
+Route::post('/avatar/{user}', 'Avatar\AvatarController@store');
+Route::delete('/avatar/{user}', 'Avatar\AvatarController@destroy');
+
 // Change Password
-Route::get('/profile/password', 'Auth\PasswordController@edit')->name('profile.password.edit');
+// Route::get('/profile/password', 'Auth\PasswordController@edit')->name('profile.password.edit');
 Route::put('/profile/password', 'Auth\PasswordController@update')->name('profile.password.update');
