@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth','role:coach,admin']], function() {
 	Route::get('/invoices/{coach}', 'Invoice\InvoiceController@index')->name('invoice.index');
 	Route::post('/invoices/{coach}', 'Invoice\InvoiceController@store')->name('invoice.store');
 	Route::get('/invoices/invoice/{invoice}', 'Invoice\InvoiceController@show')->name('invoice.show');
+	Route::get('/invoices/invoice/{invoice}/pdf', 'Invoice\InvoiceController@pdf')->name('invoice.pdf');
 	Route::post('/invoices/invoice/{invoice}/submit', 'Invoice\InvoiceController@submit')->name('invoice.submit-review');
 	Route::post('/invoices/invoice/{invoice}/approve', 'Invoice\InvoiceController@approve')->name('invoice.approve');
 	

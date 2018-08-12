@@ -8,8 +8,10 @@ use App\Models\Coach;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\RacingExcellence;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class InvoiceController extends Controller
 {
@@ -36,8 +38,6 @@ class InvoiceController extends Controller
     	$this->authorize('invoice', $invoice);
 
         $coach = $invoice->coach->load('jockeys');
-
-
 
         $invoice->load([
             'activityLines', 
@@ -146,6 +146,38 @@ class InvoiceController extends Controller
         $invoice->recalculateAndSetTotal();
 
         return redirect()->route('invoice.show', $invoice);
+    }
+
+    public function pdf(Invoice $invoice)
+    {
+        $this->authorize('invoice', $invoice);
+
+        $coach = $invoice->coach->load('jockeys');
+
+        $invoice->load([
+            'activityLines', 
+            'activityLines.activity', 
+            'activityLines.activity.type', 
+            'activityLines.activity.jockeys',
+            'activityLines.activity.location',
+            'racingExcellenceLines',
+            'racingExcellenceLines.racingExcellence',
+            'racingExcellenceLines.racingExcellence.divisions',
+            'racingExcellenceLines.racingExcellence.location',
+            'miscellaneousLines',
+            'invoiceMileage',
+            'invoiceMileage.mileages'
+        ]);
+
+        // NOTE: pdf - can't use flex.
+
+        $layout = view('invoice.pdf', compact('invoice', 'coach'));
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($layout->render());
+
+        return $pdf->stream();
+
+        return $pdf->download("invoice_{$invoice->label}_{$coach->first_name}_{$coach->last_name}.pdf");
     }
 
     private function addActivityLines(Invoice $invoice)
