@@ -96,6 +96,11 @@
         text-decoration: underline;
     }
 
+    &--text-light {
+        color: $white;
+        text-decoration: underline;
+    }
+
     &--block {
         display: block;
         width: 100%;

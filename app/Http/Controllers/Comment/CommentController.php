@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Comment\UpdatePutFormRequest;
 use App\Http\Resources\CommentResource;
 use App\Jobs\Comment\NotifyEditedComment;
+use App\Jobs\UploadImage;
+use App\Jobs\UploadVideo;
 use App\Models\Attachment;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -15,7 +17,6 @@ class CommentController extends Controller
     public function update(UpdatePutFormRequest $request, Comment $comment) // form request validation
     {
         $this->authorize('update', $comment);
-    	// add policy to check current user is author or user is an admin
     	
     	// Note: need to add attachment - adding/changing/removing
         
@@ -78,8 +79,9 @@ class CommentController extends Controller
         $request->file('attachment')->move(storage_path() . '/uploads', $attachment->filename);
 
         if($fileType === 'video') {
-            // dispatch uploadvideo job
+            $this->dispatch(new UploadVideo($attachment->filename));
         } else {
+            $this->dispatch(new UploadImage($attachment)); 
             // dispatch uploadimage job
             // Create thumbnail too.
         }

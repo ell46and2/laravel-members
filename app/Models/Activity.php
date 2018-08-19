@@ -148,6 +148,12 @@ class Activity extends Model
         });
     }
 
+    public function canBeEdited()
+    {
+        // if not an invoice_line
+        return is_null($this->invoiceLine);
+    }
+
     /*
         Attributes
     */
@@ -235,18 +241,18 @@ class Activity extends Model
     {
         // NOTE: need to have different urls depending on the users role.
         // return config('app.url') . urlAppendByRole() . "/activity/{$this->id}";
-        return "activity/{$this->id}";
+        return "/activity/{$this->id}";
     } 
 
     public function getEditRouteAttribute() {
-        return route(auth()->user()->roleName . '.activity.edit', $this);
+        return route('activity.edit', $this);
     }
 
     public function getUpdateRouteAttribute() {
         if($this->isGroup()) {
-            return route(auth()->user()->roleName . '.group-activity.update', $this);
+            return route('activity-group.update', $this);
         }
 
-        return route(auth()->user()->roleName . '.1:1-activity.update', $this);
+        return route('activity-1:1.update', $this);
     }
 }

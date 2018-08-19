@@ -53,19 +53,13 @@
         }
     }
 
-    &__checkbox-column {
-        width: 16px;
-        max-width: 16px;
-        padding-right: 0;
-    }
-
     &__checkbox {
 
         label {
 
             &:before,
             &:after {
-                top: -0.6rem;
+                top: -0.7rem;
             }
         }
     }
@@ -232,5 +226,138 @@
     &__result-position-suffix {
 
         @include font-size(12px, true);
+        margin-left: -4px;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        > * + * {
+            margin-left: 10px;
+        }
+    }
+
+    &__sortable-column {
+        display: flex;
+        align-items: center;
+    }
+
+    &__sort-button {
+        @extend %button-reset;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 12px;
+        height: 12px;
+        margin-left: 5px;
+    }
+
+    &__sort-button-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 6px;
+        height: 6px;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+            fill: $blue--lighter;
+        }
+
+        &--up {
+            transform: rotate(180deg);
+
+            #{ $self }__sort-button.is-up & {
+
+                .icon {
+                    fill: $blue;
+                }
+            }
+        }
+
+        &--down {
+
+            #{ $self }__sort-button.is-down & {
+
+                .icon {
+                    fill: $blue;
+                }
+            }
+        }
+    }
+
+    @each $name, $value in $grid-breakpoints {
+
+        &--stacked-#{ $name } {
+
+            @include media-breakpoint-only(#{ $name }) {
+                table-layout: fixed;
+
+                thead {
+                    display: none;
+                }
+
+                tr {
+                    display: block;
+
+                    &:hover {
+                        background: transparent !important;
+                    }
+
+                    & + tr {
+                        border-top: 2px solid #ddd;
+                    }
+                }
+
+                tbody td,
+                tbody th {
+                    border-bottom: 1px solid #ddd;
+                    display: block;
+                    text-align: right;
+                    width: 100%;
+                    padding: 0.5rem 0 !important;
+                }
+
+                tbody td:before {
+                    content: attr(aria-label);
+                    float: left;
+                    font-weight: $font-weight-bold;
+                    color: $blue;
+                }
+
+                #{ $self }__checkbox-column {
+
+                    .d-flex {
+                        justify-content: space-between;
+                    }
+                }
+
+                #{ $self }__checkbox {
+                    order: 2;
+                }
+
+                #{ $self }__result-column-inner {
+                    justify-content: space-between;
+                }
+
+                #{ $self }__icon--rosette {
+                    margin-right: 0;
+                }
+
+                #{ $self }__group-head {
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                #{ $self }__group-item-decor {
+                    display: none;
+                }
+            }
+        }
+
     }
 }

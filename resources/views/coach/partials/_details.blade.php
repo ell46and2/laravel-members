@@ -26,10 +26,10 @@
         'value' => $coach->alias
     ])
 
-    @include('user.partials._detail', [
+    {{-- @include('user.partials._detail', [
         'label' => 'Address',
         'value' => $coach->fullAddress
-    ])
+    ]) --}}
 
     @include('user.partials._detail', [
         'label' => 'Telephone',

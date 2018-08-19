@@ -43,29 +43,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($messages as $message)
-                        <tr>
-                            <td>
-                                @if(!$message->pivot->read)
-                                    <span class="[ badge badge-pill badge-dark ] [ mr-1 ]">NEW</span>
-                                @endif
-                                <a class="table__link" href="{{ route('messages.show', $message) }}">{{ $message->subject }}</a>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="[ avatar avatar--blue ] [ table__avatar ]">
-                                        <div class="avatar__image" style="background-image:url({{ $message->author->getAvatar() }});"></div>
+                    @if($messages->count())
+                        @foreach($messages as $message)
+                            <tr>
+                                <td>
+                                    @if(!$message->pivot->read)
+                                        <span class="[ badge badge-pill badge-dark ] [ mr-1 ]">NEW</span>
+                                    @endif
+                                    <a class="table__link" href="{{ route('messages.show', $message) }}">{{ $message->subject }}</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="[ avatar avatar--blue ] [ table__avatar ]">
+                                            <div class="avatar__image" style="background-image:url({{ $message->author->getAvatar() }});"></div>
+                                        </div>
+                                        <a class="table__link" href="">{{ $message->author->fullName }}</a>
                                     </div>
-                                    <a class="table__link" href="">{{ $message->author->fullName }}</a>
-                                </div>
-                            </td>
-                            <td>{{ $message->excerpt }}</td>
-                            <td>{{ $message->created_at->format('l jS F') }}</td>
-                            <td class="text-right">
-                                <a class="button button--primary" href="{{ route('messages.show', $message) }}">View</a>
+                                </td>
+                                <td>{{ $message->excerpt }}</td>
+                                <td>{{ $message->created_at->format('l jS F') }}</td>
+                                <td class="text-right">
+                                    <a class="button button--primary" href="{{ route('messages.show', $message) }}">View</a>
+                                </td>
+                            </tr>
+                        @endforeach 
+                    @else
+                        <tr>
+                            <td class="text-center" colspan="5">
+                                No messages
                             </td>
                         </tr>
-                    @endforeach
+                    @endif
+                    
                 </tbody>
             </table>
 

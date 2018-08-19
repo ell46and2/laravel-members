@@ -27,4 +27,9 @@ class JockeyPolicy
 
         return false;
     }
+
+    public function pdpJockeyIndex(User $user, Jockey $jockey)
+    {
+        return $user->isAdmin() || $user->isJet() || $user->id === $jockey->id;
+    }
 }

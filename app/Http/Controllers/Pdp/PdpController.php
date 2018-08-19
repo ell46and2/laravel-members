@@ -3,19 +3,32 @@
 namespace App\Http\Controllers\Pdp;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserSelectResource;
 use App\Jobs\Pdp\NotifyJetsSubmitted;
 use App\Jobs\Pdp\NotifyJockeyApproved;
 use App\Models\Jockey;
 use App\Models\Pdp;
+use App\Utilities\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Utilities\Collection;
 
 class PdpController extends Controller
 {
-    public function index(Jockey $jockey)
+    public function index()
     {
-    	// Jets and jockey only
+        // Jets only
+        
+        $pdps = Pdp::with('jockey')->paginate(config('jcp.site.pagination'));
+
+        $jockeysResource = UserSelectResource::collection(Jockey::active()->with('role')->get());
+
+        return view('pdp.index', compact('pdps', 'jockeysResource'));
+
+    }
+
+    public function jockeyIndex(Jockey $jockey)
+    {
+    	$this->authorize('pdpJockeyIndex', $jockey);
 
         $currentPdp = $jockey->latestIncompletePdp;
     	$previousPdps = $jockey->pdps()->whereNotNull('submitted')->orderBy('submitted', 'desc')->get();
@@ -26,17 +39,16 @@ class PdpController extends Controller
             $previousPdps = $previousPdps->prepend($currentPdp);
         }
 
-        $previousPdps = (new Collection($previousPdps))->paginate(1);
+        $previousPdps = (new Collection($previousPdps))->paginate(config('jcp.site.pagination'));
 
-    	return view('pdp.index', compact('jockey', 'previousPdps', 'currentPdp', 'lastSubmitted'));
+    	return view('pdp.jockey-index', compact('jockey', 'previousPdps', 'currentPdp', 'lastSubmitted'));
     }
 
     public function store(Jockey $jockey)
     {
     	if($jockey->latestIncompletePdp) {
-            dd('throw error');
-    		// throw error
-    		// return back()
+            session()->flash('error', "Please complete your current open PDP.");
+    		return back();
     	}
 
         if($lastPdp = $jockey->lastPdp()) {
@@ -522,9 +534,9 @@ class PdpController extends Controller
 
         $this->dispatch(new NotifyJetsSubmitted($pdp));
 
-        session()->flash('success', "Pdp sent for Jets review.");
+        session()->flash('success', "PDP sent for JETS review.");
 
-        return redirect()->route('pdp.list', $pdp->jockey);
+        return redirect()->route('pdp.jockey.list', $pdp->jockey);
     }
 
     public function complete(Pdp $pdp)
@@ -537,8 +549,8 @@ class PdpController extends Controller
 
         $this->dispatch(new NotifyJockeyApproved($pdp));
         
-        session()->flash('success', "Pdp marked as complete.");   
+        session()->flash('success', "PDP marked as complete.");   
 
-        return redirect()->route('pdp.list', $pdp->jockey);  
+        return redirect()->route('pdp.jockey.list', $pdp->jockey);  
     }
 }

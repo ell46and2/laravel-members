@@ -31,7 +31,8 @@ class Attachment extends Model
     {
         if (!$this->processed) {
         	// NOTE: need to return different placeholders for video and images.
-            return config('jcp.buckets.avatars') . 'default_avatar.png';
+            // return config('jcp.buckets.avatars') . 'default_avatar.png';
+            return asset('images/attachment-default.jpg');
         }
 
         if($this->filetype === 'video') {

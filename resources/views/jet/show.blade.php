@@ -21,7 +21,13 @@
 
 <div class="row row--wide-gutter">
     <div class="col-md-12 col-xl-4 flow-vertical--3">
-		@include('user.partials._profile-picture-edit', [ 'user' => $jet])
+		<avatar-upload 
+            :user-id="{{ $jet->id }}"
+            can-edit="{{ $isAdmin || $isCurrentUser }}"
+            avatar-image="{{ $jet->getAvatar() }}"
+            avatar-filename="{{ $jet->avatar_filename }}"
+        ></avatar-upload>
+
 		@include('jet.partials._jet-status-edit', [ 'jet' => $jet])
 		@include('user.partials._password-change', [ 'user' => $jet])
 	</div>

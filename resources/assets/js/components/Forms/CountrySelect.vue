@@ -1,7 +1,7 @@
 <template>
 	<select 
 		v-model="selected"
-		class="form-control" 
+		class="form-control custom-select" 
 		name="country_id" 
 		id="country_id" 
 		required

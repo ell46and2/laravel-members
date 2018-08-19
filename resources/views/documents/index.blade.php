@@ -38,8 +38,18 @@
                                 <a class="button button--primary" href="{{ $document->getDocument() }}">Download</a>
                                 @if($currentRole === 'admin')
                                 	<div class="document-card__options">
-	                                    <a class="link--underlined" href="">Edit</a>
-	                                    <a class="link--underlined" href="">Remove</a>
+	                                    <a class="link--underlined" href="{{ route('admin.document.edit', $document) }}">Edit</a>
+                                        <form 
+                                            method="POST" 
+                                            action="{{ route('admin.document.delete', $document) }}"
+                                            class="[ js-confirmation ]"
+                                            data-confirm="Are you sure you wish to delete this Document?"
+                                        >
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_method" value="delete" />
+                                            <button class="button button--text" type="submit">Remove</button>
+                                        </form>
+	                                    {{-- <a class="link--underlined" href="{{ route('admin.document.delete', $document) }}">Remove</a> --}}
 	                                </div>
                                 @endif
                             </div>

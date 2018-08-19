@@ -1,25 +1,58 @@
 .alert {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
     padding: 10px 20px;
     border-radius: $radius;
     box-shadow: 0 2px 9px 0 rgba(0,0,0,0.02);
     color: $white;
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
 
     &__text {
+        text-align: center;
+
+        @include media-breakpoint-up(md) {
+            text-align: left;
+        }
 
         &--has-icon {
             display: flex;
             align-items: flex-start;
+            justify-content: center;
+
+            @include media-breakpoint-up(md) {
+                justify-content: flex-start;
+            }
 
             .icon {
+                display: none;
                 flex-shrink: 0;
                 width: 20px;
                 height: 20px;
                 fill: $white;
                 margin-right: 10px;
+
+                @include media-breakpoint-up(md) {
+                    display: inline-block;
+                }
             }
+        }
+    }
+
+    &__buttons {
+        flex-shrink: 0;
+        padding-top: #{ $spacer / 2 };
+        text-align: center;
+
+        @include media-breakpoint-up(md) {
+            padding-top: 0;
+            padding-left: $spacer;
+            text-align: left;
         }
     }
 

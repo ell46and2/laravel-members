@@ -8,6 +8,7 @@ use App\Http\Requests\Comment\UpdatePutFormRequest;
 use App\Http\Resources\CommentResource;
 use App\Jobs\Comment\NotifyEditedComment;
 use App\Jobs\Comment\NotifyNewComment;
+use App\Jobs\UploadImage;
 use App\Jobs\UploadVideo;
 use App\Models\Activity;
 use App\Models\Attachment;
@@ -89,6 +90,7 @@ class ActivityCommentController extends Controller
     	if($fileType === 'video') {
     		$this->dispatch(new UploadVideo($attachment->filename));
     	} else {
+            $this->dispatch(new UploadImage($attachment)); 
     		// dispatch uploadimage job
     		// Create thumbnail too.
     	}

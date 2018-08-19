@@ -29,6 +29,10 @@
             @include('layouts.partials._user-bar')
 
             <div class="flow-vertical--3">
+                @if(strpos(Request::url(), 'dashboard') === false)
+                   @include('layouts.partials._messages-alert') 
+                @endif
+                
                 
                 @yield('content')
             </div>

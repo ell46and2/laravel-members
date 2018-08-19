@@ -5,7 +5,7 @@
 	            <h2 class="panel__heading">
 	                Password
 	                <div class="text--color-base text--size-base font-weight-normal mt-1">
-	                    Control your login, password and notification settings.
+	                    Change your password.
 	                </div>
 	            </h2>
 	        </div>

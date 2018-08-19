@@ -5,6 +5,7 @@
 			:exclude-ids="excludeIdsFromSearch"
 			v-on:searched="assignJockey"
 			placeholder="Search for Jockey"
+			v-if="canAssignJockeys"
 		></autocomplete>
 		
 		<div class="five-col-grid">

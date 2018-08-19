@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<table class="table table-hover" v-if="orderedDivision">
+		<table class="table table-hover table--stacked-md" v-if="orderedDivision">
 		  	<thead>
 		    	<tr>
 		    		<th></th>
@@ -31,13 +31,13 @@
 		    		        </span>
 			    		</div>
 			    	</td>
-		      		<td>{{ participant.name }}</td>
-		      		<td>{{ participant.place_points }}</td>
-		      		<td>{{ participant.presentation_points }}</td>
-		      		<td>{{ participant.professionalism_points }}</td>
-		      		<td>{{ participant.coursewalk_points }}</td>
-		      		<td>{{ participant.riding_points }}</td>
-		      		<td>{{ participant.total_points }}</td>
+		      		<td aria-label="Jockey">{{ participant.name }}</td>
+		      		<td aria-label="Place points">{{ participant.place_points ? participant.place_points : '-' }}</td>
+		      		<td aria-label="Presentation points">{{ participant.presentation_points ? participant.presentation_points : '-' }}</td>
+		      		<td aria-label="Professionalism points">{{ participant.professionalism_points ? participant.professionalism_points : '-' }}</td>
+		      		<td aria-label="Coursewalk points">{{ participant.coursewalk_points ? participant.coursewalk_points : '-' }}</td>
+		      		<td aria-label="Riding points">{{ participant.riding_points ? participant.riding_points : '-' }}</td>
+		      		<td aria-label="Total points">{{ participant.total_points ? participant.total_points : '-' }}</td>
 		    	</tr>
 		  </tbody>
 		</table>
@@ -70,9 +70,9 @@ import IconRosette from './IconRosette';
 					return participant.place
 				}
 
-				if(participant.total_points) {
+				// if(participant.total_points) {
 					return 'dnf';
-				}
+				// }
 			},
 			suffixByPlace(place) {
 				if(place === 1) return 'st';

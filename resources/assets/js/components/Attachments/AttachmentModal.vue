@@ -17,7 +17,7 @@
 						></video-player>
 		      		</template>	
 		      		<template v-if="attachment.filetype === 'image'">
-		      			<img :src="attachment.image_url">
+		      			<img class="img-fluid" :src="attachment.image_url">
 		      		</template>         	
 		      	</div>
     		</div>

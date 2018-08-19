@@ -1,15 +1,14 @@
 @extends('layouts.base')
 
 @section('content')
-
 <div class="panel">
     <div class="panel__inner">
         <div class="panel__main">
             <div class="row">
                 <div class="col-6">
                     <h1 class="[ heading--1 heading--has-button ] [ mb-1 ]">{{ $activity->isGroup() ? 'Group' : '1:1' }} {{ $activity->formattedType }}                      
-                        @if($isAdmin || $isAssignedCoach)
-                        	<a class="[ button button--primary ] [ heading__button ]" href="">Edit</a>
+                        @if(($isAdmin || $isAssignedCoach) && $activity->canBeEdited())
+                        	<a class="[ button button--primary ] [ heading__button ]" href="{{ route('activity.edit', $activity) }}">Edit</a>
 							<form 
 								method="POST" 
 								action="{{ route('activity.delete', $activity) }}"
@@ -46,6 +45,14 @@
         <div class="panel__pre-header">
             <div class="panel__pre-header-primary">
                 <ul class="panel__pre-header-definition-list">
+                    @if($isAdmin)
+                        <li>
+                            <dl>
+                                <dt>Coach</dt>
+                                <dd>{{ $activity->coach->full_name }}</dd>
+                            </dl>
+                        </li>
+                    @endif
                     <li>
                         <dl>
                             <dt>Date</dt>
@@ -194,7 +201,7 @@
                                             <div class="comments">
                                                 <comments
                                                     endpoint="{{ route('activity.comment.index', $activity) }}"
-                                                    recipient-id="{{ $jockey->id }}"
+                                                    recipient-id="{{ $currentRole === 'jockey' ? $activity->coach_id : $jockey->id }}"
                                                     jockey-id="{{ $jockey->id }}"
                                                     is-current-user-jockey="{{ $currentUser->isJockey() }}"
                                                     can-user-add-comments="{{ $activity->isAssignedToUser($currentUser) }}"
@@ -233,7 +240,7 @@
                                         <div class="comments">
                                             <comments
                                                 endpoint="{{ route('activity.comment.index', $activity) }}"
-                                                recipient-id="{{ $jockey->id }}"
+                                                recipient-id="{{ $currentRole === 'jockey' ? $activity->coach_id : $jockey->id }}"
                                                 jockey-id="{{ $jockey->id }}"
                                                 is-current-user-jockey="{{ $currentUser->isJockey() }}"
                                                 can-user-add-comments="{{ $activity->isAssignedToUser($currentUser) }}"
@@ -272,7 +279,7 @@
                                             <div class="comments">
                                                 <comments
                                                     endpoint="{{ route('activity.comment.index', $activity) }}"
-                                                    recipient-id="{{ $jockey->id }}"
+                                                    recipient-id="{{ $currentRole === 'jockey' ? $activity->coach_id : $jockey->id }}"
                                                     jockey-id="{{ $jockey->id }}"
                                                     is-current-user-jockey="{{ $currentUser->isJockey() }}"
                                                     can-user-add-comments="{{ $activity->isAssignedToUser($currentUser) }}"

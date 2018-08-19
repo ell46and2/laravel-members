@@ -30,7 +30,7 @@ class StorePostFormRequest extends FormRequest
                 'required',
                 function($attribute, $value, $fail) {
 
-                    if (!Coach::find($value)->count()) {
+                    if (!Coach::find($value)) {
                         return $fail('Please select a registered Coach');
                     }
                 }

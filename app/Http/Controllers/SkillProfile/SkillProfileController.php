@@ -31,7 +31,7 @@ class SkillProfileController extends Controller
 
         $jockey = Jockey::find($skillProfile->jockey_id);
 
-        $previousSkillProfiles = $jockey->skillProfiles()->where('id', '!=', $skillProfile->id)->paginate(15);
+        $previousSkillProfiles = $jockey->skillProfiles()->where('id', '!=', $skillProfile->id)->paginate(config('jcp.site.pagination'));
 
 		return view('skill-profile.show', compact('skillProfile', 'previousSkillProfiles'));
 	}

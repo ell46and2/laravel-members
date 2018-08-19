@@ -5,7 +5,7 @@
 	            <h2 class="panel__heading">
 	                Profile Picture
 	                <div class="text--color-base text--size-base font-weight-normal mt-1">
-	                    Upload a profile picture of yourself in the following file formats, JPG or PNG.
+	                    Upload a profile picture in the following file formats, JPG or PNG.
 	                </div>
 	            </h2>
 	        </div>

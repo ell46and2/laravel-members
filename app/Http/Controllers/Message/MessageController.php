@@ -21,7 +21,7 @@ class MessageController extends Controller
             ->messages()
             ->withPivot('read')
             ->with('author')
-            ->paginate(15);
+            ->paginate(config('jcp.site.pagination'));
         
         return view('message.index', compact('messages'));
 	}
@@ -31,7 +31,7 @@ class MessageController extends Controller
         $messages = $this->currentUser
             ->sentMessages()
             ->with('recipients')
-            ->paginate(15);
+            ->paginate(config('jcp.site.pagination'));
         
         return view('message.sent-index', compact('messages'));
     }
@@ -62,7 +62,9 @@ class MessageController extends Controller
         // if allCoaches - sent to all coaches
         
         // Need add in Jets too.
-        // 
+        
+        session()->flash('success', "Your message has been sent.");
+
         return response()->json('success', 200);
 
      //    session()->flash('message', "Message sent");

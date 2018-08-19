@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Activity;
 use App\Models\Attachment;
+use App\Models\Coach;
 use App\Models\Comment;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
@@ -15,6 +16,7 @@ use App\Models\SkillProfile;
 use App\Models\User;
 use App\Policies\ActivityPolicy;
 use App\Policies\AttachmentPolicy;
+use App\Policies\CoachPolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\InvoiceLinePolicy;
 use App\Policies\InvoicePolicy;
@@ -46,6 +48,7 @@ class AuthServiceProvider extends ServiceProvider
         Pdp::class => PdpPolicy::class,
         Jockey::class => JockeyPolicy::class,
         InvoiceLine::class => InvoiceLinePolicy::class,
+        Coach::class => CoachPolicy::class,
     ];
 
     /**

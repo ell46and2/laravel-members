@@ -13,11 +13,10 @@ class JetController extends Controller
 {
     public function show(Jet $jet)
     {
-    	if($this->currentUser->isAdmin()) {
+    	if($this->currentUser->isAdmin() || $this->currentUser->id === $jet->id) {
     		$countries = Country::all();
         	$counties = County::all();
         	$nationalities = Nationality::all();
-
 
     	   return view('jet.show', compact('jet', 'countries', 'counties', 'nationalities'));
     	}

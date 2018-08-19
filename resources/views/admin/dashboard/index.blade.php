@@ -171,7 +171,7 @@
 	                                            <td>{{ $race->startDate }}</td>
 	                                            <td>{{ $race->participants->count() }}</td>
 	                                            <td class="text-right">
-	                                                <a class="button button--primary" href="">View</a>
+	                                                <a class="button button--primary" href="{{ route('racing-excellence.show', $race) }}">View</a>
 	                                            </td>
 	                                        </tr>
 	                                    @endforeach
@@ -201,7 +201,7 @@
 	         {{-- Button - Add 1:1 Activity & Add Group Activity --}}
 	        <div class="flow-vertical--2">
 	            <button class="button button--primary button--block" type="button">Add a Coach</button>
-	            <button class="button button--primary button--block" type="button">Send Messages</button>
+	            <a class="button button--primary button--block" href="{{ route('message.create') }}">Send Messages</a>
 	            <button class="button button--primary button--block" type="button">Process Invoices</button>
 	        </div>
 
@@ -232,7 +232,7 @@
 	                                    </div>
 	                                    <div class="users-list__info">{{ $coach->overallTrainingTimeThisMonth() }} hours coaching this month</div>
 	                                </div>
-	                                <a class="button button--primary" href="">Message</a>
+	                                <a class="button button--primary" href="{{ route('message.create', ['id' => $coach->id]) }}">Message</a>
 	                            </div>
 	                            <div class="users-list__stats">
 	                                <div class="users-list__stats-item">

@@ -38,7 +38,7 @@ class NotifyJockeysDeletedActivity implements ShouldQueue
      */
     public function handle()
     {
-        $jockeys = Jockey::find($jockeyIds);
+        $jockeys = Jockey::find($this->jockeyIds);
         // If no jockeys for activity just return
         if(!$jockeys->count()) {
             return;

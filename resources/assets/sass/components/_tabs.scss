@@ -9,6 +9,7 @@
 
     &__item {
         flex: 1;
+        overflow: hidden;
 
         & + & {
             margin-left: 2px;

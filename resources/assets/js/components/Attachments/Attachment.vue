@@ -11,7 +11,7 @@
     	href="#"
     	@click.prevent="modalOpen"
     >
-        <span class="image-thumbnail__magnify-icon">
+        <span class="image-thumbnail__magnify-icon" v-if="attachment.processed">
             <icon-magnify></icon-magnify>
         </span>
     </a>

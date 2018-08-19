@@ -77,4 +77,9 @@ class SkillProfile extends Model
     {
         return $this->updated_at->format('d/m/Y');
     }
+
+    public function getNotificationLinkAttribute()
+    {
+        return "/skills-profile/{$this->id}";
+    } 
 }

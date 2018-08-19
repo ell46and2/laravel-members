@@ -20,7 +20,8 @@ class CreateCrmRecordsTable extends Migration
             $table->integer('managable_id')->unsigned()->nullable();
             $table->string('managable_type')->nullable(); // Jockey or CrmJockey
             $table->text('comment');
-            $table->date('review_date');
+            $table->date('review_date')->nullable();
+            $table->string('document_filename')->nullable();
             $table->timestamps();
         });
     }

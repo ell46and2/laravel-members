@@ -7,7 +7,7 @@
 
     <div class="panel__header">
         <h2 class="panel__heading">
-            Bio
+            Details
             <div class="text--color-base text--size-base font-weight-normal mt-1">
                 Enter your personal details.
             </div>

@@ -3,19 +3,34 @@
 <div class="panel">
     <div class="panel__inner">
         <div class="panel__main">
-            <h1 class="[ heading--1 ] [ mb-1 ]">Complete PDP</h1>
+            <h1 class="[ heading--1 ] [ mb-1 ]">
+            @if(!$pdp->submitted)
+              Complete PDP
+            @else
+                {{ $pdp->name }}
+            @endif
+            </h1>
             Personal Development Plan
         </div>
 
         <div class="panel__alert panel__alert--has-icon">
             <div>
                 @svg('info-circle', 'icon')
-                @if($currentRole === 'jockey')
-                	{{ $jockey->first_name }}, you have completed 
+                @if(!$pdp->submitted)
+                     @if($currentRole === 'jockey')
+                        {{ $jockey->first_name }}, you have completed 
+                    @else
+                        Completed
+                    @endif
+                    {{ $pdp->percentageComplete }}% of this PDP
                 @else
-                	Completed
+                    @if($pdp->status === 'Awaiting Review')
+                        Awaiting review from JETS
+                    @else
+                        Completed
+                    @endif
                 @endif
-                {{ $pdp->percentageComplete }}% of this PDP
+               
             </div>
         </div>
     </div>

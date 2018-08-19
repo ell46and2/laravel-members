@@ -22,7 +22,12 @@
 <div class="row row--wide-gutter">
     <div class="col-md-12 col-xl-4 flow-vertical--3">
 
-		@include('user.partials._profile-picture-edit', [ 'user' => $jockey])
+		<avatar-upload 
+            :user-id="{{ $jockey->id }}"
+            can-edit="{{ $isAdmin || $isCurrentUser }}"
+            avatar-image="{{ $jockey->getAvatar() }}"
+            avatar-filename="{{ $jockey->avatar_filename }}"
+        ></avatar-upload>
 
 		@include('jockey.partials._racing-stats')
 
@@ -98,6 +103,7 @@
 		                </tr>
 		            </thead>
 		            <tbody>
+		            @if($jockey->lastFiveActivities->count())
 		                @foreach($jockey->lastFiveActivities as $activity)	                            
 		                    <tr>
 		                        <td>
@@ -117,6 +123,14 @@
 		                        </td>
 		                    </tr>
 		                @endforeach
+		            @else
+		            	<tr>
+	                        <td class="text-center" colspan="6">
+	                            No items
+	                        </td>
+	                    </tr>
+		            @endif
+		                
 		            </tbody>
 		        </table>
 		    </div>

@@ -6,6 +6,8 @@
     }
 
     &__input-icon {
+        display: flex;
+        align-items: center;
         position: absolute;
         top: 0;
         right: 20px;
@@ -32,6 +34,12 @@
             .form-control.is-invalid:focus ~ & {
                 fill: $danger;
             }
+        }
+
+        &--sm {
+            width: 11px;
+            height: 11px;
+            right: 10px;
         }
     }
 }

@@ -1,7 +1,17 @@
 <template>
-	<!-- <div class="row justify-content-center"> -->
-        <!-- <div class="col-md-8"> -->
-            <div class="card">
+    <div class="panel__main">
+		<div class="row row--grid">
+			<coach-select 
+				v-for="user in users" 
+				:user="user" 
+				:key="user.id"
+				v-on:userSelected="handleSelected"
+				:selected-id="selectedId"
+			></coach-select>
+	    </div>
+	</div>
+	
+            <!-- <div class="card">
 				<coach-select 
 					v-for="user in users" 
 					:user="user" 
@@ -9,9 +19,8 @@
 					v-on:userSelected="handleSelected"
 					:selected-id="selectedId"
 				></coach-select>
-            </div>
-        <!-- </div> -->
-    <!-- </div> -->
+            </div> -->
+
 </template>
 
 <script>

@@ -80,6 +80,8 @@
 	                                        	<span class="table__result-position-suffix" style="margin-left: -4px;">
 		                                            {{ numberOrdinalSuffix($participant->place) }}
 		                                        </span>
+		                                    @else
+		                                    	dnf
 	                                        @endif
 	                                        
 	                                    </span>
@@ -111,36 +113,7 @@
 {{-- show feedback and points if currentuser is jockey OR coach is assigned to the jockey --}}
 
 
-<div>
-	<p>Coach: {{ $racingExcellence->formattedCoach }}</p>
-	<p>Date: {{ $racingExcellence->formattedStart }}</p>
-	<p>Start Time: {{ $racingExcellence->formattedStartTimeFull }}</p>
-	<p>Series: {{ $racingExcellence->series_name }}</p>
-	<p>Location: {{ $racingExcellence->location }}</p>
-	<p>ID {{ $racingExcellence->raceId }}</p>
-</div>
-
 	@foreach($racingExcellence->divisionResults() as $division)
-		<div>
-			<table class="table">
-			  	<thead>
-			    	<tr>
-			    		<th scope="col">Name</th>
-			      		<th scope="col">Place</th>
-	
-			    	</tr>
-			  	</thead>
-			  	<tbody>
-			  		@foreach($division->participants as $participant)
-				    	<tr class="{{ $participant->jockey_id === auth()->user()->id ? 'table-success' : '' }}">
-				      		<td>{{ $participant->formattedName }}</td>
-				      		<td>{{ $participant->formattedPlace }}</td>
-				    	</tr>
-			    	@endforeach
-			  	</tbody>
-			</table>
-		</div>
-
 		@if($usersParticpantIds && $division->getDivisionParticipantsByJockeyIds($usersParticpantIds))
 			@foreach($division->getDivisionParticipantsByJockeyIds($usersParticpantIds) as $participant)
 				<br>

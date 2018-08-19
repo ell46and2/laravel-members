@@ -54,7 +54,13 @@ class InvoiceController extends Controller
             'invoiceMileage.mileages'
         ]);
 
-        return view('invoice.show', compact('invoice', 'coach'));
+        // As jockey may no longer be assigned to coach so need to get all jockeys that are assigned to an invoice activity.
+        $invoiceJockeys = $invoice->activityLines->flatMap(function($line)  {
+            return $line->activity->jockeys;
+        })
+        ->keyBy('id');
+
+        return view('invoice.show', compact('invoice', 'coach', 'invoiceJockeys'));
     }
 
     public function submit(Invoice $invoice)

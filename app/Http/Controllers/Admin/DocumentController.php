@@ -10,6 +10,8 @@ use App\Jobs\UploadDocument;
 use App\Jobs\UploadDocumentNotify;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -31,9 +33,15 @@ class DocumentController extends Controller
 
    			// We'll need to show when a document is not yet uploaded to S3 in the frontend
    			// i.e. document currently uploading, please check back later.
+   			return response()->json('success', 200);
         }
 
         return redirect()->route('documents.index');
+	}
+
+	public function edit(Document $document)
+	{
+		return view('admin.document.edit', compact('document'));
 	}
 
 	public function update(Document $document, UpdatePostFormRequest $request)
@@ -49,7 +57,7 @@ class DocumentController extends Controller
 
 		$this->dispatch(new EditedDocumentNotify($document));
 
-		return redirect()->route('documents.index');
+		return response()->json('success', 200);
 	}
 
 	public function destroy(Document $document)
@@ -66,10 +74,20 @@ class DocumentController extends Controller
 		$fileName = str_replace(' ', '', $request->file('document')->getClientOriginalName());
 
         // move to temp location and give the filename a unique id 
+        
         $request->file('document')->move(storage_path() . '/uploads', $fileName);
+        $path = storage_path() . '/uploads/' . $fileName;
+
+        if(Storage::disk('s3_documents')->put($fileName, fopen($path, 'r+'))) { 
+            File::delete(storage_path('/uploads/' . $fileName)); // delete local temp file
+        }
+
+        // update user with avatar_path
+        $document->document_filename = $fileName;
+        $document->save();   
 
         // // dispatch job 
-        $this->dispatch(new UploadDocument($document, $fileName));
+        // $this->dispatch(new UploadDocument($document, $fileName));
 	}
 
 	private function removeDocument(Document $document)

@@ -99,7 +99,7 @@
 			},
 			filterResults() {
 				this.results = this.data.filter(user => {
-					// console.log(user.name);
+					// console.log('user.name', user.name);
 					// exclude those ids in excludeIds array.
 					return user.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 && !this.excludeIds.includes(user.id);
 				});

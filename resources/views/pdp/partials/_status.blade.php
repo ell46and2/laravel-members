@@ -10,29 +10,33 @@
             <div class="panel__main">
                 <ul class="icon-list">
                     @foreach(config('jcp.pdp_fields') as $page)
-                        <li class="icon-list__item{{ isCurrentPdpPage($page['field']) ? ' icon-list__item--has-emphasis' : '' }} ">
-                            <div class="icon-list__icon" aria-hidden="true" role="presentation">
+                        <li class="icon-list__item">
+                            <div class="icon-list__icon{{ $pdp->{$page['field']. '_page_complete'} ? ' icon-list__icon--has-emphasis' : '' }}" aria-hidden="true" role="presentation">
                                 @if($pdp->{$page['field']. '_page_complete'})
+
                                    @svg('tick-circle', 'icon')
                                 @else
                                     @svg('circle', 'icon') 
                                 @endif             
                             </div>
-                            <div class="icon-list__inner">
+                            <div class="icon-list__inner{{ isCurrentPdpPage($page['field']) ? ' icon-list__inner--has-emphasis' : '' }}">
                                 <a class="icon-list__link" href="{{ route(pdpFieldToLink($page['field']), $pdp) }}">{{ $page['label'] }}</a>
                             </div>
-                        </li>
-                        @if($pdp->status === 'In Progress' && $currentRole === 'jockey')
-                            <li class="icon-list__item">
-                                <div class="icon-list__icon" aria-hidden="true" role="presentation">
-                                    @svg('circle', 'icon') 
-                                </div>
-                            <div class="icon-list__inner">
-                                <a class="icon-list__link" href="{{ route('pdp.approve', $pdp) }}">Submit For Approval</a>
-                            </div>
-                        </li>
-                        @endif
+                        </li>                     
                     @endforeach
+
+                    @if($pdp->status === 'In Progress' && $currentRole === 'jockey')
+                        <li class="icon-list__item">
+                            <div class="icon-list__icon" 
+                                aria-hidden="true" 
+                                role="presentation">
+                                @svg('circle', 'icon') 
+                            </div>
+                        <div class="icon-list__inner{{ strpos(Request::url(), 'submit') !== false ? ' icon-list__inner--has-emphasis' : '' }}">
+                            <a class="icon-list__link" href="{{ route('pdp.submit', $pdp) }}">Submit For Approval</a>
+                        </div>
+                    </li>
+                    @endif
                 </ul>
             </div>
 
@@ -40,26 +44,39 @@
                 @php
                     $links = pdpNextPrevLinks(request()->path());
                     $nextLink = $links->next ? $links->next : null;
+                    $prevLink = $links->previous ? $links->previous : null;
 
                     if(!$nextLink && $currentRole === 'jockey' && $pdp->status === 'In Progress') {
                         $nextLink = 'pdp.submit';
                     }
+
+                    if(strpos(Request::url(), 'submit') !== false) {
+                        $nextLink = null;
+                        $prevLink = 'pdp.support-team';
+                    }
                 @endphp
                 <a 
                     class="panel__call-to-action" 
-                    href="{{ $links->previous ? route($links->previous, $pdp) : '#' }}"
-                    @if(!$links->previous)
+                    href="{{ $prevLink ? route($prevLink, $pdp) : '#' }}"
+                    @if(!$prevLink)
                         disabled
                     @endif
                 >
-                    @if($links->previous)
+                    @if($prevLink)
                         Previous
                     @endif
                 </a>
                 <a 
+                    @if(!$nextLink)
+                        disabled
+                    @endif
                     class="panel__call-to-action" 
                     href="{{ $nextLink ? route($nextLink, $pdp) : '#' }}"
-                >Next</a>
+                >
+                    @if($nextLink)
+                        Next
+                    @endif
+                </a>
             </div>
         </div>
     </div>

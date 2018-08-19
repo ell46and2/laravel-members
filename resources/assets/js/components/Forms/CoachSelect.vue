@@ -1,5 +1,26 @@
 <template>
-	<div class="media mt-4 mb-4" :id="user.id" @click.prevent="handleSelect">
+	<div class="col-md-3">
+		<div class="[ user-checkbox ]" :id="user.id" @click.prevent="handleSelect">
+	        <input 
+	        class="[ user-checkbox__input ] [ sr-only ]" 
+	        type="radio" 
+	        name="coach_id" 
+	        id="coach_id" 
+	        :value="user.id"
+	        :checked="selectedId && (user.id === selectedId)"
+	        />
+	        <label class="user-checkbox__label" for="coach_id">
+	            <div class="[ user-checkbox__avatar ] [ avatar ]">
+	                <div class="avatar__image" :style="`background-image:url('${user.avatar}');`" :alt="user.name"></div>
+	            </div>
+	            <span class="user-checkbox__name">{{ user.name }}
+	            </span>
+	        </label>
+	    </div>
+	</div>
+
+
+	<!-- <div class="media mt-4 mb-4" :id="user.id" @click.prevent="handleSelect">
 		<input type="radio" name="coach_id" id="coach_id" :value="user.id" v-model="selectedId">
 		<label 
 			for="coach_id"
@@ -10,10 +31,7 @@
 			<img class="mr-3" :src="user.avatar" :alt="user.name">
 			<p>{{ user.name }}</p>
 		</label>
-<!-- 		<div>
-			<a href="#" v-if="canRemove && selected">remove</a>
-		</div> -->
-	</div>
+	</div> -->
 </template>
 
 

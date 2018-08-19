@@ -16,6 +16,8 @@ class CoachController extends Controller
 {
     public function show(Coach $coach)
     {
+        $this->authorize('show', $coach);
+
         $jockeysResource = UserSelectResource::collection(Jockey::active()->with('role')->get());
 
     	if($this->currentRole === 'admin' || $this->currentUser->id === $coach->id) {
@@ -25,6 +27,23 @@ class CoachController extends Controller
 
     	   return view('coach.show', compact('coach', 'countries', 'counties', 'nationalities', 'jockeysResource'));
     	}
+
+        if($this->currentRole === 'jockey') {
+            $jockey = Jockey::findOrFail($this->currentUser->id);
+            // hours training for month and year
+            $trainingWithCoachMonth = $coach->trainingTimeWithJockeyThisMonth($jockey->id);
+            $trainingWithCoachYear = $coach->trainingTimeWithJockeyThisYear($jockey->id);
+            // last 5 recent activities
+            $lastFiveActivities = $jockey->activities()
+                ->with('location', 'type')
+                ->where('coach_id', $coach->id)
+                ->where('end', '<', now())
+                ->orderBy('end', 'desc')
+                ->take(5)
+                ->get();
+
+            return view('coach.show', compact('coach', 'jockeysResource', 'trainingWithCoachMonth', 'trainingWithCoachYear', 'lastFiveActivities'));
+        }
 
     	return view('coach.show', compact('coach', 'jockeysResource'));
     }

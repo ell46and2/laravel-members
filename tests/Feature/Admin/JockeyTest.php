@@ -40,4 +40,8 @@ class JockeyTest extends TestCase
     		$mail->hasTo($unapprovedJockey->email);
     	});
     }
+
+    /*
+     setting the jockey's api_id will turn any external RacingExcellence participants and any CrmJockeys with that api_id into the jcp Jockey.
+     */
 }

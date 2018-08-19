@@ -1,7 +1,7 @@
 .app {
     @extend %transition--slide;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         display: flex;
         min-height: 100vh;
     }
@@ -13,7 +13,7 @@
             transform: translate3d(#{ $nav-width-tablet }, 0, 0);
         }
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             transform: none;
         }
     }
@@ -25,7 +25,7 @@
             transform: translate3d(-#{ $nav-width-tablet }, 0, 0);
         }
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             transform: none;
         }
     }

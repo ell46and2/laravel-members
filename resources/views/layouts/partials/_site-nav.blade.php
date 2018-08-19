@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="site-nav__nav-item">
-                    <a class="site-nav__nav-link" href="">
+                    <a class="site-nav__nav-link" href="{{ urlAppendByRole() . '/activity/log?type=re' }}">
                         <span class="site-nav__nav-icon">
                             @svg('nav-racing-excellence', 'icon')
                         </span>
@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="site-nav__nav-item">
-                    <a class="site-nav__nav-link" href="">
+                    <a class="site-nav__nav-link" href="{{ route('documents.index') }}">
                         <span class="site-nav__nav-icon">
                             @svg('nav-documents', 'icon')
                         </span>

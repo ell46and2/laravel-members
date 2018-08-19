@@ -75,7 +75,7 @@
 			view() {
 				axios.put(`/notification/${this.notification.id}/dismiss`)
                	.then(() => {
-					window.location.href = '/' + this.notification.linkUrl;
+					window.location.href = this.notification.linkUrl;
 				}, () => {
                    // handle failer.
                	}); 

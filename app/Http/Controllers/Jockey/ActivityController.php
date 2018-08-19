@@ -18,7 +18,7 @@ class ActivityController extends Controller
 
 		$activityTypes = ActivityType::get();
 
-		$events = (new Collection($jockey->events($request)))->paginate(15);
+		$events = (new Collection($jockey->events($request)))->paginate(config('jcp.site.pagination'));
 
 		$coaches = $this->getAllCoachesWorkedWithJockey($jockey);
 

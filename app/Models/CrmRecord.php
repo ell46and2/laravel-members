@@ -15,8 +15,36 @@ class CrmRecord extends Model
 		return $this->morphTo();
 	}
 
-	public function attachment() // can only have one attachment
+    public function notifications()
     {
-        return $this->morphOne(Attachment::class, 'attachable');
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+	// public function attachment() // can only have one attachment
+ //    {
+ //        return $this->morphOne(Attachment::class, 'attachable');
+ //    }
+
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at->format('d/m/Y');
+    }
+
+    public function getFormattedReviewDateAttribute()
+    {
+        if($this->review_date) return $this->review_date->format('d/m/Y');
+            
+        return 'N/A';      
+    }
+
+    public function getExtensionAttribute()
+    {
+        $pos = strpos($this->document_filename, '.');
+        return substr($this->document_filename, $pos+1);
+    }
+
+    public function getDocument()
+    {  
+        return config('jcp.buckets.documents') . $this->document_filename;
     }
 }

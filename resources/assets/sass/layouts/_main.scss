@@ -3,7 +3,7 @@
     flex-direction: column;
     padding: 0 $spacer;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         flex: 1;
         margin-right: $notification-panel-toggle-width;
         margin-left: 300px;

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<form method="POST" action="{{ $activity->editRoute }}">
+<form method="POST" action="{{ $activity->updateRoute }}">
 	@csrf
 	@method('put')
 
@@ -31,7 +31,7 @@
 	                        <div class="[ icon-checkbox ]">
 	                            <input 
 	                            	class="[ icon-checkbox__input ] [ sr-only ]" 
-	                            	type="checkbox" 
+	                            	type="radio" 
 	                            	name="activity_type_id" 
 	                            	id="activity_type-{{ $activityType->id }}" 
 									value="{{ $activityType->id }}"
@@ -99,7 +99,7 @@
                     <div class="col">
                         <span class="text--color-blue">Select Duration</span>
                         <div class="form-group form-group--has-icon mt-1">
-                            <input class="form-control form-control--has-icon" type="text" name="duration" value="{{ old('duration, $activity->duration') }}" placeholder="Select Duration">
+                            <input class="form-control form-control--has-icon" type="text" name="duration" value="{{ old('duration', $activity->duration) }}" placeholder="Select Duration">
                             <span class="form-group__input-icon" aria-hidden="true" role="presentation">
                                 @svg( 'duration', 'icon')
                             </span>

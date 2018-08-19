@@ -21,7 +21,7 @@
         max-width: $notification-panel-width-tablet;
     }
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         left: calc(100% - #{ $notification-panel-toggle-width });
         right: 0;
         width: $notification-panel-width-desktop;
@@ -43,7 +43,7 @@
 
     &.is-active {
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             transform: translate3d(-#{ $notification-panel-width-desktop - $notification-panel-toggle-width } , 0, 0);
             box-shadow: -2px 0 8px 0 rgba(0,0,0,0.3);
         }
@@ -65,7 +65,7 @@
 
         display: none;
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             position: relative;
             display: block;
             width: $notification-panel-toggle-width;
@@ -163,7 +163,7 @@
         visibility: hidden;
         // has z-index
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             display: none;
         }
 
@@ -172,7 +172,7 @@
             visibility: visible;
             // has z-index
 
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
                 opacity: 1;
                 visibility: hidden;
                 // has z-index
@@ -185,7 +185,7 @@
 
             background: rgba($black, 0.8);
 
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
                 background: transparent;
             }
         }
@@ -215,7 +215,7 @@
             height: 100%;
         }
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             display: block;
             position: absolute;
             top: 22px;

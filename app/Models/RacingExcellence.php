@@ -199,7 +199,7 @@ class RacingExcellence extends Model
     {
         // if assigned coach send to results page - do we just redirect them from the controller?
         
-        return config('app.url') . "/racing-excellence/{$this->id}";
+        return "/racing-excellence/{$this->id}";
     }
 
     public function getInvoiceableGroupAttribute()

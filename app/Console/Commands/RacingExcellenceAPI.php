@@ -158,7 +158,7 @@ class RacingExcellenceAPI extends Command
     {
         $filteredRaces = $races->filter(function($race) {
             // NOTE: change to 3, 30 used for testing
-            return (Carbon::parse($race->raceDateTime) > now()->subDays(300)) &&
+            return (Carbon::parse($race->raceDateTime) > now()->subDays(30)) &&
             $race->resultsAvailable === 1;
             // return (Carbon::parse($race->raceDateTime) > now()->subDays(300));
                 

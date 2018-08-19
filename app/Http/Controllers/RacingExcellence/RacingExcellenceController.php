@@ -14,8 +14,7 @@ class RacingExcellenceController extends Controller
 {
     public function show(RacingExcellence $racingExcellence)
     {
-    	// NOTE: If assigned coach or RE redirect to the results page
-        
+    	// If assigned coach or RE redirect to the results page   
         if($this->currentUser->isAdmin() || $racingExcellence->coach_id === $this->currentUser->id) {
            return $this->showResults($racingExcellence);
         } 

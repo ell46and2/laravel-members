@@ -3,8 +3,8 @@
     action="{{ route('coach.update', $coach) }}"
     enctype="multipart/form-data"
 >
-@csrf
-@method('put')
+    @csrf
+    @method('put')
     
     <div class="panel__header">
         <h2 class="panel__heading">

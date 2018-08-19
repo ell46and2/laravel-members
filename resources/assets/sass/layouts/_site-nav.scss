@@ -18,7 +18,7 @@
         max-width: $nav-width-tablet;
     }
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         position: fixed;
         top: 0;
         left: 0;
@@ -52,7 +52,7 @@
         visibility: hidden;
         // has z-index
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             display: none;
         }
 
@@ -61,7 +61,7 @@
             visibility: visible;
             // has z-index
 
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
                 opacity: 1;
                 visibility: hidden;
                 // has z-index
@@ -74,7 +74,7 @@
 
             background: rgba($black, 0.8);
 
-            @include media-breakpoint-up(md) {
+            @include media-breakpoint-up(lg) {
                 background: transparent;
             }
         }

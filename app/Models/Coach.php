@@ -39,6 +39,7 @@ class Coach extends User
     {
         return $this->activities()
             ->where('start', '<', now())
+            ->where('start', '>', now()->subMonths(2))
             ->doesntHave('invoiceLine')
             ->count();
     }
@@ -57,6 +58,7 @@ class Coach extends User
     {
         return $this->racingExcellences()
             ->where('start', '<', now())
+            ->where('start', '>', now()->subMonths(2))
             ->doesntHave('invoiceLine')
             ->count();
     }
@@ -257,6 +259,28 @@ class Coach extends User
         return $res;
     }
 
+    // Look at refactoring this to combine with function above for month
+    public function trainingTimeWithJockeyThisYear($jockeyId)
+    {   
+        $activities = $this->activities()
+            ->with('jockeys')
+            ->whereBetween('end', [now()->startOfYear(), now()])
+            ->whereHas('jockeys', function($query) use ($jockeyId) {
+                $query->where('id', $jockeyId);
+            })
+            ->get();
+
+        $duration = $activities->sum(function($activity){
+            return floor($activity->duration / $activity->jockeys->count());
+        });
+
+        $res = new \stdClass();
+        $res->numActivities = $activities->count();
+        $res->duration = round($duration / 60, 2);
+
+        return $res;
+    }
+
     public function overallTrainingTimeThisMonth()
     {
         $duration = $this->activities()
@@ -305,7 +329,7 @@ class Coach extends User
             ->first();
 
         if(!$lastActivity) {
-            return 'blue';
+            return 'red';
         }
 
         if($lastActivity->start > now()->subWeeks(2)) {

@@ -222,7 +222,11 @@ class Jockey extends User
 
         if(!$licenceDate) return 4;
 
-        $end = $invoice->submitted->subMonth()->endOfMonth();
+        if($invoice->submitted) {
+            $end = $invoice->submitted->subMonth()->endOfMonth();
+        } else {
+            $end = now();
+        }
 
         if($licenceDate->day < 15) {
             $cutOff = $licenceDate->addMonths(2)->endOfMonth();
@@ -372,5 +376,20 @@ class Jockey extends User
         if(!$this->trainer_name) return '-';
 
         return $this->trainer_name;
+    }
+
+    public function getCrmTypeAttribute()
+    {
+        return 'jockey';
+    }
+
+    public function getCrmRecordCreateLinkAttribute()
+    {
+        return 'jets.crm.create';
+    }
+
+    public function getCrmRecordShowLinkAttribute()
+    {
+        return "/jets/crm/jockey/{$this->id}";
     }
 }

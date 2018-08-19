@@ -32,7 +32,7 @@ class NotifyJockeyApproved implements ShouldQueue
      */
     public function handle()
     {
-        $body = "Your pdp {$pdp->name} has been approved.";
+        $body = "Your pdp {$this->pdp->name} has been approved.";
 
         $this->pdp->notifications()->create([
             'user_id' => $this->pdp->jockey_id,

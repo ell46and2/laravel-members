@@ -4,7 +4,6 @@
 
 <div class="pt-1 pb-3 flow-vertical--1">
 	
-
 	<div class="flow-vertical--2">
 		<div class="panel">
 		    <div class="panel__inner">
@@ -17,7 +16,7 @@
 		                    <h2 class="profile-summary__greeting-primary">Hi {{ $jockey->full_name }},</h2>
 		                    <div class="profile-summary__greeting-secondary">Welcome back to your Jockey dashboard</div>
 		                    <div>
-		                        <a class="button button--primary" href="{{ route('jockey.profile.index') }}">View profile</a>
+		                        <a class="button button--primary" href="{{ route('jockey.show', $jockey) }}">View profile</a>
 		                    </div>
 		                </div>
 		            </div>
@@ -77,7 +76,7 @@
 		                </div>
 
 		                <div class="panel__main">
-		                    <table class="table">
+		                    <table class="table table--stacked-xxs table--stacked-xs table--stacked-sm table--stacked-md">
 		                        <thead>
 		                            <tr>
 		                                <th>Activity type</th>
@@ -92,12 +91,17 @@
 		                            @foreach($jockey->dashboardRecentActivities as $activity)	                            
 		                                <tr>
 		                                    <td>
-		                                        <a class="table__link" href="">{{ $activity->formattedType }}</a>
+		                                    	<div class="d-flex align-items-center">
+				                                    <span class="table__icon">
+				                                        @svg( $activity->icon, 'icon')
+				                                    </span>
+				                                    <a class="table__link" href="">{{ $activity->formattedType }}</a>
+				                                </div>
 		                                    </td>
-		                                    <td>{{ $activity->coach->full_name }}</td>
-		                                    <td>{{ $activity->formattedStartDayMonth }}</td>
-		                                    <td>{{ $activity->formattedStartTime }}</td>
-		                                    <td>{{ $activity->formattedLocation }}</td>
+		                                    <td aria-label="Coach">{{ $activity->coach->full_name }}</td>
+		                                    <td aria-label="Date">{{ $activity->formattedStartDayMonth }}</td>
+		                                    <td aria-label="Time">{{ $activity->formattedStartTime }}</td>
+		                                    <td aria-label="Location">{{ $activity->formattedLocation }}</td>
 		                                    <td class="text-right">
 		                                        <a class="button button--primary" href="{{ route('activity.show', $activity) }}">View</a>
 		                                    </td>
@@ -161,14 +165,6 @@
 			                @else
 			                	<p>No Skills Profile</p>
 		                    @endif
-		                    <div class="row">
-		                        <div class="col-8">
-		                            In <span class="heading--1">48</span> days you will need to complete a Skills Profile
-		                        </div>
-		                        <div class="col-4 text-right">
-		                            <button class="button button--primary" type="button">Complete</button>
-		                        </div>
-		                    </div>
 		                </div>
 
 		                <a class="panel__call-to-action" href="">View All Skills Profile</a>
@@ -176,7 +172,7 @@
 		        </div>
 		    </div>
 
-		    <div class="col-md-12 col-xl-4">        
+		    <div class="col-md-12 col-xl-4 [ flow-vertical--3 ]">        
 		        {{-- Panel - My Coaches --}}
 		        <div class="panel panel--is-stack">
 		            <div class="panel__inner">
@@ -216,7 +212,6 @@
 		                                <div class="users-list__stats">
 		                                    <div class="users-list__stats-item">
 		                                        <div class="users-list__stats-icon">
-		                                            {{-- {% include "svg/nav-my-coaches.svg" %} --}}
 		                                            @svg('nav-activity-log', 'icon')
 		                                        </div>
 		                                        <div class="users-list__stats-label">
@@ -241,6 +236,36 @@
 		                </div>
 
 		                <a class="panel__call-to-action" href="">View my coaches</a>
+		            </div>
+		        </div>
+
+		        <div class="panel panel--is-stack">
+		            <div class="panel__inner">
+		                <div class="panel__header">
+		                    <h2 class="panel__heading">
+		                        PDP
+		                    </h2>
+		                   {{--  <div class="panel__header-meta">
+		                        Last updated on 23/05/2018
+		                    </div> --}}
+		                </div>
+
+		                <div class="panel__main flow-vertical--3">
+		                    <div class="row">
+		                        <div class="col-12">
+		                            <img class="img-fluid" src="{{ asset('images/jets-img.jpg') }}" alt="JETS PDP">
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        @if($jockey->latestIncompletePdp()->count())
+		                        	<div class="col-6">
+			                            <a href="{{ route('pdp.personal-details', $jockey->latestIncompletePdp) }}" class="button button--primary" >Complete PDP</a>
+			                        </div>
+		                        @endif
+		                    </div>
+		                </div>
+
+		                <a class="panel__call-to-action" href="{{ route('pdp.jockey.list', $jockey) }}">View Your PDPs</a>
 		            </div>
 		        </div>
 		    </div>

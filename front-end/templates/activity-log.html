@@ -39,123 +39,50 @@
             <div class="panel__pre-header">
                 <div class="panel__pre-header-primary">
                     <form class="filter-bar" action="" method="">
-                        <div class="filter-bar__label">
-                            Filter by
-                        </div>
-
-                        <div class="filter-bar__filters">
-                            {# Filter 1 #}
-                            <div class="button-dropdown" data-module="button-dropdown">
-                                <button class="[ button button--trans-light ] [ button-dropdown__trigger ] [ filter-bar__trigger-button ] [ js-button-dropdown__trigger ]" type="button">
-                                    Select activity
-                                    <span class="button__icon button__icon--right" aria-hidden="true" role="presentation">
-                                        {% include "svg/angle-down.svg" %}
-                                    </span>
-                                </button>
-
-                                <div class="button-dropdown__overlay js-button-dropdown__overlay"></div>
-                                <div class="button-dropdown__dropdown js-button-dropdown__dropdown">
-                                    <ul class="button-dropdown__list" tabindex="-1">
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ornare Condimentum Mollis</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Cras Fusce Magna</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Amet Dapibus</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Inceptos Nullam Parturient</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Venenatis Porta Condimentum</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
-                                        </li>
-                                        <li class="button-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
-                                    </ul>
-                                </div>
-                                <input type="hidden" name="">
+                        <div class="filter-bar__filters-wrapper">
+                            <div class="filter-bar__label">
+                                Filter by
                             </div>
 
-                            {# Filter 2 #}
-                            <div class="button-dropdown" data-module="button-dropdown">
-                                <button class="[ button button--trans-light ] [ button-dropdown__trigger ] [ filter-bar__trigger-button ] [ js-button-dropdown__trigger ]" type="button">
-                                    Select jockey
-                                    <span class="button__icon button__icon--right" aria-hidden="true" role="presentation">
+                            <div class="filter-bar__filters">
+                                <select class="form-control form-control--trans-light custom-select">
+                                    <option selected>Select activity</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                                <div class="form-group form-group--has-icon">
+                                    <input class="form-control form-control--has-icon form-control--trans-light" type="text" name="" placeholder="Date from">
+                                    <span class="form-group__input-icon form-group__input-icon--sm" aria-hidden="true" role="presentation">
                                         {% include "svg/angle-down.svg" %}
                                     </span>
-                                </button>
-
-                                <div class="button-dropdown__overlay js-button-dropdown__overlay"></div>
-                                <div class="button-dropdown__dropdown js-button-dropdown__dropdown">
-                                    <ul class="button-dropdown__list" tabindex="-1">
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ornare Condimentum Mollis</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Bibendum Justo Adipiscing</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Fringilla Inceptos</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Dapibus Nibh Ullamcorper</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Cras Fusce Magna</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Ullamcorper Magna Venenatis</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Malesuada Ridiculus Egestas</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Mollis Amet Dapibus</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Vulputate Nibh Bibendum</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Inceptos Nullam Parturient</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Venenatis Porta Condimentum</button>
-                                        </li>
-                                        <li class="button-dropdown__item" tabindex="-1">
-                                            <button class="button-dropdown__button js-button-dropdown__button" tabindex="0" type="button">Aenean Sollicitudin Condimentum</button>
-                                        </li>
-                                        <li class="button-dropdown__bottom-grad" aria-hidden="true" role="presentation"></li>
-                                    </ul>
                                 </div>
-                                <input type="hidden" name="">
+
+                                <div class="form-group form-group--has-icon">
+                                    <input class="form-control form-control--has-icon form-control--trans-light" type="text" name="" placeholder="Date to">
+                                    <span class="form-group__input-icon form-group__input-icon--sm" aria-hidden="true" role="presentation">
+                                        {% include "svg/angle-down.svg" %}
+                                    </span>
+                                </div>
+
+                                <select class="form-control form-control--trans-light custom-select">
+                                    <option selected>Select jockey</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
                             </div>
                         </div>
 
-                        <button class="[ filter-bar__filter-button ] [ button button--primary button--white ]" type="submit">
-                            Filter
-                        </button>
+                        <div class="filter-bar__actions">
+                            <button class="[ filter-bar__filter-button ] [ button button--text-light ]" type="reset">
+                                Reset
+                            </button>
+                            <button class="[ filter-bar__filter-button ] [ button button--primary button--white ]" type="submit">
+                                Filter
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -166,16 +93,26 @@
             </div>
 
             <div class="panel__main">
-                <table class="table table-hover">
+                <table class="table table-hover table--stacked-xxs table--stacked-xs table--stacked-sm table--stacked-lg">
                     <thead>
                         <tr>
                             <th>Activity Type</th>
                             <th>Jockey</th>
-                            <th>Date</th>
+                            <th class="table__sortable-column">
+                                Date
+                                <button class="table__sort-button is-up" type="button">
+                                    <span class="sr-only">Toggle sort direction</span>
+                                    <span class="table__sort-button-icon table__sort-button-icon--up">
+                                        {% include 'svg/angle-up.svg' %}
+                                    </span>
+                                    <span class="table__sort-button-icon table__sort-button-icon--down">
+                                        {% include 'svg/angle-down.svg' %}
+                                    </span>
+                                </button>
+                            </th>
                             <th>Time</th>
                             <th>Location</th>
                             <th>Comments</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -189,11 +126,11 @@
                                         <a class="table__link" href="">{{ item.activity_type }}</a>
                                     </div>
                                 </td>
-                                <td>{{ item.jockey_name }}</td>
-                                <td>{{ item.date }}</td>
-                                <td>{{ item.time }}</td>
-                                <td>{{ item.location }}</td>
-                                <td>
+                                <td aria-label="Jockey">{{ item.jockey_name }}</td>
+                                <td aria-label="Date">{{ item.date }}</td>
+                                <td aria-label="Time">{{ item.time }}</td>
+                                <td aria-label="Location">{{ item.location }}</td>
+                                <td aria-label="Comments">
                                     <div class="icon-notify">
                                         {% include "svg/conversation.svg" %}
                                         <div class="icon-notify__badges">
@@ -202,12 +139,10 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="table__icon-column">
+                                <td class="table__actions">
                                     <a class="table__icon-button" href="">
                                         {% include "svg/edit.svg" %}
                                     </a>
-                                </td>
-                                <td class="text-right">
                                     <a class="button button--primary" href="">View</a>
                                 </td>
                             </tr>

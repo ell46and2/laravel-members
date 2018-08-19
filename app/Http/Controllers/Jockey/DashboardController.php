@@ -21,7 +21,8 @@ class DashboardController extends Controller
     		'dashboardRecentActivities.location',
             'dashboardRecentActivities.type',
     		'racingExcellences',
-            'lastSkillProfile'
+            'lastSkillProfile',
+            'latestIncompletePdp',
     	])
     	->findOrFail($this->currentUser->id);
 

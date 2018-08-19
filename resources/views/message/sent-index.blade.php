@@ -43,30 +43,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($messages as $message)
+                    @if($messages->count())
+                        @foreach($messages as $message)
+                            <tr>
+                                <td>
+                                    <a class="table__link" href="{{ route('messages.show', $message) }}">{{ $message->subject }}</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if($message->recipients->count() === 1)
+                                            <div class="[ avatar avatar--blue ] [ table__avatar ]">
+                                                <div class="avatar__image" style="background-image:url({{ $message->recipients->first()->getAvatar() }});"></div>
+                                            </div>
+                                            <a class="table__link" href="">{{ $message->recipients->first()->fullName }}</a>
+                                            @else
+                                                @svg( 'group', 'icon') {{ $message->recipients->count()  }} users
+                                            @endif
+                                    </div>
+                                </td>
+                                <td>{{ $message->excerpt }}</td>
+                                <td>{{ $message->created_at->format('l jS F') }}</td>
+                                <td class="text-right">
+                                    <a class="button button--primary" href="{{ route('messages.show', $message) }}">View</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td>
-                                <a class="table__link" href="{{ route('messages.show', $message) }}">{{ $message->subject }}</a>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    @if($message->recipients->count() === 1)
-                                        <div class="[ avatar avatar--blue ] [ table__avatar ]">
-                                            <div class="avatar__image" style="background-image:url({{ $message->recipients->first()->getAvatar() }});"></div>
-                                        </div>
-                                        <a class="table__link" href="">{{ $message->recipients->first()->fullName }}</a>
-                                        @else
-                                            @svg( 'group', 'icon') {{ $message->recipients->count()  }} users
-                                        @endif
-                                </div>
-                            </td>
-                            <td>{{ $message->excerpt }}</td>
-                            <td>{{ $message->created_at->format('l jS F') }}</td>
-                            <td class="text-right">
-                                <a class="button button--primary" href="{{ route('messages.show', $message) }}">View</a>
+                            <td class="text-center" colspan="5">
+                                No messages
                             </td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
 

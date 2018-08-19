@@ -14,7 +14,7 @@
         		<form method="POST" action="{{ route('jockey.set-api', $jockey) }}">
         			{{ csrf_field() }}
 		            <div class="form-group flow-vertical--1">
-		                <label for="api_id" class="text--color-blue text--size-sm">Racing Post URL</label>
+		                <label for="api_id" class="text--color-blue text--size-sm">Racing Post ID</label>
 		                @include('form.partials._input', [
 				            'field' => 'api_id',
 				            'type' => 'text',

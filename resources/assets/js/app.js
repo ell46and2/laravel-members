@@ -27,6 +27,14 @@ Vue.component('upload-document', require('./components/Documents/UploadDocument.
 
 Vue.component('avatar-upload', require('./components/Avatar/AvatarUpload.vue'));
 
+Vue.component('jockey-select', require('./components/Pdp/JockeySelect.vue'));
+
+Vue.component('crm-jockey-search', require('./components/Crm/CrmJockeySearch.vue'));
+
+Vue.component('crm-record-create', require('./components/Crm/CrmRecordCreate.vue'));
+
+Vue.component('profile-search', require('./components/Profile/ProfileSearch.vue'));
+
 /*
     Notifications
 */

@@ -1,10 +1,35 @@
 .custom-select {
     border-width: 0;
-    padding: $input-padding-y calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding }) $input-padding-y $input-padding-x;
+    padding: $input-padding-y
+             calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding })
+             $input-padding-y
+             $input-padding-x;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNS45MiAxNS45MiI+CiAgPHBhdGggZmlsbD0iIzM0M2E0MCIgZD0iTTggOS43MWw2LTUuOTNhMSAxIDAgMCAxIDEuNDIgMGwuMjkuMzNhMSAxIDAgMCAxIDAgMS40MUw5IDEyLjIyYTEgMSAwIDAgMS0xIC4yNSAxIDEgMCAwIDEtMS0uMjVMLjI1IDUuNTNhMSAxIDAgMCAxIDAtMS40MmwuMzMtLjMzQTEgMSAwIDAgMSAyIDMuNzd6Ii8+Cjwvc3ZnPgo=');
+    background-position: calc(100% - 10px) center;
+    background-size: 11px;
 
     &:focus {
         border-width: 2px;
-        padding: calc(#{ $input-padding-y } - 2px) calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding }) calc(#{ $input-padding-y } - 2px) calc(#{ $input-padding-x } - 2px);
+        padding: calc(#{ $input-padding-y } - 2px)
+                 calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding })
+                 calc(#{ $input-padding-y } - 2px)
+                 calc(#{ $input-padding-x } - 2px);
         background-position: right calc(#{ $custom-select-padding-x } - 2px) center;
+    }
+
+    &.form-control--trans-light {
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNS45MiAxNS45MiI+CiAgPHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTggOS43MWw2LTUuOTNhMSAxIDAgMCAxIDEuNDIgMGwuMjkuMzNhMSAxIDAgMCAxIDAgMS40MUw5IDEyLjIyYTEgMSAwIDAgMS0xIC4yNSAxIDEgMCAwIDEtMS0uMjVMLjI1IDUuNTNhMSAxIDAgMCAxIDAtMS40MmwuMzMtLjMzQTEgMSAwIDAgMSAyIDMuNzd6Ii8+Cjwvc3ZnPgo=');
+        background-position: calc(100% - 10px) center;
+        background-size: 11px;
+
+        &:focus {
+            background-color: transparent;
+            padding: $input-padding-y
+                     calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding })
+                     $input-padding-y
+                     $input-padding-x;
+            border-width: 0;
+            color: $white;
+        }
     }
 }

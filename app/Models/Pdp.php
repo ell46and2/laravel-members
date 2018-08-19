@@ -53,6 +53,11 @@ class Pdp extends Model
     	return $this->belongsTo(Jockey::class);
     }
 
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
     /*
         Attributes    
     */
@@ -113,13 +118,27 @@ class Pdp extends Model
 
     public function getDaysTillPerformanceReviewAttribute()
     {
-        $threeMonths = now()->diffInDays($this->submitted->addMonths(3));
-        if($threeMonths > 0) return $threeMonths;
+        if($this->submitted) {
+            $threeMonths = now()->diffInDays($this->submitted->addMonths(3));
+            if($threeMonths > 0) return $threeMonths;
 
-        $sixMonths = now()->diffInDays($this->submitted->addMonths(6));
-        if($sixMonths > 0) return $sixMonths;
+            $sixMonths = now()->diffInDays($this->submitted->addMonths(6));
+            if($sixMonths > 0) return $sixMonths;
 
-        $twelveMonths = now()->diffInDays($this->submitted->addMonths(12));
-        if($twelveMonths > 0) return $twelveMonths;
+            $twelveMonths = now()->diffInDays($this->submitted->addMonths(12));
+            if($twelveMonths > 0) return $twelveMonths;
+        }      
+    }
+
+    public function getDaysTillNextReviewAttribute()
+    {
+        if(!$this->submitted) return;
+
+        return now()->diffInDays($this->submitted->addMonths(12));
+    }
+
+    public function getNotificationLinkAttribute()
+    {
+        return route('pdp.personal-details', $this);
     }
 }

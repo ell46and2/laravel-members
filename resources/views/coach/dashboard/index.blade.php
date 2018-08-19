@@ -74,7 +74,7 @@
 	                    </div>
 
 	                    <div class="panel__main">
-	                        <table class="table">
+	                        <table class="table table--stacked-xxs table--stacked-xs table--stacked-sm">
 	                            <thead>
 	                                <tr>
 	                                    <th>Activity type</th>
@@ -97,12 +97,12 @@
 				                                    <a class="table__link" href="">{{ $activity->formattedType }}</a>
 				                                </div>
 	                                        </td>
-	                                        <td>{{ $activity->formattedJockeyOrGroup }}</td>
-	                                        <td>{{ $activity->formattedStartDayMonth }}</td>
-	                                        <td>{{ $activity->formattedStartTime }}</td>
-	                                        <td>{{ $activity->formattedLocation }}</td>
+	                                        <td aria-label="Jockey">{{ $activity->formattedJockeyOrGroup }}</td>
+	                                        <td aria-label="Date">{{ $activity->formattedStartDayMonth }}</td>
+	                                        <td aria-label="Time">{{ $activity->formattedStartTime }}</td>
+	                                        <td aria-label="Location">{{ $activity->formattedLocation }}</td>
 	                                        <td class="table__icon-column">
-                                                <a class="table__icon-button" href="{{ route('coach.activity.edit', $activity) }}">
+                                                <a class="table__icon-button" href="{{ route('activity.edit', $activity) }}">
                                                     @svg( 'edit', 'icon')
                                                 </a>
                                             </td>
@@ -148,7 +148,7 @@
 	                                            </div>
 	                                            @if($latestOpenInvoice)
 	                                            	<div class="text-right">
-		                                                <a class="button button--primary" href="{{ route('invoice.add-lines', $latestOpenInvoice) }}">View</a>
+		                                                <a class="button button--primary" href="{{ route('invoice.add', $latestOpenInvoice) }}">View</a>
 		                                            </div>
 	                                            @endif   
 	                                        </div>
@@ -168,7 +168,7 @@
 	                                            </div>
 	                                            @if($latestOpenInvoice)
 	                                            	<div class="text-right">
-		                                                <a class="button button--primary" href="{{ route('invoice.add-lines', $latestOpenInvoice) }}">View</a>
+		                                                <a class="button button--primary" href="{{ route('invoice.add', $latestOpenInvoice) }}">View</a>
 		                                            </div>
 	                                            @endif
 	                                        </div>
@@ -202,10 +202,10 @@
 	                            @if($lastInvoice)
 	                            	<div class="invoices-summary__last-invoice">
 		                                <span>
-		                                    Your last invoice for {{ $lastInvoice->invoicePeriodMonthSubmitted }} was <span class="[ heading--1 ] [ text--color-blue-dark ]">&pound;{{ $lastInvoice->overallValue }}</span> <span class="text--size-lg text--color-blue-dark">{{ $lastInvoice->formattedStatus }}</span>
+		                                    Your last invoice for {{ $lastInvoice->invoicePeriodMonthSubmitted }} was <span class="[ heading--1 ] [ text--color-blue-dark ]">&pound;{{ $lastInvoice->overallValue }}</span>{{--  <span class="text--size-lg text--color-blue-dark">{{ $lastInvoice->formattedStatus }}</span> --}}
 		                                </span>
 		                                <span>
-		                                    Submitted on <span class="text--size-lg text--color-blue-dark">{{ $lastInvoice->submittedDateShort }}</span>
+		                                    {{ $lastInvoice->formattedStatus }} on <span class="text--size-lg text--color-blue-dark">{{ $lastInvoice->submittedDateShort }}</span>
 		                                </span>
 		                                <span>
 		                                    Invoice number <span class="text--size-lg text--color-blue-dark">{{ $lastInvoice->id }}</span>

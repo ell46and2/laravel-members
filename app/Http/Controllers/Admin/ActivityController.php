@@ -16,13 +16,32 @@ use App\Jobs\Activity\NotifyJockeyRemovedFromActivity;
 use App\Models\Activity;
 use App\Models\ActivityLocation;
 use App\Models\ActivityType;
+use App\Models\Admin;
 use App\Models\Coach;
+use App\Models\Jockey;
+use App\Utilities\Collection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
+    public function index(Request $request)
+    {
+        $admin = Admin::find($this->currentUser->id);
+
+        $events = (new Collection($admin->events($request)))->paginate(config('jcp.site.pagination'));
+
+        $activityTypes = ActivityType::get();
+
+        $jockeys = Jockey::all();
+
+        $coaches = Coach::all();
+
+        return view('admin.activitylist.index', compact('events', 'jockeys', 'coaches', 'activityTypes'));
+    }
+
+
     public function singleCreate()
     {
     	return $this->create();
@@ -110,96 +129,8 @@ class ActivityController extends Controller
         return view('admin.activity.edit', compact('activity', 'coachesResource', 'activityTypes', 'locations'));
     }
 
-    public function singleUpdate(OneToOneUpdatePutFormRequest $request, Activity $activity)
-    {
-        $this->authorize('update', $activity);
-
-        $previous = clone $activity;
-
-        $activity->update([
-            'coach_id' => $request->coach_id,
-            'activity_type_id' => $request->activity_type_id,
-            'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
-            'duration' => $request->duration ? $request->duration : null,
-            'location_id' => $request->location_id,
-            'location_name' => $request->location_name
-        ]);
-
-        if($activity->start > Carbon::now() && $this->typeOrStartOrLocationChanged($previous, $activity)) {
-            $this->dispatch(new NotifyJockeyAmendedActivity($activity));
-        }
-        
-        $this->dispatch(new NotifyCoachAmendedActivity($activity));
-
-        return redirect()->route('activity.show', $activity);
-    }
-
-    public function groupUpdate(Request $request, Activity $activity) // Add form request
-    {
-        $this->authorize('update', $activity);
-
-        $previous = clone $activity;
-
-        $activity->update([
-            'coach_id' => $request->coach_id,
-            'activity_type_id' => $request->activity_type_id,
-            'start' => Carbon::createFromFormat('d/m/Y H:i',"{$request->start_date} {$request->start_time}"),
-            'duration' => $request->duration ? $request->duration : null,
-            'location_id' => $request->location_id,
-            'location_name' => $request->location_name
-        ]);
-
-        $this->updateActivitysJockeys($activity);
-
-        if($activity->start > Carbon::now() && $this->typeOrStartOrLocationChanged($previous, $activity)) {
-            $this->dispatch(new NotifyJockeyAmendedActivity($activity));
-        }
-
-        $this->dispatch(new NotifyCoachAmendedActivity($activity));
-
-        return redirect()->route('activity.show', $activity);
-    }
-
     public function getCoachesJockeys(Coach $coach)
     {
     	return UserSelectResource::collection($coach->jockeys);
-    }
-
-    // Move to trait
-    private function typeOrStartOrLocationChanged(Activity $previous, Activity $activity)
-    {
-        // dd($previous->activity_type_id != $activity->activity_type_id);
-        return $previous->start != $activity->start ||
-            $previous->activity_type_id != $activity->activity_type_id ||
-            $previous->location_id != $activity->location_id ||
-            $previous->location_name != $activity->location_name; 
-    }
-
-    // Move to trait
-    private function updateActivitysJockeys(Activity $activity)
-    {
-        $currentJockeys = $activity->jockeys;
-        $requestJockeys = collect(array_keys(request()->jockeys));
-        
-        // remove
-        foreach ($currentJockeys as $jockey) {
-            if(!$requestJockeys->contains($jockey->id)) {
-                $activity->removeJockey($jockey);
-
-                // notify jockey removed
-                $this->dispatch(new NotifyJockeyRemovedFromActivity($activity, $jockey));
-            }
-        }
-
-        // add
-        $currentJockeyIds = $currentJockeys->pluck('id');
-        foreach ($requestJockeys as $id) {
-            if(!$currentJockeyIds->contains($id)) {
-                $activity->addJockeyById($id);
-
-                // notify jockey added
-               $this->dispatch(new NotifyJockeyAddedToActivity($activity, $id));
-            }
-        }
     }
 }

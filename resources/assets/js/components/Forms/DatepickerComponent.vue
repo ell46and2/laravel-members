@@ -5,7 +5,7 @@
 		:placeholder="placeholder"
 		:format="format"
 		:value="date"
-		input-class="form-control form-control--has-icon mt-1"
+		:input-class="inputClasses"
 		></datepicker>
 		<span class="form-group__input-icon" aria-hidden="true" role="presentation">
             <!-- {% include "svg/calendar.svg" %} -->
@@ -44,6 +44,10 @@
 			format: {
 				required: false,
 				default: 'dd/MM/yyyy'
+			},
+			overwriteClasses: {
+				required: false,
+				type: String
 			}
 		},
 		mounted() {
@@ -68,6 +72,13 @@
 					this.date = new Date(this.old.split('/').reverse().join('/'));
 				}
 				
+			}
+		},
+		computed: {
+			inputClasses() {
+				if(this.overwriteClasses) return this.overwriteClasses;
+
+				return 'form-control form-control--has-icon mt-1';
 			}
 		}
 
@@ -94,7 +105,7 @@
 	color: #1E70B7;
 }
 .cell.selected {
-	color: white;
+	color: white !important;
 	background: #1E70B7 !important;
 	border-radius: 4px;
 }
@@ -105,5 +116,8 @@
 	border-radius: 4px;
 	background: #1E70B7 !important;
 	color: white;
+}
+.cell.day, .cell.month, .cell.year {
+	color: #6f6f6f;
 }
 </style>

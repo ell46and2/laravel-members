@@ -1,6 +1,6 @@
 .form-control {
     position: relative;
-    box-shadow: inset 0 0 6px 0 rgba($black, 0.10) !important;
+    box-shadow: inset 0 0 6px 0 rgba($black, 0.10);
 
     &:focus,
     &.is-valid,
@@ -27,7 +27,7 @@
     }
 
     &--display-as-text {
-        box-shadow: none !important;
+        box-shadow: none;
         color: $blue--dark;
         padding: 0;
         height: auto;
@@ -48,6 +48,40 @@
 
         &:-ms-input-placeholder {
             opacity: 0;
+        }
+    }
+
+    &--trans-light {
+        background-color: transparent;
+        color: $white;
+        box-shadow: none;
+        border-width: 0;
+
+        @include placeholder($white);
+
+        & ~ .form-group__input-icon {
+
+            .icon {
+                fill: $white;
+            }
+        }
+
+        &:focus {
+            background-color: transparent;
+            padding: $input-padding-y
+                     calc(#{ $input-padding-x } + #{ $custom-select-indicator-padding })
+                     $input-padding-y
+                     $input-padding-x;
+            border-width: 0;
+            box-shadow: none;
+            color: $white;
+
+            & ~ .form-group__input-icon {
+
+                .icon {
+                    fill: $white !important;
+                }
+            }
         }
     }
 }

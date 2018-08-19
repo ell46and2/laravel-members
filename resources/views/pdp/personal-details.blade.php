@@ -16,7 +16,7 @@
             <div class="panel__header">
                 <h2 class="panel__heading">
                     Personal Details
-                    <div class="text--color-base text--size-base">Enter your personal information</div>
+                    {{-- <div class="text--color-base text--size-base">Enter your personal information</div> --}}
                 </h2>
             </div>
 

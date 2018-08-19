@@ -8,32 +8,13 @@
                 <h1 class="[ heading--1 ] [ mb-1 ]">JETS - PDP</h1>
                 JETS Personal Development Plan
             </div>
-
-			@php
-
-			@endphp
-			@if($lastSubmitted)
-				<div class="panel__alert panel__alert--has-icon">
-	                <div>
-	                     @svg('info-circle', 'icon')
-	                    Name, in {{ $lastSubmitted->daysTillPerformanceReview }} days you have performance goals to review
-	                </div>
-	                <div class="alert__buttons">
-	                    <a class="button button--white" href="{{ route('pdp.performance-goals', $lastSubmitted) }}">View My Recent Goals</a>
-	                </div>
-	            </div>
-			@endif
-            
         </div>
     </div>
 
+    <jockey-select
+        resource="{{ json_encode($jockeysResource) }}"
+    ></jockey-select>
 
-	@if(!$currentPdp)
-		<form method="POST" action="{{ route('pdp.create', $jockey) }}">
-			{{ csrf_field() }}
-			<button class="button button--primary button--block" type="submit">Create a{{ $previousPdps->count() ? ' Continuation' : '' }} PDP</button>
-		</form>
-	@endif
 
 	<div class="panel">
         <div class="panel__inner">
@@ -47,35 +28,33 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th>Jockey</th>
                             <th>PDP Name</th>
                             <th>Status</th>
                             <th>Completed Date</th>
                             <th>Last Modified</th>
-                            <th>Goals Achived</th>
+                            <th>Next Review</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($previousPdps as $pdp)
+                        @foreach($pdps as $pdp)
                             <tr>
-                                <td><a class="table__link" href="">{{ $pdp->name }}</a></td>
+                                <td>{{ $pdp->jockey->full_name }}</td>
+                                <td>{{ $pdp->name }}</td>
                                 <td>{{ $pdp->status }}</td>
                                 <td>{{ $pdp->formattedSubmitted }}</td>
                                 <td>{{ $pdp->formattedUpdatedAt }}</td>
-                                <td>{{ $pdp->goalsAchieved }}</td>
+                                <td>{{ $pdp->daysTillPerformanceReview }}</td>
                                 <td class="text-right">
-                                    @if(!$pdp->submitted)
-										<a href="{{ route('pdp.personal-details', $pdp) }}" class="button button--primary">Update</a>
-									@else
-										<a href="{{ route('pdp.personal-details', $pdp) }}" class="button button--primary">View</a>
-									@endif
+									<a href="{{ route('pdp.personal-details', $pdp) }}" class="button button--primary">View</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                {{ $previousPdps->links() }}
+                {{ $pdps->links() }}
 
                 {{-- <nav aria-label="Table Pagination" class="mt-2">
                     <ul class="pagination justify-content-center">

@@ -1,23 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 @section('content')
 
+@component('pdp.components._pdp', compact('pdp', 'jockey'))
 
-<div class="container">
+<div class="panel">
+    <div class="panel__inner">
 
-	<h4>Send For Approval</h4>
-
-	<form method="POST" action="{{ route('pdp.submit.store', $pdp) }}">
-        @csrf
-        
-        <div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4">
-                <button type="submit" class="btn btn-primary">
-                    Send For Approval
-                </button>
-            </div>
+        <div class="panel__header">
+            <h2 class="panel__heading">
+                  Send for Review
+                  <div class="text--color-base text--size-base">Your PDP will be reviewed by a member of JETS</div>
+            </h2>
         </div>
-    </form>
+        
+        <div class="panel__main">
+        	<form method="POST" action="{{ route('pdp.submit.store', $pdp) }}">
+                @csrf
+                
+                <button type="submit" class="button button--primary button--block mt-3">
+                    Send
+                </button>             
+            </form>
+        </div>
+    </div>
 </div>
+
+@endcomponent
 
 @endsection

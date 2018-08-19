@@ -944,6 +944,23 @@
     </div>
 
     {####################################
+     Form: Select transparent light
+    #####################################}
+    <div class="components__component components__component--blue-bg">
+        <h2 class="components__component-heading">Form: Select</h2>
+        <div class="components__component-main">
+            {# START #}
+            <select class="form-control custom-select custom-select--trans-light">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+            {# END #}
+        </div>
+    </div>
+
+    {####################################
      Form: Textarea
     #####################################}
     <div class="components__component">
@@ -1362,7 +1379,7 @@
         <div class="components__component-main">
             <div class="row row--grid">
                 {% for item in content.icon_checkboxes %}
-                    <div class="col-md-3">
+                    <div class="col-xs-6 col-md-4 col-xl-3">
                         {# START #}
                         <div class="icon-checkbox">
                             <input class="[ icon-checkbox__input ] [ sr-only ]" type="checkbox" name="icon-checkboxes" id="icon-checkbox-{{ loop.index }}">
@@ -1388,7 +1405,7 @@
         <div class="components__component-main">
             <div class="row row--grid">
                 {% for item in content.icon_checkboxes %}
-                    <div class="col-md-3">
+                    <div class="col-xs-6 col-md-4 col-xl-3">
                         {# START #}
                         <div class="icon-radio">
                             <input class="[ icon-radio__input ] [ sr-only ]" type="radio" name="icon-radios" id="icon-radio-{{ loop.index }}">
@@ -1757,7 +1774,9 @@
 
                     <div class="panel__alert panel__alert--has-icon">
                         <div>
-                            {% include "svg/info-circle.svg" %}
+                            <div class="d-none d-md-inline-block">
+                                {% include "svg/info-circle.svg" %}
+                            </div>
                             George, you have completed 5% of this PDP
                         </div>
                     </div>
@@ -1791,10 +1810,12 @@
 
                     <div class="panel__alert panel__alert--has-icon">
                         <div>
-                            {% include "svg/info-circle.svg" %}
+                            <div class="d-none d-md-inline-block">
+                                {% include "svg/info-circle.svg" %}
+                            </div>
                             George, you have completed 5% of this PDP
                         </div>
-                        <div>
+                        <div class="flex-shrink-0 mt-2 mt-md-0">
                             <a class="button button--white" href="">View messages</a>
                         </div>
                     </div>
@@ -1939,16 +1960,38 @@
         <h2 class="components__component-heading">Table</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table table-hover">
+            <table class="table table-hover table--stacked-md">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Activity type</th>
-                        <th>Coach</th>
-                        <th>Date</th>
+                        <th>
+                            <div class="table__sortable-column">
+                                Coach
+                                <button class="table__sort-button is-down" type="button">
+                                    <span class="sr-only">Toggle sort direction</span>
+                                    <span class="table__sort-button-icon table__sort-button-icon--up">
+                                        {% include 'svg/angle-up.svg' %}
+                                    </span>
+                                    <span class="table__sort-button-icon table__sort-button-icon--down">
+                                        {% include 'svg/angle-down.svg' %}
+                                    </span>
+                                </button>
+                            </div>
+                        </th>
+                        <th class="table__sortable-column">
+                            Date
+                            <button class="table__sort-button is-up" type="button">
+                                <span class="sr-only">Toggle sort direction</span>
+                                <span class="table__sort-button-icon table__sort-button-icon--up">
+                                    {% include 'svg/angle-up.svg' %}
+                                </span>
+                                <span class="table__sort-button-icon table__sort-button-icon--down">
+                                    {% include 'svg/angle-down.svg' %}
+                                </span>
+                            </button>
+                        </th>
                         <th>Time</th>
                         <th>Location</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -1956,25 +1999,25 @@
                     {% for item in content.recent_activities %}
                         <tr>
                             <td class="table__checkbox-column">
-                                <div class="[ custom-control custom-checkbox ] [ table__checkbox ]">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ loop.index }}">
-                                    <label class="custom-control-label" for="checkbox-{{ loop.index }}"></label>
+                                <div class="d-flex">
+                                    <div class="[ custom-control custom-checkbox ] [ table__checkbox ]">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox-{{ loop.index }}">
+                                        <label class="custom-control-label" for="checkbox-{{ loop.index }}"></label>
+                                    </div>
+                                    <a class="table__link" href="">{{ item.activity_type }}</a>
                                 </div>
                             </td>
+                            <td aria-label="Coach">{{ item.coach }}</td>
+                            <td aria-label="Date">{{ item.date }}</td>
+                            <td aria-label="Time">{{ item.time }}</td>
+                            <td aria-label="Location">{{ item.location }}</td>
                             <td>
-                                <a class="table__link" href="">{{ item.activity_type }}</a>
-                            </td>
-                            <td>{{ item.coach }}</td>
-                            <td>{{ item.date }}</td>
-                            <td>{{ item.time }}</td>
-                            <td>{{ item.location }}</td>
-                            <td class="table__icon-column">
-                                <a class="table__icon-button" href="">
-                                    {% include "svg/edit.svg" %}
-                                </a>
-                            </td>
-                            <td class="text-right">
-                                <a class="button button--primary" href="">View</a>
+                                <div class="table__actions">
+                                    <a class="table__icon-button" href="">
+                                        {% include "svg/edit.svg" %}
+                                    </a>
+                                    <a class="button button--primary" href="">View</a>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -1991,7 +2034,7 @@
         <h2 class="components__component-heading">Table (with avatar)</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table table-hover">
+            <table class="table table-hover table--stacked-md">
                 <thead>
                     <tr>
                         <th>Activity type</th>
@@ -1999,7 +2042,6 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>Location</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -2014,16 +2056,14 @@
                                     <a class="table__link" href="">{{ item.activity_type }}</a>
                                 </div>
                             </td>
-                            <td>{{ item.coach }}</td>
-                            <td>{{ item.date }}</td>
-                            <td>{{ item.time }}</td>
-                            <td>{{ item.location }}</td>
-                            <td class="table__icon-column">
+                            <td aria-label="Coach">{{ item.coach }}</td>
+                            <td aria-label="Date">{{ item.date }}</td>
+                            <td aria-label="Time">{{ item.time }}</td>
+                            <td aria-label="Location">{{ item.location }}</td>
+                            <td class="table__actions">
                                 <a class="table__icon-button" href="">
                                     {% include "svg/edit.svg" %}
                                 </a>
-                            </td>
-                            <td class="text-right">
                                 <a class="button button--primary" href="">View</a>
                             </td>
                         </tr>
@@ -2041,7 +2081,7 @@
         <h2 class="components__component-heading">Results table</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table table-hover">
+            <table class="table table-hover table--stacked-md">
                 <thead>
                     <tr>
                         <th></th>
@@ -2074,7 +2114,7 @@
                                         </span>
                                     </span>
                                     {% if item.position in ["1", "2", "3", "4"] %}
-                                        <span class="table__icon
+                                        <span class="table__icon table__icon--rosette
                                             {% if item.position|last == "1" %}
                                                 table__icon--gold
                                             {% elif item.position|last == "2" %}
@@ -2088,13 +2128,13 @@
                                     {% endif %}
                                 </div>
                             </td>
-                            <td><a class="table__link" href="">{{ item.jockey }}</a></td>
-                            <td>{% if item.place_points == undefined %}-{% else %}{{ item.place_points }}pts{% endif %}</td>
-                            <td>{% if item.presentation_points == undefined %}-{% else %}{{ item.presentation_points }}pts{% endif %}</td>
-                            <td>{% if item.professionalism_points == undefined %}-{% else %}{{ item.professionalism_points }}pts{% endif %}</td>
-                            <td>{% if item.coursewalk_points == undefined %}-{% else %}{{ item.coursewalk_points }}pts{% endif %}</td>
-                            <td>{% if item.riding_points == undefined %}-{% else %}{{ item.riding_points }}pts{% endif %}</td>
-                            <td>{{ item.total_points }}pts</td>
+                            <td aria-label="Jockey"><a class="table__link" href="">{{ item.jockey }}</a></td>
+                            <td aria-label="Place points">{% if item.place_points == undefined %}-{% else %}{{ item.place_points }}pts{% endif %}</td>
+                            <td aria-label="Presentation points">{% if item.presentation_points == undefined %}-{% else %}{{ item.presentation_points }}pts{% endif %}</td>
+                            <td aria-label="Professionalism points">{% if item.professionalism_points == undefined %}-{% else %}{{ item.professionalism_points }}pts{% endif %}</td>
+                            <td aria-label="Coursewalk points">{% if item.coursewalk_points == undefined %}-{% else %}{{ item.coursewalk_points }}pts{% endif %}</td>
+                            <td aria-label="Riding points">{% if item.riding_points == undefined %}-{% else %}{{ item.riding_points }}pts{% endif %}</td>
+                            <td aria-label="Total points">{{ item.total_points }}pts</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -2110,7 +2150,7 @@
         <h2 class="components__component-heading">Grouped invoice table</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table table--grouped">
+            <table class="table table--grouped table--stacked-md">
                 <thead>
                     <tr>
                         <th colspan="2">Activity type</th>
@@ -2142,12 +2182,12 @@
                         {% for item in group.items %}
                             <tr>
                                 <td class="table__group-item-decor"></td>
-                                <td>
+                                <td aria-label="Activity type">
                                     <a class="table__link" href="">{{ item.activity }}</a>
                                 </td>
-                                <td>{{ item.date }}</td>
-                                <td>{{ item.duration }}</td>
-                                <td>{{ item.amount }}</td>
+                                <td aria-label="Date">{{ item.date }}</td>
+                                <td aria-label="Duration">{{ item.duration }}</td>
+                                <td aria-label="Amount">{{ item.amount }}</td>
                                 <td class="text-right">
                                     <a class="button button--primary" href="">Remove</a>
                                 </td>
@@ -2167,7 +2207,7 @@
         <h2 class="components__component-heading">Empty table</h2>
         <div class="components__component-main">
             {# START #}
-            <table class="table">
+            <table class="table table--stacked-md">
                 <thead>
                     <tr>
                         <th>Activity type</th>
